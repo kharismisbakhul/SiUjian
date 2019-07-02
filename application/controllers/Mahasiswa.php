@@ -12,7 +12,6 @@ class Mahasiswa extends CI_Controller
     public function index()
     {
 
-
         $data['title'] = 'My Profile';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->view('templates/header', $data);
@@ -23,52 +22,23 @@ class Mahasiswa extends CI_Controller
     }
 
     // Edit Profile
-    public function edit()
+    public function profil()
     {
-        $data['title'] = 'Edit Profile';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('mahasiswa_model', 'mahasiswa');
 
-        $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
-
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('user/edit', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $name = $this->input->post('name');
-            $email = $this->input->post('email');
-
-            // cek jika ada gambar yang di upload
-            $upload_image = $_FILES['image'];
-            if ($upload_image) {
-                $config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size']     = '2048'; //kb
-                $config['upload_path'] = './assets/img/profile/';
-
-                $this->load->library('upload', $config);
-
-                if ($this->upload->do_upload('image')) {
-                    $old_image = $data['user']['image'];
-                    if ($old_image != 'default.jpg') {
-                        unlink(FCPATH . 'assets/img/profile/' . $old_image);
-                    }
-                    $new_image = $this->upload->data('file_name');
-                    $this->db->set('image', $new_image);
-                } else {
-                    echo $this->upload->display_errors();
-                }
-            }
+        $data['title'] = 'Profile';
+        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
 
 
-            $this->db->set('name', $name);
-            $this->db->where('email', $email);
-            $this->db->update('user');
+        $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user']['prodikode']);
 
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Your profile has been updated ! </div>');
-            redirect('user');
-        }
+
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('mahasiswa/profil', $data);
+        $this->load->view('templates/footer');
     }
 
     public function changePassword()

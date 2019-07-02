@@ -1,12 +1,12 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-siujian sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-rocket"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">AYF Admin</div>
+        <div class="sidebar-brand-text mx-3">Si-Ujian</div>
     </a>
 
     <!-- Divider -->
@@ -16,8 +16,8 @@
     <?php
     $role_id = $this->session->userdata('user_profile_kode');
     $queryMenu = "SELECT `user_menu`.`id`, `menu`
-                    FROM `user_menu` JOIN `user_access_menu`
-                    ON `user_menu`.`id` = `user_access_menu`.`menu_id`
+                FROM `user_menu` JOIN `user_access_menu`
+                ON `user_menu`.`id` = `user_access_menu`.`menu_id`
                 WHERE `user_access_menu`.`user_profil_kode` = $role_id
                 ORDER BY `user_access_menu`.`menu_id` ASC
                 ";
