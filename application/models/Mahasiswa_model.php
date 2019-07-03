@@ -16,4 +16,23 @@ class Mahasiswa_model extends CI_Model
 
         return $this->db->get()->row_array();
     }
+
+    public function getBelumUjian($data)
+    {
+        $this->db->select('kodeujian.nama_ujian');
+        $this->db->from('mahasiswa');
+        $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
+        $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode', 'right');
+        $this->db->where('ujian.kodeUjianKode=', null);
+        return $this->db->get()->result_array();
+    }
+
+    public function getUjian($data)
+    {
+        $this->db->select('ujian.*,kodeujian.nama_ujian');
+        $this->db->from('mahasiswa');
+        $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
+        $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode');
+        return $this->db->get()->result_array();
+    }
 }

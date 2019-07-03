@@ -12,7 +12,7 @@ class Mahasiswa extends CI_Controller
     public function index()
     {
 
-        $data['title'] = 'My Profile';
+        $data['title'] = 'Dasboard';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -26,7 +26,7 @@ class Mahasiswa extends CI_Controller
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
 
-        $data['title'] = 'Profile';
+        $data['title'] = 'Profil';
         $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
 
 
@@ -41,44 +41,45 @@ class Mahasiswa extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function changePassword()
+    public function ujian()
     {
-        $data['title'] = 'Change Password';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $data['title'] = 'Ujian';
+        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
 
-        $this->form_validation->set_rules('current_password', 'Curent Password', 'required|trim');
-        $this->form_validation->set_rules('new_password1', 'New Password', 'required|trim|min_length[3]|matches[new_password2]');
-        $this->form_validation->set_rules('new_password2', 'New Password', 'required|trim|min_length[3]|matches[new_password1]');
+        $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
 
-        if ($this->form_validation->run() == false) {
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('mahasiswa/ujian', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambahUjian()
+    {
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $data['title'] = 'Ujian';
+        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['ujian'] = $this->mahasiswa->getBelumUjian($this->session->userdata('username'));
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('mahasiswa/tambahUjian', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function publikasi()
+    { {
+            $data['title'] = 'Publikasi';
+            $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('user/changepassword', $data);
+            $this->load->view('mahasiswa/publikasi', $data);
             $this->load->view('templates/footer');
-        } else {
-            $current_password = $this->input->post('current_password');
-            $new_password = $this->input->post('new_password1');
-
-            if (!password_verify($current_password, $data['user']['password'])) {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Wrong current password ! </div>');
-                redirect('user/changepassword');
-            } else {
-                if ($current_password == $new_password) {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> New Password cannot be the same as current password! </div>');
-                    redirect('user/changepassword');
-                } else {
-                    // passwor sudah benar
-                    $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-
-                    $this->db->set('password', $password_hash);
-                    $this->db->where('email', $this->session->userdata('email'));
-                    $this->db->update('user');
-
-                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> New Password change! </div>');
-                    redirect('user/changepassword');
-                }
-            }
         }
     }
 }
