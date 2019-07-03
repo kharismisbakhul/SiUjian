@@ -5,6 +5,6 @@ class Hello extends CI_Controller
 {
     public function index()
     {
-        $this->load->view('bimbingan.php');
+        $this->load->view('dosen/input_nilai.php');
     }
 }
