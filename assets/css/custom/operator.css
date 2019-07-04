@@ -1,0 +1,75 @@
+.clr-white{
+    color: white
+}
+
+.bg-blue{
+    background-color:#4e73df;
+}
+
+.close{
+    font-size: 1.8rem;
+}
+
+.close:hover{
+    color: white;
+}
+
+.modal-body .card .card-body textarea{
+    border-radius: 10px;
+}
+
+.clr-black{
+    color: black
+}
+
+.btn-ujian{
+    background-color: #9b59b6;
+}
+
+.btn-ujian:hover{
+    background-color: #9b59b6;
+    opacity: 0.9;
+}
+
+.btn-publikasi{
+    background-color: #e67e22;
+}
+
+.btn-publikasi:hover{
+    background-color: #e67e22;
+    opacity: 0.9;
+}
+
+.btn-bimbingan{
+    background-color: #353b48;
+}
+
+.btn-bimbingan:hover{
+    background-color: #353b48;
+    opacity: 0.8;
+}
+
+.tolak, .setuju, .kembali{
+    width: 7rem;
+}
+
+
+
+@media only screen and (max-device-width: 570px){
+
+    .haha{
+        justify-content: center;
+    }
+
+    .tolak{
+        width: 10rem;
+    }
+
+    .setuju{
+        width: 10rem;
+    }
+
+    .kembali{
+        width: 10rem;
+    }
+}

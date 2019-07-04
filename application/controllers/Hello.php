@@ -5,6 +5,6 @@ class Hello extends CI_Controller
 {
     public function index()
     {
-        $this->load->view('pimpinan/rekap_dosen.php');
+        $this->load->view('operator/validasi_operator_ujian.php');
     }
 }
