@@ -3,16 +3,19 @@
 
     <!-- Page Heading -->
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col-xl-10 col-sm-1">
             <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?></h1>
         </div>
-        <div class="col-lg-5 float-right ">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalProfil">
-                <span class="icon text-white-50">
-                    <i class="fas fa-fw fa-plus-circle"></i>
-                </span>
-                <span class="text">Tambah</span>
-            </button>
+        <div class=" col-xl-2 ">
+            <form action="<?= base_url('mahasiswa') ?>/tambahPublikasi">
+                <button type="submit" class="btn btn-primary float-right mb-2">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-fw fa-plus-circle"></i>
+                    </span>
+                    <span class="text">Tambah</span>
+                </button>
+            </form>
+
         </div>
     </div>
 
@@ -30,7 +33,7 @@
     <div class="row">
 
         <!-- Area Chart -->
-        <div class="col-xl-8 col-lg-7">
+        <div class="col-xl-12 col-lg-7">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -51,90 +54,45 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>12 Mei 2019</td>
-                                    <td>Ini contoh artikel</td>
-                                    <td>VALID</td>
+                                <?php $i = 1; ?>
+                                <?php foreach ($publikasi as $p) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $i++  ?></th>
+                                        <td><?= $p['tanggal']  ?></td>
+                                        <td><?= $p['judulArtikel'] ?></td>
+                                        <?php if ($p['valid'] == 1) {  ?>
+                                            <td class="text-success font-weight-bold">VALID</td>
+                                        <?php } elseif ($p['valid'] == 2) { ?>
+                                            <td class="text-primary font-weight-bold">PROSES</td>
+                                        <?php } else { ?>
+                                            <td class="text-danger font-weight-bold">TIDAK VALID</td>
+                                        <?php } ?>
 
-                                    <td>
-                                        <button type="button" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                            </span>
-                                            <span class="text">Delete</span>
-                                        </button>
-                                        <button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-pencil-alt"></i>
-                                            </span>
-                                            <span class="text">Edit</span>
-                                        </button>
-                                        <button type="button" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-eye"></i>
-                                            </span>
-                                            <span class="text">Detail</span>
-                                        </button>
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>12 Mei 2019</td>
-                                    <td>Ujian Komisi Persiapan Proposal</td>
-                                    <td>12 Mei</td>
-                                    <td>
-                                        <button type="button" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                            </span>
-                                            <span class="text">Delete</span>
-                                        </button>
-
-                                        <button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-pencil-alt"></i>
-                                            </span>
-                                            <span class="text">Edit</span>
-                                        </button>
-                                        <button type="button" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-eye"></i>
-                                            </span>
-                                            <span class="text">Detail</span>
-                                        </button>
-                                    </td>
+                                        <td>
+                                            <a href="<?= base_url(); ?>mahasiswa/hapusPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-danger btn-icon-split btn-sm">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-fw fa-trash-alt"></i>
+                                                </span>
+                                                <span class="text">Delete</span>
+                                            </a>
+                                            <button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#ModalProfil">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-fw fa-pencil-alt"></i>
+                                                </span>
+                                                <span class="text">Edit</span>
+                                            </button>
+                                            <button type="button" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ModalProfil">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-fw fa-eye"></i>
+                                                </span>
+                                                <span class="text">Detail</span>
+                                            </button>
+                                        </td>
 
 
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>12 Mei 2019</td>
-                                    <td>Ujian Komisi Persiapan Proposal</td>
-                                    <td>12 Mei</td>
-                                    <td>
-                                        <button type="button" class="badge badge-pill badge-danger" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                            </span>
-                                            <span class="text">Delete</span>
-                                        </button>
-                                        <button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-pencil-alt"></i>
-                                            </span>
-                                            <span class="text">Edit</span>
-                                        </button>
-                                        <button type="button" class="badge badge-pill badge-info" data-toggle="modal" data-target="#ModalProfil">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-eye"></i>
-                                            </span>
-                                            <span class="text">Detail</span>
-                                        </button>
-                                    </td>
-                                </tr>
+                                    </tr>
+                                <?php endforeach; ?>
+
                             </tbody>
                         </table>
                     </div>

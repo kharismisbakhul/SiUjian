@@ -35,4 +35,12 @@ class Mahasiswa_model extends CI_Model
         $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode');
         return $this->db->get()->result_array();
     }
+
+    public function getPublikasi($data)
+    {
+        $this->db->select('publikasi.*');
+        $this->db->from('mahasiswa');
+        $this->db->join('publikasi', 'publikasi.Mahasiswanim=' . $data);
+        return $this->db->get()->result_array();
+    }
 }
