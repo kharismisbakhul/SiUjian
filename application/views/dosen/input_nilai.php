@@ -162,8 +162,6 @@
                           </tbody>
                         </table>
                       </div>
-                      <div class="text-xs pt-3 pb-3 see-more font-weight-normal">lihat
-                        selengkapnya</div>
                     </div>
                   </div>
                 </div>
