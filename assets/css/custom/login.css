@@ -6,47 +6,22 @@ body{
     background-image: linear-gradient(180deg, #224abe 10%, #36b9cc 100%);
 }
 
-.row{
-    width: 100%;
-    margin: 0 auto;
+
+@media (min-width: 991px){
+    .container{
+        max-width: 45em;
+    }
 }
 
-.bg-login-image{
-    /* Link to your background image using in the property below! */
-    background: scroll center url('https://images.unsplash.com/photo-1494145904049-0dca59b4bbad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80');
-    background-size: cover;
-  }
+@media (max-width: 990px){
+    form{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    
+    .container{
+        max-width: 30rem;
+        
+    }
 
-  .div-title{
-      color: black;
-      font-size: 2rem;
-  }
-
-  .div-title .sub-title{
-      font-size: 1rem;
-      color: #bdc3c7;
-  }
-
-.forget{
-    font-size: .8rem;
-    color: #34495e
 }
-
-.forget:hover{
-    color: #34495e;
-    opacity: 0.8;
-}
-
-.btn-primary{
-    background-color: #ffa801;
-    border-color: #ffa801;
-}
-
-.btn-primary:hover{
-    background-color: #ffa801;
-    border-color: #ffa801;
-    opacity: 0.8;
-    transition: 0.5s;
-}
-
-
