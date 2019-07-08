@@ -133,6 +133,12 @@
                                                 <textarea type="text" class="form-control" id="kontribusi_implikasi"></textarea>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label for="komentarRevisi" class="col-sm-3 col-form-label">Komentar (Revisi)</label>
+                                            <div class="col-sm-9">
+                                                <textarea type="text" class="form-control" id="komentarRevisi"></textarea>
+                                            </div>
+                                        </div>
                                         <div class="form-group row mt-2" style="float:right;" >
                                             <div class="col-lg-6 col-md-6 col-sm-6 mb-1">
                                                 <button type="button" class="btn btn-success setuju">Setuju</button>
