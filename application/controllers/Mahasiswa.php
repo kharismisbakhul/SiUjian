@@ -15,6 +15,8 @@ class Mahasiswa extends CI_Controller
 
         $data['title'] = 'Dasboard';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -49,6 +51,7 @@ class Mahasiswa extends CI_Controller
         $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
 
         $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
+        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user']['nim']])->num_rows();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -59,18 +62,131 @@ class Mahasiswa extends CI_Controller
 
     public function tambahUjian()
     {
+
+
         $this->load->model('mahasiswa_model', 'mahasiswa');
-        $data['title'] = 'Ujian';
+        $data['title'] = 'Tambah Ujian';
         $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
         $data['ujian'] = $this->mahasiswa->getBelumUjian($this->session->userdata('username'));
+        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user']['nim']])->num_rows();
+        if ($data['jumlah_ujian'] > 3) {
+            redirect('mahasiswa/ujian');
+        }
+
+        $this->form_validation->set_rules('kodeUjian', 'Ujian', 'required|trim');
+        $this->form_validation->set_rules('tanggalUjian', 'Tanggal Ujian', 'required|trim');
 
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('mahasiswa/tambahUjian', $data);
-        $this->load->view('templates/footer');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('mahasiswa/tambahUjian', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $dataUjian = [
+                'tanggal_ujian' => $this->input->post('tanggalUjian'),
+                'kodeUjiankode' => $this->input->post('kodeUjian'),
+                'bukti_ujian' => $_FILES['buktiUjian']['name'],
+                'tanggal_tambah_ujian' => date("Y/m/d"),
+                'MahasiswaNim' => $data['user']['nim']
+            ];
+            if ($dataUjian['bukti_ujian']) {
+                $config['allowed_types'] = 'jpg|png|pdf';
+                $config['max_size']     = '2048'; //kb
+                $config['upload_path'] = './assets/ujian/';
+                $config['file_name'] = time() . '_' . $data['user']['nim'] . '_' . $dataUjian['bukti_ujian'];
+
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('buktiUjian')) {
+                    $dataUjian['bukti_ujian'] = $this->upload->data('file_name');
+                    $this->mahasiswa->insertUjian($dataUjian);
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data ujian berhasil di tambah ! </div>');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data ujian gagal di tambah ! </div>');
+                    echo $this->upload->display_errors();
+                }
+                redirect('mahasiswa/ujian');
+            }
+        }
     }
+
+    public function hapusUjian($id)
+    {
+        $user = [
+            'publikasi' => $this->db->get_where('ujian', ['id' => $id])->row_array()
+        ];
+
+        $this->load->library('upload');
+
+        unlink(FCPATH . "assets/ujian/" . $user['publikasi']['bukti']);
+        $this->db->delete('ujian', ['id' => $id]);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ujian terhapus</div>');
+
+        redirect('mahasiswa/ujian');
+    }
+
+    public function editUjian($id)
+    {
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $data['title'] = 'Edit Ujian';
+        $data['ujian'] = $this->db->get_where('ujian', ['id' => $id])->row_array();
+        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $data['ujian']['MahasiswaNim']])->row_array();
+
+        $ujianBelum = $this->mahasiswa->getBelumUjian($data['ujian']['MahasiswaNim']);
+        $data['listUjian'] = ($ujianBelum);
+        $data['pilihanUjian'] =  $this->mahasiswa->getUjian_Edit($id);
+
+
+        $this->form_validation->set_rules('kodeUjian', 'Ujian', 'required|trim');
+        $this->form_validation->set_rules('tanggalUjian', 'Tanggal Ujian', 'required|trim');
+
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('mahasiswa/editUjian', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $dataUjian = [
+                'tgl_ujian' => $this->input->post('tanggalUjian'),
+                'kodeUjiankode' => $this->input->post('kodeUjian'),
+                'tgl_tambah_ujian' => date("Y/m/d"),
+                'MahasiswaNim' => $data['user']['nim'],
+                'bukti' => $data['ujian']['bukti']
+            ];
+
+            $upload_bukti = $_FILES['buktiUjian'];
+
+            if ($upload_bukti['name'] != '') {
+                $config['allowed_types'] = 'jpg|png|pdf';
+                $config['max_size']     = '2048'; //kb
+                $config['upload_path'] = './assets/ujian/';
+                $config['file_name'] = time() . '_' . $data['user']['nim'] . '_' . $upload_bukti['name'];
+
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('buktiUjian')) {
+                    unlink(FCPATH . 'assets/ujian/' . $data['ujian']['bukti']);
+                    $dataUjian['bukti'] = $this->upload->data('file_name');
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            }
+
+            $this->mahasiswa->editUjian($dataUjian, $id);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data ujian berhasil di perbaharui ! </div>');
+
+            redirect('mahasiswa/ujian');
+        }
+    }
+
 
     public function publikasi()
     {
@@ -79,6 +195,7 @@ class Mahasiswa extends CI_Controller
         $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
 
         $data['publikasi'] = $this->mahasiswa->getPublikasi($this->session->userdata('username'));
+        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user']['nim']])->num_rows();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -92,11 +209,15 @@ class Mahasiswa extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Tambah Publikasi';
         $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user']['nim']])->num_rows();
+        if ($data['jumlah_publikasi'] > 2) {
+            redirect('mahasiswa/publikasi');
+        }
 
         $this->form_validation->set_rules('judulArtikel', 'Judul Artikel', 'required|trim');
         $this->form_validation->set_rules('namaJurnal', 'Nama Jurnal', 'required|trim');
         $this->form_validation->set_rules('volumDanNo', 'Volume Dan No Terbitan', 'required|trim');
-        $this->form_validation->set_rules('statusJurnal', 'Kategori Jurnal', 'required|trim');
+        $this->form_validation->set_rules('statusJurnal', 'Status Jurnal', 'required|trim');
 
 
         if ($this->form_validation->run() == false) {
@@ -110,8 +231,8 @@ class Mahasiswa extends CI_Controller
                 'judulArtikel' => $this->input->post('judulArtikel'),
                 'namaJurnal' => $this->input->post('namaJurnal'),
                 'volumeDanNoTerbitan' => $this->input->post('volumDanNo'),
-                'kategoriJurnal' => $this->input->post('statusJurnal'),
-                'statusJurnal' => 'kosong',
+                'kategoriJurnal' => 'kosong',
+                'statusJurnal' => $this->input->post('statusJurnal'),
                 'Mahasiswanim' => $data['user']['nim'],
                 'bukti' => $_FILES['buktiPublikasi']['name'],
                 'tanggal' => date("Y/m/d"),
@@ -156,5 +277,71 @@ class Mahasiswa extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Publikasi terhapus</div>');
 
         redirect('mahasiswa/publikasi');
+    }
+
+
+
+
+
+    public function editPublikasi($id)
+    {
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $data['title'] = 'Edit Publikasi';
+        $data['jurnal'] = $this->db->get_where('publikasi', ['idJurnal' => $id])->row_array();
+        $data['statusJurnal'] = ['Internasional Bereputasi', 'Internasional', 'Nasional Terakreditasi', 'Nasional'];
+
+        $this->form_validation->set_rules('judulArtikel', 'Judul Artikel', 'required|trim');
+        $this->form_validation->set_rules('namaJurnal', 'Nama Jurnal', 'required|trim');
+        $this->form_validation->set_rules('volumDanNo', 'Volume Dan No Terbitan', 'required|trim');
+        $this->form_validation->set_rules('statusJurnal', 'Status Jurnal', 'required|trim');
+
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('mahasiswa/editPublikasi', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $dataPublikasi = [
+                'judulArtikel' => $this->input->post('judulArtikel'),
+                'namaJurnal' => $this->input->post('namaJurnal'),
+                'volumeDanNoTerbitan' => $this->input->post('volumDanNo'),
+                'statusJurnal' => $this->input->post('statusJurnal'),
+                'Mahasiswanim' => $data['jurnal']['Mahasiswanim'],
+                'bukti' => $data['jurnal']['bukti'],
+                'tanggal' => date("Y/m/d")
+
+            ];
+
+            $upload_publikasi = $_FILES['buktiPublikasi'];
+
+            if ($upload_publikasi['name'] != '') {
+
+                $config['allowed_types'] = 'jpg|png|pdf';
+                $config['max_size']     = '2048'; //kb
+                $config['upload_path'] = './assets/publikasi/';
+                $config['file_name'] = time() . '_' . $data['user']['nim'] . '_' . $upload_publikasi['name'];
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('buktiPublikasi')) {
+                    unlink(FCPATH . 'assets/publikasi/' . $data['user']['bukti']);
+                    $dataPublikasi['bukti'] = $this->upload->data('file_name');
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            }
+
+
+            $this->mahasiswa->editPublikasi($dataPublikasi, $id);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data publikasi berhasil di perbaharui ! </div>');
+
+            redirect('mahasiswa/publikasi');
+        }
+    }
+    public function getDetailPublikasi($data)
+    {
+        echo json_encode($this->db->get_where('publikasi', ['idJurnal' => $data])->row_array());
     }
 }

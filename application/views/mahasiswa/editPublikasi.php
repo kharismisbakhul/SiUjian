@@ -28,11 +28,11 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <?= form_open_multipart('mahasiswa/tambahPublikasi'); ?>
+                    <?= form_open_multipart('mahasiswa/editPublikasi/' . $jurnal['idJurnal']); ?>
                     <div class="form-group row mb-3">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Artikel</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="judulArtikel" id="judulArtikel" placeholder="Masukkan judul artikel...">
+                            <input type="text" class="form-control" name="judulArtikel" id="judulArtikel" placeholder="Masukkan judul artikel..." value="<?= $jurnal['judulArtikel']  ?>">
                             <?= form_error('judulArtikel', '<small class="text-danger pl-3">', '</small>'); ?>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                     <div class="form-group row mb-3">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama Jurnal</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="namaJurnal" id="namaJurnal" placeholder="Masukkan nama jurnal...">
+                            <input type="text" class="form-control" name="namaJurnal" id="namaJurnal" placeholder="Masukkan nama jurnal..." value="<?= $jurnal['namaJurnal'] ?>">
                             <?= form_error('namaJurnal', '<small class="text-danger pl-3">', '</small>'); ?>
 
                         </div>
@@ -49,7 +49,7 @@
                     <div class="form-group row mb-3">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Volume dan No terbitan</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" name="volumDanNo" id="volumDanNo" placeholder="(exp:10/2)...">
+                            <input type="text" class="form-control" name="volumDanNo" id="volumDanNo" placeholder="(exp:10/2)..." value="<?= $jurnal['volumeDanNoTerbitan'] ?>">
                             <?= form_error('volumDanNo', '<small class="text-danger pl-3">', '</small>'); ?>
                         </div>
                     </div>
@@ -57,11 +57,14 @@
                     <div class="form-group row mb-3">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Status jurnal</label>
                         <div class="col-sm-4">
-                            <select class="custom-select" id="statusJurnal" name="statusJurnal">
-                                <option value="Internasional Bereputasi">Internasional Bereputasi</option>
-                                <option value="Internasional">Internasional</option>
-                                <option value="Nasional Terakreditasi">Nasional Terakreditasi</option>
-                                <option value="Nasional">Nasional</option>
+                            <select class="form-control" id="statusJurnal" name="statusJurnal">
+                                <?php foreach ($statusJurnal as $j) : ?>
+                                    <?php if ($jurnal['statusJurnal'] == $j) : ?>
+                                        <option value="<?= $j; ?>" selected><?= $j ?> </option>
+                                    <?php else : ?>
+                                        <option value="<?= $j; ?>"><?= $j; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -72,9 +75,13 @@
                             <div class="input-group mb-2">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="buktiPublikasi" name="buktiPublikasi">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <label class="custom-file-label" for="customFile">Chose file..</label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <a href="<?= base_url('assets/') ?>publikasi/<?= $jurnal['bukti'] ?>">
+                                <?= $jurnal['bukti'];  ?></a><br>
                         </div>
                     </div>
 
@@ -95,7 +102,7 @@
                         <div class="col-lg-8">
                         </div>
                         <div class="col-lg-4">
-                            <a href="<?= base_url('mahasiswa') ?>/publikasi" class="btn btn-primary">Close</a>
+                            <a href="<?= base_url('mahasiswa') ?>/publikasi" class="btn btn-primary">kembali</a>
                             <button type="submit" class="btn btn-success ">Save changes</button>
                         </div>
                     </div>
