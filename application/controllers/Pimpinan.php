@@ -60,4 +60,17 @@ class Pimpinan extends CI_Controller
         $this->load->view('pimpinan/rekap_dosen', $data);
         $this->load->view('templates/footer');
     }
+
+
+    public function detailMahasiswa($nim)
+    {
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $result = $this->mahasiswa->getDetailMahasiswa($nim);
+        $data = $this->mahasiswa->getProfilJurusan($result['prodikode']);
+        $dosenPembimbing = $this->mahasiswa->getDosenPembimbing($nim);
+        $result['nama_prodi'] = $data['nama_prodi'];
+        $result['nama_jurusan'] = $data['nama_jurusan'];
+        $result['dosen_pembimbing'] = $dosenPembimbing;
+        echo json_encode($result);
+    }
 }

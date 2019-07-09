@@ -46,9 +46,23 @@ class Mahasiswa_model extends CI_Model
 
     public function getMahasiswaPlusProdi()
     {
-        $this->db->select('mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang');
+        $this->db->select('mahasiswa.nim, mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang');
         $this->db->from('mahasiswa');
         $this->db->join('prodi', 'mahasiswa.prodikode= prodi.kode');
+        return $this->db->get()->result_array();
+    }
+
+    public function getDetailMahasiswa($nim)
+    {
+        return $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
+    }
+
+    public function getDosenPembimbing($nim)
+    {
+        $this->db->select('Dosennip, dosen.nama, pembimbing.statusPembimbing');
+        $this->db->from('pembimbing');
+        $this->db->join('dosen', 'dosen.nip = pembimbing.Dosennip', 'left');
+        $this->db->where('pembimbing.Mahasiswanim =' . $nim);
         return $this->db->get()->result_array();
     }
 }

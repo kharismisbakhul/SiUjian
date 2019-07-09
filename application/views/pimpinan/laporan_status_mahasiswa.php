@@ -72,7 +72,7 @@
                             <td></td>
                             <td class="text-success font-weight-bold"></td>
                             <td class="text-center">
-                              <button class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".modalDetailMahasiswa" data-id="<?= $m['nama']; ?>">
+                              <button class="btn btn-info btn-icon-split btn-sm modalDetail" data-toggle="modal" data-target=".modalDetailMahasiswa" data-id="<?= $m['nim']; ?>">
                                 <span class="icon text-white-50">
                                   <i class="fas fa-eye"></i>
                                 </span>
@@ -103,7 +103,7 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-blue">
-          <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Mahasiswa Bimbingan - <span id="nama_mahasiswa"></span></h5>
+          <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Mahasiswa Bimbingan - <span class="nama_mahasiswa"></span></h5>
           <button type="button" class="close clr-white" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -114,7 +114,7 @@
               <h6 class="m-0 font-weight-bold text-capitalize">Detail Mahasiswa</h6>
             </div>
             <div class="card-body">
-              ngambil dari yusril
+
             </div>
           </div>
         </div>

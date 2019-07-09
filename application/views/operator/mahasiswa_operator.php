@@ -72,24 +72,24 @@
                             <td></td>
                             <td class="text-success font-weight-bold"></td>
                             <td class="text-center">
-                              <button href="#" class="btn btn-info btn-icon-split btn-sm">
+                              <a href="<?= base_url('operator/mahasiswa/profile/') . $m['nim']; ?>" class="btn btn-info btn-icon-split btn-sm">
                                 <span class="icon text-white-50">
                                   <i class="fas fa-eye"></i>
                                 </span>
                                 <span class="text">Profile</span>
-                              </button>
-                              <button href="#" class="btn btn-ujian btn-icon-split btn-sm">
+                              </a>
+                              <a href="<?= base_url('operator/mahasiswa/ujian/') . $m['nim']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
                                 <span class="icon text-white-50">
                                   <i class="fas fa-paste"></i>
                                 </span>
                                 <span class="text clr-white">Ujian</span>
-                              </button>
-                              <button href="#" class="btn btn-publikasi btn-icon-split btn-sm">
+                              </a>
+                              <a href="<?= base_url('operator/mahasiswa/publikasi/') . $m['nim']; ?>" class="btn btn-publikasi btn-icon-split btn-sm">
                                 <span class="icon text-white-50">
                                   <i class="fas fa-book"></i>
                                 </span>
                                 <span class="text clr-white">Publikasi</span>
-                              </button>
+                              </a>
                             </td>
                           </tr>
                           <?php $i++; ?>

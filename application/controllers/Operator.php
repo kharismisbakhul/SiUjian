@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Operator extends CI_Controller
@@ -34,12 +37,29 @@ class Operator extends CI_Controller
 
     public function mahasiswa()
     {
+        $type = $this->uri->segment(3);
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = $this->initData();
         $data['title'] = 'Mahasiswa';
         $data['mahasiswa'] = $this->mahasiswa->getMahasiswaPlusProdi();
+        if ($type != "list") {
+            $Id = $this->uri->segment(4);
+            $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $Id])->row_array();
+            $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
+            $data['ujian'] = $this->mahasiswa->getUjian($Id);
+            $data['publikasi'] = $this->mahasiswa->getPublikasi($Id);
+        }
+
         $this->loadTemplate($data);
-        $this->load->view('operator/mahasiswa_operator', $data);
+        if ($type === "list") {
+            $this->load->view('operator/mahasiswa_operator', $data);
+        } elseif ($type === "profile") {
+            $this->load->view('mahasiswa/profil', $data);
+        } elseif ($type === "ujian") {
+            $this->load->view('mahasiswa/ujian', $data);
+        } elseif ($type === "publikasi") {
+            $this->load->view('mahasiswa/publikasi', $data);
+        }
         $this->load->view('templates/footer');
     }
     public function dosen()
