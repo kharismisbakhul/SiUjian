@@ -5,6 +5,11 @@ class Hello extends CI_Controller
 {
     public function index()
     {
-        $this->load->view('dashboard');
+        $data['title'] = "SiUjian";
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('dashboard', $data);
+        $this->load->view('templates/footer');
     }
 }

@@ -1,0 +1,28 @@
+.clr-white{
+    color: white
+}
+
+.bg-blue{
+    background-color:#4e73df;
+}
+
+.close{
+    font-size: 1.8rem;
+}
+
+.close:hover{
+    color: white;
+}
+
+.modal-body .card .card-body textarea{
+    border-radius: 10px;
+}
+
+.clr-black{
+    color: black
+}
+
+.search-dosen{
+    width: 100%;
+    height: 10rem;
+}

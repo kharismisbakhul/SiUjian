@@ -1,0 +1,28 @@
+/* General */
+
+/* dashboard Mahasiswa */
+.dosen-penguji{
+    font-size: 1.2rem;
+}
+
+.see-more{
+    color: #273C75;
+    float: right;
+    margin-top: 0px;
+    margin-bottom: -15px;
+}
+
+.not-dosen{
+    margin-top: 1em;
+}
+
+.clr-white{
+    color: white
+}
+
+/* Dashboard Dosen */
+
+.bg-blue-ocean{
+    /* background-image: linear-gradient(180deg, #224abe 10%, #36b9cc 100%); */
+    background-color: #4E73DF;
+}
