@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2019 at 04:27 AM
+-- Generation Time: Jul 09, 2019 at 11:26 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -164,7 +164,10 @@ INSERT INTO `pembimbing` (`Mahasiswanim`, `Dosennip`, `id`, `statusPembimbing`) 
 ('165150201111001', '165150201111300', 2, 2),
 ('165150201111231', '165150201111230', 3, 1),
 ('2001', '165150201111300', 5, 1),
-('2002', '165150201111300', 6, 2);
+('2002', '165150201111300', 6, 2),
+('100', '1001', 7, 1),
+('100', '1002', 8, 2),
+('100', '1003', 9, 3);
 
 -- --------------------------------------------------------
 
@@ -346,11 +349,7 @@ INSERT INTO `user_access_menu` (`id`, `user_profil_kode`, `menu_id`) VALUES
 (6, 3, 4),
 (7, 3, 3),
 (8, 4, 4),
-(9, 5, 5),
-(10, 1, 6),
-(11, 2, 6),
-(12, 3, 6),
-(13, 4, 6);
+(9, 5, 5);
 
 -- --------------------------------------------------------
 
@@ -403,7 +402,7 @@ INSERT INTO `user_sub_menu` (`id`, `judul`, `url`, `ikon`, `is_active`, `menu_id
 (7, 'Laporan Status Mahasiswa', 'pimpinan/laporanStatusMahasiswa', 'fas fa-fw fa-user-graduate', '1', 3),
 (8, 'Laporan Dosen', 'pimpinan/laporanDosen', 'fas fa-fw fa-book-reader', '1', 3),
 (9, 'Rekap Dosen', 'pimpinan/rekapDosen', 'fas fa-fw fa-book', '1', 3),
-(10, 'Mahasiswa', 'operator/mahasiswa', 'fas fa-fw fa-graduation-cap', '1', 2),
+(10, 'Mahasiswa', 'operator/mahasiswa/list', 'fas fa-fw fa-graduation-cap', '1', 2),
 (11, 'Dosen', 'operator/dosen', 'fas fa-fw fa-chalkboard-teacher', '1', 2),
 (12, 'Validasi', 'operator/validasi', 'fas fa-fw fa-check-circle', '1', 2),
 (13, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1);
@@ -561,7 +560,7 @@ ALTER TABLE `userprofile`
 -- AUTO_INCREMENT for table `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_menu`
