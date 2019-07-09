@@ -8,11 +8,16 @@
            <div class="card-body p-0">
              <!-- Nested Row within Card Body -->
              <div class="row">
-               <div class="col-lg-5 d-none d-lg-block bg-login-image"></div>
-               <div class="col-lg-6 col-sm-12 mx-auto">
+               <div class="col-lg-5 d-none d-lg-block haha text-center ml-2 clr-white">
+                <img src="<?= base_url('assets/') ?>img/logo-ub-removebg-preview.png" class="rounded mx-auto d-block mt-4 " alt="" style="width: 50%;">
+                <h1 class="h2 title mt-3 font-weight-bold" style="color:white;">Si-Ujian</h1>
+                <h6 class="h6 title mt-5 ml-2 font-weight-bold" style="color:white;">Fakultas Ekonomi dan Bisnis</h6>
+                <h6 class="h6 title mt-0 ml-2 font-weight-bold" style="color:white;">Universitas Brawijaya</h6>
+               </div>
+               <div class="col-lg-6 col-sm-12 mx-auto gatau">
                  <div class="py-4">
                    <div class="text-center div-title">
-                     <h1 class="h2 title mb-3 font-weight-bold" style="color:black;">Login</h1>
+                     <h1 class="h4 title mb-3 font-weight-bold" style="color:black;">Login</h1>
                      <h6 class="sub-title mb-4 font-weight-normal" style="font-size: 0.8rem;">Please sign in with your SIAM / SIADO account</h6>
                    </div>
                    <?= $this->session->flashdata('message');  ?>

@@ -6,7 +6,7 @@
 }
 
 .see-more{
-    color: red;
+    color: #273C75;
     float: right;
     margin-top: 0px;
     margin-bottom: -15px;
@@ -23,6 +23,7 @@
 /* Dashboard Dosen */
 
 .bg-blue-ocean{
-    background-image: linear-gradient(180deg, #224abe 10%, #36b9cc 100%);
+    /* background-image: linear-gradient(180deg, #224abe 10%, #36b9cc 100%); */
+    background-color: #4E73DF;
 }
 
