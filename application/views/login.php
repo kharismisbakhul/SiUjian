@@ -1,9 +1,9 @@
-   <div class="container mt-5" style="width: 100%; height: 100%;">
+   <div class="container mt-5 text-center" style="width: 100%; height: 100%;">
 
      <!-- Outer Row -->
      <div class="row justify-content-center">
 
-       <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12">
+       <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 mt-4">
          <div class="card o-hidden border-0 shadow-lg my-5" style="width: 100%;">
            <div class="card-body p-0">
              <!-- Nested Row within Card Body -->
@@ -35,7 +35,7 @@
                          Login
                        </button>
                      </form>
-                     <hr>
+                     <hr class="mt-4">
                      <div class="text-center">
                        <a class="small text-primary text-decoration-none forget" href="<?= base_url('auth/forgotpassword') ?>">Forgot Password?</a>
                      </div>
