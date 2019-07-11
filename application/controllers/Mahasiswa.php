@@ -10,6 +10,9 @@ class Mahasiswa extends CI_Controller
     }
     public function index()
     {
+        if ($this->session->userdata('user_profile_kode') != 5) {
+            redirect('auth/blocked');
+        }
         $data['title'] = 'Dasboard';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->view('templates/header', $data);

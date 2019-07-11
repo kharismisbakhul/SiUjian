@@ -74,7 +74,7 @@
                         <?php $role_id = $this->session->userdata('user_profile_kode'); ?>
                         <a class="dropdown-item" href="<?= base_url(link_profil($role_id)) ?>">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            My Profile
+                            Profil
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item logout" href="#">

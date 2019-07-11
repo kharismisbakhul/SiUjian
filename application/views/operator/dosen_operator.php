@@ -54,7 +54,7 @@
                             <th>#</th>
                             <th>Nama Dosen</th>
                             <th>NIP</th>
-                            <th>Status Aktif</th>
+                            <th>Status Aktif Dosen</th>
                             <th>Jumlah Bimbingan</th>
                             <th>Action</th>
                           </tr>
@@ -74,24 +74,24 @@
                               } ?>
                               <td><?= $d['jumlah_bimbingan'] ?></td>
                               <td class="text-center">
-                                <button href="#" class="btn btn-info btn-icon-split btn-sm">
+                                <a href="<?= base_url('operator/dosen/profile/') . $d['nip']; ?>" class="btn btn-info btn-icon-split btn-sm">
                                   <span class="icon text-white-50">
                                     <i class="fas fa-eye"></i>
                                   </span>
                                   <span class="text">Profile</span>
-                                </button>
-                                <button href="#" class="btn btn-ujian btn-icon-split btn-sm">
+                                </a>
+                                <a href="<?= base_url('operator/dosen/ujian/') . $d['nip']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
                                   <span class="icon text-white-50">
                                     <i class="fas fa-paste"></i>
                                   </span>
                                   <span class="text clr-white">Ujian</span>
-                                </button>
-                                <button href="#" class="btn btn-bimbingan btn-icon-split btn-sm">
+                                </a>
+                                <a href="<?= base_url('operator/dosen/bimbingan/') . $d['nip']; ?>" class="btn btn-bimbingan btn-icon-split btn-sm">
                                   <span class="icon text-white-50">
                                     <i class="fas fa-book"></i>
                                   </span>
                                   <span class="text clr-white">Bimbingan</span>
-                                </button>
+                                </a>
                               </td>
                             </tr>
                             <?php $i++;

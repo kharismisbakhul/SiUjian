@@ -12,8 +12,8 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('username')) {
-            redirect('mahasiswa');
+        if ($this->session->userdata('user_profile_kode')) {
+            redirect(link_dashboard($this->session->userdata('user_profile_kode')));
         }
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim');

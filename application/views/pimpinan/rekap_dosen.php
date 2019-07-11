@@ -75,7 +75,7 @@
                                                     <tr>
                                                         <td><?= $i; ?></td>
                                                         <td><?= $d['nama']; ?></td>
-                                                        <td></td>
+                                                        <td><?= $d['jumlah_bimbingan']; ?></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>

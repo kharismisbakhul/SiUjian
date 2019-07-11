@@ -28,14 +28,14 @@
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <span><?= $user['nama']; ?></span>
+                                <span><?= $user_login['nama']; ?></span>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">NIP</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <span><?= $user['nip']; ?></span>
+                                <span><?= $user_login['nip']; ?></span>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -43,7 +43,7 @@
                             <div class="col-sm-10">
                                 <span>:</span>
                                 <?php
-                                if ($user['posisi'] == 1) {
+                                if ($user_login['posisi'] == 1) {
                                     echo "<span'>Dosen FEB</span>";
                                 } else {
                                     echo "<span'>Dosen Luar</span'>";
@@ -56,7 +56,7 @@
                             <div class="col-sm-10">
                                 <span>:</span>
                                 <?php
-                                if ($user['nip'] == 1) {
+                                if ($user_login['nip'] == 1) {
                                     echo "<span class='text-primary'>AKTIF</span>>";
                                 } else {
                                     echo "<span class='text-danger'>TIDAK AKTIF</span>";

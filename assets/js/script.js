@@ -1,39 +1,39 @@
 $(document).ready(function () {
-    $('.js-example-basic-single').select2();
+  $('.js-example-basic-single').select2();
 });
 
 $('.custom-file-input').on('change', function () {
-    let fileName = $(this).val().split('\\').pop();
-    $(this).next('.custom-file-label').addClass("selected").html(fileName);
+  let fileName = $(this).val().split('\\').pop();
+  $(this).next('.custom-file-label').addClass("selected").html(fileName);
 });
 
 $('.privileges').on('change', function () {
-    // alert("<?php echo $aa; ?>");
-    $.ajax({
-        url: 'http://localhost/SiUjianTemp/admin/getListProdi',
-        method: 'get',
-        dataType: 'json',
+  // alert("<?php echo $aa; ?>");
+  $.ajax({
+    url: 'http://localhost/SiUjianTemp/admin/getListProdi',
+    method: 'get',
+    dataType: 'json',
 
-        success: function (data) {
-            var d = [];
-            for (i = 0; i < data.length; i++) {
-                d.push(data[i]['nama_prodi']);
-            }
-            if ($('.privileges').val() === "Mahasiswa") {
-                clear();
-                $('.a').addClass('form-group row');
-                $('.a').append(`
+    success: function (data) {
+      var d = [];
+      for (i = 0; i < data.length; i++) {
+        d.push(data[i]['nama_prodi']);
+      }
+      if ($('.privileges').val() === "Mahasiswa") {
+        clear();
+        $('.a').addClass('form-group row');
+        $('.a').append(`
                 <label for= "prodi" class= "col-sm-4 col-form-label" >Prodi</label >
                     <div class="col-sm-8">
                         <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
                         </select>
                         </div>`);
-                d.forEach(myFunction);
-            }
-            else if ($('.privileges').val() === "Dosen") {
-                clear();
-                $('.a').addClass('form-group row');
-                $('.a').append(`
+        d.forEach(myFunction);
+      }
+      else if ($('.privileges').val() === "Dosen") {
+        clear();
+        $('.a').addClass('form-group row');
+        $('.a').append(`
                         <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
                             <div class="col-sm-8">
                                 <select class="form-control jenjang" name="jenjang" id="jenjang">
@@ -41,33 +41,33 @@ $('.privileges').on('change', function () {
                                 <option>S3</option>
                                 </select>
                                 </div>`);
-            }
-            else {
-                clear();
-            }
-        }
-    })
+      }
+      else {
+        clear();
+      }
+    }
+  })
 });
 
 function clear() {
-    $('.a').removeClass('form-group row');
-    $('.a').html(``);
+  $('.a').removeClass('form-group row');
+  $('.a').html(``);
 }
 
 function myFunction(item) {
-    document.getElementById("prodi").innerHTML += `<option>` + item + `</option>`;
+  document.getElementById("prodi").innerHTML += `<option>` + item + `</option>`;
 }
 
 $('.modalDetail').on("click", function () {
-    var nim = $(this).data('id');
-    $.ajax({
-        url: 'http://localhost/SiUjianTemp/Pimpinan/detailMahasiswa/' + nim,
-        dataType: 'json',
-        type: 'get',
-        success: function (data) {
-            $(".modal-body .card-body").html('');
-            $(".modal-title .nama_mahasiswa").html(data.nama);
-            $(".modal-body .card-body").html(`
+  var nim = $(this).data('id');
+  $.ajax({
+    url: 'http://localhost/SiUjianTemp/Pimpinan/detailMahasiswa/' + nim,
+    dataType: 'json',
+    type: 'get',
+    success: function (data) {
+      $(".modal-body .card-body").html('');
+      $(".modal-title .nama_mahasiswa").html(data.nama);
+      $(".modal-body .card-body").html(`
           <form>
             <div class="form-group row mb-1">
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
@@ -149,7 +149,6 @@ $('.modalDetail').on("click", function () {
               </div>
             </div>
 
-
             <div class="row">
               <h5 class="col-sm-6 mt-2 ">Daftar Dosen Pendamping</h5>
             </div>
@@ -170,16 +169,52 @@ $('.modalDetail').on("click", function () {
             </div>
           </form>
             `);
-            data.dosen_pembimbing.forEach(dosenLoop);
-        }
-    })
+      data.dosen_pembimbing.forEach(dosenLoop);
+      a = 1;
+    }
+  })
 });
 
+var a = 1;
+
 function dosenLoop(dosen_pembimbing) {
-    document.getElementById("dosen_pembimbing").innerHTML +=
-        `<tr>
-    <th>`+ dosen_pembimbing.statusPembimbing + `</th>
+  document.getElementById("dosen_pembimbing").innerHTML +=
+    `<tr>
+    <th>`+ (a++) + `</th>
     <td>`+ dosen_pembimbing.nama + `</td>
     <td> Pembimbing `+ dosen_pembimbing.statusPembimbing + `</td>
     </tr>`;
+};
+
+// Pimpinan, Detail mahasiswa bimbingan Laporan Dosen
+
+$('.modalDetailBimbingan').on("click", function () {
+  var nip = $(this).data('id');
+  $.ajax({
+    url: 'http://localhost/SiUjianTemp/Pimpinan/detailMahasiswaBimbingan/' + nip,
+    dataType: 'json',
+    type: 'get',
+    success: function (data) {
+      $(".modal-body #mahasiswa_bimbingan").html('');
+      $(".modal-title .nama_dosen").html(data.nama);
+      posisi_pembimbing = data.posisi;
+      data.mahasiswa_bimbingan.forEach(bimbinganLoop);
+      i = 1;
+    }
+  })
+});
+
+var i = 1;
+
+function bimbinganLoop(mahasiswa_bimbingan) {
+  document.getElementById("mahasiswa_bimbingan").innerHTML +=
+    `<tr>
+  <td>`+ (i++) + `</td>
+  <td>`+ mahasiswa_bimbingan.nama + `</td>
+  <td>`+ mahasiswa_bimbingan.jenjang + `</td>
+  <td>`+ mahasiswa_bimbingan.nama_prodi + `</td>
+  <td> Pembimbing `+ mahasiswa_bimbingan.statusPembimbing + `</td>
+  <td></td>
+  <td class="text-success font-weight-bold"></td>
+  </tr>`;
 }

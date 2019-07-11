@@ -18,17 +18,20 @@ class Dosen extends CI_Controller
 
     private function initData()
     {
-        $data['user'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
         $data['username'] = $this->session->userdata('username');
         //Mahasiswa bimbingan
-        $this->load->model('Bimbingan_model', 'bimbingan');
-        $data['bimbingan_jumlah'] = $this->bimbingan->getMahasiswaBimbingan($data['user']['nip'])->num_rows();
-        $data['bimbingan'] = $this->bimbingan->getMahasiswaBimbingan($data['user']['nip'])->result_array();
+        $this->load->model('dosen_model', 'dosen');
+        $data['bimbingan_jumlah'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->num_rows();
+        $data['bimbingan'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->result_array();
         return $data;
     }
 
     public function index()
     {
+        if ($this->session->userdata('user_profile_kode') != 4) {
+            redirect('auth/blocked');
+        }
         $data = $this->initData();
         $data['title'] = 'Dashboard Dosen';
         $this->loadTemplate($data);

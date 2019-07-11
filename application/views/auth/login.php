@@ -3,7 +3,7 @@
   <!-- Outer Row -->
   <div class="row justify-content-center">
 
-    <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12">
+    <div class="col-xl-12 col-sm-12 col-lg-12 col-md-12 mt-5">
       <div class="card o-hidden border-0 shadow-lg my-5" style="width: 100%;">
         <div class="card-body p-0">
           <!-- Nested Row within Card Body -->

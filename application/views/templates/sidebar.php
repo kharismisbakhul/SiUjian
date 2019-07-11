@@ -2,7 +2,8 @@
 <ul class="navbar-nav bg-gradient-siujian sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <?php $role_id = $this->session->userdata('user_profile_kode'); ?>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url(link_dashboard($role_id)); ?>">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-rocket"></i>
         </div>
@@ -16,7 +17,6 @@
         <?php else : ?>
         <li class="nav-item">
         <?php endif; ?>
-        <?php $role_id = $this->session->userdata('user_profile_kode'); ?>
         <a class="nav-link mt-0 pt-0" href="<?= base_url(link_dashboard($role_id)); ?> ">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>

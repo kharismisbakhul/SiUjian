@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2019 at 11:26 AM
+-- Generation Time: Jul 11, 2019 at 07:22 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -100,6 +100,16 @@ CREATE TABLE `kodeujian` (
   `nama_ujian` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `kodeujian`
+--
+
+INSERT INTO `kodeujian` (`kode`, `nama_ujian`) VALUES
+(1, 'Ujian Komisi'),
+(2, 'Ujian Proposal'),
+(3, 'Ujian Seminar Hasil'),
+(4, 'Ujian Tesis');
+
 -- --------------------------------------------------------
 
 --
@@ -135,7 +145,7 @@ CREATE TABLE `mahasiswa` (
 
 INSERT INTO `mahasiswa` (`nim`, `nama`, `noTest`, `prodikode`, `password`, `angkatan`, `jalur`, `konsentrasi`, `alamat`, `noTelp`, `asalStudi`, `judulTugasAkhir`, `tglMasuk`, `tglMulaiTA`, `statusKelulusan`, `statusWisuda`, `statusTOEFL`, `statusTPA`, `semester`, `jenjang`) VALUES
 ('100', 'Kharis Saja', '0spZ', 8, '$2y$10$cGdEqGQuHAMjA.8HuI1iKO71WMOgwVYF/v2QpPaUv0MKm0ggjMChe', 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 'S2'),
-('165150201111001', 'Adi Saputra', 'AAA', 7, '123', 2016, 'snmptn', '', 'Jl. Kucing', '0888', 'SMAN 1 Malang', 'How To Be Mature to Economics', '2019-07-01', '2019-07-10', 1, 1, 1, 1, 0, 'S2'),
+('165150201111001', 'Adi Saputra', 'AAA', 7, '123', 2016, 'snmptn', '', 'Jl. Kucing', '0888', 'SMAN 1 Malang', 'How To Be Mature to Economics', '2019-07-01', '2019-07-10', 1, 1, 1, 1, 0, 'S3'),
 ('165150201111231', 'Aditya Yusril Fikri', '1234', 4, '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 2017, 'snmptn', 'rpl', 'jln. malang aja', '0987654322', 'UB', 'pengaruh senyawa x terhadap senyawa y menggunakan metode z', '2017-06-14', '2019-07-01', 0, 0, 0, 0, 0, 'S2'),
 ('2001', 'Mahasiswa A', 'hQ4H', 6, '$2y$10$BlrYhlM/nz4ccGzS0WcRIuXxPNw5746lxe3hdhpMyIfWxZDYytXSa', 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 'S3'),
 ('2002', 'Mahasiswa B', 'Jter', 10, '$2y$10$gMz.Jv7IlcAdOndPo6God.gupoE./UQFcV5yFmUxzu7wibG2lUsLi', 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 'S3'),
@@ -191,7 +201,7 @@ CREATE TABLE `penguji` (
 CREATE TABLE `prodi` (
   `kode` int(11) NOT NULL,
   `nama_prodi` varchar(50) NOT NULL,
-  `jenjang` int(11) NOT NULL,
+  `jenjang_prodi` int(11) NOT NULL,
   `jurusankode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -199,7 +209,7 @@ CREATE TABLE `prodi` (
 -- Dumping data for table `prodi`
 --
 
-INSERT INTO `prodi` (`kode`, `nama_prodi`, `jenjang`, `jurusankode`) VALUES
+INSERT INTO `prodi` (`kode`, `nama_prodi`, `jenjang_prodi`, `jurusankode`) VALUES
 (1, 'financial accounting', 2, 1),
 (2, 'management accounting', 2, 1),
 (3, 'auditing', 2, 1),
@@ -300,7 +310,11 @@ INSERT INTO `user` (`id`, `user_profile_kode`, `username`, `password`, `is_activ
 (18, 4, '1003', '$2y$10$ChlyJ4qzT0HWTSQ5DKDisunMGjTd8IcKUUFjmJMxcw1rhwuvXhPNu', 1, 'Dosen C', 0, 'default.png'),
 (19, 5, '2001', '$2y$10$DL0fW0HcYL7ZhGrtZcY.juSbDUbhaW9vOs1Gh.mkf0SMTVys4c0Du', 1, 'Mahasiswa A', 0, 'default.png'),
 (20, 5, '2002', '$2y$10$7OmB4W1VU.iQ7UIUctqrauX3qeCeDGG/1bCHgQF1T3BXaQhgBTvmm', 1, 'Mahasiswa B', 0, 'default.png'),
-(21, 5, '2003', '$2y$10$aWBD9.9kxTSnwGW5jTq2ReN/mKiDkAbMRqRfzdkeYXN4WaFZ5EtTu', 1, 'Mahasiswa C', 0, 'default.png');
+(21, 5, '2003', '$2y$10$aWBD9.9kxTSnwGW5jTq2ReN/mKiDkAbMRqRfzdkeYXN4WaFZ5EtTu', 1, 'Mahasiswa C', 0, 'default.png'),
+(23, 3, '3001', '$2y$10$xRdW33MbYvwbQ5/.xQkPTOSPbwanf0ttuP3LN.TreRVX5mKhSNwfy', 1, 'Pimpinan 1', 0, 'default.png'),
+(24, 3, '3002', '$2y$10$ibFfc6nr4iYqw8u/aeV0COptpgkMHOneSx06eIXcam5SOl/QsCM4y', 1, 'Pimpinan 2', 0, 'default.png'),
+(25, 2, '4001', '$2y$10$N3Yn6v0/JfBs3y1TN2jttuiBQMlksVe2k.GFcflYe/ZiiDmoZdF7G', 1, 'Operator 1', 0, 'default.png'),
+(26, 2, '4002', '$2y$10$V/6M1zAQh7Leo0dD/wns6OJ8kafCj8DtyBnrmF8sfXUHbMZDKAwBy', 1, 'Operator 2', 0, 'default.png');
 
 -- --------------------------------------------------------
 
@@ -403,7 +417,7 @@ INSERT INTO `user_sub_menu` (`id`, `judul`, `url`, `ikon`, `is_active`, `menu_id
 (8, 'Laporan Dosen', 'pimpinan/laporanDosen', 'fas fa-fw fa-book-reader', '1', 3),
 (9, 'Rekap Dosen', 'pimpinan/rekapDosen', 'fas fa-fw fa-book', '1', 3),
 (10, 'Mahasiswa', 'operator/mahasiswa/list', 'fas fa-fw fa-graduation-cap', '1', 2),
-(11, 'Dosen', 'operator/dosen', 'fas fa-fw fa-chalkboard-teacher', '1', 2),
+(11, 'Dosen', 'operator/dosen/list', 'fas fa-fw fa-chalkboard-teacher', '1', 2),
 (12, 'Validasi', 'operator/validasi', 'fas fa-fw fa-check-circle', '1', 2),
 (13, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1);
 
@@ -548,7 +562,7 @@ ALTER TABLE `publikasi`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `userprofile`

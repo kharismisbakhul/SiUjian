@@ -62,7 +62,7 @@
                                                         <th>#</th>
                                                         <th>Privileges</th>
                                                         <th>Nama</th>
-                                                        <th>Status</th>
+                                                        <th>Status User</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>

@@ -30,11 +30,21 @@ class Admin extends CI_Controller
         $result = $this->db->query($query)->result_array();
         $data['list_user'] = $result;
 
+        //Mahasiswa
+        $data['jumlah_mahasiswa'] = $this->db->get_where('user', ['user_profile_kode' => 5])->num_rows();
+        $data['jumlah_operator'] = $this->db->get_where('user', ['user_profile_kode' => 4])->num_rows();
+        $this->db->select('Dosennip');
+        $this->db->distinct();
+        $data['jumlah_pembimbing'] = $this->db->get('pembimbing')->num_rows();
+
         return $data;
     }
 
     public function index()
     {
+        if ($this->session->userdata('user_profile_kode') != 1) {
+            redirect('auth/blocked');
+        }
         $data = $this->initData();
         $data['title'] = 'Dashboard';
         $this->loadTemplate($data);

@@ -85,7 +85,6 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="text-xs pt-3 pb-3 see-more font-weight-normal"></div>
                 </div>
               </div>
             </div>
@@ -103,7 +102,7 @@
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-blue">
-          <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Mahasiswa Bimbingan - <span class="nama_mahasiswa"></span></h5>
+          <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Detail Mahasiswa - <span class="nama_mahasiswa"></span></h5>
           <button type="button" class="close clr-white" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

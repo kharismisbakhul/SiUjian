@@ -16,7 +16,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col ml-auto">
                   <div class="h5 mb-0 font-weight-bold text-gray-800">Selamat Datang di Si-Ujian, <span id="user_name" class="text-gray-900 font-weight-bolder">Wayan Firdaus Mahmudy</span></div>
-                  <div class="text-s font-weight-normal text-gray-800 mt-2">Silahkan untuk mengecek Jadwal Penguji selanjutnya dan memberi Nilai Ujian :)</div>
+                  <div class="text-s font-weight-normal text-gray-800 mt-2"></div>
                 </div>
                 <div class="col-auto mr-3">
                   <i class="far fa-smile-beam fa-3x"></i>
