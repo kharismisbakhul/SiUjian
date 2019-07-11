@@ -80,14 +80,14 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('user_profile_kode');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been logged out!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Logout Success</div>');
         redirect('auth');
     }
 
 
     public function blocked()
     {
-        $this->load->view('auth/blocked');
+        $this->load->view('error403');
     }
 
     public function forgotPassword()

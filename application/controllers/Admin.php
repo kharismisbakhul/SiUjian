@@ -52,6 +52,15 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function profil()
+    {
+        $data = $this->initData();
+        $data['title'] = 'Profil';
+        $this->loadTemplate($data);
+        $this->load->view('admin/profil', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function manajemenUser()
     {
         $data = $this->initData();

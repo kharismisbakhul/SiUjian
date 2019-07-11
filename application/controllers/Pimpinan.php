@@ -37,6 +37,15 @@ class Pimpinan extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function profil()
+    {
+        $data = $this->initData();
+        $data['title'] = 'Profil';
+        $this->loadTemplate($data);
+        $this->load->view('pimpinan/profil', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function laporanStatusMahasiswa()
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');

@@ -19,6 +19,7 @@ class Dosen extends CI_Controller
     private function initData()
     {
         $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['username'] = $this->session->userdata('username');
         //Mahasiswa bimbingan
         $this->load->model('dosen_model', 'dosen');
@@ -33,7 +34,7 @@ class Dosen extends CI_Controller
             redirect('auth/blocked');
         }
         $data = $this->initData();
-        $data['title'] = 'Dashboard Dosen';
+        $data['title'] = 'Dashboard';
         $this->loadTemplate($data);
         $this->load->view('dashboard/dash_dosen', $data);
         $this->load->view('templates/footer');

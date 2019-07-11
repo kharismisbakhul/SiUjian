@@ -19,7 +19,7 @@
     <link href="<?= base_url('assets/')  ?>css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Own CSS -->
-    <link href="<?= base_url('assets/')  ?>css/style-yusril.css" rel="stylesheet">
+    <link href="<?= base_url('assets/') ?>css/style-yusril.css" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>css/custom/dashboard.css" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>css/custom/dosen.css" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>css/custom/operator.css" rel="stylesheet">

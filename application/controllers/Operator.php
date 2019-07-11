@@ -38,6 +38,15 @@ class Operator extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function profil()
+    {
+        $data = $this->initData();
+        $data['title'] = 'Profil';
+        $this->loadTemplate($data);
+        $this->load->view('operator/profil', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function mahasiswa()
     {
         $type = $this->uri->segment(3);

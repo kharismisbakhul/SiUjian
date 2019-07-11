@@ -13,12 +13,13 @@ class Mahasiswa extends CI_Controller
         if ($this->session->userdata('user_profile_kode') != 5) {
             redirect('auth/blocked');
         }
-        $data['title'] = 'Dasboard';
+        $data['title'] = 'Dashboard';
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('mahasiswa/index', $data);
+        $this->load->view('dashboard/dash_mahasiswa', $data);
         $this->load->view('templates/footer');
     }
     // Edit Profile
@@ -26,8 +27,10 @@ class Mahasiswa extends CI_Controller
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Profil';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
-        $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user']['prodikode']);
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -38,9 +41,11 @@ class Mahasiswa extends CI_Controller
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Ujian';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
         $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
-        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user']['nim']])->num_rows();
+        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -148,11 +153,13 @@ class Mahasiswa extends CI_Controller
     }
     public function publikasi()
     {
+        $data['username'] = $this->session->userdata('username');
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Publikasi';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['publikasi'] = $this->mahasiswa->getPublikasi($this->session->userdata('username'));
-        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user']['nim']])->num_rows();
+        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
