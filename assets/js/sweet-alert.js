@@ -9,7 +9,7 @@ $('.logout').on('click', function () {
         confirmButtonText: 'Logout'
     }).then(function (result) {
         if (result.value) {
-            window.location = window.location.origin + "/SiUjianTemp/auth/logout";
+            window.location = window.location.origin + "/SiUjian/auth/logout";
         }
     })
 });

@@ -10,7 +10,7 @@ $('.custom-file-input').on('change', function () {
 $('.privileges').on('change', function () {
   // alert("<?php echo $aa; ?>");
   $.ajax({
-    url: 'http://localhost/SiUjianTemp/admin/getListProdi',
+    url: 'http://localhost/SiUjian/admin/getListProdi',
     method: 'get',
     dataType: 'json',
 
@@ -61,7 +61,7 @@ function myFunction(item) {
 $('.modalDetail').on("click", function () {
   var nim = $(this).data('id');
   $.ajax({
-    url: 'http://localhost/SiUjianTemp/Pimpinan/detailMahasiswa/' + nim,
+    url: 'http://localhost/SiUjian/Pimpinan/detailMahasiswa/' + nim,
     dataType: 'json',
     type: 'get',
     success: function (data) {
@@ -191,7 +191,7 @@ function dosenLoop(dosen_pembimbing) {
 $('.modalDetailBimbingan').on("click", function () {
   var nip = $(this).data('id');
   $.ajax({
-    url: 'http://localhost/SiUjianTemp/Pimpinan/detailMahasiswaBimbingan/' + nip,
+    url: 'http://localhost/SiUjian/Pimpinan/detailMahasiswaBimbingan/' + nip,
     dataType: 'json',
     type: 'get',
     success: function (data) {

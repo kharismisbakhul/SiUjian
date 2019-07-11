@@ -8,14 +8,14 @@ $('.detail').on('click', function () {
 
 	$.ajax({
 
-		url: 'http://localhost:8080/SiUjian/mahasiswa/getDetailPublikasi/' + id,
+		url: 'http://localhost/SiUjian/mahasiswa/getDetailPublikasi/' + id,
 		data: {
 			idJurnal: id
 		},
 		method: 'post',
 		dataType: 'json',
 		beforeSend: function () {
-			$('.loader').attr('src', 'http://localhost:8080/SiUjian/assets/img/loader2.gif')
+			$('.loader').attr('src', 'http://localhost/SiUjian/assets/img/loader2.gif')
 		},
 		success: function (data) {
 			$('.loader').hide()
@@ -27,7 +27,7 @@ $('.detail').on('click', function () {
 			$('#volumeDanNoTerbitan').html(data.volumeDanNoTerbitan);
 			$('#valid').html(data.valid);
 			$('#bukti').html(data.bukti);
-			$('#bukti').attr('href', 'http://localhost:8080/SiUjian/assets/publikasi/' + data.bukti);
+			$('#bukti').attr('href', 'http://localhost/SiUjian/assets/publikasi/' + data.bukti);
 
 		}
 	});
