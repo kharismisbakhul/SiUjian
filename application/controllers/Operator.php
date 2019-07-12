@@ -53,7 +53,7 @@ class Operator extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = $this->initData();
         $data['title'] = 'Mahasiswa';
-        $data['mahasiswa'] = $this->mahasiswa->getMahasiswaPlusProdi();
+        $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
         if ($type != "list") {
             $Id = $this->uri->segment(4);
             $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $Id])->row_array();

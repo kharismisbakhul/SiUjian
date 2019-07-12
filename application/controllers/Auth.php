@@ -80,7 +80,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('user_profile_kode');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Logout Success</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success text-center" role="alert">Logout Success</div>');
         redirect('auth');
     }
 

@@ -7,7 +7,6 @@ class Mahasiswa_model extends CI_Model
     public function getProfilJurusan($data)
     {
         $this->db->select('prodi.nama_prodi, jurusan.nama_jurusan');
-
         // prodi -> nama -> kode
         // jurusan -> nama -> kode
         $this->db->from('mahasiswa');
@@ -79,9 +78,27 @@ class Mahasiswa_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function getUjianTerakhir($nim)
+    {
+        $this->db->where('Mahasiswanim', $nim);
+        $this->db->select('nama_ujian, nilai, statusUjian, max(kodeUjiankode) as ujian_terakhir');
+        $this->db->from('ujian');
+        $this->db->join('kodeujian', 'kodeujian.kode = ujian.kodeUjiankode', 'left');
+        return $this->db->get()->row_array();
+    }
+
     public function getDetailMahasiswa($nim)
     {
         return $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
+    }
+
+    public function getDetailLaporanMahasiswa()
+    {
+        $mahasiswa = $this->getMahasiswaPlusProdi();
+        for ($i = 0; $i < count($mahasiswa); $i++) {
+            $mahasiswa[$i]['ujian_terakhir'] = $this->getUjianTerakhir($mahasiswa[$i]['nim']);
+        }
+        return $mahasiswa;
     }
 
     public function getDosenPembimbing($nim)

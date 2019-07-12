@@ -50,7 +50,7 @@ class Pimpinan extends CI_Controller
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = $this->initData();
-        $data['mahasiswa'] = $this->mahasiswa->getMahasiswaPlusProdi();
+        $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
         $data['title'] = 'Laporan Status Mahasiswa';
         $this->loadTemplate($data);
         $this->load->view('pimpinan/laporan_status_mahasiswa', $data);
@@ -76,6 +76,11 @@ class Pimpinan extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function getRekap()
+    {
+        $this->load->model('dosen_model', 'dosen');
+        $this->dosen->getRekapDosen();
+    }
 
     public function detailMahasiswa($nim)
     {
@@ -91,10 +96,14 @@ class Pimpinan extends CI_Controller
     public function detailMahasiswaBimbingan($nip)
     {
         $this->load->model('dosen_model', 'dosen');
+        $this->load->model('mahasiswa_model', 'mahasiswa');
         $result = $this->dosen->getMahasiswaBimbingan($nip)->result_array();
         $dosenA = $this->dosen->getDetailDosen($nip);
         $dosen['nama'] = $dosenA['nama'];
         $dosen['mahasiswa_bimbingan'] = $result;
+        for ($i = 0; $i < count($dosen['mahasiswa_bimbingan']); $i++) {
+            $dosen['mahasiswa_bimbingan'][$i]['ujian_terakhir'] = $this->mahasiswa->getUjianTerakhir($dosen['mahasiswa_bimbingan'][$i]['nim']);
+        }
         // $data = $this->mahasiswa->getProfilJurusan($result['prodikode']);
         // $dosenPembimbing = $this->mahasiswa->getDosenPembimbing($nim);
         // $result['nama_prodi'] = $data['nama_prodi'];

@@ -117,34 +117,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-capitalize">Detail Mahasiswa Bimbingan </h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nama Mahasiswa</th>
-                                            <th>Jenjang</th>
-                                            <th>Program Studi</th>
-                                            <th>Posisi Dosen</th>
-                                            <th>Status 1</th>
-                                            <th>Status 2</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="mahasiswa_bimbingan">
 
-                                    </tbody>
-                                </table>
-
-
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

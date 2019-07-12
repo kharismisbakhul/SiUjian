@@ -36,6 +36,8 @@ class Admin extends CI_Controller
         $this->db->select('Dosennip');
         $this->db->distinct();
         $data['jumlah_pembimbing'] = $this->db->get('pembimbing')->num_rows();
+        $time = date('Y-m-d');
+        $data['jumlah_ujian_hari_ini'] = $this->db->get_where('ujian', ['tgl_ujian' => $time])->num_rows();
 
         return $data;
     }
@@ -262,4 +264,7 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Account has been deleted</div>');
         redirect('admin/manajemenUser');
     }
+
+    public function getUjianHariIni()
+    { }
 }

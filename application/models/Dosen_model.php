@@ -9,6 +9,16 @@ class Dosen_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function getRekapDosen()
+    {
+        $this->db->select('*');
+        $this->db->from('pembimbing');
+        // $this->db->join('pembimbing', 'dosen.nip = pembimbing.Dosennip');
+        $this->db->join('mahasiswa', 'mahasiswa.nim = pembimbing.Mahasiswanim');
+        $result = $this->db->get();
+        echo json_encode($result->result_array());
+    }
+
     public function getDetailDosen($nip)
     {
         return $this->db->get_where('dosen', ['nip' => $nip])->row_array();

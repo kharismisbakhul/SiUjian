@@ -46,7 +46,7 @@
                       <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                         Jumlah Mahasiswa Ujian Hari Ini</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">
-                        <span>5</span> Mahasiswa</div>
+                        <span><?= $jumlah_ujian_hari_ini; ?></span> Mahasiswa</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-graduation-cap fa-4x text-gray-300"></i>
@@ -64,7 +64,7 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                         Jumlah Ujian Hari Ini</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">5 Ujian
+                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><?= $jumlah_ujian_hari_ini; ?> Ujian
                       </div>
                     </div>
                     <div class="col-auto">
@@ -83,7 +83,7 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                         Jumlah Penguji Ujian Hari Ini</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">10 Penguji
+                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"> Penguji
                       </div>
                     </div>
                     <div class="col-auto">
@@ -107,7 +107,7 @@
                       <i class="fas fa-graduation-cap fa-4x text-gray-300"></i>
                     </div>
                   </div>
-                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div>
+                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal"><a href="<?= base_url('operator/mahasiswa/list') ?>">lihat selengkapnya</a></div>
                 </div>
               </div>
             </div>
@@ -125,7 +125,7 @@
                       <i class="fab fa-redhat fa-4x text-gray-300"></i>
                     </div>
                   </div>
-                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div>
+                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal"><a href="<?= base_url('admin/manajemenUser') ?>">lihat selengkapnya</a></div>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@
                       <i class="fas fa-chalkboard-teacher fa-4x text-gray-300"></i>
                     </div>
                   </div>
-                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div>
+                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal"><a href="<?= base_url('operator/dosen/list') ?>">lihat selengkapnya</a></div>
                 </div>
               </div>
             </div>
