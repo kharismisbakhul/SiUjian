@@ -36,3 +36,33 @@ function check_access($role_id, $menu_id)
         return "checked='checked'";
     }
 }
+
+
+function link_dashboard($user_profil_kode)
+{
+    if ($user_profil_kode == 1) {
+        return "admin";
+    } else if ($user_profil_kode == 2) {
+        return "operator";
+    } else if ($user_profil_kode == 3) {
+        return "pimpinan";
+    } else if ($user_profil_kode == 4) {
+        return "dosen";
+    } else if ($user_profil_kode == 5) {
+        return "mahasiswa";
+    }
+}
+function link_profil($user_profil_kode)
+{
+    if ($user_profil_kode == 1) {
+        return "admin/profil";
+    } else if ($user_profil_kode == 2) {
+        return "operator/profil";
+    } else if ($user_profil_kode == 3) {
+        return "pimpinan/profil";
+    } else if ($user_profil_kode == 4) {
+        return "dosen/profil";
+    } else if ($user_profil_kode == 5) {
+        return "mahasiswa/profil";
+    }
+}

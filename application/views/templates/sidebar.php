@@ -11,6 +11,18 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
+    <?php if ($title == "Dashboard") : ?>
+        <li class="nav-item active">
+        <?php else : ?>
+        <li class="nav-item">
+        <?php endif; ?>
+        <?php $role_id = $this->session->userdata('user_profile_kode'); ?>
+        <a class="nav-link mt-0 pt-0" href="<?= base_url(link_dashboard($role_id)); ?> ">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
 
     <!-- QUERY MENU -->
     <?php

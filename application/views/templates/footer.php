@@ -1,13 +1,3 @@
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Aditya Yusril Fikri <?= date('Y')  ?></span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
-
 </div>
 <!-- End of Content Wrapper -->
 
@@ -44,12 +34,20 @@
 
 <!-- Core plugin JavaScript-->
 <script src="<?= base_url('assets/')  ?>vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/')  ?>js/sb-admin-2.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/sweetalert2.all.min.js"></script>
+
+<script src="<?= base_url('assets/') ?>js/sweet-alert.js"></script>
+
+<!-- Sweet alert custom -->
+<!-- Page level plugins -->
+<script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="<?= base_url('assets/') ?>js/demo/datatables-demo.js"></script>
 <script src="<?= base_url('assets'); ?>/js/myscript.js"></script>
 </body>
 

@@ -21,6 +21,15 @@ class Mahasiswa_model extends CI_Model
         return $this->db->get()->row_array();
     }
 
+    public function getPembimbing($nim)
+    {
+        $this->db->select('dosen.nama_dosen,pembimbing.statusPembimbing');
+        $this->db->from('pembimbing');
+        $this->db->join('dosen', 'pembimbing.dosennip=dosen.nip');
+        $this->db->where('pembimbing.mahasiswanim', $nim);
+        return $this->db->get()->result_array();
+    }
+
     public function getBelumUjian($data)
     {
         $this->db->select('kodeujian.*');
@@ -37,6 +46,8 @@ class Mahasiswa_model extends CI_Model
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
         $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode');
+        $this->db->group_by('ujian.id');
+        $this->db->order_by('kodeujian.kode', 'ASC');
         return $this->db->get()->result_array();
     }
 
@@ -56,12 +67,21 @@ class Mahasiswa_model extends CI_Model
         $this->db->update('ujian', $dataUjian);
     }
 
+    public function getDetailUjian($id_ujian)
+    {
+        $this->db->select('ujian.*,kodeujian.nama_ujian');
+        $this->db->from('ujian');
+        $this->db->join('kodeujian', 'kodeujian.kode=ujian.kodeujiankode');
+        $this->db->where('ujian.id', $id_ujian);
+        return $this->db->get()->row_array();
+    }
 
     public function getPublikasi($data)
     {
         $this->db->select('publikasi.*');
         $this->db->from('mahasiswa');
         $this->db->join('publikasi', 'publikasi.Mahasiswanim=' . $data);
+        $this->db->group_by('publikasi.idJurnal');
         return $this->db->get()->result_array();
     }
 
@@ -79,5 +99,13 @@ class Mahasiswa_model extends CI_Model
         $this->db->set('tgl_tambah_ujian', $dataUjian['tanggal_tambah_ujian']);
         $this->db->set('bukti', $dataUjian['bukti_ujian']);
         $this->db->insert('ujian');
+    }
+
+    public function getMahasiswaPlusProdi()
+    {
+        $this->db->select('mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang');
+        $this->db->from('mahasiswa');
+        $this->db->join('prodi', 'mahasiswa.prodikode= prodi.kode');
+        return $this->db->get()->result_array();
     }
 }

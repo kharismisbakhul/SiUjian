@@ -14,3 +14,68 @@
 .table-wrapper-scroll-y {
 	display: block;
 }
+
+.tombol {
+	opacity: 0;
+	transition: 0.8s;
+	transform: translate(50px, 0);
+}
+
+.hilang {
+	opacity: 1;
+	transition: 0.8s;
+}
+
+.box {
+	opacity: 0;
+	transition: 1s;
+	transform: translate(0, 50px);
+}
+
+.box2 {
+	opacity: 0;
+	transition: 1.2s;
+	transform: translate(50px, 50px);
+}
+
+.box2.bMuncul,
+.box.bMuncul {
+	opacity: 1;
+	transform: translate(0, 0);
+}
+
+.tombol.pMuncul {
+	opacity: 1;
+	transform: translate(0, 0);
+}
+
+.dftr {
+	opacity: 0;
+	transform: translate(0, -40px);
+	transition: 1.5s;
+}
+
+.dftr.muncul {
+	opacity: 1;
+	transform: translate(0, 0);
+}
+
+.bClip {
+	overflow: hidden;
+	position: relative;
+	height: 360px;
+	z-index: 0;
+}
+
+.tClip {
+	z-index: -3;
+}
+
+.clip {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 430px;
+	font-size: 300px;
+	z-index: -2;
+}
