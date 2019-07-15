@@ -29,7 +29,6 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/sweetalert2.all.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/myscript.js"></script>
 
 <!-- Page level plugins -->
 <script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js"></script>
@@ -41,25 +40,12 @@
 <!-- Sweet alert custom -->
 <script src="<?= base_url('assets/') ?>js/sweet-alert.js"></script>
 
-<!-- Select2 -->
-<script src="<?= base_url('assets/') ?>js/script.js"></script>
-
-<!-- Memanggil Autocomplete.js -->
-<script src="jquery.autocomplete.min.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        // Selector input yang akan menampilkan autocomplete.
-        $("#dosenSearch").autocomplete({
-            serviceUrl: "source.php", // Kode php untuk prosesing data.
-            dataType: "JSON", // Tipe data JSON.
-            onSelect: function(suggestion) {
-                $("#buah").val("" + suggestion.nama);
-            }
-        });
-    })
-</script>
+<!-- Script Modal -->
+<script src="<?= base_url('assets/'); ?>js/myscript.js"></script>
+<script src="<?= base_url('assets/') ?>js/manajemenUser.js"></script>
+<script src="<?= base_url('assets/') ?>js/laporanDosen.js"></script>
+<script src="<?= base_url('assets/') ?>js/laporanStatusMahasiswa.js"></script>
+<script src="<?= base_url('assets/') ?>js/rekapDosen.js"></script>
 
 </body>
 

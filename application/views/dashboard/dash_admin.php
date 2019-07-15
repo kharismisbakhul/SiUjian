@@ -83,7 +83,7 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                         Jumlah Penguji Ujian Hari Ini</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"> Penguji
+                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><?= $jumlah_penguji_hari_ini; ?> Penguji
                       </div>
                     </div>
                     <div class="col-auto">
@@ -167,52 +167,24 @@
                             <tr>
                               <th>#</th>
                               <th>Nama Mahasiswa</th>
-                              <th>Tanggal</th>
                               <th>Program Studi</th>
                               <th>Keterangan</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>Reynald Daffa</td>
-                              <td>20 Juli 2019</td>
-                              <td>Akuntansi</td>
-                              <td>Seminar Hasil</td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>Misbakhul Kharis</td>
-                              <td>20 Juli 2019</td>
-                              <td>Manajemen</td>
-                              <td>Ujian Proposal</td>
-                            </tr>
-                            <tr>
-                              <td>3</td>
-                              <td>Aditiya Yusril</td>
-                              <td>20 Juli 2019</td>
-                              <td>Ekonomi Pembangunan</td>
-                              <td>Ujian Tesis</td>
-                            </tr>
-                            <tr>
-                              <td>4</td>
-                              <td>Tony</td>
-                              <td>20 Juli 2019</td>
-                              <td>Ekonomi Pembangunan</td>
-                              <td>Ujian Tesis</td>
-                            </tr>
-                            <tr>
-                              <td>5</td>
-                              <td>Dominic Teroret</td>
-                              <td>20 Juli 2019</td>
-                              <td>Manajemen</td>
-                              <td>Ujian Tesis</td>
-                            </tr>
+                            <?php $i = 1;
+                            foreach ($valid_ujian as $v) : ?>
+                              <tr>
+                                <td><?= $i++;  ?></td>
+                                <td><?= $v['nama']  ?></td>
+                                <td><?= $v['nama_prodi']  ?></td>
+                                <td><?= $v['nama_ujian']  ?></td>
+                              </tr>
+                            <?php endforeach; ?>
                           </tbody>
                         </table>
                       </div>
-                      <div class="text-xs pt-3 pb-3 see-more font-weight-normal">lihat
-                        selengkapnya</div>
+                      <div class="text-xs pt-3 pb-3 see-more font-weight-normal"><a href="<?= base_url('operator/validasi') ?>">lihat selengkapnya</a></div>
                     </div>
                   </div>
                 </div>
@@ -220,6 +192,7 @@
             </div>
           </div>
         </div>
-        <!-- /.container-fluid -->
       </div>
-      <!-- End of Main Content -->
+      <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->

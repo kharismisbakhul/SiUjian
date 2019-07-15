@@ -17,6 +17,13 @@
          </div>
        </div>
 
+       <div class="row">
+         <div class="col-lg-6">
+           <?= $this->session->flashdata('message');  ?>
+         </div>
+       </div>
+
+
        <!-- Content Row -->
        <div class="row">
 
@@ -53,7 +60,7 @@
                        <thead>
                          <tr>
                            <th>#</th>
-                           <th>Tanggal Masuk</th>
+                           <th>Tanggal Data Masuk</th>
                            <th>Nama Mahasiswa</th>
                            <th>Jenjang</th>
                            <th>Program Studi</th>
@@ -63,91 +70,35 @@
                          </tr>
                        </thead>
                        <tbody>
-                         <tr>
-                           <td>1</td>
-                           <td>20 Juli 2019</td>
-                           <td>Reynald Daffa</td>
-                           <td>S2</td>
-                           <td>Akuntansi</td>
-                           <td>Seminar Hasil</td>
-                           <td class="text-success font-weight-bold">Valid</td>
-                           <td class="text-center">
-                             <button href="#" class="btn btn-secondary btn-icon-split btn-sm">
-                               <span class="icon text-white-50">
-                                 <i class="fas fa-check-circle"></i>
-                               </span>
-                               <span class="text">Validasi</span>
-                             </button>
-                           </td>
-                         </tr>
-                         <tr>
-                           <td>2</td>
-                           <td>20 Juli 2019</td>
-                           <td>Misbakhul Kharis</td>
-                           <td>S2</td>
-                           <td>Manajemen</td>
-                           <td>Publikasi</td>
-                           <td class="text-success font-weight-bold">Valid</td>
-                           <td class="text-center">
-                             <button href="#" class="btn btn-secondary btn-icon-split btn-sm" disabled>
-                               <span class="icon text-white-50">
-                                 <i class="fas fa-check-circle"></i>
-                               </span>
-                               <span class="text">Validasi</span>
-                             </button>
-                           </td>
-                         </tr>
-                         <tr>
-                           <td>3</td>
-                           <td>20 Juli 2019</td>
-                           <td>Aditiya Yusril</td>
-                           <td>S3</td>
-                           <td>Ekonomi Pembangunan</td>
-                           <td>Ujian Tesis</td>
-                           <td class="text-success font-weight-bold">Valid</td>
-                           <td class="text-center">
-                             <button href="#" class="btn btn-secondary btn-icon-split btn-sm" disabled>
-                               <span class="icon text-white-50">
-                                 <i class="fas fa-check-circle"></i>
-                               </span>
-                               <span class="text">Validasi</span>
-                             </button>
-                           </td>
-                         </tr>
-                         <tr>
-                           <td>4</td>
-                           <td>20 Juli 2019</td>
-                           <td>Tony Krauk</td>
-                           <td>S3</td>
-                           <td>Ekonomi Pembangunan</td>
-                           <td>Ujian Tesis</td>
-                           <td class="text-info font-weight-bold">Proses</td>
-                           <td class="text-center">
-                             <button href="#" class="btn btn-success btn-icon-split btn-sm">
-                               <span class="icon text-white-50">
-                                 <i class="fas fa-check-circle"></i>
-                               </span>
-                               <span class="text">Validasi</span>
-                             </button>
-                           </td>
-                         </tr>
-                         <tr>
-                           <td>5</td>
-                           <td>20 Juli 2019</td>
-                           <td>Dominic Teroret</td>
-                           <td>S3</td>
-                           <td>Manajemen</td>
-                           <td>Ujian Tesis</td>
-                           <td class="text-info font-weight-bold">Proses</td>
-                           <td class="text-center">
-                             <button href="#" class="btn btn-success btn-icon-split btn-sm">
-                               <span class="icon text-white-50">
-                                 <i class="fas fa-check-circle"></i>
-                               </span>
-                               <span class="text">Validasi</span>
-                             </button>
-                           </td>
-                         </tr>
+                         <?php $i = 1;
+                          foreach ($valid_ujian as $v) : ?>
+                           <tr>
+                             <td><?= $i++;  ?></td>
+                             <td><?= $v['tgl_tambah_ujian']  ?></td>
+                             <td><?= $v['nama']  ?></td>
+                             <td><?= $v['jenjang']  ?></td>
+                             <td><?= $v['nama_prodi']  ?></td>
+                             <td><?= $v['nama_ujian']  ?></td>
+
+                             <!-- valid ujian -->
+                             <?php if ($v['valid'] == 1) { ?>
+                               <td class="font-weight-bold text-success">VALID</td>
+                             <?php } elseif ($v['valid'] == 2) { ?>
+                               <td class="font-weight-bold text-primary">PROSES</td>
+                             <?php } else { ?>
+                               <td class="font-weight-bold text-danger">TIDAK VALID</td>
+                             <?php } ?>
+
+                             <td class="text-center">
+                               <a href="<?= base_url('operator')  ?>/validasi_cek/<?= $v['id']  ?>" class="btn btn-success btn-icon-split btn-sm">
+                                 <span class="icon text-white-50">
+                                   <i class="fas fa-check-circle"></i>
+                                 </span>
+                                 <span class="text">Validasi</span>
+                               </a>
+                             </td>
+                           </tr>
+                         <?php endforeach; ?>
                        </tbody>
                      </table>
                    </div>

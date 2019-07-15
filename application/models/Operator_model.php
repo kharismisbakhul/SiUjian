@@ -12,6 +12,19 @@ class Operator_model extends CI_Model
         $this->db->order_by('ujian.tgl_tambah_ujian', 'DSC');
         return $this->db->get()->result_array();
     }
+    public function cekValidasiHariIni()
+    {
+        $time = date('Y-m-d');
+        $this->db->where('ujian.tgl_ujian', $time);
+        $this->db->select('mahasiswa.nama,mahasiswa.jenjang,ujian.*,kodeujian.nama_ujian,prodi.nama_prodi');
+        $this->db->from('mahasiswa');
+        $this->db->join('ujian', 'ujian.mahasiswanim=mahasiswa.nim');
+        $this->db->join('kodeujian', 'ujian.kodeujiankode=kodeujian.kode');
+        $this->db->join('prodi', 'prodi.kode=mahasiswa.prodikode');
+        $this->db->order_by('ujian.tgl_tambah_ujian', 'DSC');
+        return $this->db->get()->result_array();
+    }
+
     public function getUjian($id_ujian)
     {
         $this->db->select('mahasiswa.nama,

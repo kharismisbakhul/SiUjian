@@ -69,17 +69,17 @@ class Pimpinan extends CI_Controller
     {
         $this->load->model('dosen_model', 'dosen');
         $data = $this->initData();
-        $data['dosen'] = $this->dosen->getListDosen();
+        $data['rekap_dosen'] = $this->dosen->getRekapDosen();
         $data['title'] = 'Rekap Dosen';
         $this->loadTemplate($data);
         $this->load->view('pimpinan/rekap_dosen', $data);
         $this->load->view('templates/footer');
     }
 
-    public function getRekap()
+    public function detailRekapDosen($nip)
     {
         $this->load->model('dosen_model', 'dosen');
-        $this->dosen->getRekapDosen();
+        $data['rekap_dosen'] = $this->dosen->getDetailRekapDosen($nip);
     }
 
     public function detailMahasiswa($nim)
@@ -99,7 +99,7 @@ class Pimpinan extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $result = $this->dosen->getMahasiswaBimbingan($nip)->result_array();
         $dosenA = $this->dosen->getDetailDosen($nip);
-        $dosen['nama'] = $dosenA['nama'];
+        $dosen['nama_dosen'] = $dosenA['nama_dosen'];
         $dosen['mahasiswa_bimbingan'] = $result;
         for ($i = 0; $i < count($dosen['mahasiswa_bimbingan']); $i++) {
             $dosen['mahasiswa_bimbingan'][$i]['ujian_terakhir'] = $this->mahasiswa->getUjianTerakhir($dosen['mahasiswa_bimbingan'][$i]['nim']);

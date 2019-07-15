@@ -64,23 +64,19 @@
                                                     <th>Nama Dosen</th>
                                                     <th>Pembimbing</th>
                                                     <th>Penguji</th>
-                                                    <th>Status 1</th>
-                                                    <th>Bimbingan Lulus</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1;
-                                                foreach ($dosen as $d) : ?>
+                                                foreach ($rekap_dosen as $rd) : ?>
                                                     <tr>
                                                         <td><?= $i; ?></td>
-                                                        <td><?= $d['nama_dosen']; ?></td>
-                                                        <td><?= $d['jumlah_bimbingan']; ?></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td><?= $rd['nama_dosen']; ?></td>
+                                                        <td><?= $rd['jumlah_bimbingan']; ?></td>
+                                                        <td><?= $rd['jumlah_menguji']; ?></td>
                                                         <td class="text-center">
-                                                            <button href="#" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".modalDetailMahasiswa">
+                                                            <button href="#" class="btn btn-info btn-icon-split btn-sm modalRekap" data-toggle="modal" data-target=".modalDetailRekap" data-id="<?= $rd['nip']; ?>">
                                                                 <span class="icon text-white-50">
                                                                     <i class="fas fa-eye"></i>
                                                                 </span>
@@ -107,11 +103,11 @@
     <!-- End of Main Content -->
 
     <!-- Detail profile modal -->
-    <div class="modal fade bd-example-modal-lg modalDetailMahasiswa" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg modalDetailRekap" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-blue">
-                    <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Detail Rekapitulasi Dosen - <span>Bayu Priambada</span></h5>
+                    <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Detail Rekapitulasi Dosen - <span class="nama-dosennya"></span></h5>
                     <button type="button" class="close clr-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -133,7 +129,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>5</h6>
+                                                <h6 class="jPembimbing1"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -144,7 +140,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>5</h6>
+                                                <h6 class="jPembimbing2"></h6>
                                             </div>
                                         </div>
                                         <hr>
@@ -156,7 +152,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6 class="font-weight-bold">10</h6>
+                                                <h6 class="font-weight-bold jTotalPembimbing"></h6>
                                             </div>
                                         </div>
                                     </form>
@@ -178,7 +174,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>4</h6>
+                                                <h6 class="jPenguji1"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -189,7 +185,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>4</h6>
+                                                <h6 class="jPenguji2"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -200,7 +196,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>0</h6>
+                                                <h6 class="jPenguji3"></h6>
                                             </div>
                                         </div>
                                         <hr>
@@ -212,7 +208,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6 class="font-weight-bold">8</h6>
+                                                <h6 class="font-weight-bold jTotalPenguji"></h6>
                                             </div>
                                         </div>
                                     </form>
@@ -235,7 +231,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusKomisi"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -246,7 +242,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusProposal"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -257,7 +253,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusSemhas"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -268,7 +264,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusTesis"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -279,7 +275,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusWisuda"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -290,7 +286,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusBelumLulus"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -301,7 +297,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusLulus"></h6>
                                             </div>
                                         </div>
                                         <hr>
@@ -313,7 +309,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6 class="font-weight-bold">10</h6>
+                                                <h6 class="font-weight-bold statusTotalLulusTidak"></h6>
                                             </div>
                                         </div>
                                     </form>

@@ -79,7 +79,7 @@
                                                         <td class="text-center"><?= $i; ?></td>
                                                         <td><?= $d['nama_dosen']; ?></td>
                                                         <td class="text-center">
-                                                            <button class="btn btn-info btn-icon-split btn-sm modalDetailBimbingan" data-toggle="modal" data-target=".modalBimbingan" data-id="<?= $d['nip']; ?>">
+                                                            <button class="btn btn-info btn-icon-split btn-sm modalDetailDosen" data-toggle="modal" data-target=".modalBimbinganDosen" data-id="<?= $d['nip']; ?>">
                                                                 <span class="icon text-white-50">
                                                                     <i class="fas fa-eye"></i>
                                                                 </span>
@@ -107,7 +107,7 @@
     <!-- End of Main Content -->
 
     <!-- Detail Bimbingan Dosen modal -->
-    <div class="modal fade bd-example-modal-lg modalBimbingan" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg modalBimbinganDosen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header bg-blue">

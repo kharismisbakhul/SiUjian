@@ -38,7 +38,12 @@ class Admin extends CI_Controller
         $data['jumlah_pembimbing'] = $this->db->get('pembimbing')->num_rows();
         $time = date('Y-m-d');
         $data['jumlah_ujian_hari_ini'] = $this->db->get_where('ujian', ['tgl_ujian' => $time])->num_rows();
-        // $data['jumlah_penguji_hari_ini'] = 
+        $this->load->model('dosen_model', 'dosen');
+        $data['jumlah_penguji_hari_ini'] = $this->dosen->getPengujiHariIni();
+
+        //list validasi hari_ini
+        $this->load->model('Operator_model', 'operator');
+        $data['valid_ujian'] = $this->operator->cekValidasiHariIni();
 
         return $data;
     }
@@ -265,32 +270,5 @@ class Admin extends CI_Controller
         $this->db->delete('user');
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Account has been deleted</div>');
         redirect('admin/manajemenUser');
-    }
-
-    public function getPengujiHariIni()
-    {
-        // $this->db->select('*');
-        $pengujiHariIni = 0;
-        $dosen = $this->db->get('dosen')->result_array();
-        for ($i = 0; $i < count($dosen); $i++) {
-            $this->db->where('penguji.Dosennip', $dosen[$i]['nip']);
-            $this->db->select('*');
-            $this->db->from('penguji');
-            $this->db->join('ujian', 'ujian.id = penguji.Ujianid');
-            $jadwal_menguji = $this->db->get()->result_array();
-            $dosen[$i]['jadwal_menguji'] = $jadwal_menguji;
-            $ujianHariIni = 0;
-            for ($j = 0; $j < count($jadwal_menguji); $j++) {
-                if ($jadwal_menguji[$j]['tgl_ujian'] === date('Y-m-d')) {
-                    $ujianHariIni++;
-                }
-            }
-            if ($ujianHariIni > 0) {
-                $pengujiHariIni++;
-            }
-            // $dosen[$i]['menguji_hari_ini']
-        }
-        // $result = $this->db->get()->result_array();
-        echo json_encode($pengujiHariIni);
     }
 }
