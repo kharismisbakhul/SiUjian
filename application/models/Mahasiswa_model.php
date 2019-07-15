@@ -16,25 +16,33 @@ class Mahasiswa_model extends CI_Model
         return $this->db->get()->row_array();
     }
 
+    public function getPembimbing($nim)
+    {
+        $this->db->select('dosen.nama_dosen,pembimbing.statusPembimbing');
+        $this->db->from('pembimbing');
+        $this->db->join('dosen', 'pembimbing.dosennip=dosen.nip');
+        $this->db->where('pembimbing.mahasiswanim', $nim);
+        return $this->db->get()->result_array();
+    }
     public function getBelumUjian($data)
     {
-        $this->db->select('kodeujian.nama_ujian');
+        $this->db->select('kodeujian.*');
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
         $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode', 'right');
         $this->db->where('ujian.kodeUjianKode=', null);
         return $this->db->get()->result_array();
     }
-
     public function getUjian($data)
     {
         $this->db->select('ujian.*,kodeujian.nama_ujian');
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
         $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode');
+        $this->db->group_by('kodeujian.kode');
+        $this->db->order_by('kodeujian.kode', 'ASC');
         return $this->db->get()->result_array();
     }
-
     public function getUjian_Edit($data)
     {
         $this->db->select('kodeujian.*');
@@ -48,11 +56,20 @@ class Mahasiswa_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('ujian', $dataUjian);
     }
+    public function getDetailUjian($id_ujian)
+    {
+        $this->db->select('ujian.*,kodeujian.nama_ujian');
+        $this->db->from('ujian');
+        $this->db->join('kodeujian', 'kodeujian.kode=ujian.kodeujiankode');
+        $this->db->where('ujian.id', $id_ujian);
+        return $this->db->get()->row_array();
+    }
     public function getPublikasi($data)
     {
         $this->db->select('publikasi.*');
         $this->db->from('mahasiswa');
         $this->db->join('publikasi', 'publikasi.Mahasiswanim=' . $data);
+        $this->db->group_by('publikasi.idJurnal');
         return $this->db->get()->result_array();
     }
     public function editPublikasi($dataPublikasi, $id)
@@ -69,7 +86,6 @@ class Mahasiswa_model extends CI_Model
         $this->db->set('bukti', $dataUjian['bukti_ujian']);
         $this->db->insert('ujian');
     }
-
     public function getMahasiswaPlusProdi()
     {
         $this->db->select('mahasiswa.nim, mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang');
@@ -81,7 +97,7 @@ class Mahasiswa_model extends CI_Model
     public function getUjianTerakhir($nim)
     {
         $this->db->where('Mahasiswanim', $nim);
-        $this->db->select('nama_ujian, nilai, statusUjian, max(kodeUjiankode) as ujian_terakhir');
+        $this->db->select('nama_ujian, nilai_akhir, statusUjian, max(kodeUjiankode) as ujian_terakhir');
         $this->db->from('ujian');
         $this->db->join('kodeujian', 'kodeujian.kode = ujian.kodeUjiankode', 'left');
         return $this->db->get()->row_array();
@@ -103,7 +119,7 @@ class Mahasiswa_model extends CI_Model
 
     public function getDosenPembimbing($nim)
     {
-        $this->db->select('Dosennip, dosen.nama, pembimbing.statusPembimbing');
+        $this->db->select('Dosennip, dosen.nama_dosen, pembimbing.statusPembimbing');
         $this->db->from('pembimbing');
         $this->db->join('dosen', 'dosen.nip = pembimbing.Dosennip', 'left');
         $this->db->where('pembimbing.Mahasiswanim =' . $nim);

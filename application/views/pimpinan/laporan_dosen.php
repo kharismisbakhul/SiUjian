@@ -77,7 +77,7 @@
                                                 foreach ($dosen as $d) : ?>
                                                     <tr>
                                                         <td class="text-center"><?= $i; ?></td>
-                                                        <td><?= $d['nama']; ?></td>
+                                                        <td><?= $d['nama_dosen']; ?></td>
                                                         <td class="text-center">
                                                             <button class="btn btn-info btn-icon-split btn-sm modalDetailBimbingan" data-toggle="modal" data-target=".modalBimbingan" data-id="<?= $d['nip']; ?>">
                                                                 <span class="icon text-white-50">

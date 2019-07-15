@@ -62,7 +62,33 @@ class Dosen extends CI_Controller
         $data = $this->initData();
         $data['title'] = 'Input Nilai';
         $this->loadTemplate($data);
-        $this->load->view('dosen/inputNilai', $data);
-        $this->load->view('templates/footer');
+        $this->load->model('Dosen_model', 'dosen');
+        $data['ujian'] = $this->dosen->getUjian($data['user']['username']);
+        $this->form_validation->set_rules('inputNilai', 'nilai', 'required|numeric');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('dosen/inputNilai', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'id_ujian' => $this->input->post('ujian'),
+                'id_penguji' => $this->input->post('idPenguji')
+            ];
+            $nilai = $this->input->post('inputNilai');
+            $this->dosen->updateNilai($nilai, $data['id_penguji']);
+            $NilaiAkhir = $this->dosen->cekNilaiAkhir($data['id_ujian']);
+            $this->dosen->updateNilaiAkhir($NilaiAkhir['nilai'], $data['id_ujian']);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> nilai berhasil di tambah ! </div>');
+            redirect('dosen/inputNilai');
+        }
+    }
+    public function getDetailUjian($id_ujian)
+    {
+        $this->load->model('Operator_model', 'dosen');
+        $data = [
+            'ujian' => $this->dosen->getUjian($id_ujian),
+            'penguji' => $this->dosen->getPenguji($id_ujian),
+            'pembimbing' => $this->dosen->getPembimbing($id_ujian),
+        ];
+        echo json_encode($data);
     }
 }

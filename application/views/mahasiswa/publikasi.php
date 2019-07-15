@@ -9,7 +9,7 @@
         <div class="col-xl-2 ">
             <?php if ($jumlah_publikasi < 2) : ?>
                 <form action="<?= base_url('mahasiswa') ?>/tambahPublikasi">
-                    <button type="submit" class="btn btn-primary float-right mb-2">
+                    <button type="submit" class="btn btn-primary float-right mb-2 tombol">
                         <span class="icon text-white-50">
                             <i class="fas fa-fw fa-plus-circle"></i>
                         </span>
@@ -17,7 +17,7 @@
                     </button>
                 </form>
             <?php else : ?>
-                <button type="submit" class="btn btn-secondary float-right mb-2">
+                <button type="submit" class="btn btn-secondary float-right mb-2 tombol">
                     <span class="icon text-white-50">
                         <i class="fas fa-fw fa-plus-circle"></i>
                     </span>
@@ -32,7 +32,6 @@
     <div class="row">
         <div class="col-lg-6">
             <?= $this->session->flashdata('message');  ?>
-
         </div>
 
     </div>
@@ -43,16 +42,16 @@
 
         <!-- Area Chart -->
         <div class="col-xl-12">
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4 box border-left-success">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                    <h6 class="m-0 font-weight-bold text-success">Daftar Publikasi</h6>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body ">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar row ml-1 mr-1 ">
 
-                        <table class="table mb-0 table-sm">
+                        <table class="table table-bordered text-center">
                             <thead>
                                 <tr style="background-color: 	#f8f8f8; color: #101010">
                                     <th scope="col">#</th>

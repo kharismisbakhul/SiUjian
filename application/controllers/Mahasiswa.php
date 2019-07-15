@@ -14,8 +14,10 @@ class Mahasiswa extends CI_Controller
             redirect('auth/blocked');
         }
         $data['title'] = 'Dashboard';
+        $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['username'] = $this->session->userdata('username');
+        $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -31,6 +33,7 @@ class Mahasiswa extends CI_Controller
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
+        $data['pembimbing'] = $this->mahasiswa->getDosenPembimbing($data['user_login']['nim']);
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -153,10 +156,10 @@ class Mahasiswa extends CI_Controller
     }
     public function publikasi()
     {
-        $data['username'] = $this->session->userdata('username');
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Publikasi';
         $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['publikasi'] = $this->mahasiswa->getPublikasi($this->session->userdata('username'));
         $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
@@ -276,5 +279,15 @@ class Mahasiswa extends CI_Controller
     public function getDetailPublikasi($data)
     {
         echo json_encode($this->db->get_where('publikasi', ['idJurnal' => $data])->row_array());
+    }
+    public function getDetailUjian($id_ujian)
+    {
+        $this->load->model('Operator_model', 'operator');
+        $this->load->model('Mahasiswa_model', 'mahasiswa');
+        $data = [
+            'ujian' => $this->mahasiswa->getDetailUjian($id_ujian),
+            'penguji' => $this->operator->getPenguji($id_ujian)
+        ];
+        echo json_encode($data);
     }
 }

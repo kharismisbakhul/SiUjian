@@ -58,6 +58,8 @@ function myFunction(item) {
   document.getElementById("prodi").innerHTML += `<option>` + item + `</option>`;
 }
 
+//pimpinan
+
 $('.modalDetail').on("click", function () {
   var nim = $(this).data('id');
   $.ajax({

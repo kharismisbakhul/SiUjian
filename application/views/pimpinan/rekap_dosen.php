@@ -74,7 +74,7 @@
                                                 foreach ($dosen as $d) : ?>
                                                     <tr>
                                                         <td><?= $i; ?></td>
-                                                        <td><?= $d['nama']; ?></td>
+                                                        <td><?= $d['nama_dosen']; ?></td>
                                                         <td><?= $d['jumlah_bimbingan']; ?></td>
                                                         <td></td>
                                                         <td></td>

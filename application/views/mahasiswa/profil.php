@@ -16,7 +16,7 @@
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
 
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4 box">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Profil Mahasiswa</h6>
@@ -109,40 +109,34 @@
 
 
             <div class="row">
-              <h5 class="col-sm-6 mt-2 ">Daftar Dosen Pendamping</h5>
+              <h5 class="col-sm-6 mt-2 ">Dosen Pembimbing</h5>
             </div>
 
-            <div class=" row ml-1 mr-1">
+            <div class="row ml-1 mr-1">
+              <div class="table-responsive">
+                <table class="table table-bordered text-center" width="30%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nama Dosen</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $i = 1;
+                    foreach ($pembimbing as $pmb) : ?>
 
-              <table class="table table-sm ">
-                <thead>
-                  <tr style="background-color: 	#C0C0C0; color: #101010">
-                    <th scope="col">#</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Nama Dosen</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Bambang Pamungkas</td>
-                    <td>Dosen Pembimbing 1</td>
-
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Ely Eboy</td>
-                    <td>Dosem Pembimbing 2</td>
-
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Markus Horison</td>
-                    <td>Dosen Pembimbing 3</td>
-                  </tr>
-                </tbody>
-              </table>
+                      <tr>
+                        <td><?= $i++  ?></td>
+                        <td><?= $pmb['nama_dosen']; ?></td>
+                        <td>Pembimbing <?= $pmb['statusPembimbing']  ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
+
             <div class="row float-right mr-3">
               <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalProfil">
                 <span class="icon text-white-50">
@@ -159,7 +153,7 @@
 
     <!-- Area Chart -->
     <div class="col-xl-4 col-lg-5">
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4 box2">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Status Kelulusan</h6>

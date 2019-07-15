@@ -3,10 +3,8 @@
 
     <!-- Main Content -->
     <div id="content">
-
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mt-5 mb-3">
                 <h1 class="h3 mb-0 text-gray-800">Validasi</h1>
@@ -14,13 +12,10 @@
                     <div class="text-s mb-0 font-weight-bold text-gray-400">
                         <span><i class="fas fa-calendar-day text-gray-400"></i></span> 4 July 2019
                     </div>
-
                 </div>
             </div>
-
             <!-- Content Row -->
             <div class="row">
-
                 <div class="d-none d-lg-block col-md-8 mb-4">
                     <div class="shadow mb-1">
                         <a href="#collapseCardExample" class="d-block card-header py-3 bg-blue text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
@@ -37,11 +32,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-12 col-sm-12 col-md-12">
                     <!-- Content Row -->
                     <div class="row">
-
                         <div class="col-lg-10 col-md-12 col-sm-12 mb-4">
                             <!-- Approach -->
                             <div class="card shadow mb-4">
@@ -110,7 +103,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

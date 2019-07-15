@@ -64,7 +64,7 @@
                             <?php $i = 1;
                             foreach ($dosen as $d) : ?>
                               <td><?= $i; ?></td>
-                              <td><?= $d['nama'] ?></td>
+                              <td><?= $d['nama_dosen'] ?></td>
                               <td><?= $d['nip'] ?></td>
                               <?php
                               if ($d['statusAktif'] == 1) {
