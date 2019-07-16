@@ -37,7 +37,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small text-primary text-decoration-none forget" href="<?= base_url('auth/forgotpassword') ?>">Forgot Password?</a>
+                    <a class="small text-primary text-decoration-none forget" href="<?= base_url('auth/forgotpassword') ?>">Lupa Password?</a>
                   </div>
               </div>
             </div>

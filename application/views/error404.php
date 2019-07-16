@@ -19,8 +19,7 @@
                     <h1 class="font-weight-bold text-404">404</h1>
                     <!-- <h1 class="font-weight-bold text-uppercase text-error mb-5">error</h1> -->
                     <h4 class="lead text-error mb-4">Maaf, halaman yang anda cari tidak tersedia</h4>
-                    <a href="<?= base_url(); ?>" class="btn btn-light"><i class="fas fa-home"></i> Back to
-                        dashboard</a>
+                    <a href="<?= base_url(); ?>" class="btn btn-light"><i class="fas fa-home"></i> Kembali ke halaman utama</a>
                 </div>
             </div>
         </div>

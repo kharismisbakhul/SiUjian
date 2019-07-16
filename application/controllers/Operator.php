@@ -23,6 +23,15 @@ class Operator extends CI_Controller
     {
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $time = date('Y-m-d');
+        $data['jumlah_ujian_hari_ini'] = $this->db->get_where('ujian', ['tgl_ujian' => $time])->num_rows();
+        $this->load->model('dosen_model', 'dosen');
+        $data['jumlah_penguji_hari_ini'] = $this->dosen->getPengujiHariIni();
+
+        //list validasi hari_ini
+        $this->load->model('Operator_model', 'operator');
+        $data['valid_ujian'] = $this->operator->cekValidasiHariIni();
+
         return $data;
     }
 
@@ -58,6 +67,7 @@ class Operator extends CI_Controller
             $Id = $this->uri->segment(4);
             $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $Id])->row_array();
             $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
+            $data['pembimbing'] = $this->mahasiswa->getDosenPembimbing($data['user_login']['nim']);
             $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $Id])->num_rows();
             $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $Id])->num_rows();
             $data['ujian'] = $this->mahasiswa->getUjian($Id);
@@ -89,6 +99,7 @@ class Operator extends CI_Controller
             //Mahasiswa bimbingan
             $data['bimbingan_jumlah'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->num_rows();
             $data['bimbingan'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->result_array();
+            $data['ujian'] = $this->dosen->getUjian($data['user_login']['nip']);
         }
 
         $this->loadTemplate($data);

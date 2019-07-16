@@ -28,7 +28,7 @@
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <span><?= $user_login['nama']; ?></span>
+                                <span><?= $user_login['nama_dosen']; ?></span>
                             </div>
                         </div>
                         <div class="form-group row mb-1">

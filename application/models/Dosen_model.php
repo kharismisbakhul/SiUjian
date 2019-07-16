@@ -39,16 +39,75 @@ class Dosen_model extends CI_Model
     public function getDetailRekapDosen($nip)
     {
         $dosen = $this->db->get_where('dosen', ['nip' => $nip])->row_array();
-        $jumlah_bimbingan_lulus = 0;
+
+        //inisialisasi variabel
+        $jumlah_pembimbing_1 = 0;
+        $jumlah_pembimbing_2 = 0;
+        $jumlah_komisi = 0;
+        $jumlah_proposal = 0;
+        $jumlah_semhas = 0;
+        $jumlah_tesis = 0;
+        $jumlah_wisuda = 0;
+        $jumlah_belum_lulus = 0;
+        $jumlah_lulus = 0;
+
+        //Jumlah Sebagai Pembimbing
         $mahasiswa_bimbingan = $this->getMahasiswaBimbingan($nip)->result_array();
         $dosen['mahasiswa_bimbingan'] = $mahasiswa_bimbingan;
-        for ($j = 0; $j < count($mahasiswa_bimbingan); $j++) {
-            if ($mahasiswa_bimbingan[$j]['statusKelulusan'] == 1) {
-                $jumlah_bimbingan_lulus++;
-            }
-        }
+        for ($i = 0; $i < count($mahasiswa_bimbingan); $i++) {
+            if ($mahasiswa_bimbingan[$i]['statusKelulusan'] == 1) {
+                $jumlah_lulus++;
+            } else if ($mahasiswa_bimbingan[$i]['statusKelulusan'] == 0) {
+                $jumlah_belum_lulus++;
+            };
+            if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 1) {
+                $jumlah_pembimbing_1++;
+            } else if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 2) {
+                $jumlah_pembimbing_2++;
+            };
+            if ($mahasiswa_bimbingan[$i]['statusWisuda'] == 1) {
+                $jumlah_wisuda++;
+            };
+            $ujian_mahasiswa = $this->db->get_where('ujian', ['MahasiswaNim' => $mahasiswa_bimbingan[$i]['Mahasiswanim']])->result_array();
+            $dosen['mahasiswa_bimbingan'][$i]['ujian'] = $ujian_mahasiswa;
+            for ($j = 0; $j < count($ujian_mahasiswa); $j++) {
+                if ($ujian_mahasiswa[$j]['kodeUjiankode'] == 1) {
+                    $jumlah_komisi++;
+                } else if ($ujian_mahasiswa[$j]['kodeUjiankode'] == 2) {
+                    $jumlah_proposal++;
+                } else if ($ujian_mahasiswa[$j]['kodeUjiankode'] == 3) {
+                    $jumlah_semhas++;
+                } else if ($ujian_mahasiswa[$j]['kodeUjiankode'] == 4) {
+                    $jumlah_tesis++;
+                }
+            };
+        };
+
+        //Jumlah sebagai pembimbing
+        $jumlah_pembimbing_total = $jumlah_pembimbing_1 + $jumlah_pembimbing_2;
+        $dosen['jumlah_pembimbing'] = ['total' => $jumlah_pembimbing_total, 1 => $jumlah_pembimbing_1, 2 => $jumlah_pembimbing_2];
+
+        //Jumlah sebagai penguji
+        $jumlah_penguji_1 = $this->db->get_where('penguji', ['Dosennip' => $nip, 'statusPenguji' => 1])->num_rows();
+        $jumlah_penguji_2 = $this->db->get_where('penguji', ['Dosennip' => $nip, 'statusPenguji' => 2])->num_rows();;
+        $jumlah_penguji_3 = $this->db->get_where('penguji', ['Dosennip' => $nip, 'statusPenguji' => 3])->num_rows();;
+
+        $jumlah_penguji_total = $jumlah_penguji_1 + $jumlah_penguji_2 + $jumlah_penguji_3;
+        $dosen['jumlah_penguji'] = ['total' => $jumlah_penguji_total, 1 => $jumlah_penguji_1, 2 => $jumlah_penguji_2, 3 => $jumlah_penguji_3];
+
+        //Jumlah Wisuda
+        $dosen['jumlah_wisuda'] = $jumlah_wisuda;
+
+        //Jumlah detail ujian
+        $jumlah_ujian_total = $jumlah_komisi + $jumlah_proposal + $jumlah_semhas + $jumlah_tesis + $jumlah_wisuda;
+        $dosen['jumlah_ujian'] = ['total' => $jumlah_ujian_total, 'komisi' => $jumlah_komisi, 'proposal' => $jumlah_proposal, 'semhas' => $jumlah_semhas, 'tesis' => $jumlah_tesis];
+
+        //Jumlah lulus/belum
+        $jumlah_kelulusan_total = $jumlah_lulus + $jumlah_belum_lulus;
+        $dosen['jumlah_kelulusan'] = ['total' => $jumlah_kelulusan_total, 'lulus' => $jumlah_lulus, 'belum' => $jumlah_belum_lulus];
+
+
         $dosen['jumlah_mahasiswa_bimbingan'] = $this->getMahasiswaBimbingan($nip)->num_rows();
-        $dosen['jumlah_bimbingan_lulus'] = $jumlah_bimbingan_lulus;
         $dosen['jumlah_menguji'] = $this->db->get_where('penguji', ['Dosennip' => $nip])->num_rows();
         echo json_encode($dosen);
     }
@@ -61,7 +120,7 @@ class Dosen_model extends CI_Model
     public function getMahasiswaBimbingan($dosen_nip)
     {
         $this->db->where('pembimbing.Dosennip', $dosen_nip);
-        $this->db->select('*');
+        $this->db->select('Mahasiswanim, Dosennip, id, statusPembimbing, nama, statusKelulusan, statusWisuda, statusTOEFL, statusTPA, mahasiswa.jenjang, nama_prodi, nama_jurusan');
         $this->db->from('pembimbing');
         // $this->db->join('pembimbing', 'pembimbing.Dosennip = ' . $dosen_nip);
         $this->db->join('mahasiswa', 'mahasiswa.nim = pembimbing.Mahasiswanim', 'right');

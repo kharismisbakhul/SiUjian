@@ -7,7 +7,7 @@ $('.modalDetailDosen').on("click", function () {
         dataType: 'json',
         type: 'get',
         success: function (data) {
-            console.log(data);
+            $(".modal-body").html('');
             $(".modal-title .nama_dosen").html(data.nama_dosen);
             if (data.mahasiswa_bimbingan.length != 0) {
                 $(".modal-body").html('');

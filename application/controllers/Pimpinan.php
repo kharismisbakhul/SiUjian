@@ -102,7 +102,7 @@ class Pimpinan extends CI_Controller
         $dosen['nama_dosen'] = $dosenA['nama_dosen'];
         $dosen['mahasiswa_bimbingan'] = $result;
         for ($i = 0; $i < count($dosen['mahasiswa_bimbingan']); $i++) {
-            $dosen['mahasiswa_bimbingan'][$i]['ujian_terakhir'] = $this->mahasiswa->getUjianTerakhir($dosen['mahasiswa_bimbingan'][$i]['nim']);
+            $dosen['mahasiswa_bimbingan'][$i]['ujian_terakhir'] = $this->mahasiswa->getUjianTerakhir($dosen['mahasiswa_bimbingan'][$i]['Mahasiswanim']);
         }
         // $data = $this->mahasiswa->getProfilJurusan($result['prodikode']);
         // $dosenPembimbing = $this->mahasiswa->getDosenPembimbing($nim);

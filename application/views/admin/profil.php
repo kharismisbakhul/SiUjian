@@ -16,7 +16,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Profil Dosen</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Profil Admin</h6>
                     <div class="dropdown no-arrow">
                     </div>
                 </div>
@@ -35,53 +35,12 @@
                             </div>
                         </div>
                         <div class="form-group row mb-1">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">NIP</label>
-                            <div class="col-sm-10">
-                                <span>:</span>
-                                <span><?= $user['nip']; ?></span>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Posisi</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <?php
-                                if ($user['posisi'] == 1) {
-                                    echo "<span'>Dosen FEB</span>";
-                                } else {
-                                    echo "<span'>Dosen Luar</span'>";
-                                }
-                                ?>
+                                <span>Admin</span>
                             </div>
                         </div>
-                        <div class="form-group row mb-1">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Status Aktif</label>
-                            <div class="col-sm-10">
-                                <span>:</span>
-                                <?php
-                                if ($user['nip'] == 1) {
-                                    echo "<span class='text-primary'>AKTIF</span>>";
-                                } else {
-                                    echo "<span class='text-danger'>TIDAK AKTIF</span>";
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">No Hp</label>
-                            <div class="col-sm-10">
-                                <span>:</span>
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Alamat</label>
-                            <div class="col-sm-10">
-                                <span>:</span>
-                                <span></span>
-                            </div>
-                        </div>
-
                     </form>
                 </div>
             </div>
