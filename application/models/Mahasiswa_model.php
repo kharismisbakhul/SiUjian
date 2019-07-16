@@ -4,9 +4,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mahasiswa_model extends CI_Model
 {
 
-    // public function getCount($table){
-    //     return $this->db->get($table,['mahasiswanim' => $nim])->;
-    // }
+    public function getUjianTerakhir($nim)
+    {
+        $this->db->where('Mahasiswanim', $nim);
+        $this->db->select('nama_ujian, nilai_akhir, statusUjian, max(kodeUjiankode) as ujian_terakhir');
+        $this->db->from('ujian');
+        $this->db->join('kodeujian', 'kodeujian.kode = ujian.kodeUjiankode', 'left');
+        return $this->db->get()->row_array();
+    }
 
     public function getProfilJurusan($data)
     {
@@ -46,7 +51,7 @@ class Mahasiswa_model extends CI_Model
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
         $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode');
-        $this->db->group_by('ujian.id');
+        $this->db->group_by('kodeujian.kode');
         $this->db->order_by('kodeujian.kode', 'ASC');
         return $this->db->get()->result_array();
     }
@@ -103,9 +108,18 @@ class Mahasiswa_model extends CI_Model
 
     public function getMahasiswaPlusProdi()
     {
-        $this->db->select('mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang');
+        $this->db->select('mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang,mahasiswa.nim');
         $this->db->from('mahasiswa');
         $this->db->join('prodi', 'mahasiswa.prodikode= prodi.kode');
         return $this->db->get()->result_array();
+    }
+
+    public function getDetailLaporanMahasiswa()
+    {
+        $mahasiswa = $this->getMahasiswaPlusProdi();
+        for ($i = 0; $i < count($mahasiswa); $i++) {
+            $mahasiswa[$i]['ujian_terakhir'] = $this->getUjianTerakhir($mahasiswa[$i]['nim']);
+        }
+        return $mahasiswa;
     }
 }

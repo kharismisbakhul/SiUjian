@@ -4,7 +4,7 @@ class Dosen_model extends CI_Model
 {
     public function getListDosen()
     {
-        $query = "SELECT dosen.nama, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as 'jumlah_bimbingan' FROM dosen left join pembimbing on dosen.nip = pembimbing.Dosennip GROUP BY dosen.nama";
+        $query = "SELECT dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as 'jumlah_bimbingan' FROM dosen left join pembimbing on dosen.nip = pembimbing.Dosennip GROUP BY dosen.nama_dosen";
         return $this->db->query($query)->result_array();
     }
     public function getRekapDosen()
@@ -25,13 +25,29 @@ class Dosen_model extends CI_Model
         $this->db->where('pembimbing.Dosennip', $dosen_nip);
         $this->db->select('*');
         $this->db->from('pembimbing');
-        // $this->db->join('pembimbing', 'pembimbing.Dosennip = ' . $dosen_nip);
         $this->db->join('mahasiswa', 'mahasiswa.nim = pembimbing.Mahasiswanim', 'right');
-        // prodi -> nama -> kode
-        // jurusan -> nama -> kode
         $this->db->join('prodi', 'prodi.kode = mahasiswa.prodikode');
         $this->db->join('jurusan', 'jurusan.kode = prodi.jurusankode');
         return $this->db->get();
+    }
+
+    public function getStatusBimbingan($nip)
+    {
+        $this->db->select('pmb.*,MAX(kodeujian.kode) as K');
+        $this->db->from('pembimbing as pmb');
+        $this->db->join('ujian', 'ujian.mahasiswanim = pmb.mahasiswanim', 'left');
+        $this->db->join('kodeujian', 'ujian.kodeujiankode = kodeujian.kode', 'left');
+        $this->db->where('pmb.dosennip', $nip);
+        $this->db->group_by('pmb.mahasiswanim');
+        $this->db->order_by('pmb.mahasiswanim');
+        $from_clause = $this->db->get_compiled_select();
+
+        $this->db->select('kodeujian.nama_ujian,kode.*,mahasiswa.nama,mahasiswa.jenjang,prodi.nama_prodi,mahasiswa.statusKelulusan');
+        $this->db->from('kodeujian');
+        $this->db->join('(' . $from_clause . ') as kode', 'kode.K = kodeujian.kode', 'right');
+        $this->db->join('mahasiswa', 'mahasiswa.nim = kode.mahasiswanim', 'left');
+        $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
+        return $this->db->get()->result_array();
     }
 
     public function getUjian($nip)

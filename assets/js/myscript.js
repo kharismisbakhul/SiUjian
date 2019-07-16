@@ -9,6 +9,7 @@ $(window).on('load', function () {
 		}, 300 * (i + 1));
 	});
 
+
 })
 
 $('.custom-file-input').on('change', function () {
@@ -18,7 +19,6 @@ $('.custom-file-input').on('change', function () {
 // mahasiswa
 $('.detail').on('click', function () {
 	let id = $(this).data('id');
-
 	$.ajax({
 
 		url: 'http://localhost:8080/SiUjian/mahasiswa/getDetailPublikasi/' + id,
@@ -60,8 +60,15 @@ $('.cls').on('click', function () {
 $('.detail-ujian').on('click', function () {
 	let id = $(this).data('id');
 	$('.dosen-penguji').remove();
-	$.ajax({
+	let url = $(location).attr('href');
+	let segments = url.split('/');
+	let action = segments[4];
+	let controllers = 'mahasiswa';
+	if (action == 'operator' || action == 'admin') {
 
+	}
+	console.log(action);
+	$.ajax({
 		url: 'http://localhost:8080/SiUjian/mahasiswa/getDetailUjian/' + id,
 		method: 'get',
 		dataType: 'json',
@@ -97,11 +104,11 @@ $('.detail-ujian').on('click', function () {
 			$('#bobot').html(': ' + data['ujian'].bobot);
 			$('#bukti').html(': ' + data['ujian'].bukti);
 			$('#bukti').attr('href', 'http://localhost:8080/SiUjian/assets/ujian/' + data['ujian'].bukti);
-
+			let i = 1;
 			data['penguji'].forEach(function (p) {
 				$('.penguji').append(`
 				<tr class="dosen-penguji">
-					<th scope="row"></th>
+					<th scope="row">` + (i++) + `</th>
 					<td>` + p.nama_dosen + `</td>
 					<td>Penguji ` + p.statusPenguji + `</td>
 					<td>` + p.nilai + `</td>
@@ -252,6 +259,7 @@ function myFunction(item) {
 
 // Script Dosen
 
+//  nilai
 $('.input-nilai').on('click', function () {
 	let id = $(this).data('id');
 	let nip = $('#nip').val();
@@ -303,4 +311,77 @@ $('.input-nilai').on('click', function () {
 		}
 	})
 });
+// akhir nilai
+
+// bimbingan
+$('.info-bimbingan').on('click', function () {
+	let nim = $(this).data('nim');
+	$('.list-ujian').remove();
+	$('.list-pembimbing').remove();
+	$('.list-publikasi').remove();
+	$.ajax({
+		url: 'http://localhost:8080/SiUjian/dosen/getDetailBimbingan/' + nim,
+		method: 'get',
+		dataType: 'json',
+		success: function (data) {
+			$('#nama-bimbingan').html(data['user'].nama)
+			let i = 1;
+			let td;
+			data['ujian'].forEach(function (p) {
+				if (p.statusUjian == 1) {
+					td = `<td class="text-success font-weight-bold">Lulus</td>`
+				} else if (p.statusUjian == 2) {
+					td = `<td class="text-primary font-weight-bold">Proses</td>`
+				} else {
+					td = `<td class="text-danger font-weight-bold">Tidak Lulus</td>`
+				}
+				$('.ujian').append(`
+				<tr class="list-ujian">
+				<td>` + (i++) + `</td>
+				<td>` + p.nama_ujian + `</td>
+				<td>` + p.tgl_ujian + `</td>
+				` + td + `
+				<td>` + p.bobot + `</td>
+				<td>` + p.nilai_akhir + `</td>
+				</tr>`);
+			})
+			$('#nama').html(data['user'].nama)
+			$('#nim').html(data['user'].nim)
+			$('#nama_jurusan').html(data['fakultas'].nama_jurusan)
+			$('#nama_prodi').html(data['fakultas'].nama_prodi)
+			$('#angkatan').html(data['user'].angkatan)
+			$('#konsentrasi').html(data['user'].konsentrasi)
+			$('#alamat').html(data['user'].alamat)
+			$('#noTelp').html(data['user'].noTelp)
+			$('#asalStudi').html(data['user'].asalStudi)
+			$('#tglMulaiTA').html(data['user'].tglMulaiTA)
+
+
+			let j = 1;
+			data['pembimbing'].forEach(function (p) {
+				$('.pembimbing').append(`
+				<tr class="list-pembimbing">
+					<th scope="row">` + (j++) + `</th>
+					<td>` + p.nama_dosen + `</td>
+					<td>Pembimbing ` + p.statusPembimbing + `</td>
+				</tr>
+				`)
+			})
+			let k = 1;
+			data['publikasi'].forEach(function (p) {
+				$('.publikasi').append(`
+				<tr class="list-publikasi">
+					<th scope="row">` + (k++) + `</th>
+					<td>` + p.judulArtikel + `</td>
+					<td>` + p.statusJurnal + `</td>
+				</tr>
+				`)
+			})
+		}
+	})
+});
+
+// akhir bimbingan
+
+
 // akhir dosen

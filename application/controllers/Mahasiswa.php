@@ -277,9 +277,6 @@ class Mahasiswa extends CI_Controller
     }
 
 
-
-
-
     public function editPublikasi($id)
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
