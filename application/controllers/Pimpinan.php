@@ -51,6 +51,9 @@ class Pimpinan extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = $this->initData();
         $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
+        // echo json_encode($data['mahasiswa']);
+        // var_dump($data['mahasiswa']);
+        // die;
         $data['title'] = 'Laporan Status Mahasiswa';
         $this->loadTemplate($data);
         $this->load->view('pimpinan/laporan_status_mahasiswa', $data);
@@ -104,11 +107,6 @@ class Pimpinan extends CI_Controller
         for ($i = 0; $i < count($dosen['mahasiswa_bimbingan']); $i++) {
             $dosen['mahasiswa_bimbingan'][$i]['ujian_terakhir'] = $this->mahasiswa->getUjianTerakhir($dosen['mahasiswa_bimbingan'][$i]['Mahasiswanim']);
         }
-        // $data = $this->mahasiswa->getProfilJurusan($result['prodikode']);
-        // $dosenPembimbing = $this->mahasiswa->getDosenPembimbing($nim);
-        // $result['nama_prodi'] = $data['nama_prodi'];
-        // $result['nama_jurusan'] = $data['nama_jurusan'];
-        // $result['dosen_pembimbing'] = $dosenPembimbing;
         echo json_encode($dosen);
     }
 }

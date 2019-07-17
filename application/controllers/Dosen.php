@@ -48,15 +48,37 @@ class Dosen extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function getDetailBimbingan($nim)
+    {
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
+        $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user']['prodikode']);
+        $data['isianMahasiswa'] = $this->db->get('isianmahasiswa', ['mahasiswanim' => $nim])->row_array();
+        $data['ujian'] = $this->mahasiswa->getUjian($data['user']['nim']);
+        $data['publikasi'] = $this->mahasiswa->getPublikasi($data['user']['nim']);
+        $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user']['nim']);
+        echo json_encode($data, true);
+    }
     public function profil()
     {
         $data = $this->initData();
         $data['title'] = 'Profil';
         $this->loadTemplate($data);
-        $this->load->view('dosen/profil', $data);
-        $this->load->view('templates/footer');
+        $this->form_validation->set_rules('notlpn', 'No Telepon', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('dosen/profil', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $update = [
+                'noTlpnDosen' => $this->input->post('notlpn'),
+                'AlamatDosen' => $this->input->post('alamat')
+            ];
+            $this->db->where('nip', $data['user_login']['nip']);
+            $this->db->update('dosen', $update);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Profil berhasil di perbaharui ! </div>');
+            redirect('dosen/profil');
+        }
     }
-
     public function inputNilai()
     {
         $data = $this->initData();

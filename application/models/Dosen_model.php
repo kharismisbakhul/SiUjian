@@ -132,6 +132,25 @@ class Dosen_model extends CI_Model
 
         return $this->db->get();
     }
+
+    public function getStatusBimbingan($nip)
+    {
+        $this->db->select('pmb.*,MAX(kodeujian.kode) as K');
+        $this->db->from('pembimbing as pmb');
+        $this->db->join('ujian', 'ujian.mahasiswanim = pmb.mahasiswanim', 'left');
+        $this->db->join('kodeujian', 'ujian.kodeujiankode = kodeujian.kode', 'left');
+        $this->db->where('pmb.dosennip', $nip);
+        $this->db->group_by('pmb.mahasiswanim');
+        $this->db->order_by('pmb.mahasiswanim');
+        $from_clause = $this->db->get_compiled_select();
+        $this->db->select('kodeujian.nama_ujian,kode.*,mahasiswa.nama,mahasiswa.jenjang,prodi.nama_prodi,mahasiswa.statusKelulusan');
+        $this->db->from('kodeujian');
+        $this->db->join('(' . $from_clause . ') as kode', 'kode.K = kodeujian.kode', 'right');
+        $this->db->join('mahasiswa', 'mahasiswa.nim = kode.mahasiswanim', 'left');
+        $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
+        return $this->db->get()->result_array();
+    }
+
     public function getUjian($nip)
     {
         $this->db->select('ujian.id,mahasiswa.nama,kodeujian.nama_ujian,ujian.tgl_ujian,ujian.nilai_akhir');

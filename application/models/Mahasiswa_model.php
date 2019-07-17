@@ -97,11 +97,45 @@ class Mahasiswa_model extends CI_Model
     public function getUjianTerakhir($nim)
     {
         $this->db->where('Mahasiswanim', $nim);
-        $this->db->select('nama_ujian, nilai_akhir, statusUjian, max(kodeUjiankode) as ujian_terakhir');
+        $this->db->select('max(kodeUjiankode) as ujian_terakhir');
+        $this->db->from('ujian');
+        $ujian_terakhir_kode = $this->db->get()->row_array();
+
+        $ujian_terakhir = $this->getDetailUjianTerakhir($nim, $ujian_terakhir_kode['ujian_terakhir']);
+        $ujian_terakhir['kode'] = $ujian_terakhir_kode['ujian_terakhir'];
+
+        return $ujian_terakhir;
+    }
+
+    public function getDetailUjianTerakhir($nim, $kode)
+    {
+        $this->db->where('Mahasiswanim', $nim);
+        $this->db->where('kodeUjiankode', $kode);
+        $this->db->select('nama_ujian, nilai_akhir, statusUjian');
         $this->db->from('ujian');
         $this->db->join('kodeujian', 'kodeujian.kode = ujian.kodeUjiankode', 'left');
-        return $this->db->get()->row_array();
+        $ujian_terakhir_detail = $this->db->get()->row_array();
+
+        return $ujian_terakhir_detail;
     }
+
+    public function getUjianSelanjutnya($nim)
+    {
+        $this->db->where('Mahasiswanim', $nim);
+        $this->db->where('statusUjian', 2);
+        $this->db->select('id, nama_ujian, tgl_ujian, nilai_akhir, statusUjian, max(kodeUjiankode) as ujian_terakhir');
+        $this->db->from('ujian');
+        $this->db->join('kodeujian', 'kodeujian.kode = ujian.kodeUjiankode', 'left');
+        $result = $this->db->get()->row_array();
+
+        $this->db->where('Ujianid', $result['id']);
+        $this->db->select('nip, nama_dosen');
+        $this->db->from('penguji');
+        $this->db->join('dosen', 'dosen.nip = penguji.Dosennip');
+        $result['dosen_penguji'] = $this->db->get()->result_array();
+        return $result;
+    }
+
 
     public function getDetailMahasiswa($nim)
     {

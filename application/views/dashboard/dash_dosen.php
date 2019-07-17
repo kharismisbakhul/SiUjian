@@ -16,7 +16,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col ml-auto">
                       <div class="h5 mb-0 font-weight-bold text-gray-800">Selamat Datang di Si-Ujian, <span id="user_name" class="text-gray-900 font-weight-bolder"><?= $user['nama']; ?></span></div>
-                      <div class="text-s font-weight-normal text-gray-800 mt-2">Silahkan untuk mengecek Jadwal Penguji selanjutnya dan memberi Nilai Ujian :)</div>
+                      <div class="text-s font-weight-normal text-gray-800 mt-2"></div>
                     </div>
                     <div class="col-auto mr-3">
                       <i class="far fa-smile-beam fa-3x"></i>
@@ -48,7 +48,7 @@
                       <i class="fas fa-graduation-cap fa-4x text-gray-300"></i>
                     </div>
                   </div>
-                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div>
+                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal"><a href="<?= base_url('dosen/bimbingan') ?>">lihat selengkapnya</a></div>
                 </div>
               </div>
             </div>
@@ -60,13 +60,13 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jadwal Ujian Selanjutnya (Penguji)</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">22 Juli 2019</div>
+                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar-alt fa-4x text-gray-300"></i>
                     </div>
                   </div>
-                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div>
+                  <!-- <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div> -->
                 </div>
               </div>
             </div>
@@ -78,13 +78,13 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Jadwal Ujian Hari ini (penguji)</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">5 Ujian</div>
+                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-chalkboard-teacher fa-4x text-gray-300"></i>
                     </div>
                   </div>
-                  <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div>
+                  <!-- <div class="text-xs pt-2 see-more not-dosen font-weight-normal">lihat selengkapnya</div> -->
                 </div>
               </div>
             </div>

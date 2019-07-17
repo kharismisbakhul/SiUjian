@@ -70,20 +70,20 @@
                             <td><?= $m['jenjang']; ?></td>
                             <td><?= $m['nama_prodi']; ?></td>
                             <?php
-                            if (!$m['ujian_terakhir']['nama_ujian']) {
-                              $m['ujian_terakhir']['nama_ujian'] = "-";
+                            if (!$m['ujian_terakhir']['kode']) {
+                              $m['ujian_terakhir']['nama_ujian'] = "Baru Mulai";
                             }
                             ?>
                             <td class='font-weight-bold'><?= $m['ujian_terakhir']['nama_ujian']; ?></td>
                             <?php
-                            if ($m['ujian_terakhir']['statusUjian'] == 1) {
+                            if (!$m['ujian_terakhir']['kode']) {
+                              echo "<td class='font-weight-bold'>-</td>";
+                            } else if ($m['ujian_terakhir']['statusUjian'] == 1) {
                               echo "<td class='text-success font-weight-bold'>Lulus</td>";
                             } else if ($m['ujian_terakhir']['statusUjian'] == 2) {
                               echo "<td class='text-primary font-weight-bold'>Proses</td>";
                             } else if ($m['ujian_terakhir']['statusUjian'] == 3) {
                               echo "<td class='text-danger font-weight-bold'>Tidak Lulus</td>";
-                            } else {
-                              echo "<td class='font-weight-bold'>-</td>";
                             }
                             ?>
                             <td class="text-center">

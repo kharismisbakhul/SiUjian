@@ -1,6 +1,6 @@
 // Pimpinan, Detail mahasiswa bimbingan Laporan Dosen
 
-$('.modalDetailDosen').on("click", function () {
+$('.modalDetailBimbingan').on("click", function () {
     var nip = $(this).data('id');
     $.ajax({
         url: 'http://localhost/SiUjian/Pimpinan/detailMahasiswaBimbingan/' + nip,
@@ -54,10 +54,12 @@ var i = 1;
 
 function bimbinganLoop(mahasiswa_bimbingan) {
     var warnaClass = "";
+    var kodeUjian = mahasiswa_bimbingan.ujian_terakhir.kode;
     var statusUjian = mahasiswa_bimbingan.ujian_terakhir.statusUjian;
     var namaUjian = mahasiswa_bimbingan.ujian_terakhir.nama_ujian;
-    if (!namaUjian) {
-        namaUjian = "-";
+    if (!kodeUjian) {
+        namaUjian = "Baru Mulai";
+        statusUjian = "-";
     }
     if (statusUjian == 1) {
         warnaClass = "text-success";
@@ -70,9 +72,6 @@ function bimbinganLoop(mahasiswa_bimbingan) {
     else if (statusUjian == 3) {
         warnaClass = "text-danger";
         statusUjian = "Tidak Lulus";
-    }
-    else {
-        statusUjian = "-";
     }
     $("#mahasiswa_bimbingan").append(
         `<tr>

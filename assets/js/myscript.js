@@ -9,6 +9,7 @@ $(window).on('load', function () {
 		}, 300 * (i + 1));
 	});
 
+
 })
 
 $('.custom-file-input').on('change', function () {
@@ -18,14 +19,13 @@ $('.custom-file-input').on('change', function () {
 // mahasiswa
 $('.detail').on('click', function () {
 	let id = $(this).data('id');
-
 	$.ajax({
 
-		url: 'http://localhost/SiUjian/mahasiswa/getDetailPublikasi/' + id,
+		url: 'http://localhost:8080/SiUjian/mahasiswa/getDetailPublikasi/' + id,
 		method: 'get',
 		dataType: 'json',
 		beforeSend: function () {
-			$('.loader').attr('src', 'http://localhost/SiUjian/assets/img/loader2.gif')
+			$('.loader').attr('src', 'http://localhost:8080/SiUjian/assets/img/loader2.gif')
 		},
 		success: function (data) {
 			$('.loader').hide()
@@ -37,7 +37,7 @@ $('.detail').on('click', function () {
 			$('#volumeDanNoTerbitan').html(data.volumeDanNoTerbitan);
 			$('#valid').html(data.valid);
 			$('#bukti').html(data.bukti);
-			$('#bukti').attr('href', 'http://localhost/SiUjian/assets/publikasi/' + data.bukti);
+			$('#bukti').attr('href', 'http://localhost:8080/SiUjian/assets/publikasi/' + data.bukti);
 
 		}
 	});
@@ -60,16 +60,23 @@ $('.cls').on('click', function () {
 $('.detail-ujian').on('click', function () {
 	let id = $(this).data('id');
 	$('.dosen-penguji').remove();
-	$.ajax({
+	let url = $(location).attr('href');
+	let segments = url.split('/');
+	let action = segments[4];
+	let controllers = 'mahasiswa';
+	if (action == 'operator' || action == 'admin') {
 
-		url: 'http://localhost/SiUjian/mahasiswa/getDetailUjian/' + id,
+	}
+	console.log(action);
+	$.ajax({
+		url: 'http://localhost:8080/SiUjian/mahasiswa/getDetailUjian/' + id,
 		method: 'get',
 		dataType: 'json',
 		beforeSend: function (jqXHR, options) {
 			$('.test').hide();
 			$('.modal-body').append(`
 				<div class="dosen-penguji" style="height:550px">
-					<img src="http://localhost/SiUjian/assets/img/loader.gif" class="transis rounded mx-auto d-block" style="width:80%;">
+					<img src="http://localhost:8080/SiUjian/assets/img/loader.gif" class="transis rounded mx-auto d-block" style="width:80%;">
 				</div>
 				`);
 			setTimeout(function () {
@@ -96,12 +103,12 @@ $('.detail-ujian').on('click', function () {
 			$('#komentar').html(': ' + data['ujian'].komentar);
 			$('#bobot').html(': ' + data['ujian'].bobot);
 			$('#bukti').html(': ' + data['ujian'].bukti);
-			$('#bukti').attr('href', 'http://localhost/SiUjian/assets/ujian/' + data['ujian'].bukti);
-
+			$('#bukti').attr('href', 'http://localhost:8080/SiUjian/assets/ujian/' + data['ujian'].bukti);
+			let i = 1;
 			data['penguji'].forEach(function (p) {
 				$('.penguji').append(`
 				<tr class="dosen-penguji">
-					<th scope="row"></th>
+					<th scope="row">` + (i++) + `</th>
 					<td>` + p.nama_dosen + `</td>
 					<td>Penguji ` + p.statusPenguji + `</td>
 					<td>` + p.nilai + `</td>
@@ -126,13 +133,13 @@ $('.info').on('click', function () {
 	$('#loader').remove();
 	let id = $(this).data('id');
 	$.ajax({
-		url: 'http://localhost/SiUjian/operator/getInfoPenguji/' + id,
+		url: 'http://localhost:8080/SiUjian/operator/getInfoPenguji/' + id,
 		method: 'get',
 		dataType: 'json',
 		beforeSend: function () {
 			$('#jadwal-dosen').append(`
 				<div id="loader">
-					<img src="http://localhost/SiUjian/assets/img/loader_fix.gif" style="width: 50%" class="rounded mx-auto d-block">
+					<img src="http://localhost:8080/SiUjian/assets/img/loader_fix.gif" style="width: 50%" class="rounded mx-auto d-block">
 				</div>	
 			`);
 
@@ -145,7 +152,7 @@ $('.info').on('click', function () {
 					$('#jadwal-dosen').append(`
 						<div class="card" id="penguji" style="width:120%;">
 							<h5 class="text-center">test</h5>
-							<img src="http://localhost/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
+							<img src="http://localhost:8080/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
 							<div class="card-body">
 								<table class="table table-bordered text-center" id="kuy" width="100%" cellspacing="0">
 									<thead>
@@ -173,7 +180,7 @@ $('.info').on('click', function () {
 				$('#jadwal-dosen').append(`
 						<div class="card" id="penguji" style="width:120%;">
 							<h5 class="text-center">test</h5>
-							<img src="http://localhost/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
+							<img src="http://localhost:8080/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
 							<div class="card-body">
 								<p>Tidak Ada Jadwal Ujian Dosen</p>
 							</div>
@@ -195,15 +202,69 @@ $('.cls').on('click', function () {
 })
 // akhir Operator
 
+
+
+
+$('.privileges').on('change', function () {
+	// alert("<?php echo $aa; ?>");
+	$.ajax({
+		url: 'http://localhost:8080/SiUjianTemp/admin/getListProdi',
+		method: 'get',
+		dataType: 'json',
+
+		success: function (data) {
+			var d = [];
+			for (i = 0; i < data.length; i++) {
+				d.push(data[i]['nama_prodi']);
+			}
+			if ($('.privileges').val() === "Mahasiswa") {
+				clear();
+				$('.a').addClass('form-group row');
+				$('.a').append(`
+                <label for= "prodi" class= "col-sm-4 col-form-label" >Prodi</label >
+                    <div class="col-sm-8">
+                        <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
+                        </select>
+                        </div>`);
+				d.forEach(myFunction);
+			} else if ($('.privileges').val() === "Dosen") {
+				clear();
+				$('.a').addClass('form-group row');
+				$('.a').append(`
+                        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
+                            <div class="col-sm-8">
+                                <select class="form-control jenjang" name="jenjang" id="jenjang">
+                                <option>S2</option>
+                                <option>S3</option>
+                                </select>
+                                </div>`);
+			} else {
+				clear();
+			}
+		}
+	})
+});
+
+function clear() {
+	$('.a').removeClass('form-group row');
+	$('.a').html(``);
+}
+
+function myFunction(item) {
+	document.getElementById("prodi").innerHTML += `<option>` + item + `</option>`;
+}
+
+
 // Script Dosen
 
+//  nilai
 $('.input-nilai').on('click', function () {
 	let id = $(this).data('id');
 	let nip = $('#nip').val();
 
 	$('.daftar-penguji').remove();
 	$.ajax({
-		url: 'http://localhost/SiUjian/dosen/getDetailUjian/' + id,
+		url: 'http://localhost:8080/SiUjian/dosen/getDetailUjian/' + id,
 		method: 'get',
 		dataType: 'json',
 		success: function (data) {
@@ -248,4 +309,77 @@ $('.input-nilai').on('click', function () {
 		}
 	})
 });
+// akhir nilai
+
+// bimbingan
+$('.info-bimbingan').on('click', function () {
+	let nim = $(this).data('nim');
+	$('.list-ujian').remove();
+	$('.list-pembimbing').remove();
+	$('.list-publikasi').remove();
+	$.ajax({
+		url: 'http://localhost:8080/SiUjian/dosen/getDetailBimbingan/' + nim,
+		method: 'get',
+		dataType: 'json',
+		success: function (data) {
+			$('#nama-bimbingan').html(data['user'].nama)
+			let i = 1;
+			let td;
+			data['ujian'].forEach(function (p) {
+				if (p.statusUjian == 1) {
+					td = `<td class="text-success font-weight-bold">Lulus</td>`
+				} else if (p.statusUjian == 2) {
+					td = `<td class="text-primary font-weight-bold">Proses</td>`
+				} else {
+					td = `<td class="text-danger font-weight-bold">Tidak Lulus</td>`
+				}
+				$('.ujian').append(`
+				<tr class="list-ujian">
+				<td>` + (i++) + `</td>
+				<td>` + p.nama_ujian + `</td>
+				<td>` + p.tgl_ujian + `</td>
+				` + td + `
+				<td>` + p.bobot + `</td>
+				<td>` + p.nilai_akhir + `</td>
+				</tr>`);
+			})
+			$('#nama').html(data['user'].nama)
+			$('#nim').html(data['user'].nim)
+			$('#nama_jurusan').html(data['fakultas'].nama_jurusan)
+			$('#nama_prodi').html(data['fakultas'].nama_prodi)
+			$('#angkatan').html(data['user'].angkatan)
+			$('#konsentrasi').html(data['user'].konsentrasi)
+			$('#alamat').html(data['user'].alamat)
+			$('#noTelp').html(data['user'].noTelp)
+			$('#asalStudi').html(data['user'].asalStudi)
+			$('#tglMulaiTA').html(data['user'].tglMulaiTA)
+
+
+			let j = 1;
+			data['pembimbing'].forEach(function (p) {
+				$('.pembimbing').append(`
+				<tr class="list-pembimbing">
+					<th scope="row">` + (j++) + `</th>
+					<td>` + p.nama_dosen + `</td>
+					<td>Pembimbing ` + p.statusPembimbing + `</td>
+				</tr>
+				`)
+			})
+			let k = 1;
+			data['publikasi'].forEach(function (p) {
+				$('.publikasi').append(`
+				<tr class="list-publikasi">
+					<th scope="row">` + (k++) + `</th>
+					<td>` + p.judulArtikel + `</td>
+					<td>` + p.statusJurnal + `</td>
+				</tr>
+				`)
+			})
+		}
+	})
+});
+
+// akhir bimbingan
+
+
 // akhir dosen

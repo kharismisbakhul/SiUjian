@@ -68,17 +68,24 @@
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">No Hp</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <span></span>
+                                <span><?= $user_login['noTlpnDosen'] ?></span>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Alamat</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <span></span>
+                                <span><?= $user_login['AlamatDosen'] ?></span>
                             </div>
                         </div>
-
+                        <div class="row float-right mr-3">
+                            <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalProfilEdit">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                                <span class="text">Edit</span>
+                            </button>
+                        </div>
                     </form>
 
                 </div>
@@ -89,3 +96,33 @@
 
 </div>
 <!-- End of Main Content -->
+<div class="modal fade" id="ModalProfilEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Profil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('dosen/profil/') . $user_login['nip'] ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">No.HP:</label>
+                        <input type="text" class="form-control" id="notlpn" name="notlpn" value="<?= $user_login['noTlpnDosen'] ?>">
+                        <?= form_error('notlpn', '<small class="text-danger pl-3">', '</small>'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Alamat:</label>
+                        <textarea class="form-control" id="alamat" name="alamat"><?= $user_login['AlamatDosen'] ?></textarea>
+                        <?= form_error('alamat', '<small class="text-danger pl-3">', '</small>'); ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
