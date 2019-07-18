@@ -169,7 +169,7 @@
  											<p>:</p>
  										</div>
  										<div class="col-sm-8">
- 											<input type="text" class="form-control" id="inputNilai" name="inputNilai" placeholder="">
+ 											<input type="text" class="form-control inputNilai" id="inputNilai" name="inputNilai" placeholder="">
  											<?= form_error('nilai', '<small class="text-danger pl-3">', '</small>'); ?>
  										</div>
  									</div>

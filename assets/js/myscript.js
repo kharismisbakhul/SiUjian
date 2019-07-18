@@ -16,6 +16,7 @@ $('.custom-file-input').on('change', function () {
 	let fileName = $(this).val().split('\\').pop();
 	$(this).next('.custom-file-label').addClass("selected").html(fileName);
 });
+
 // mahasiswa
 $('.detail').on('click', function () {
 	let id = $(this).data('id');
@@ -119,11 +120,6 @@ $('.detail-ujian').on('click', function () {
 		}
 	});
 })
-
-// $('.cls').on('click', function () {
-// 	$('.dosen-penguji').remove();
-// })
-
 
 // akhir mahasiswa
 
@@ -263,8 +259,11 @@ function myFunction(item) {
 $('.input-nilai').on('click', function () {
 	let id = $(this).data('id');
 	let nip = $('#nip').val();
-
+	let url = $(location).attr('href');
+	let segments = url.split('/');
+	let action = segments[7];
 	$('.daftar-penguji').remove();
+	$('.daftar-pembimbing').remove();
 	$.ajax({
 		url: 'http://localhost:8080/SiUjian/dosen/getDetailUjian/' + id,
 		method: 'get',
@@ -281,12 +280,14 @@ $('.input-nilai').on('click', function () {
 			$('#nilai_akhir').html(nilai_akhir)
 
 
+			console.log(action)
 			let i = 1;
 			data['penguji'].forEach(function (p) {
-				if (p.nip == nip) {
+
+				if (p.nip == nip || p.nip == action) {
 					$('#idPenguji').val(p.id)
 					$('#ujian').val(p.Ujianid)
-					$('#inputNilai').val(p.nilai)
+					$('.inputNilai').val(p.nilai)
 				}
 				$('.penguji').append(`
 				<tr class="daftar-penguji">

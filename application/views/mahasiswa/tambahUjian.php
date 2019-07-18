@@ -49,10 +49,10 @@
                             <!-- apabila user sebagai mhs,dosen,pimpinan -->
                             <?php if ($this->session->userdata('user_profile_kode') == 5  || $this->session->userdata('user_profile_kode') == 4 || $this->session->userdata('user_profile_kode') == 3) { ?>
 
-                                <input type="email" class="form-control" name="nim" id="nim" placeholder="Nim.." readonly value="<?= $user['nama'] ?>">
+                                <input type="email" class="form-control" name="nim" id="nim" placeholder="Nim.." readonly value="<?= $user['nim'] ?>">
                             <?php } else { ?>
                                 <!-- apabila user sebagai admin,operator -->
-                                <input type="email" class="form-control" name="nim" id="nim" placeholder="Nim.." value="<?= $user['nama'] ?>">
+                                <input type="email" class="form-control" name="nim" id="nim" placeholder="Nim.." value="<?= $user['nim'] ?>">
                             <?php } ?>
                         </div>
                     </div>
@@ -62,11 +62,11 @@
                             <!-- apabila user sebagai mhs,dosen,pimpinan -->
                             <?php if ($this->session->userdata('user_profile_kode') == 5  || $this->session->userdata('user_profile_kode') == 4 || $this->session->userdata('user_profile_kode') == 3) : ?>
                                 <textarea type="text" class="form-control" id="judulTA" placeholder="Tugas Akhir..." readonly name="judulTA" id="" cols="10" rows="2"><?= $user['judulTugasAkhir'] ?>
-                                                                                                                                                                            </textarea>
+                                                                                                                                                                                            </textarea>
                             <?php else : ?>
                                 <!-- apabila user sebagai admin,operator -->
                                 <textarea type="text" class="form-control" id="judulTA" placeholder="Tugas Akhir..." name="judulTA" id="" cols="10" rows="2"><?= $user['judulTugasAkhir'] ?>
-                                                                        </textarea>
+                                                                                        </textarea>
                             <?php endif; ?>
 
                         </div>
@@ -119,69 +119,13 @@
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Bukti</label>
                         <div class="col-sm-4">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="buktiUjian" name="buktiUjian" required>
+                                <input type="file" class="custom-file-input" id="buktiUjian" name="buktiUjian">
 
                                 <label class="custom-file-label" for="customFile">Choose file</label id="buktiUjian" name="buktiUjian">
 
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row mb-1">
-                        <div class="col-sm-7">
-                            <h5>Daftar Dosen Penguji</h5>
-                            <div class="table-wrapper-scroll-y my-custom-scrollbar row ml-1 mr-1 ">
-                                <table class="table mb-0 table-sm" style="color: #101010">
-                                    <thead>
-                                        <tr style="background-color: #f8f8f8; color: #101010">
-                                            <th scope="col">#</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Nama Dosen</th>
-                                            <th scope="col">Nilai</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <th>Nilai akhir</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Dosen Pembimbing -->
-                        <div class="col-sm-5">
-                            <h5>Daftar Dosen Pendamping</h5>
-
-                            <table class="table mb-0 table-sm" style="color: #101010">
-                                <thead>
-                                    <tr style="background-color: #f8f8f8; color: #101010">
-                                        <th scope="col">#</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Nama Dosen</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
                     <div class="form-group row mb-1 mt-3">
                         <div class="col-lg-12 ">
                             <button type="submit" class="btn btn-primary float-right">

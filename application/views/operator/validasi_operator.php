@@ -94,7 +94,7 @@
                                  <span class="icon text-white-50">
                                    <i class="fas fa-check-circle"></i>
                                  </span>
-                                 <span class="text">Validasi</span>
+                                 <span class="text">Detail</span>
                                </a>
                              </td>
                            </tr>

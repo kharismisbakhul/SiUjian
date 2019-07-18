@@ -25,13 +25,54 @@ class Mahasiswa_model extends CI_Model
 
         return $this->db->get()->row_array();
     }
+    public function getPosisiPembimbing()
+    {
+        $this->db->select('*');
+        $this->db->from('posisi');
+        $this->db->where('id <', 7);
+        return $this->db->get()->result_array();
+    }
 
     public function getPembimbing($nim)
     {
-        $this->db->select('dosen.nama_dosen,pembimbing.statusPembimbing');
+        $this->db->select('dosen.nama_dosen,pembimbing.statusPembimbing,pembimbing.id,posisi.status_dosen');
         $this->db->from('pembimbing');
         $this->db->join('dosen', 'pembimbing.dosennip=dosen.nip');
+        $this->db->join('posisi', 'posisi.id=pembimbing.statusPembimbing');
         $this->db->where('pembimbing.mahasiswanim', $nim);
+        return $this->db->get()->result_array();
+    }
+    public function updatePenguji($pembimbing, $ujian)
+    {
+        $data = [
+            'Dosennip' => $pembimbing['Dosennip'],
+            'Ujianid' => $ujian,
+            'statusPenguji' => $pembimbing['statusPenguji']
+
+        ];
+        $this->db->insert('penguji', $data);
+    }
+    public function getNewIdUjian($nim, $kode)
+    {
+        $this->db->select('id');
+        $this->db->from('ujian');
+        $this->db->where('kodeUjiankode', $kode);
+        $this->db->where('MahasiswaNim', $nim);
+        return $this->db->get()->row_array();
+    }
+
+
+    public function getDaftarPembimbing($nim)
+    {
+        $this->db->select('pembimbing.*');
+        $this->db->from('pembimbing');
+        $this->db->where('pembimbing.mahasiswanim', $nim);
+        $from_clause = $this->db->get_compiled_select();
+
+        $this->db->select('dosen.*');
+        $this->db->from('(' . $from_clause . ') as pmb');
+        $this->db->join('dosen', 'pmb.dosennip = dosen.nip', 'right');
+        $this->db->where('pmb.dosennip', null);
         return $this->db->get()->result_array();
     }
 
@@ -98,11 +139,7 @@ class Mahasiswa_model extends CI_Model
 
     public function insertUjian($dataUjian)
     {
-        $this->db->set('tgl_ujian', $dataUjian['tanggal_ujian']);
-        $this->db->set('kodeUjiankode', $dataUjian['kodeUjiankode']);
-        $this->db->set('MahasiswaNim', $dataUjian['MahasiswaNim']);
-        $this->db->set('tgl_tambah_ujian', $dataUjian['tanggal_tambah_ujian']);
-        $this->db->set('bukti', $dataUjian['bukti_ujian']);
+        $this->db->set($dataUjian);
         $this->db->insert('ujian');
     }
 

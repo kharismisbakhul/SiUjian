@@ -42,20 +42,29 @@ class Operator_model extends CI_Model
 
     public function getPembimbing($id_ujian)
     {
-        $this->db->select('dosen.*,pembimbing.statuspembimbing');
+        $this->db->select('dosen.*,posisi.status_dosen');
         $this->db->from('pembimbing');
         $this->db->join('dosen', 'pembimbing.dosennip=dosen.nip');
         $this->db->join('ujian', 'ujian.id=' . $id_ujian);
+        $this->db->join('posisi', 'posisi.id=pembimbing.statusPembimbing', 'left');
         $this->db->where('pembimbing.mahasiswanim=ujian.mahasiswanim');
+        return $this->db->get()->result_array();
+    }
+
+    public function getPosisiPenguji()
+    {
+        $this->db->select('*');
+        $this->db->from('posisi');
         return $this->db->get()->result_array();
     }
 
     public function getPenguji($id_ujian)
     {
-        $this->db->select('dosen.*,penguji.*');
+        $this->db->select('dosen.*,penguji.*,posisi.status_dosen');
         $this->db->from('penguji');
         $this->db->join('dosen', 'penguji.dosennip=dosen.nip');
         $this->db->join('ujian', 'ujian.id=' . $id_ujian);
+        $this->db->join('posisi', 'posisi.id=penguji.statusPenguji', 'left');
         $this->db->where('penguji.ujianid=ujian.id');
         return $this->db->get()->result_array();
     }
@@ -83,5 +92,12 @@ class Operator_model extends CI_Model
         $this->db->join('ujian', 'ujian.id=penguji.ujianid');
         $this->db->join('kodeujian', 'kodeujian.kode=ujian.kodeujiankode');
         return $this->db->get()->result_array();
+    }
+
+    public function updateNilaiUjian($id, $nilai)
+    {
+        $data = ['nilai' => $nilai];
+        $this->db->where('id', $id);
+        $this->db->update('penguji', $data);
     }
 }
