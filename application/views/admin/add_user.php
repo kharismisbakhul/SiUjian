@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?></h1>
+    <h1 class="h3 mb-4 text-gray-800">Tambah User</h1>
 
     <div class="row">
         <!-- Area Chart -->
@@ -17,9 +17,9 @@
                 <div class="card-body">
                     <form action="<?= base_url('admin/adduser') ?>" method="post">
                         <div class="form-group row">
-                            <label for="usernameadd" class="col-sm-4 col-form-label">Username</label>
+                            <label for="usernameadd" class="col-sm-4 col-form-label">Nomor Induk</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="usernameadd" name="usernameadd" placeholder="Username">
+                                <input type="text" class="form-control" id="usernameadd" name="usernameadd" placeholder="Nomor Induk">
                                 <?= form_error('usernameadd', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
                         </div>
@@ -46,12 +46,15 @@
                         <div class="form-group row">
                             <label for="privileges" class="col-sm-4 col-form-label">Privileges</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="privileges" id="privileges">
+                                <select class="form-control privileges" name="privileges" id="privileges">
                                     <?php foreach ($privileges as $p) : ?>
                                         <option><?= $p['jenisUser'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
+                        </div>
+                        <div class="a">
+                            <?php $aa = "Hello World"; ?>
                         </div>
                         <div class="form-group row">
                             <label for="status" class="col-sm-4 col-form-label">Status</label>

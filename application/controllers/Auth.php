@@ -12,8 +12,8 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('username')) {
-            redirect('mahasiswa');
+        if ($this->session->userdata('user_profile_kode')) {
+            redirect(link_dashboard($this->session->userdata('user_profile_kode')));
         }
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
@@ -22,7 +22,7 @@ class Auth extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['title'] = 'SiUjian Login';
             $this->load->view('templates/auth_header', $data);
-            $this->load->view('login');
+            $this->load->view('auth/login');
             $this->load->view('templates/auth_footer');
         } else {
             // validasi success
@@ -80,14 +80,14 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('user_profile_kode');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been logged out!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success text-center" role="alert">Logout Success</div>');
         redirect('auth');
     }
 
 
     public function blocked()
     {
-        $this->load->view('auth/blocked');
+        $this->load->view('error403');
     }
 
     public function forgotPassword()

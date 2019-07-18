@@ -16,7 +16,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col ml-auto">
                   <div class="h5 mb-0 font-weight-bold text-gray-800">Selamat Datang di Si-Ujian, <span id="user_name" class="text-gray-900 font-weight-bolder">Wayan Firdaus Mahmudy</span></div>
-                  <div class="text-s font-weight-normal text-gray-800 mt-2">Silahkan untuk mengecek Jadwal Penguji selanjutnya dan memberi Nilai Ujian :)</div>
+                  <div class="text-s font-weight-normal text-gray-800 mt-2"></div>
                 </div>
                 <div class="col-auto mr-3">
                   <i class="far fa-smile-beam fa-3x"></i>
@@ -86,7 +86,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pembimbing Mahasiswa terbanyak</div>
-                  <div class="h6 mb-0 font-weight-bold text-gray-800 mt-3">Adam Hendra Brata</div>
+                  <div class="h6 mb-0 font-weight-bold text-gray-800 mt-3">Adam Hendra Brata., S.Kom., M.Kom.</div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-chalkboard-teacher fa-4x text-gray-300"></i>
@@ -103,7 +103,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Penguji Ujian Terbanyak</div>
-                  <div class="h6 mb-0 font-weight-bold text-gray-800 mt-3">Arif Rahman</div>
+                  <div class="h6 mb-0 font-weight-bold text-gray-800 mt-3">Drs. Arif Rahman., M.Kom.</div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-chalkboard-teacher fa-4x text-gray-300 mb-2"></i>

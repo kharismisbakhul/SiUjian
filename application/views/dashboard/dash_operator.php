@@ -12,7 +12,7 @@
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         <div class="tanggal">
           <div class="text-s mb-0 font-weight-bold text-gray-400">
-            <span><i class="fas fa-calendar-day text-gray-400"></i></span> 4 July 2019
+            <span><i class="fas fa-calendar-day text-gray-400"></i></span> <?= date('d M Y') ?>
           </div>
 
         </div>
@@ -26,9 +26,8 @@
               <div class="row no-gutters align-items-center">
                 <div class="col ml-auto">
                   <div class="h5 mb-0 font-weight-bold text-gray-800">Selamat Datang di
-                    Si-Ujian, <span id="user_name" class="text-gray-900 font-weight-bolder">Yohannes</span></div>
-                  <div class="text-s font-weight-normal text-gray-800 mt-2">Silahkan untuk
-                    mengecek Validasi Ujian :)</div>
+                    Si-Ujian, <span id="user_name" class="text-gray-900 font-weight-bolder"><?= $user['nama']; ?></span></div>
+                  <div class="text-s font-weight-normal text-gray-800 mt-2"></div>
                 </div>
                 <div class="col-auto mr-3">
                   <i class="far fa-smile-beam fa-3x"></i>
@@ -40,7 +39,7 @@
 
         <div class="col-lg-4">
           <div class="row">
-            <div class="col-xl-12 col-md-6 col-lg-4 mb-4">
+            <!-- <div class="col-xl-12 col-md-6 col-lg-4 mb-4">
               <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -48,7 +47,7 @@
                       <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                         Jumlah Mahasiswa Ujian Hari Ini</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">
-                        <span>5</span> Mahasiswa</div>
+                        <span><?= $jumlah_ujian_hari_ini; ?></span> Mahasiswa</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-graduation-cap fa-4x text-gray-300"></i>
@@ -56,7 +55,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- Jadwal Ujian Selanjutnya -->
             <div class="col-xl-12 col-md-6 col-lg-4 mb-4">
@@ -66,7 +65,7 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                         Jumlah Ujian Hari Ini</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">5 Ujian
+                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><?= $jumlah_ujian_hari_ini; ?> Ujian
                       </div>
                     </div>
                     <div class="col-auto">
@@ -85,7 +84,7 @@
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                         Jumlah Penguji Ujian Hari Ini</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">10 Penguji
+                      <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><?= $jumlah_penguji_hari_ini; ?> Penguji
                       </div>
                     </div>
                     <div class="col-auto">
@@ -117,52 +116,24 @@
                         <tr>
                           <th>#</th>
                           <th>Nama Mahasiswa</th>
-                          <th>Tanggal</th>
                           <th>Program Studi</th>
                           <th>Keterangan</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Reynald Daffa</td>
-                          <td>20 Juli 2019</td>
-                          <td>Akuntansi</td>
-                          <td>Seminar Hasil</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Misbakhul Kharis</td>
-                          <td>20 Juli 2019</td>
-                          <td>Manajemen</td>
-                          <td>Ujian Proposal</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Aditiya Yusril</td>
-                          <td>20 Juli 2019</td>
-                          <td>Ekonomi Pembangunan</td>
-                          <td>Ujian Tesis</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Tony</td>
-                          <td>20 Juli 2019</td>
-                          <td>Ekonomi Pembangunan</td>
-                          <td>Ujian Tesis</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>Dominic Teroret</td>
-                          <td>20 Juli 2019</td>
-                          <td>Manajemen</td>
-                          <td>Ujian Tesis</td>
-                        </tr>
+                        <?php $i = 1;
+                        foreach ($valid_ujian as $v) : ?>
+                          <tr>
+                            <td><?= $i++;  ?></td>
+                            <td><?= $v['nama']  ?></td>
+                            <td><?= $v['nama_prodi']  ?></td>
+                            <td><?= $v['nama_ujian']  ?></td>
+                          </tr>
+                        <?php endforeach; ?>
                       </tbody>
                     </table>
                   </div>
-                  <div class="text-xs pt-3 pb-3 see-more font-weight-normal">lihat
-                    selengkapnya</div>
+                  <div class="text-xs pt-3 pb-3 see-more font-weight-normal"><a href="<?= base_url('operator/validasi') ?>">lihat selengkapnya</a></div>
                 </div>
               </div>
             </div>

@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <?= $this->session->flashdata('message');  ?>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                                                         <th>#</th>
                                                         <th>Privileges</th>
                                                         <th>Nama</th>
-                                                        <th>Status</th>
+                                                        <th>Status User</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>

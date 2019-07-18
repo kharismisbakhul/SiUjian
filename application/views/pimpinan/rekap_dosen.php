@@ -64,92 +64,28 @@
                                                     <th>Nama Dosen</th>
                                                     <th>Pembimbing</th>
                                                     <th>Penguji</th>
-                                                    <th>Status 1</th>
-                                                    <th>Bimbingan Lulus</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Bayu Priambada</td>
-                                                    <td>10</td>
-                                                    <td>8</td>
-                                                    <td>10</td>
-                                                    <td>5</td>
-                                                    <td class="text-center">
-                                                        <button href="#" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".modalDetailMahasiswa">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-eye"></i>
-                                                            </span>
-                                                            <span class="text">Info</span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Denny Sagita</td>
-                                                    <td>10</td>
-                                                    <td>8</td>
-                                                    <td>10</td>
-                                                    <td>5</td>
-                                                    <td class="text-center">
-                                                        <button href="#" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".modalDetailMahasiswa">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-eye"></i>
-                                                            </span>
-                                                            <span class="text">Info</span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Tri Astoto Kurniawan</td>
-                                                    <td>10</td>
-                                                    <td>8</td>
-                                                    <td>10</td>
-                                                    <td>5</td>
-                                                    <td class="text-center">
-                                                        <button href="#" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".modalDetailMahasiswa">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-eye"></i>
-                                                            </span>
-                                                            <span class="text">Info</span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Nurudin Santoso</td>
-                                                    <td>10</td>
-                                                    <td>8</td>
-                                                    <td>10</td>
-                                                    <td>5</td>
-                                                    <td class="text-center">
-                                                        <button href="#" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".modalDetailMahasiswa">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-eye"></i>
-                                                            </span>
-                                                            <span class="text">Info</span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Fajar Pradana</td>
-                                                    <td>10</td>
-                                                    <td>8</td>
-                                                    <td>10</td>
-                                                    <td>5</td>
-                                                    <td class="text-center">
-                                                        <button href="#" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target=".modalDetailMahasiswa">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-eye"></i>
-                                                            </span>
-                                                            <span class="text">Info</span>
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                <?php $i = 1;
+                                                foreach ($rekap_dosen as $rd) : ?>
+                                                    <tr>
+                                                        <td><?= $i; ?></td>
+                                                        <td><?= $rd['nama_dosen']; ?></td>
+                                                        <td><?= $rd['jumlah_bimbingan']; ?></td>
+                                                        <td><?= $rd['jumlah_menguji']; ?></td>
+                                                        <td class="text-center">
+                                                            <button href="#" class="btn btn-info btn-icon-split btn-sm modalRekap" data-toggle="modal" data-target=".modalDetailRekap" data-id="<?= $rd['nip']; ?>">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </span>
+                                                                <span class="text">Info</span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php $i++;
+                                                endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -167,20 +103,22 @@
     <!-- End of Main Content -->
 
     <!-- Detail profile modal -->
-    <div class="modal fade bd-example-modal-lg modalDetailMahasiswa" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg modalDetailRekap" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-blue">
-                    <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Detail Rekapitulasi Dosen - <span>Bayu Priambada</span></h5>
+                    <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Detail Rekapitulasi Dosen - <span class="nama-dosennya"></span></h5>
                     <button type="button" class="close clr-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
+
+                        <!-- Start jumlah pembimbing -->
                         <div class="col-lg-6">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3 bg-blue clr-white">
+                                <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-capitalize">Pembimbing</h6>
                                 </div>
                                 <div class="card-body">
@@ -193,7 +131,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>5</h6>
+                                                <h6 class="jPembimbing1"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -204,9 +142,10 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>5</h6>
+                                                <h6 class="jPembimbing2"></h6>
                                             </div>
                                         </div>
+                                        <br class="mt-1">
                                         <hr>
                                         <div class="form-row">
                                             <div class="col-5">
@@ -216,16 +155,19 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6 class="font-weight-bold">10</h6>
+                                                <h6 class="font-weight-bold jTotalPembimbing"></h6>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
+                        <!-- End Jumlah pembimbing -->
+
+                        <!-- Start jumlah penguji -->
                         <div class="col-lg-6">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3 bg-blue clr-white">
+                                <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-capitalize">Penguji</h6>
                                 </div>
                                 <div class="card-body">
@@ -238,7 +180,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>4</h6>
+                                                <h6 class="jPenguji1"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -249,7 +191,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>4</h6>
+                                                <h6 class="jPenguji2"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -260,7 +202,7 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>0</h6>
+                                                <h6 class="jPenguji3"></h6>
                                             </div>
                                         </div>
                                         <hr>
@@ -272,114 +214,146 @@
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6 class="font-weight-bold">8</h6>
+                                                <h6 class="font-weight-bold jTotalPenguji"></h6>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <!-- End Jumlah Penguji -->
+
+                        <!-- Start Jumlah Ujian -->
+                        <div class="col-lg-6">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3 bg-blue clr-white">
+                                <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-capitalize">Status Mahasiswa Bimbingan</h6>
                                 </div>
                                 <div class="card-body">
                                     <form action="">
-
                                         <div class="form-row">
-                                            <div class="col-7">
+                                            <div class="col-5">
                                                 <h6 class="">Tahap Komisi</h6>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-3">
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusKomisi"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-7">
+                                            <div class="col-5">
                                                 <h6 class="">Proposal Ujian</h6>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-3">
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusProposal"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-7">
+                                            <div class="col-5">
                                                 <h6 class="">Seminar Hasil</h6>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-3">
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusSemhas"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-7">
+                                            <div class="col-5">
                                                 <h6 class="">Ujian Tesis</h6>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-3">
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusTesis"></h6>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-7">
+                                            <div class="col-5">
                                                 <h6 class="">Wisuda</h6>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-3">
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6>2</h6>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-7">
-                                                <h6 class="">Belum Lulus</h6>
-                                            </div>
-                                            <div class="col-1">
-                                                <h6>:</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <h6>2</h6>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-7">
-                                                <h6 class="">Lulus</h6>
-                                            </div>
-                                            <div class="col-1">
-                                                <h6>:</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <h6>2</h6>
+                                                <h6 class="statusWisuda"></h6>
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="form-row">
-                                            <div class="col-7">
+                                            <div class="col-5">
                                                 <h6 class="font-weight-bold">Jumlah</h6>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-3">
                                                 <h6>:</h6>
                                             </div>
                                             <div class="col-4">
-                                                <h6 class="font-weight-bold">10</h6>
+                                                <h6 class="font-weight-bold statusTotalUjian"></h6>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
+                        <!-- End Jumlah Ujian -->
+
+                        <!-- Start Jumlah Kelulusan -->
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-capitalize">Jumlah Kelulusan Mahasiswa Bimbingan</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form action="">
+                                        <br>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Belum Lulus</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="statusBelumLulus"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Lulus</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="statusLulus"></h6>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br class="mt-2">
+                                        <hr>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="font-weight-bold">Jumlah Kelulusan / Belum</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="font-weight-bold statusTotalLulusTidak"></h6>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Jumlah Kelulusan -->
                     </div>
                 </div>
             </div>

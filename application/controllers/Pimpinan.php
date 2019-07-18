@@ -20,11 +20,16 @@ class Pimpinan extends CI_Controller
     {
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $this->load->model('dosen_model', 'dosen');
+        $data['dosen'] = $this->dosen->getListDosen();
         return $data;
     }
 
     public function index()
     {
+        if ($this->session->userdata('user_profile_kode') != 3) {
+            redirect('auth/blocked');
+        }
         $data = $this->initData();
         $data['title'] = 'Dashboard';
         $this->loadTemplate($data);
@@ -32,9 +37,23 @@ class Pimpinan extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function laporanStatusMahasiswa()
+    public function profil()
     {
         $data = $this->initData();
+        $data['title'] = 'Profil';
+        $this->loadTemplate($data);
+        $this->load->view('pimpinan/profil', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function laporanStatusMahasiswa()
+    {
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $data = $this->initData();
+        $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
+        // echo json_encode($data['mahasiswa']);
+        // var_dump($data['mahasiswa']);
+        // die;
         $data['title'] = 'Laporan Status Mahasiswa';
         $this->loadTemplate($data);
         $this->load->view('pimpinan/laporan_status_mahasiswa', $data);
@@ -48,12 +67,46 @@ class Pimpinan extends CI_Controller
         $this->load->view('pimpinan/laporan_dosen', $data);
         $this->load->view('templates/footer');
     }
+
     public function rekapDosen()
     {
+        $this->load->model('dosen_model', 'dosen');
         $data = $this->initData();
+        $data['rekap_dosen'] = $this->dosen->getRekapDosen();
         $data['title'] = 'Rekap Dosen';
         $this->loadTemplate($data);
         $this->load->view('pimpinan/rekap_dosen', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function detailRekapDosen($nip)
+    {
+        $this->load->model('dosen_model', 'dosen');
+        $data['rekap_dosen'] = $this->dosen->getDetailRekapDosen($nip);
+    }
+
+    public function detailMahasiswa($nim)
+    {
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $result = $this->mahasiswa->getDetailMahasiswa($nim);
+        $data = $this->mahasiswa->getProfilJurusan($result['prodikode']);
+        $dosenPembimbing = $this->mahasiswa->getDosenPembimbing($nim);
+        $result['nama_prodi'] = $data['nama_prodi'];
+        $result['nama_jurusan'] = $data['nama_jurusan'];
+        $result['dosen_pembimbing'] = $dosenPembimbing;
+        echo json_encode($result);
+    }
+    public function detailMahasiswaBimbingan($nip)
+    {
+        $this->load->model('dosen_model', 'dosen');
+        $this->load->model('mahasiswa_model', 'mahasiswa');
+        $result = $this->dosen->getMahasiswaBimbingan($nip)->result_array();
+        $dosenA = $this->dosen->getDetailDosen($nip);
+        $dosen['nama_dosen'] = $dosenA['nama_dosen'];
+        $dosen['mahasiswa_bimbingan'] = $result;
+        for ($i = 0; $i < count($dosen['mahasiswa_bimbingan']); $i++) {
+            $dosen['mahasiswa_bimbingan'][$i]['ujian_terakhir'] = $this->mahasiswa->getUjianTerakhir($dosen['mahasiswa_bimbingan'][$i]['Mahasiswanim']);
+        }
+        echo json_encode($dosen);
     }
 }

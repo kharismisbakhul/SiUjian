@@ -62,174 +62,53 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Reynald Daffa</td>
-                          <td>S2</td>
-                          <td>Akuntansi</td>
-                          <td>Seminar Hasil</td>
-                          <td class="text-success font-weight-bold">Lulus</td>
-                          <td class="text-center">
-                            <button href="#" class="badge badge-info badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-eye"></i>
-                              </span>
-                              <span class="text">Profile</span>
-                            </button>
-                            <button href="#" class="badge btn-ujian badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paste"></i>
-                              </span>
-                              <span class="text clr-white">Ujian</span>
-                            </button>
-                            <button href="#" class="badge btn-publikasi badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-book"></i>
-                              </span>
-                              <span class="text clr-white">Publikasi</span>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Misbakhul Kharis</td>
-                          <td>S2</td>
-                          <td>Manajemen</td>
-                          <td>Ujian Proposal</td>
-                          <td class="text-success font-weight-bold">Lulus</td>
-                          <td class="text-center">
-                            <button href="#" class="badge badge-info badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-eye"></i>
-                              </span>
-                              <span class="text">Profile</span>
-                            </button>
-                            <button href="#" class="badge btn-ujian badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paste"></i>
-                              </span>
-                              <span class="text clr-white">Ujian</span>
-                            </button>
-                            <button href="#" class="badge btn-publikasi badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-book"></i>
-                              </span>
-                              <span class="text clr-white">Publikasi</span>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Aditiya Yusril</td>
-                          <td>S3</td>
-                          <td>Ekonomi Pembangunan</td>
-                          <td>Ujian Tesis</td>
-                          <td class="text-success font-weight-bold">Lulus</td>
-                          <td class="text-center">
-                            <button href="#" class="badge badge-info badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-eye"></i>
-                              </span>
-                              <span class="text">Profile</span>
-                            </button>
-                            <button href="#" class="badge btn-ujian badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paste"></i>
-                              </span>
-                              <span class="text clr-white">Ujian</span>
-                            </button>
-                            <button href="#" class="badge btn-publikasi badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-book"></i>
-                              </span>
-                              <span class="text clr-white">Publikasi</span>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Tony Krauk</td>
-                          <td>S3</td>
-                          <td>Ekonomi Pembangunan</td>
-                          <td>Ujian Tesis</td>
-                          <td class="text-danger font-weight-bold">Belum Lulus</td>
-                          <td class="text-center">
-                            <button href="#" class="badge badge-info badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-eye"></i>
-                              </span>
-                              <span class="text">Profile</span>
-                            </button>
-                            <button href="#" class="badge btn-ujian badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paste"></i>
-                              </span>
-                              <span class="text clr-white">Ujian</span>
-                            </button>
-                            <button href="#" class="badge btn-publikasi badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-book"></i>
-                              </span>
-                              <span class="text clr-white">Publikasi</span>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>Dominic Teroret</td>
-                          <td>S3</td>
-                          <td>Manajemen</td>
-                          <td>Ujian Tesis</td>
-                          <td class="text-danger font-weight-bold">Belum Lulus</td>
-                          <td class="text-center">
-                            <button href="#" class="badge badge-info badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-eye"></i>
-                              </span>
-                              <span class="text">Profile</span>
-                            </button>
-                            <button href="#" class="badge btn-ujian badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paste"></i>
-                              </span>
-                              <span class="text clr-white">Ujian</span>
-                            </button>
-                            <button href="#" class="badge btn-publikasi badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-book"></i>
-                              </span>
-                              <span class="text clr-white">Publikasi</span>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>6</td>
-                          <td>Maemunah</td>
-                          <td>S3</td>
-                          <td>Ekonomi Pembangunan</td>
-                          <td>Ujian Tesis</td>
-                          <td class="text-danger font-weight-bold">Belum Lulus</td>
-                          <td class="text-center">
-                            <button href="#" class="badge badge-info badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-eye"></i>
-                              </span>
-                              <span class="text">Profile</span>
-                            </button>
-                            <button href="#" class="badge btn-ujian badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paste"></i>
-                              </span>
-                              <span class="text clr-white">Ujian</span>
-                            </button>
-                            <button href="#" class="badge btn-publikasi badge-icon-split badge-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-book"></i>
-                              </span>
-                              <span class="text clr-white">Publikasi</span>
-                            </button>
-                          </td>
-                        </tr>
+                        <?php $i = 1; ?>
+                        <?php foreach ($mahasiswa as $m) : ?>
+                          <tr>
+                            <td><?= $i; ?></td>
+                            <td><?= $m['nama']; ?></td>
+                            <td><?= $m['jenjang']; ?></td>
+                            <td><?= $m['nama_prodi']; ?></td>
+                            <?php
+                            if (!$m['ujian_terakhir']['nama_ujian']) {
+                              $m['ujian_terakhir']['nama_ujian'] = "-";
+                            }
+                            ?>
+                            <td class='font-weight-bold'><?= $m['ujian_terakhir']['nama_ujian']; ?></td>
+                            <?php
+                            if ($m['ujian_terakhir']['statusUjian'] == 1) {
+                              echo "<td class='text-success font-weight-bold'>Lulus</td>";
+                            } else if ($m['ujian_terakhir']['statusUjian'] == 2) {
+                              echo "<td class='text-primary font-weight-bold'>Proses</td>";
+                            } else if ($m['ujian_terakhir']['statusUjian'] == 3) {
+                              echo "<td class='text-danger font-weight-bold'>Tidak Lulus</td>";
+                            } else {
+                              echo "<td class='font-weight-bold'>-</td>";
+                            }
+                            ?>
+                            <td class="text-center">
+                              <a href="<?= base_url('operator/mahasiswa/profile/') . $m['nim']; ?>" class="btn btn-info btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-eye"></i>
+                                </span>
+                                <span class="text">Profile</span>
+                              </a>
+                              <a href="<?= base_url('operator/mahasiswa/ujian/') . $m['nim']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-paste"></i>
+                                </span>
+                                <span class="text clr-white">Ujian</span>
+                              </a>
+                              <a href="<?= base_url('operator/mahasiswa/publikasi/') . $m['nim']; ?>" class="btn btn-publikasi btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-book"></i>
+                                </span>
+                                <span class="text clr-white">Publikasi</span>
+                              </a>
+                            </td>
+                          </tr>
+                          <?php $i++; ?>
+                        <?php endforeach; ?>
                       </tbody>
                     </table>
                   </div>

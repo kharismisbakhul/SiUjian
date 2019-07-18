@@ -16,7 +16,7 @@
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
 
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4 box">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Profil Mahasiswa</h6>
@@ -31,7 +31,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['nama'];  ?></span>
+                <span><?= $user_login['nama'];  ?></span>
               </div>
             </div>
 
@@ -39,7 +39,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nim</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['nim'];  ?></span>
+                <span><?= $user_login['nim'];  ?></span>
               </div>
             </div>
 
@@ -63,7 +63,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Angkatan</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['angkatan'];  ?></span>
+                <span><?= $user_login['angkatan'];  ?></span>
               </div>
             </div>
 
@@ -71,7 +71,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Konsentrasi</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['konsentrasi'];  ?></span>
+                <span><?= $user_login['konsentrasi'];  ?></span>
               </div>
             </div>
 
@@ -79,7 +79,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Alamat</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['alamat'];  ?></span>
+                <span><?= $user_login['alamat'];  ?></span>
               </div>
             </div>
 
@@ -87,7 +87,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">No.Telepon</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['noTelp'];  ?></span>
+                <span><?= $user_login['noTelp'];  ?></span>
               </div>
             </div>
 
@@ -95,7 +95,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Asal Studi</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['asalStudi'];  ?></span>
+                <span><?= $user_login['asalStudi'];  ?></span>
               </div>
             </div>
 
@@ -103,47 +103,38 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tanggal Mulai Tugas Akhir</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
 
             <div class="row">
-              <h5 class="col-sm-6 mt-2 ">Daftar Dosen Pendamping</h5>
+              <h5 class="col-sm-6 mt-2 ">Dosen Pembimbing</h5>
             </div>
 
-            <div class=" row ml-1 mr-1">
+            <div class="row ml-1 mr-1">
+              <div class="table-responsive">
+                <table class="table table-bordered text-center" width="30%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nama Dosen</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $i = 1;
+                    foreach ($pembimbing as $pmb) : ?>
 
-              <table class="table table-sm ">
-                <thead>
-                  <tr style="background-color: 	#C0C0C0; color: #101010">
-                    <th scope="col">#</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Nama Dosen</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Bambang Pamungkas</td>
-                    <td>Dosen Pembimbing 1</td>
-
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Ely Eboy</td>
-                    <td>Dosem Pembimbing 2</td>
-
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Markus Horison</td>
-                    <td>Dosen Pembimbing 3</td>
-
-
-                  </tr>
-                </tbody>
-              </table>
+                      <tr>
+                        <td><?= $i++  ?></td>
+                        <td><?= $pmb['nama_dosen']; ?></td>
+                        <td>Pembimbing <?= $pmb['statusPembimbing']  ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div class="row float-right mr-3">
@@ -162,7 +153,7 @@
 
     <!-- Area Chart -->
     <div class="col-xl-4 col-lg-5">
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4 box2">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Status Kelulusan</h6>
@@ -177,7 +168,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kelulusan</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <?php if ($user['statusKelulusan'] == 0) { ?>
+                <?php if ($user_login['statusKelulusan'] == 0) { ?>
                   <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                   <span class="text-success font-weight-bold">LULUS</span><?php } ?>
               </div>
@@ -187,7 +178,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Wisuda</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <?php if ($user['statusWisuda'] == 0) { ?>
+                <?php if ($user_login['statusWisuda'] == 0) { ?>
                   <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                   <span class="text-success font-weight-bold">LULUS</span><?php } ?>
               </div>
@@ -197,7 +188,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TOEFL</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <?php if ($user['statusTOEFL'] == 0) { ?>
+                <?php if ($user_login['statusTOEFL'] == 0) { ?>
                   <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                   <span class="text-success font-weight-bold">LULUS</span><?php } ?>
               </div>
@@ -207,7 +198,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TPA</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <?php if ($user['statusTPA'] == 0) { ?>
+                <?php if ($user_login['statusTPA'] == 0) { ?>
                   <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                   <span class="text-success font-weight-bold">LULUS</span><?php } ?>
               </div>
@@ -241,7 +232,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
@@ -249,7 +240,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Paradigma</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
@@ -257,7 +248,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kata Kunci</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
@@ -265,7 +256,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tujuan Penelitian</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
@@ -273,7 +264,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 1</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
@@ -281,7 +272,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 2</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
@@ -289,7 +280,7 @@
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Temuan</label>
               <div class="col-sm-9">
                 <span>:</span>
-                <span><?= $user['tglMulaiTA'];  ?></span>
+                <span><?= $user_login['tglMulaiTA'];  ?></span>
               </div>
             </div>
 
