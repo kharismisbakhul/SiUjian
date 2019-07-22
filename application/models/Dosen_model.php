@@ -31,24 +31,30 @@ class Dosen_model extends CI_Model
         return $this->db->get();
     }
 
-    public function getStatusBimbingan($nip)
+    public function getStatusBimbingan($nip, $star_date = null, $end_date = null)
     {
-        $this->db->select('pmb.*,MAX(kodeujian.kode) as K');
+        $this->db->select('pmb.mahasiswanim ,MAX(kodeujian.kode) as K,pmb.tgl_tambah_pembimbing');
         $this->db->from('pembimbing as pmb');
         $this->db->join('ujian', 'ujian.mahasiswanim = pmb.mahasiswanim', 'left');
         $this->db->join('kodeujian', 'ujian.kodeujiankode = kodeujian.kode', 'left');
         $this->db->where('pmb.dosennip', $nip);
+        if ($star_date != null && $end_date != null) {
+            $this->db->where('pmb.tgl_tambah_pembimbing >=', $star_date);
+            $this->db->where('pmb.tgl_tambah_pembimbing <=', $end_date);
+        }
         $this->db->group_by('pmb.mahasiswanim');
-        $this->db->order_by('pmb.mahasiswanim');
         $from_clause = $this->db->get_compiled_select();
 
-        $this->db->select('kodeujian.nama_ujian,kode.*,mahasiswa.nama,mahasiswa.jenjang,prodi.nama_prodi,mahasiswa.statusKelulusan');
+        $this->db->select('kodeujian.nama_ujian,kode.*,mahasiswa.nama,prodi.nama_prodi,mahasiswa.jenjang,statusUjian,statusKelulusan');
         $this->db->from('kodeujian');
         $this->db->join('(' . $from_clause . ') as kode', 'kode.K = kodeujian.kode', 'right');
         $this->db->join('mahasiswa', 'mahasiswa.nim = kode.mahasiswanim', 'left');
         $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
+        $this->db->join('ujian', 'kode.mahasiswanim = ujian.mahasiswanim AND ujian.kodeujiankode = kode.K', 'left');
         return $this->db->get()->result_array();
     }
+
+
 
     public function getUjian($nip)
     {
@@ -70,6 +76,45 @@ class Dosen_model extends CI_Model
     }
     public function updateNilaiAkhir($updateNilaiAkhir, $id_ujian)
     {
+        if ($updateNilaiAkhir > 80) {
+            $this->db->set('nilai_huruf', 'A');
+            $this->db->set('bobot', 4.0);
+            $this->db->set('statusUjian', 1);
+        } elseif ($updateNilaiAkhir > 75) {
+            $this->db->set('nilai_huruf', 'B+');
+            $this->db->set('bobot', 3.5);
+            $this->db->set('statusUjian', 1);
+        } elseif ($updateNilaiAkhir > 69) {
+            $this->db->set('nilai_huruf', 'B');
+            $this->db->set('bobot', 3.0);
+            $this->db->set('statusUjian', 1);
+        } elseif ($updateNilaiAkhir > 60) {
+            $this->db->set('nilai_huruf', 'C+');
+            $this->db->set('bobot', 2.5);
+            $this->db->set('statusUjian', 3);
+        } elseif ($updateNilaiAkhir > 55) {
+            $this->db->set('nilai_huruf', 'C');
+            $this->db->set('bobot', 2.0);
+            $this->db->set('statusUjian', 3);
+        } elseif ($updateNilaiAkhir > 50) {
+            $this->db->set('nilai_huruf', 'D+');
+            $this->db->set('bobot', 1.5);
+            $this->db->set('statusUjian', 3);
+        } elseif ($updateNilaiAkhir > 44) {
+            $this->db->set('nilai_huruf', 'D');
+            $this->db->set('bobot', 1.0);
+            $this->db->set('statusUjian', 3);
+        } elseif ($updateNilaiAkhir > 0) {
+            $this->db->set('nilai_huruf', 'E');
+            $this->db->set('bobot', 0.0);
+            $this->db->set('statusUjian', 3);
+        } else {
+            $this->db->set('nilai_huruf', 'K');
+            $this->db->set('bobot', 0.0);
+            $this->db->set('statusUjian', 2);
+        }
+
+
         $this->db->set('nilai_akhir', $updateNilaiAkhir);
         $this->db->where('id', $id_ujian);
         $this->db->update('ujian');

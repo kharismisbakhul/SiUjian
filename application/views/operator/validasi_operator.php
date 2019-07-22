@@ -47,16 +47,39 @@
          <div class="col-lg-12">
            <!-- Content Row -->
            <div class="row">
-
-             <div class="col-lg-12 col-md-6 mb-4">
+             <div class="col-lg-12 col-md-12 mb-4">
                <!-- Approach -->
                <div class="card shadow mb-4">
                  <div class="card-header py-3 bg-blue">
                    <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Permintaan Validasi</h6>
                  </div>
                  <div class="card-body">
+                   <form action="<?= base_url('operator/ujian') ?>" method="post">
+                     <div class="row mb-2">
+                       <div class="col-md-3">
+                         <small>Mulai Periode</small>
+                         <?php if ($star_date != null) : ?>
+                           <small> <?= $star_date ?></small>
+                         <?php endif; ?>
+                         <input type="date" class="form-control" name="star_date">
+                       </div>
+                       <div class="col-md-3">
+                         <small>Akhir Periode</small>
+                         <?php if ($end_date != null) : ?>
+                           <small> <?= $end_date ?></small>
+                         <?php endif; ?>
+                         <div class="input-group mb-3">
+                           <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                           <div class="input-group-append">
+                             <input type="submit" class="btn btn-primary" name="submit" value="cari" id="basic-addon2">
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </form>
+
                    <div class="table-responsive">
-                     <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                     <table class="display table table-bordered text-wrap table-sm text-center" id="test" width="100%" cellspacing="0">
                        <thead>
                          <tr>
                            <th>#</th>
@@ -74,7 +97,7 @@
                           foreach ($valid_ujian as $v) : ?>
                            <tr>
                              <td><?= $i++;  ?></td>
-                             <td><?= $v['tgl_tambah_ujian']  ?></td>
+                             <td><small><?= $v['tgl_tambah_ujian']  ?></small></td>
                              <td><?= $v['nama']  ?></td>
                              <td><?= $v['jenjang']  ?></td>
                              <td><?= $v['nama_prodi']  ?></td>
@@ -82,11 +105,11 @@
 
                              <!-- valid ujian -->
                              <?php if ($v['valid'] == 1) { ?>
-                               <td class="font-weight-bold text-success">VALID</td>
+                               <td class="badge badge-pill badge-success">Valid</td>
                              <?php } elseif ($v['valid'] == 2) { ?>
-                               <td class="font-weight-bold text-primary">PROSES</td>
+                               <td class="badge badge-pill badge-primary">Proses</td>
                              <?php } else { ?>
-                               <td class="font-weight-bold text-danger">TIDAK VALID</td>
+                               <td class="badge badge-pill badge-danger">Tidak Valid</td>
                              <?php } ?>
 
                              <td class="text-center">
@@ -100,6 +123,16 @@
                            </tr>
                          <?php endforeach; ?>
                        </tbody>
+                       <tfoot>
+                         <tr>
+                           <th colspan="3"></th>
+                           <th>Jenjang</th>
+                           <th>Program Studi</th>
+                           <th>Keterangan</th>
+                           <th>Validate</th>
+                           <th></th>
+                         </tr>
+                       </tfoot>
                      </table>
                    </div>
                  </div>

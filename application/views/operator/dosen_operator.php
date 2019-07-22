@@ -40,15 +40,38 @@
             <!-- Content Row -->
             <div class="row">
 
-              <div class="col-lg-12 col-md-6 mb-4">
+              <div class="col-lg-12 col-md-12 mb-4">
                 <!-- Approach -->
                 <div class="card shadow mb-4">
                   <div class="card-header py-3 bg-blue">
                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Dosen</h6>
                   </div>
                   <div class="card-body">
+                    <form action="<?= base_url('operator/dosen/list') ?>" method="post">
+                      <div class="row mb-2">
+                        <div class="col-md-3">
+                          <small>Mulai Periode</small>
+                          <?php if ($star_date != null) : ?>
+                            <small> <?= $star_date ?></small>
+                          <?php endif; ?>
+                          <input type="date" class="form-control" name="star_date">
+                        </div>
+                        <div class="col-md-3">
+                          <small>Akhir Periode</small>
+                          <?php if ($end_date != null) : ?>
+                            <small><?= $end_date ?></small>
+                          <?php endif; ?>
+                          <div class="input-group mb-3">
+                            <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                            <div class="input-group-append">
+                              <input type="submit" class="btn btn-primary" name="submit" value="cari" id="basic-addon2">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                     <div class="table-responsive">
-                      <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                      <table class="table table-bordered text-center text-nowrap table-sm" id="dataTableDosen" cellspacing="0">
                         <thead>
                           <tr>
                             <th>#</th>
@@ -66,12 +89,13 @@
                               <td><?= $i; ?></td>
                               <td><?= $d['nama_dosen'] ?></td>
                               <td><?= $d['nip'] ?></td>
-                              <?php
-                              if ($d['statusAktif'] == 1) {
-                                echo "<td class='text-success font-weight-bold'>Aktif</td>";
-                              } else {
-                                echo "<td class='text-danger font-weight-bold'>Tidak Aktif</td>";
-                              } ?>
+                              <td>
+                                <?php if ($d['statusAktif'] == 1) : ?>
+                                  Aktif
+                                <?php else : ?>
+                                  Tidak Aktif
+                                <?php endif; ?>
+                              </td>
                               <td><?= $d['jumlah_bimbingan'] ?></td>
                               <td class="text-center">
                                 <a href="<?= base_url('operator/dosen/profile/') . $d['nip']; ?>" class="btn btn-info btn-icon-split btn-sm">
@@ -86,17 +110,31 @@
                                   </span>
                                   <span class="text clr-white">Ujian</span>
                                 </a>
-                                <a href="<?= base_url('operator/dosen/bimbingan/') . $d['nip']; ?>" class="btn btn-bimbingan btn-icon-split btn-sm">
-                                  <span class="icon text-white-50">
-                                    <i class="fas fa-book"></i>
-                                  </span>
-                                  <span class="text clr-white">Bimbingan</span>
-                                </a>
+                                <form action="<?= base_url('operator/dosen/bimbingan/') . $d['nip']; ?>" method="post">
+                                  <input type="hidden" name="tglMulai" value="<?= $star_date ?>">
+                                  <input type="hidden" name="tglAkhir" value="<?= $end_date ?>">
+                                  <button type="submit" class="btn btn-bimbingan btn-icon-split btn-sm" name="bimbingan">
+                                    <span class="icon text-white-50">
+                                      <i class="fas fa-book"></i>
+                                    </span>
+                                    <span class="text clr-white">Bimbingan</span>
+                                  </button>
+                                </form>
                               </td>
                             </tr>
                             <?php $i++;
                           endforeach; ?>
                         </tbody>
+                        <tfoot>
+                          <tr>
+                            <th></th>
+                            <th>Nama Dosen</th>
+                            <th></th>
+                            <th>Status Aktif</th>
+                            <th>Jumlah Bimbingan</th>
+                            <th></th>
+                          </tr>
+                        </tfoot>
                       </table>
                     </div>
                   </div>

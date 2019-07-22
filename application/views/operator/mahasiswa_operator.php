@@ -41,18 +41,42 @@
           <!-- Content Row -->
           <div class="row">
 
-            <div class="col-lg-12 col-md-6 mb-4">
+            <div class="col-lg-12 col-md-12 mb-4">
               <!-- Approach -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-blue">
                   <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Mahasiswa</h6>
                 </div>
                 <div class="card-body">
+                  <form action="<?= base_url('operator/mahasiswa/list') ?>" method="post">
+                    <div class="row mb-2">
+                      <div class="col-md-3">
+                        <small>Mulai Periode</small>
+                        <?php if ($star_date != null) : ?>
+                          <small> <?= $star_date ?></small>
+                        <?php endif; ?>
+                        <input type="date" class="form-control" name="star_date">
+                      </div>
+                      <div class="col-md-3">
+                        <small>Akhir Periode</small>
+                        <?php if ($end_date != null) : ?>
+                          <small> <?= $end_date ?></small>
+                        <?php endif; ?>
+                        <div class="input-group mb-3">
+                          <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                          <div class="input-group-append">
+                            <input type="submit" class="btn btn-primary" name="submit" value="cari" id="basic-addon2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                   <div class="table-responsive">
-                    <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered text-center text-nowrap table-sm" id="dataTable" cellspacing="0">
                       <thead>
                         <tr>
                           <th>#</th>
+                          <th>Tanggal Mulai Tugas Akhir</th>
                           <th>Nama Mahasiswa</th>
                           <th>Jenjang</th>
                           <th>Program Studi</th>
@@ -66,26 +90,26 @@
                         <?php foreach ($mahasiswa as $m) : ?>
                           <tr>
                             <td><?= $i; ?></td>
+                            <th><?= $m['tglMulaiTA'] ?></th>
                             <td><?= $m['nama']; ?></td>
                             <td><?= $m['jenjang']; ?></td>
                             <td><?= $m['nama_prodi']; ?></td>
-                            <?php
-                            if (!$m['ujian_terakhir']['nama_ujian']) {
-                              $m['ujian_terakhir']['nama_ujian'] = "-";
-                            }
-                            ?>
-                            <td class='font-weight-bold'><?= $m['ujian_terakhir']['nama_ujian']; ?></td>
-                            <?php
-                            if ($m['ujian_terakhir']['statusUjian'] == 1) {
-                              echo "<td class='text-success font-weight-bold'>Lulus</td>";
-                            } else if ($m['ujian_terakhir']['statusUjian'] == 2) {
-                              echo "<td class='text-primary font-weight-bold'>Proses</td>";
-                            } else if ($m['ujian_terakhir']['statusUjian'] == 3) {
-                              echo "<td class='text-danger font-weight-bold'>Tidak Lulus</td>";
-                            } else {
-                              echo "<td class='font-weight-bold'>-</td>";
-                            }
-                            ?>
+                            <?php if ($m['statusKelulusan'] == 1) : ?>
+                              <td>Lulus</td>
+                              <td>-</td>
+                            <?php elseif ($m['nama_ujian'] != null) : ?>
+                              <td><?= $m['nama_ujian']  ?></td>
+                              <?php if ($m['statusUjian'] == 1) : ?>
+                                <td><span class="badge badge-pill badge-success">Lulus</span></td>
+                              <?php elseif ($m['statusUjian'] == 2) : ?>
+                                <td><span class="badge badge-pill badge-primary">Proses</span></td>
+                              <?php else : ?>
+                                <td><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
+                              <?php endif; ?>
+                            <?php elseif ($m['nama_ujian'] == null) : ?>
+                              <td>Baru Mulai</td>
+                              <td>-</td>
+                            <?php endif; ?>
                             <td class="text-center">
                               <a href="<?= base_url('operator/mahasiswa/profile/') . $m['nim']; ?>" class="btn btn-info btn-icon-split btn-sm">
                                 <span class="icon text-white-50">

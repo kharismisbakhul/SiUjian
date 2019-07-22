@@ -188,6 +188,7 @@
  									<input type="hidden" id="ujian" name="ujian" value="0">
  									<button type="submit" class="btn btn-primary" id="simpan" style="float: right;"> Simpan
  									</button>
+ 									<input type="hidden" id="operator-nip" name="nip" value="">
  									</form>
  								</div>
  							</div>

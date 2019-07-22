@@ -31,6 +31,36 @@ class Operator_model extends CI_Model
         return $this->db->get()->row_array();
     }
 
+    // ujian
+    public function getDataPeriode($star_date = null, $end_date = null)
+    {
+        $this->db->select('mahasiswa.nama,mahasiswa.jenjang,ujian.*,kodeujian.nama_ujian,prodi.nama_prodi');
+        $this->db->from('mahasiswa');
+        $this->db->join('ujian', 'ujian.mahasiswanim=mahasiswa.nim');
+        $this->db->join('kodeujian', 'ujian.kodeujiankode=kodeujian.kode');
+        $this->db->join('prodi', 'prodi.kode=mahasiswa.prodikode');
+        $this->db->order_by('ujian.tgl_tambah_ujian', 'DSC');
+        $this->db->where('ujian.tgl_tambah_ujian >=', $star_date);
+        $this->db->where('ujian.tgl_tambah_ujian <=', $end_date);
+        return $this->db->get()->result_array();
+    }
+    // Dosen
+    public function getDataPeriodeDosen($star_date = null, $end_date = null)
+    {
+        $this->db->select('COUNT(pembimbing.mahasiswanim) as jumlah_bimbingan,pembimbing.dosennip');
+        $this->db->from('pembimbing');
+        $this->db->where('pembimbing.tgl_tambah_pembimbing >=', $star_date);
+        $this->db->where('pembimbing.tgl_tambah_pembimbing <=', $end_date);
+        $this->db->order_by('pembimbing.tgl_tambah_pembimbing', 'ASC');
+        $this->db->group_by('pembimbing.dosennip');
+        $from_cluse = $this->db->get_compiled_select();
+
+        $this->db->select('dosen.nama_dosen,dosen.nip,dosen.statusAktif,kode.jumlah_bimbingan');
+        $this->db->from('dosen');
+        $this->db->join('(' . $from_cluse . ') as kode', 'kode.dosennip = dosen.nip', 'left');
+        return $this->db->get()->result_array();
+    }
+
     public function validasiUjian($data)
     {
         $this->db->set('komentar', $data['komentar']);
@@ -51,10 +81,17 @@ class Operator_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function getPosisiPenguji()
+    public function getPosisiPenguji($ujianid)
     {
+        $this->db->select('statusPenguji');
+        $this->db->from('penguji');
+        $this->db->where('Ujianid', $ujianid);
+        $from_clause = $this->db->get_compiled_select();
+
         $this->db->select('*');
         $this->db->from('posisi');
+        $this->db->join('(' . $from_clause . ') as kode', 'kode.statusPenguji=posisi.id', 'left');
+        $this->db->where('kode.statusPenguji', null);
         return $this->db->get()->result_array();
     }
 
@@ -66,6 +103,7 @@ class Operator_model extends CI_Model
         $this->db->join('ujian', 'ujian.id=' . $id_ujian);
         $this->db->join('posisi', 'posisi.id=penguji.statusPenguji', 'left');
         $this->db->where('penguji.ujianid=ujian.id');
+        $this->db->order_by('posisi.id');
         return $this->db->get()->result_array();
     }
 

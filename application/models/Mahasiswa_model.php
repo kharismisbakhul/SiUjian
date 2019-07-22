@@ -25,15 +25,23 @@ class Mahasiswa_model extends CI_Model
 
         return $this->db->get()->row_array();
     }
-    public function getPosisiPembimbing()
+    public function getPosisiPembimbing($nim)
     {
+
+        $this->db->select('dosennip,statusPembimbing');
+        $this->db->from('pembimbing');
+        $this->db->where('Mahasiswanim', $nim);
+        $from_clause = $this->db->get_compiled_select();
+
         $this->db->select('*');
         $this->db->from('posisi');
+        $this->db->join('(' . $from_clause . ') as kode', 'kode.statusPembimbing = posisi.id', 'left');
         $this->db->where('id <', 7);
+        $this->db->where('kode.statusPembimbing', null);
         return $this->db->get()->result_array();
     }
 
-    public function getPembimbing($nim)
+    public function  getPembimbing($nim)
     {
         $this->db->select('dosen.nama_dosen,pembimbing.statusPembimbing,pembimbing.id,posisi.status_dosen');
         $this->db->from('pembimbing');
@@ -47,7 +55,8 @@ class Mahasiswa_model extends CI_Model
         $data = [
             'Dosennip' => $pembimbing['Dosennip'],
             'Ujianid' => $ujian,
-            'statusPenguji' => $pembimbing['statusPenguji']
+            'statusPenguji' => $pembimbing['statusPenguji'],
+            'tgl_tambah_penguji' => date("Y/m/d")
 
         ];
         $this->db->insert('penguji', $data);
@@ -151,12 +160,27 @@ class Mahasiswa_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function getDetailLaporanMahasiswa()
+    public function getDetailLaporanMahasiswa($star_date = null, $end_date = null)
     {
-        $mahasiswa = $this->getMahasiswaPlusProdi();
-        for ($i = 0; $i < count($mahasiswa); $i++) {
-            $mahasiswa[$i]['ujian_terakhir'] = $this->getUjianTerakhir($mahasiswa[$i]['nim']);
+        $this->db->select('mhs.nim,MAX(kodeujian.kode) as K');
+        $this->db->from('mahasiswa as mhs');
+        $this->db->join('ujian', 'ujian.mahasiswanim = mhs.nim', 'left');
+        $this->db->join('kodeujian', 'ujian.kodeujiankode = kodeujian.kode', 'left');
+        if ($star_date != null && $end_date != null) {
+            $this->db->where('mhs.tglMulaiTA >=', $star_date);
+            $this->db->where('mhs.tglMulaiTA <=', $end_date);
         }
-        return $mahasiswa;
+        $this->db->group_by('mhs.nim');
+        $this->db->order_by('mhs.nim');
+        $from_clause = $this->db->get_compiled_select();
+
+        $this->db->select('kode.*,kodeujian.nama_ujian,ujian.id,ujian.statusUjian,mahasiswa.nama,prodi.nama_prodi,mahasiswa.jenjang,mahasiswa.statusKelulusan,mahasiswa.tglMulaiTA');
+        $this->db->from('kodeujian');
+        $this->db->join('(' . $from_clause . ') as kode', 'kode.K = kodeujian.kode', 'right');
+        $this->db->join('ujian', 'kode.nim = ujian.mahasiswanim and kode.K = ujian.kodeujiankode', 'left');
+        $this->db->join('mahasiswa', 'mahasiswa.nim=kode.nim', 'left');
+        $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
+
+        return $this->db->get()->result_array();
     }
 }

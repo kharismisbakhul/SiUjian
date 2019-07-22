@@ -28,7 +28,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <?= form_open_multipart('mahasiswa/tambahPublikasi'); ?>
+                    <?= form_open_multipart('mahasiswa/tambahPublikasi/' . $user['nim']); ?>
                     <div class="form-group row mb-3">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Artikel</label>
                         <div class="col-sm-8">
@@ -90,7 +90,6 @@
                             <?php } ?>
                         </div>
                     </div>
-
                     <div class="row mt-4">
                         <div class="col-lg-8">
                         </div>

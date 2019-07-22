@@ -90,10 +90,10 @@
                         <div class="col-sm-4">
                             <!-- apabila user sebagai mhs,dosen,pimpinan -->
                             <?php if ($this->session->userdata('user_profile_kode') == 5  || $this->session->userdata('user_profile_kode') == 4 || $this->session->userdata('user_profile_kode') == 3) { ?>
-                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="" readonly>
+                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>" readonly>
                             <?php } else { ?>
                                 <!-- apabila user sebagai admin,operator -->
-                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="">
+                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>">
                             <?php } ?>
                         </div>
                     </div>

@@ -98,9 +98,26 @@ $('.detail-ujian').on('click', function () {
 			$('#tgl_ujian').html(': ' + data['ujian'].tgl_ujian);
 			$('#nilai-akhir').html(data['ujian'].nilai_akhir)
 			if (data['ujian'].statusUjian == 2) {
-				$('#statusUjian').html(': PROSES');
+				$('.statusUjian').html('Proses');
+				$('.statusUjian').addClass('badge badge-pill badge-primary');
+			} else if (data['ujian'].statusUjian == 1) {
+				$('.statusUjian').html('Lulus');
+				$('.statusUjian').addClass('badge badge-pill badge-success');
+			} else {
+				$('.statusUjian').html('Tidak Lulus');
+				$('.statusUjian').addClass('badge badge-pill badge-danger');
 			}
-			$('#valid').html(': ' + data['ujian'].valid);
+			if (data['ujian'].valid == 2) {
+				$('.valid').html('Proses');
+				$('.valid').addClass('badge badge-pill badge-primary');
+			} else if (data['ujian'].valid == 1) {
+				$('.valid').html('Valid');
+				$('.valid').addClass('badge badge-pill badge-success');
+			} else {
+				$('.valid').html('Tidak Valid');
+				$('.valid').addClass('badge badge-pill badge-danger');
+			}
+
 			$('#komentar').html(': ' + data['ujian'].komentar);
 			$('#bobot').html(': ' + data['ujian'].bobot);
 			$('#bukti').html(': ' + data['ujian'].bukti);
@@ -111,7 +128,7 @@ $('.detail-ujian').on('click', function () {
 				<tr class="dosen-penguji">
 					<th scope="row">` + (i++) + `</th>
 					<td>` + p.nama_dosen + `</td>
-					<td>Penguji ` + p.statusPenguji + `</td>
+					<td>` + p.status_dosen + `</td>
 					<td>` + p.nilai + `</td>
 				</tr>
 				`);
@@ -288,6 +305,7 @@ $('.input-nilai').on('click', function () {
 					$('#idPenguji').val(p.id)
 					$('#ujian').val(p.Ujianid)
 					$('.inputNilai').val(p.nilai)
+					$('#operator-nip').val(p.nip)
 				}
 				$('.penguji').append(`
 				<tr class="daftar-penguji">
@@ -385,4 +403,89 @@ $('.info-bimbingan').on('click', function () {
 // akhir bimbingan
 
 
+
 // akhir dosen
+
+// dataTable Ujian-operator
+$(document).ready(function () {
+	$('#test').DataTable({
+		initComplete: function () {
+			this.api().columns([3, 4, 5, 6]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Ujian-operator
+
+// dataTable Dosen-operator
+$(document).ready(function () {
+	$('#dataTableDosen').DataTable({
+		initComplete: function () {
+			this.api().columns([1, 3, 4]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Dosen-operator
+
+// dataTable Dosen
+$(document).ready(function () {
+	$('#dataTableBimbingan').DataTable({
+		initComplete: function () {
+			this.api().columns([3, 4, 5, 6]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Dosen

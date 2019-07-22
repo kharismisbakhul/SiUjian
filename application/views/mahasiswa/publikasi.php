@@ -4,12 +4,12 @@
     <!-- Page Heading -->
     <div class="row">
         <div class="col-xl-10">
-            <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?></h1>
+            <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?> - <?= $user['nama'] ?> (<?= $user['nim'] ?>) </h1>
         </div>
         <div class="col-xl-2 ">
             <?php if ($jumlah_publikasi < 2) : ?>
-                <form action="<?= base_url('mahasiswa') ?>/tambahPublikasi">
-                    <button type="submit" class="btn btn-primary float-right mb-2 tombol">
+                <form action="<?= base_url('mahasiswa/tambahPublikasi/') . $user['nim'] ?>">
+                    <button type="submit" class="btn btn-success float-right mb-2 tombol">
                         <span class="icon text-white-50">
                             <i class="fas fa-fw fa-plus-circle"></i>
                         </span>
@@ -24,22 +24,31 @@
                     <span class="text">Tambah</span>
                 </button>
             <?php endif; ?>
-
         </div>
     </div>
 
-
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-5">
             <?= $this->session->flashdata('message');  ?>
-        </div>
+            <div class="card shadow mb-3 box border-left-success">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Dosen Pembimbing</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <?php foreach ($pembimbing as $pmb) : ?>
+                            <p><?= $pmb['nama_dosen'] ?> - <span><?= $pmb['status_dosen'] ?></span></p>
 
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-
     <div class="row">
-
         <!-- Area Chart -->
         <div class="col-xl-12">
             <div class="card shadow mb-4 box border-left-success">
@@ -50,7 +59,6 @@
                 <!-- Card Body -->
                 <div class="card-body ">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar row ml-1 mr-1 ">
-
                         <table class="table table-bordered text-center">
                             <thead>
                                 <tr style="background-color: 	#f8f8f8; color: #101010">
@@ -69,26 +77,41 @@
                                         <td><?= $p['tanggal']  ?></td>
                                         <td><?= $p['judulArtikel'] ?></td>
                                         <?php if ($p['valid'] == 1) {  ?>
-                                            <td class="text-success font-weight-bold">VALID</td>
+                                            <td><span class="badge badge-pill badge-success">Valid</span></td>
                                         <?php } elseif ($p['valid'] == 2) { ?>
-                                            <td class="text-primary font-weight-bold">PROSES</td>
+                                            <td><span class="badge badge-pill badge-primary">Proses</span></td>
                                         <?php } else { ?>
-                                            <td class="text-danger font-weight-bold">TIDAK VALID</td>
+                                            <td><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
                                         <?php } ?>
 
                                         <td>
-                                            <a href="<?= base_url(); ?>mahasiswa/hapusPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-danger btn-icon-split btn-sm">
-                                                <span class="icon text-white-50">
-                                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                                </span>
-                                                <span class="text">Delete</span>
-                                            </a>
-                                            <a href="<?= base_url(); ?>mahasiswa/editPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-primary btn-icon-split btn-sm" id="editPublikasi">
-                                                <span class="icon text-white-50">
-                                                    <i class="fas fa-fw fa-pencil-alt"></i>
-                                                </span>
-                                                <span class="text">Edit</span>
-                                            </a>
+                                            <?php if ($p['valid'] == 2 || $p['valid'] == 3) :  ?>
+                                                <a href="<?= base_url(); ?>mahasiswa/hapusPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-danger btn-icon-split btn-sm">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                                    </span>
+                                                    <span class="text">Hapus</span>
+                                                </a>
+                                                <a href="<?= base_url(); ?>mahasiswa/editPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-primary btn-icon-split btn-sm" id="editPublikasi">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-fw fa-pencil-alt"></i>
+                                                    </span>
+                                                    <span class="text">Edit</span>
+                                                </a>
+                                            <?php else : ?>
+                                                <a class="btn btn-secondary btn-icon-split btn-sm">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                                    </span>
+                                                    <span class="text">Hapus</span>
+                                                </a>
+                                                <a class="btn btn-secondary btn-icon-split btn-sm" id="editPublikasi">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-fw fa-pencil-alt"></i>
+                                                    </span>
+                                                    <span class="text">Edit</span>
+                                                </a>
+                                            <?php endif; ?>
                                             <button type="button" class=" detail btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target="#modalDetail" data-id="<?= $p['idJurnal'] ?>">
                                                 <span class="icon text-white-50">
                                                     <i class="fas fa-fw fa-eye"></i>

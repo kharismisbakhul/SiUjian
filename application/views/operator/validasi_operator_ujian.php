@@ -100,7 +100,7 @@
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="buktiUjian" class="col-sm-3 col-form-label">Status Ujian</label>
+													<label for="buktiUjian" class="col-sm-3 col-form-label">Validate</label>
 													<div class="col-sm-9 pt-1">
 														<?php if ($ujian['valid'] == 1) : ?>
 															<p class="text-success font-weight-bold">VALID</p>
@@ -108,6 +108,18 @@
 															<p class="text-primary font-weight-bold">PROSES</p>
 														<?php else : ?>
 															<p class="text-danger font-weight-bold">TIDAK VALID</p>
+														<?php endif; ?>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="buktiUjian" class="col-sm-3 col-form-label">Status Ujian</label>
+													<div class="col-sm-9 pt-1">
+														<?php if ($ujian['statusUjian'] == 1) : ?>
+															<span class="badge badge-pill badge-success">Lulus</span>
+														<?php elseif ($ujian['statusUjian'] == 2) : ?>
+															<span class="badge badge-pill badge-primary">Proses</span>
+														<?php else : ?>
+															<span class="badge badge-pill badge-danger">Tidak Lulus</span>
 														<?php endif; ?>
 													</div>
 												</div>
@@ -130,7 +142,7 @@
 												</div>
 												<div class="form-group row mt-2 mr-1" style="float:right;">
 													<div class="col-lg-6 col-md-6 col-sm-6 mb-1 haha">
-														<a href="<?= base_url('operator/validasi')  ?>" class="btn btn-dark kembali">Kembali</a>
+														<a href="<?= base_url('operator/ujian')  ?>" class="btn btn-dark kembali">Kembali</a>
 													</div>
 												</div>
 											</form>
@@ -158,17 +170,18 @@
 														</span>
 														<span class="text">Nilai</span>
 													</button>
-													<form class="table-responsive" action="<?= base_url('operator/hapusPenguji') ?>" method="post">
-														<table class="table table-bordered text-center" width="100%" cellspacing="0">
-															<thead>
-																<tr>
-																	<th>#</th>
-																	<th>Nama Dosen</th>
-																	<th>Status</th>
-																	<th>Nilai</th>
-																	<th>Action</th>
-																</tr>
-															</thead>
+
+													<table class="table table-bordered text-center" width="100%" cellspacing="0">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>Nama Dosen</th>
+																<th>Status</th>
+																<th>Nilai</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<form class="table-responsive" action="<?= base_url('operator/hapusPenguji') ?>" method="post">
 															<tbody>
 																<?php $i = 1;
 																foreach ($penguji as $pngj) : ?>
@@ -185,12 +198,35 @@
 																	</tr>
 																<?php endforeach; ?>
 															</tbody>
-															<tfoot>
-																<th colspan="3">Nilai Akhir</th>
-																<th colspan="1"><?= $ujian['nilai_akhir']  ?></th>
-															</tfoot>
-														</table>
-													</form>
+														</form>
+														<tfoot>
+															<tr>
+																<td colspan="3">Nilai Akhir</td>
+																<td colspan="1"><?= $ujian['nilai_akhir']  ?></td>
+																<td></td>
+															</tr>
+															<tr>
+																<td colspan="5">
+																	<form action="<?= base_url('operator/validasiUjian/') . $ujian['id']  ?>" method="post">
+																		<button type="submit" class="btn btn-success btn-icon-split btn-sm input-nilai mr-2" style="float:center;" name="statusUjian" value=1>
+																			<span class="icon text-white-50">
+																				<i class="fas fa-fw fa-laugh-beam"></i>
+																			</span>
+																			<span class="text">Lulus</span>
+																		</button>
+																		<button type="submit" class="btn btn-danger btn-icon-split btn-sm input-nilai mr-2" style="float:center;" name="statusUjian" value=3>
+																			<span class="icon text-white-50">
+																				<i class="fas fa-fw fa-sad-cry"></i>
+																			</span>
+																			<span class="text">Tidak Lulus</span>
+																		</button>
+																	</form>
+																</td>
+															</tr>
+
+														</tfoot>
+													</table>
+
 												</div>
 											</div>
 										</div>
@@ -291,10 +327,6 @@
 												<td><?= $dsn['nama_dosen'];  ?></td>
 												<td><?= $dsn['nip'] ?></td>
 												<td>
-													<a data-id="<?= $dsn['nip']  ?>" class="info badge badge-info text-white pb-2">
-														<span>info</span>
-														<i class="fas fa-fw fa-info-circle"></i>
-													</a>
 													<input type="radio" name="nip" value="<?= $dsn['nip']  ?>">
 												</td>
 											</tr>
