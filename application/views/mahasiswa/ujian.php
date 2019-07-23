@@ -1,14 +1,13 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <div class="row">
         <div class="col-xl-10 ">
-            <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?></h1>
+            <h1 class="h3 mb-4 text-gray-800"><?= $title; ?> - <?= $user['nama']  ?>(<?= $user['nim']  ?>)</h1>
         </div>
         <div class="col-xl-2">
             <?php if ($jumlah_ujian < 4) :  ?>
-                <form action="<?= base_url('mahasiswa')  ?>/tambahUjian">
-                    <button type="submit" class="btn btn-primary float-right mb-2 tombol">
+                <form action="<?= base_url('mahasiswa/tambahUjian/') . $user['nim']  ?>">
+                    <button type="submit" class="btn btn-success float-right mb-2 tombol">
                         <span class="icon text-white-50">
                             <i class="fas fa-fw fa-plus-circle"></i>
                         </span>
@@ -20,18 +19,29 @@
                     <span class="icon text-white-50">
                         <i class="fas fa-fw fa-plus-circle"></i>
                     </span>
-                    <span class="text">Tambah</span>
+                    <span class="text">Tambah Ujian</span>
                 </button>
             <?php endif; ?>
         </div>
     </div>
 
-
-
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-5">
             <?= $this->session->flashdata('message');  ?>
-
+            <div class="card shadow mb-3 box border-left-primary">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Dosen Pembimbing</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <?php foreach ($pembimbing as $pmb) : ?>
+                            <p><?= $pmb['nama_dosen'] ?> - <span><?= $pmb['status_dosen'] ?></span></p>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -41,7 +51,6 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Daftar Ujian</h6>
-
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -50,7 +59,7 @@
                             <thead>
                                 <tr style="background-color: 	#f8f8f8; color: #101010">
                                     <th scope="col">#</th>
-                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Tanggal Tambah Ujian</th>
                                     <th scope="col">Jenis Ujian</th>
                                     <th scope="col">Tanggal Ujian</th>
                                     <th scope="col">Status Ujian</th>
@@ -69,20 +78,20 @@
                                         <td><?= $u['tgl_ujian']  ?></td>
                                         <!-- status Ujian -->
                                         <?php if ($u['statusUjian'] == 1) { ?>
-                                            <td class="font-weight-bold text-success">LULUS</td>
+                                            <td><span class="badge badge-pill badge-success">Lulus</span></td>
                                         <?php } elseif ($u['statusUjian'] == 2) { ?>
-                                            <td class="font-weight-bold text-primary">PROSES</td>
+                                            <td><span class="badge badge-pill badge-primary">Proses</span></td>
                                         <?php } else { ?>
-                                            <td class="font-weight-bold text-danger">TIDAK LULUS</td>
+                                            <td><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
                                         <?php } ?>
 
                                         <!-- valid ujian -->
                                         <?php if ($u['valid'] == 1) { ?>
-                                            <td class="font-weight-bold text-success">VALID</td>
+                                            <td><span class="badge badge-pill badge-success">Valid</span></td>
                                         <?php } elseif ($u['valid'] == 2) { ?>
-                                            <td class="font-weight-bold text-primary">PROSES</td>
+                                            <td><span class="badge badge-pill badge-primary">Proses</span></td>
                                         <?php } else { ?>
-                                            <td class="font-weight-bold text-danger">TIDAK VALID</td>
+                                            <td><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
                                         <?php } ?>
                                         <td><?= $u['nilai_akhir']  ?></td>
                                         <td>
@@ -105,14 +114,14 @@
                                             <?php if ($u['valid'] == 1) :  ?>
                                                 <button class="btn btn-secondary btn-icon-split btn-sm">
                                                     <span class="icon text-white-50">
-                                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                                        <i class="fas fa-fw fa-pencil-alt"></i>
                                                     </span>
                                                     <span class="text">Edit</span>
                                                 </button>
                                             <?php else : ?>
                                                 <a href="<?= base_url('mahasiswa')  ?>/editUjian/<?= $u['id'];  ?>" class="btn btn-primary btn-icon-split btn-sm">
                                                     <span class="icon text-white-50">
-                                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                                        <i class="fas fa-fw fa-pencil-alt"></i>
                                                     </span>
                                                     <span class="text">Edit</span>
                                                 </a>
@@ -150,10 +159,10 @@
 
 
     <div class="modal fade bd-example-modal-xl" id="ModalDetailUjian" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Ujian</h5>
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Detail Ujian</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -187,13 +196,13 @@
                         <div class="form-group row">
                             <label for="nomorInduk" class="col-sm-3 col-form-label">Status Ujian</label>
                             <div class="col-sm-9">
-                                <p id="statusUjian"></p>
+                                <span class="statusUjian"></span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="nomorInduk" class="col-sm-3 col-form-label">Validate</label>
                             <div class="col-sm-9">
-                                <p id="valid"></p>
+                                <span class="valid"></span>
                             </div>
                         </div>
                         <div class="form-group row">

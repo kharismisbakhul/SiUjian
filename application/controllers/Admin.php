@@ -103,6 +103,13 @@ class Admin extends CI_Controller
         }
     }
 
+    private function getKodeProdi($prodi){
+        $this->db->select('kode');
+        $this->db->where('nama_prodi', $prodi);
+        $result = $this->db->get('prodi')->row_array();
+        return $result['kode'];
+    }
+
     public function adduser()
     {
         $this->form_validation->set_rules('namaadd', 'Nama', 'required|trim');
@@ -119,6 +126,8 @@ class Admin extends CI_Controller
             $username = $this->input->post('usernameadd');
             $password = $this->input->post('passwordadd');
             $nama = $this->input->post('namaadd');
+            $prodi_kode = $this->getKodeProdi($this->input->post('prodi'));
+            $jenjang = $this->input->post('jenjang');
             $user_profile_kode = $this->getProfilKode($this->input->post('privileges'));
             $is_active = $this->getStatus($this->input->post('status'));
             $data = array(
@@ -129,30 +138,30 @@ class Admin extends CI_Controller
                 'is_active' => $is_active
             );
             if ($user_profile_kode == 5) {
-                $prodi = $this->input->post('prodi');
-                $this->db->select('kode');
-                $this->db->where('nama_prodi', $prodi);
-                $prodi_kode = $this->db->get('prodi')->row_array();
                 $data_mahasiswa = [
                     'nim' => $username,
                     'nama' => $nama,
                     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'prodikode' => $prodi_kode['kode'],
+                    'prodikode' => $prodi_kode,
+                    'jenjang' => $jenjang,
                     'noTest' => base64_encode(random_bytes(3))
                 ];
                 $this->db->insert('mahasiswa', $data_mahasiswa);
             }
-            if ($user_profile_kode == 4) {
+            else if ($user_profile_kode == 4 || $user_profile_kode == 3) {
                 $data_dosen = [
                     'nip' => $username,
-                    'nama' => $nama,
+                    'nama_dosen' => $nama,
+                    'jenjang' => $jenjang,
+                    'prodi_dosen' => $prodi_kode,
                     'statusAktif' => $is_active
                 ];
+                if($user_profile_kode == 3){
+                    $data_dosen['jabatan_pimpinan'] = $this->input->post('posisi');
+                }
                 $this->db->insert('dosen', $data_dosen);
             }
             $this->db->insert('user', $data);
-            // var_dump($data);
-            // die;
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Account has been registered</div>');
             redirect('admin/manajemenUser');
         }

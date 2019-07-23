@@ -16,16 +16,17 @@ $('.custom-file-input').on('change', function () {
 	let fileName = $(this).val().split('\\').pop();
 	$(this).next('.custom-file-label').addClass("selected").html(fileName);
 });
+
 // mahasiswa
 $('.detail').on('click', function () {
 	let id = $(this).data('id');
 	$.ajax({
 
-		url: 'http://localhost:8080/SiUjian/mahasiswa/getDetailPublikasi/' + id,
+		url: 'http://localhost/SiUjian/mahasiswa/getDetailPublikasi/' + id,
 		method: 'get',
 		dataType: 'json',
 		beforeSend: function () {
-			$('.loader').attr('src', 'http://localhost:8080/SiUjian/assets/img/loader2.gif')
+			$('.loader').attr('src', 'http://localhost/SiUjian/assets/img/loader2.gif')
 		},
 		success: function (data) {
 			$('.loader').hide()
@@ -37,7 +38,7 @@ $('.detail').on('click', function () {
 			$('#volumeDanNoTerbitan').html(data.volumeDanNoTerbitan);
 			$('#valid').html(data.valid);
 			$('#bukti').html(data.bukti);
-			$('#bukti').attr('href', 'http://localhost:8080/SiUjian/assets/publikasi/' + data.bukti);
+			$('#bukti').attr('href', 'http://localhost/SiUjian/assets/publikasi/' + data.bukti);
 
 		}
 	});
@@ -69,14 +70,14 @@ $('.detail-ujian').on('click', function () {
 	}
 	console.log(action);
 	$.ajax({
-		url: 'http://localhost:8080/SiUjian/mahasiswa/getDetailUjian/' + id,
+		url: 'http://localhost/SiUjian/mahasiswa/getDetailUjian/' + id,
 		method: 'get',
 		dataType: 'json',
 		beforeSend: function (jqXHR, options) {
 			$('.test').hide();
 			$('.modal-body').append(`
 				<div class="dosen-penguji" style="height:550px">
-					<img src="http://localhost:8080/SiUjian/assets/img/loader.gif" class="transis rounded mx-auto d-block" style="width:80%;">
+					<img src="http://localhost/SiUjian/assets/img/loader.gif" class="transis rounded mx-auto d-block" style="width:80%;">
 				</div>
 				`);
 			setTimeout(function () {
@@ -97,20 +98,37 @@ $('.detail-ujian').on('click', function () {
 			$('#tgl_ujian').html(': ' + data['ujian'].tgl_ujian);
 			$('#nilai-akhir').html(data['ujian'].nilai_akhir)
 			if (data['ujian'].statusUjian == 2) {
-				$('#statusUjian').html(': PROSES');
+				$('.statusUjian').html('Proses');
+				$('.statusUjian').addClass('badge badge-pill badge-primary');
+			} else if (data['ujian'].statusUjian == 1) {
+				$('.statusUjian').html('Lulus');
+				$('.statusUjian').addClass('badge badge-pill badge-success');
+			} else {
+				$('.statusUjian').html('Tidak Lulus');
+				$('.statusUjian').addClass('badge badge-pill badge-danger');
 			}
-			$('#valid').html(': ' + data['ujian'].valid);
+			if (data['ujian'].valid == 2) {
+				$('.valid').html('Proses');
+				$('.valid').addClass('badge badge-pill badge-primary');
+			} else if (data['ujian'].valid == 1) {
+				$('.valid').html('Valid');
+				$('.valid').addClass('badge badge-pill badge-success');
+			} else {
+				$('.valid').html('Tidak Valid');
+				$('.valid').addClass('badge badge-pill badge-danger');
+			}
+
 			$('#komentar').html(': ' + data['ujian'].komentar);
 			$('#bobot').html(': ' + data['ujian'].bobot);
 			$('#bukti').html(': ' + data['ujian'].bukti);
-			$('#bukti').attr('href', 'http://localhost:8080/SiUjian/assets/ujian/' + data['ujian'].bukti);
+			$('#bukti').attr('href', 'http://localhost/SiUjian/assets/ujian/' + data['ujian'].bukti);
 			let i = 1;
 			data['penguji'].forEach(function (p) {
 				$('.penguji').append(`
 				<tr class="dosen-penguji">
 					<th scope="row">` + (i++) + `</th>
 					<td>` + p.nama_dosen + `</td>
-					<td>Penguji ` + p.statusPenguji + `</td>
+					<td>` + p.status_dosen + `</td>
 					<td>` + p.nilai + `</td>
 				</tr>
 				`);
@@ -120,11 +138,6 @@ $('.detail-ujian').on('click', function () {
 	});
 })
 
-// $('.cls').on('click', function () {
-// 	$('.dosen-penguji').remove();
-// })
-
-
 // akhir mahasiswa
 
 // Operator
@@ -133,13 +146,13 @@ $('.info').on('click', function () {
 	$('#loader').remove();
 	let id = $(this).data('id');
 	$.ajax({
-		url: 'http://localhost:8080/SiUjian/operator/getInfoPenguji/' + id,
+		url: 'http://localhost/SiUjian/operator/getInfoPenguji/' + id,
 		method: 'get',
 		dataType: 'json',
 		beforeSend: function () {
 			$('#jadwal-dosen').append(`
 				<div id="loader">
-					<img src="http://localhost:8080/SiUjian/assets/img/loader_fix.gif" style="width: 50%" class="rounded mx-auto d-block">
+					<img src="http://localhost/SiUjian/assets/img/loader_fix.gif" style="width: 50%" class="rounded mx-auto d-block">
 				</div>	
 			`);
 
@@ -152,7 +165,7 @@ $('.info').on('click', function () {
 					$('#jadwal-dosen').append(`
 						<div class="card" id="penguji" style="width:120%;">
 							<h5 class="text-center">test</h5>
-							<img src="http://localhost:8080/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
+							<img src="http://localhost/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
 							<div class="card-body">
 								<table class="table table-bordered text-center" id="kuy" width="100%" cellspacing="0">
 									<thead>
@@ -180,7 +193,7 @@ $('.info').on('click', function () {
 				$('#jadwal-dosen').append(`
 						<div class="card" id="penguji" style="width:120%;">
 							<h5 class="text-center">test</h5>
-							<img src="http://localhost:8080/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
+							<img src="http://localhost/SiUjian/assets/img/profile/237627.jpg" class="rounded mx-auto d-block img-thumbnail card-img-top" style="width: 50%">
 							<div class="card-body">
 								<p>Tidak Ada Jadwal Ujian Dosen</p>
 							</div>
@@ -208,7 +221,7 @@ $('.cls').on('click', function () {
 $('.privileges').on('change', function () {
 	// alert("<?php echo $aa; ?>");
 	$.ajax({
-		url: 'http://localhost:8080/SiUjianTemp/admin/getListProdi',
+		url: 'http://localhost/SiUjianTemp/admin/getListProdi',
 		method: 'get',
 		dataType: 'json',
 
@@ -261,10 +274,13 @@ function myFunction(item) {
 $('.input-nilai').on('click', function () {
 	let id = $(this).data('id');
 	let nip = $('#nip').val();
-
+	let url = $(location).attr('href');
+	let segments = url.split('/');
+	let action = segments[7];
 	$('.daftar-penguji').remove();
+	$('.daftar-pembimbing').remove();
 	$.ajax({
-		url: 'http://localhost:8080/SiUjian/dosen/getDetailUjian/' + id,
+		url: 'http://localhost/SiUjian/dosen/getDetailUjian/' + id,
 		method: 'get',
 		dataType: 'json',
 		success: function (data) {
@@ -279,12 +295,15 @@ $('.input-nilai').on('click', function () {
 			$('#nilai_akhir').html(nilai_akhir)
 
 
+			console.log(action)
 			let i = 1;
 			data['penguji'].forEach(function (p) {
-				if (p.nip == nip) {
+
+				if (p.nip == nip || p.nip == action) {
 					$('#idPenguji').val(p.id)
 					$('#ujian').val(p.Ujianid)
-					$('#inputNilai').val(p.nilai)
+					$('.inputNilai').val(p.nilai)
+					$('#operator-nip').val(p.nip)
 				}
 				$('.penguji').append(`
 				<tr class="daftar-penguji">
@@ -318,7 +337,7 @@ $('.info-bimbingan').on('click', function () {
 	$('.list-pembimbing').remove();
 	$('.list-publikasi').remove();
 	$.ajax({
-		url: 'http://localhost:8080/SiUjian/dosen/getDetailBimbingan/' + nim,
+		url: 'http://localhost/SiUjian/dosen/getDetailBimbingan/' + nim,
 		method: 'get',
 		dataType: 'json',
 		success: function (data) {
@@ -382,4 +401,89 @@ $('.info-bimbingan').on('click', function () {
 // akhir bimbingan
 
 
+
 // akhir dosen
+
+// dataTable Ujian-operator
+$(document).ready(function () {
+	$('#test').DataTable({
+		initComplete: function () {
+			this.api().columns([3, 4, 5, 6]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Ujian-operator
+
+// dataTable Dosen-operator
+$(document).ready(function () {
+	$('#dataTableDosen').DataTable({
+		initComplete: function () {
+			this.api().columns([1, 3, 4]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Dosen-operator
+
+// dataTable Dosen
+$(document).ready(function () {
+	$('#dataTableBimbingan').DataTable({
+		initComplete: function () {
+			this.api().columns([3, 4, 5, 6]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Dosen

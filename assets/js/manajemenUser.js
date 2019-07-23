@@ -19,7 +19,17 @@ $('.privileges').on('change', function () {
         clear();
         $('.a').addClass('form-group row');
         $('.a').append(`
-                <label for= "prodi" class= "col-sm-4 col-form-label" >Prodi</label >
+        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
+        <div class="col-sm-8">
+        <select class="form-control jenjang" name="jenjang" id="jenjang">
+        <option>S2</option>
+        <option>S3</option>
+        </select>
+        </div>
+        `);
+        $('.b').addClass('form-group row');
+                        $('.b').append(`
+                <label for= "prodi" class= "col-sm-4 col-form-label">Prodi</label>
                     <div class="col-sm-8">
                         <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
                         </select>
@@ -30,13 +40,50 @@ $('.privileges').on('change', function () {
         clear();
         $('.a').addClass('form-group row');
         $('.a').append(`
-                        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
-                            <div class="col-sm-8">
-                                <select class="form-control jenjang" name="jenjang" id="jenjang">
-                                <option>S2</option>
-                                <option>S3</option>
-                                </select>
-                                </div>`);
+        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
+        <div class="col-sm-8">
+        <select class="form-control jenjang" name="jenjang" id="jenjang">
+        <option>S2</option>
+        <option>S3</option>
+        </select>
+        </div>
+        `);
+        $('.b').addClass('form-group row');
+                        $('.b').append(`
+                <label for= "prodi" class= "col-sm-4 col-form-label">Prodi</label>
+                    <div class="col-sm-8">
+                        <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
+                        </select>
+                        </div>`);
+        d.forEach(myFunction);
+      }
+      else if($('.privileges').val() === "Pimpinan"){
+        clear();
+        $('.a').addClass('form-group row');
+        $('.a').append(`
+        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
+        <div class="col-sm-8">
+        <select class="form-control jenjang" name="jenjang" id="jenjang">
+        <option>S2</option>
+        <option>S3</option>
+        </select>
+        </div>
+        `);
+        $('.b').addClass('form-group row');
+                        $('.b').append(`
+                <label for= "prodi" class= "col-sm-4 col-form-label">Prodi</label>
+                    <div class="col-sm-8">
+                        <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
+                        </select>
+                        </div>`);
+        d.forEach(myFunction);
+        $('.c').addClass('form-group row');
+        $('.c').append(`
+        <label for= "posisi" class= "col-sm-4 col-form-label" >Posisi</label >
+        <div class="col-sm-8">
+        <textarea class="form-control posisi" name="posisi" id="posisi"></textarea>
+        </div>
+        `);
       }
       else {
         clear();
@@ -47,7 +94,11 @@ $('.privileges').on('change', function () {
 
 function clear() {
   $('.a').removeClass('form-group row');
+  $('.b').removeClass('form-group row');
+  $('.c').removeClass('form-group row');
   $('.a').html(``);
+  $('.b').html(``);
+  $('.c').html(``);
 }
 
 function myFunction(item) {

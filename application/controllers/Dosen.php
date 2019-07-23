@@ -41,8 +41,18 @@ class Dosen extends CI_Controller
     }
     public function bimbingan()
     {
+        $this->load->model('Dosen_model', 'dosen');
         $data = $this->initData();
         $data['title'] = 'Bimbingan';
+        $data['star_date'] = "";
+        $data['end_date'] = "";
+        if ($this->input->post('submit') && $this->input->post('star_date') && $this->input->post('end_date')) {
+            $data['star_date'] = $this->input->post('star_date');
+            $data['end_date'] = $this->input->post('end_date');
+            $data['bimbingan'] = $this->dosen->getStatusBimbingan($this->input->post('nip'), $data['star_date'], $data['end_date']);
+        } else {
+            $data['bimbingan'] = $this->dosen->getStatusBimbingan($this->input->post('nip'), null, null);
+        }
         $this->loadTemplate($data);
         $this->load->view('dosen/bimbingan', $data);
         $this->load->view('templates/footer');
@@ -76,6 +86,9 @@ class Dosen extends CI_Controller
             $this->db->where('nip', $data['user_login']['nip']);
             $this->db->update('dosen', $update);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Profil berhasil di perbaharui ! </div>');
+            if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
+                redirect('operator/dosen/profile/' . $this->input->post('nip'));
+            }
             redirect('dosen/profil');
         }
     }
@@ -100,6 +113,9 @@ class Dosen extends CI_Controller
             $NilaiAkhir = $this->dosen->cekNilaiAkhir($data['id_ujian']);
             $this->dosen->updateNilaiAkhir($NilaiAkhir['nilai'], $data['id_ujian']);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> nilai berhasil di tambah ! </div>');
+            if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
+                redirect('operator/dosen/ujian/' . $this->input->post('nip'));
+            }
             redirect('dosen/inputNilai');
         }
     }

@@ -168,7 +168,7 @@
  											<p>:</p>
  										</div>
  										<div class="col-sm-8">
- 											<input type="text" class="form-control" id="inputNilai" name="inputNilai" placeholder="">
+ 											<input type="text" class="form-control inputNilai" id="inputNilai" name="inputNilai" placeholder="">
  											<?= form_error('nilai', '<small class="text-danger pl-3">', '</small>'); ?>
  										</div>
  									</div>
@@ -187,6 +187,7 @@
  									<input type="hidden" id="ujian" name="ujian" value="0">
  									<button type="submit" class="btn btn-primary" id="simpan" style="float: right;"> Simpan
  									</button>
+ 									<input type="hidden" id="operator-nip" name="nip" value="">
  									</form>
  								</div>
  							</div>

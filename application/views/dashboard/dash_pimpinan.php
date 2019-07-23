@@ -15,7 +15,7 @@
             <div class="card-body">
               <div class="row no-gutters align-items-center">
                 <div class="col ml-auto">
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">Selamat Datang di Si-Ujian, <span id="user_name" class="text-gray-900 font-weight-bolder">Wayan Firdaus Mahmudy</span></div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">Selamat Datang di Si-Ujian, <span id="user_name" class="text-gray-900 font-weight-bolder"><?= $user['nama'] ?></span></div>
                   <div class="text-s font-weight-normal text-gray-800 mt-2"></div>
                 </div>
                 <div class="col-auto mr-3">
@@ -33,7 +33,16 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">jumlah mahasiswa bimbingan</div>
-                  <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><span>20</span> Orang</div>
+                  <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">
+                    <span>
+                      <?php
+                      if ($bimbingan_jumlah < 10) {
+                        echo "0" . $bimbingan_jumlah;
+                      } else {
+                        echo $bimbingan_jumlah;
+                      };
+                      ?>
+                    </span> Orang</div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-graduation-cap fa-4x text-gray-300"></i>
@@ -51,7 +60,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jadwal Ujian Selanjutnya (Penguji)</div>
-                  <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">22 Juli 2019</div>
+                  <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"></div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-calendar-alt fa-4x text-gray-300"></i>
@@ -86,7 +95,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pembimbing Mahasiswa terbanyak</div>
-                  <div class="h6 mb-0 font-weight-bold text-gray-800 mt-3">Adam Hendra Brata., S.Kom., M.Kom.</div>
+                  <div class="h6 mb-0 font-weight-bold text-gray-800 mt-3"><?= $pembimbing_terbanyak['nama_dosen'] ?></div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-chalkboard-teacher fa-4x text-gray-300"></i>

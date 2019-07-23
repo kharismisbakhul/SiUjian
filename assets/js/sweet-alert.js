@@ -14,6 +14,13 @@ $('.logout').on('click', function () {
     })
 });
 
+$("#searchYear").on("change", function () {
+    var value = $(this).val();
+    $("#tabelBimbingan tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+});
+
 // $('.userdelete').on('click', function () {
 //     Swal.fire({
 //         title: 'Are you sure?',

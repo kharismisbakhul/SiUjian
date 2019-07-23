@@ -27,7 +27,7 @@
 			<!-- Content Row -->
 			<div class="row">
 
-				<div class="d-none d-lg-block col-md-8 mb-4">
+				<div class="d-none d-lg-block col-md-10 mb-4">
 					<div class="shadow mb-1">
 						<a href="#collapseCardExample" class="d-block card-header py-3 bg-blue text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
 							<div class="d-sm-flex align-items-center justify-content-between">
@@ -50,11 +50,11 @@
 					<!-- Content Row -->
 					<div class="row">
 
-						<div class="col-lg-7 col-md-12 col-sm-12 mb-4">
+						<div class="col-lg-10 col-md-12 col-sm-12 mb-4">
 							<!-- Approach -->
 							<div class="card shadow mb-4">
 								<div class="card-header py-3 bg-blue">
-									<h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Permintaan
+									<h6 class="m-0 font-weight-bold text-capitalize clr-white">Permintaan
 										Validasi - Ujian</h6>
 								</div>
 								<div class="card-body">
@@ -100,7 +100,7 @@
 													</div>
 												</div>
 												<div class="form-group row">
-													<label for="buktiUjian" class="col-sm-3 col-form-label">Status Ujian</label>
+													<label for="buktiUjian" class="col-sm-3 col-form-label">Validate</label>
 													<div class="col-sm-9 pt-1">
 														<?php if ($ujian['valid'] == 1) : ?>
 															<p class="text-success font-weight-bold">VALID</p>
@@ -108,6 +108,18 @@
 															<p class="text-primary font-weight-bold">PROSES</p>
 														<?php else : ?>
 															<p class="text-danger font-weight-bold">TIDAK VALID</p>
+														<?php endif; ?>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label for="buktiUjian" class="col-sm-3 col-form-label">Status Ujian</label>
+													<div class="col-sm-9 pt-1">
+														<?php if ($ujian['statusUjian'] == 1) : ?>
+															<span class="badge badge-pill badge-success">Lulus</span>
+														<?php elseif ($ujian['statusUjian'] == 2) : ?>
+															<span class="badge badge-pill badge-primary">Proses</span>
+														<?php else : ?>
+															<span class="badge badge-pill badge-danger">Tidak Lulus</span>
 														<?php endif; ?>
 													</div>
 												</div>
@@ -130,7 +142,7 @@
 												</div>
 												<div class="form-group row mt-2 mr-1" style="float:right;">
 													<div class="col-lg-6 col-md-6 col-sm-6 mb-1 haha">
-														<a href="<?= base_url('operator/validasi')  ?>" class="btn btn-dark kembali">Kembali</a>
+														<a href="<?= base_url('operator/ujian')  ?>" class="btn btn-dark kembali">Kembali</a>
 													</div>
 												</div>
 											</form>
@@ -140,54 +152,90 @@
 							</div>
 						</div>
 
-						<div class="col-lg-5 col-md-12 col-sm-12 mb-4">
+						<div class="col-lg-12 col-md-12 col-sm-12 mb-4">
 							<!-- Approach -->
 							<div class="row">
-								<div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="col-lg-6 col-md-12 col-sm-12">
 									<div class="card shadow mb-4">
 										<div class="card-header py-3 bg-blue">
-											<h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar
-												Permintaan Validasi - Penguji</h6>
+											<h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Penguji</h6>
 										</div>
 										<div class="card-body">
 											<div class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12" style="margin: 0 auto;">
-													<button type="button" class="tambahPenguji btn btn-success block mb-4 pb-2" data-toggle="modal" data-target="#tambahPenguji" style="float:right;" data-id="<?= $this->uri->segment(3); ?>">Tambah Penguji <i class="fas fa-plus-circle"></i></button>
-													<form class="table-responsive" action="<?= base_url('operator/hapusPenguji') ?>" method="post">
-														<table class="table table-bordered text-center" width="100%" cellspacing="0">
-															<thead>
-																<tr>
-																	<th>#</th>
-																	<th>Nama Dosen</th>
-																	<th>Status</th>
-																	<th>Action</th>
-																</tr>
-															</thead>
+													<button type="button" class="tambahPenguji btn btn-success block mb-4 pb-2 btn-sm " data-toggle="modal" data-target="#tambahPenguji" style="float:right;" data-id="<?= $this->uri->segment(3); ?>">Tambah Penguji <i class="fas fa-plus-circle"></i></button>
+													<button class="btn btn-warning btn-icon-split btn-sm input-nilai mr-2" style="float:right;" data-toggle="modal" data-target="#ModalInputNilai">
+														<span class="icon text-white-50">
+															<i class="fas fa-pen-square"></i>
+														</span>
+														<span class="text">Nilai</span>
+													</button>
+
+													<table class="table table-bordered text-center" width="100%" cellspacing="0">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>Nama Dosen</th>
+																<th>Status</th>
+																<th>Nilai</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<form class="table-responsive" action="<?= base_url('operator/hapusPenguji') ?>" method="post">
 															<tbody>
 																<?php $i = 1;
 																foreach ($penguji as $pngj) : ?>
 																	<tr>
 																		<td><?= $i++  ?></td>
 																		<td><?= $pngj['nama_dosen']  ?></td>
-																		<td><?= $pngj['statusPenguji']  ?></td>
+																		<td><?= $pngj['status_dosen']  ?></td>
+																		<td><?= $pngj['nilai'] ?></td>
 																		<td><button type="submit" class="btn btn-danger btn-sm text-white" name="id_penguji" placeholder="hapus" value="<?= $pngj['id']; ?>">hapus</button>
 																			<input type="hidden" value="<?= $this->uri->segment(3); ?>" name="id_ujian" id="id_ujian">
+
+
 																		</td>
 																	</tr>
 																<?php endforeach; ?>
 															</tbody>
-														</table>
-													</form>
+														</form>
+														<tfoot>
+															<tr>
+																<td colspan="3">Nilai Akhir</td>
+																<td colspan="1"><?= $ujian['nilai_akhir']  ?></td>
+																<td></td>
+															</tr>
+															<tr>
+																<td colspan="5">
+																	<form action="<?= base_url('operator/validasiUjian/') . $ujian['id']  ?>" method="post">
+																		<button type="submit" class="btn btn-success btn-icon-split btn-sm input-nilai mr-2" style="float:center;" name="statusUjian" value=1>
+																			<span class="icon text-white-50">
+																				<i class="fas fa-fw fa-laugh-beam"></i>
+																			</span>
+																			<span class="text">Lulus</span>
+																		</button>
+																		<button type="submit" class="btn btn-danger btn-icon-split btn-sm input-nilai mr-2" style="float:center;" name="statusUjian" value=3>
+																			<span class="icon text-white-50">
+																				<i class="fas fa-fw fa-sad-cry"></i>
+																			</span>
+																			<span class="text">Tidak Lulus</span>
+																		</button>
+																	</form>
+																</td>
+															</tr>
+
+														</tfoot>
+													</table>
+
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="col-lg-6 col-md-12 col-sm-12">
 									<div class="card shadow mb-4">
 										<div class="card-header py-3 bg-blue">
-											<h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar
-												Permintaan Validasi - Pembimbing</h6>
+											<h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Pembimbing</h6>
 										</div>
 										<div class="card-body">
 											<div class="row">
@@ -208,7 +256,7 @@
 																	<tr>
 																		<td><?= $i++  ?></td>
 																		<td><?= $pmb['nama_dosen']; ?></td>
-																		<td><?= $pmb['statuspembimbing']  ?></td>
+																		<td><?= $pmb['status_dosen']  ?></td>
 																	</tr>
 																<?php endforeach; ?>
 															</tbody>
@@ -249,9 +297,8 @@
 	<i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Modal -->
 <div class="modal fade" id="tambahPenguji" tabindex="-1" role="dialog" aria-labelledby="tambahPenguji" aria-hidden="true">
-	<div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-blue">
 				<h5 class="modal-title clr-white" id="exampleModalLabel">Tambah Penguji untuk Ujian</h5>
@@ -260,17 +307,17 @@
 				</button>
 			</div>
 			<form action="<?= base_url('operator/tambahPenguji/') . $this->uri->segment(3);  ?>" class="table-responsive" method="post">
-				<div class="form-group row">
-					<div class="modal-body">
+				<div class="container">
+					<div class="modal-body" style="height: 35rem;">
 						<div class="row">
-							<div class="col-lg-6 ml-2">
-								<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+							<div class="col-lg-12 col-md-12 col-xs-12 ml-2 mx-auto">
+								<table class="table table-bordered text-center" id="dataTable" cellspacing="0">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>Nama Dosen</th>
-											<th>Nip</th>
-											<th>Action</th>
+											<th scope="row">#</th>
+											<th scope="row">Nama Dosen</th>
+											<th scope="row">Nip</th>
+											<th style="width: 50%">Action</th>
 										</tr>
 									</thead>
 									<tbody id="pop-dosen">
@@ -280,10 +327,6 @@
 												<td><?= $dsn['nama_dosen'];  ?></td>
 												<td><?= $dsn['nip'] ?></td>
 												<td>
-													<a data-id="<?= $dsn['nip']  ?>" class="info badge badge-info text-white pb-2">
-														<span>info</span>
-														<i class="fas fa-fw fa-info-circle"></i>
-													</a>
 													<input type="radio" name="nip" value="<?= $dsn['nip']  ?>">
 												</td>
 											</tr>
@@ -291,32 +334,77 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="col-lg-5" id="jadwal-dosen">
 
-							</div>
 						</div>
 
 					</div>
-
 				</div>
-				<div class="form-group modal-footer">
-					<div class="input-group" style="width: 30%">
-						<div class="input-group-prepend">
-							<label class="input-group-text" for="inputGroupSelect01">Status Penguji</label>
+				<div class="container">
+					<div class="modal-footer">
+						<div class="input-group" style="width: 50%;">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="inputGroupSelect01">Status Penguji</label>
+							</div>
+							<select class="custom-select" id="inputGroupSelect01" name="statuspenguji">
+								<?php foreach ($posisiPenguji as $pngj) : ?>
+									<option value="<?= $pngj['id'] ?>"><?= $pngj['status_dosen'] ?></option>
+								<?php endforeach; ?>
+							</select>
 						</div>
-						<select class="custom-select" id="inputGroupSelect01" name="statuspenguji">
-							<option value="1" selected>1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="3">Tamu</option>
-						</select>
+						<button type="button" class="btn btn-secondary cls" data-dismiss="modal">Tutup</button>
+						<button ype="submit" class="btn btn-success cls"> Tambah
+						</button>
 					</div>
-					<button type="button" class="btn btn-secondary cls" data-dismiss="modal">Tutup</button>
-					<button ype="submit" class="btn btn-success cls"> Tambah
-					</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
 <!-- End of Detail Profile modal -->
+
+
+<!-- Input Nilai -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="ModalInputNilai">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Nilai Ujian</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="table-responsive" action="<?= base_url('operator/ubahNilai') ?>" method="post">
+				<div class="modal-body">
+					<table class="table table-bordered text-center" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Nama Dosen</th>
+								<th>Status</th>
+								<th>Nilai</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php $i = 1;
+							foreach ($penguji as $pngj) : ?>
+								<tr>
+									<td><?= $i++  ?></td>
+									<td><?= $pngj['nama_dosen']  ?></td>
+									<td>Penguji<?= $pngj['statusPenguji']  ?></td>
+									<td><input type="text" class="form-control" placeholder="Nilai..." value="<?= $pngj['nilai'] ?>" name="<?= $pngj['id']; ?>">
+										<input type="hidden" value="<?= $pngj['Ujianid'] ?>" name="idujian">
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Simpan</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- Akhir Input Nilia -->
