@@ -103,7 +103,8 @@ class Admin extends CI_Controller
         }
     }
 
-    private function getKodeProdi($prodi){
+    private function getKodeProdi($prodi)
+    {
         $this->db->select('kode');
         $this->db->where('nama_prodi', $prodi);
         $result = $this->db->get('prodi')->row_array();
@@ -135,7 +136,8 @@ class Admin extends CI_Controller
                 'password' => password_hash($password, PASSWORD_DEFAULT),
                 'nama' => $nama,
                 'user_profile_kode' => $user_profile_kode,
-                'is_active' => $is_active
+                'is_active' => $is_active,
+                'date_created' => date('Y-m-d')
             );
             if ($user_profile_kode == 5) {
                 $data_mahasiswa = [
@@ -147,8 +149,7 @@ class Admin extends CI_Controller
                     'noTest' => base64_encode(random_bytes(3))
                 ];
                 $this->db->insert('mahasiswa', $data_mahasiswa);
-            }
-            else if ($user_profile_kode == 4 || $user_profile_kode == 3) {
+            } else if ($user_profile_kode == 4 || $user_profile_kode == 3) {
                 $data_dosen = [
                     'nip' => $username,
                     'nama_dosen' => $nama,
@@ -156,7 +157,7 @@ class Admin extends CI_Controller
                     'prodi_dosen' => $prodi_kode,
                     'statusAktif' => $is_active
                 ];
-                if($user_profile_kode == 3){
+                if ($user_profile_kode == 3) {
                     $data_dosen['jabatan_pimpinan'] = $this->input->post('posisi');
                 }
                 $this->db->insert('dosen', $data_dosen);

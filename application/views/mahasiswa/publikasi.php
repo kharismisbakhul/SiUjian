@@ -4,11 +4,11 @@
     <!-- Page Heading -->
     <div class="row">
         <div class="col-xl-10">
-            <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?> - <?= $user['nama'] ?> (<?= $user['nim'] ?>) </h1>
+            <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?> - <?= $user_login['nama'] ?> (<?= $user_login['nim'] ?>) </h1>
         </div>
         <div class="col-xl-2 ">
             <?php if ($jumlah_publikasi < 2) : ?>
-                <form action="<?= base_url('mahasiswa/tambahPublikasi/') . $user['nim'] ?>">
+                <form action="<?= base_url('mahasiswa/tambahPublikasi/') . $user_login['nim'] ?>">
                     <button type="submit" class="btn btn-success float-right mb-2 tombol">
                         <span class="icon text-white-50">
                             <i class="fas fa-fw fa-plus-circle"></i>
@@ -142,7 +142,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title <img class="loader" style="width: 80px; height: 40px;"></h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Detail Publikasi <img class="loader" style="width: 80px; height: 40px;"></h5>
 
                 <button type="button" class="close cls" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

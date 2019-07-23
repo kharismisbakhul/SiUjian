@@ -49,9 +49,17 @@ class Dosen extends CI_Controller
         if ($this->input->post('submit') && $this->input->post('star_date') && $this->input->post('end_date')) {
             $data['star_date'] = $this->input->post('star_date');
             $data['end_date'] = $this->input->post('end_date');
-            $data['bimbingan'] = $this->dosen->getStatusBimbingan($this->input->post('nip'), $data['star_date'], $data['end_date']);
+            if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
+                $data['bimbingan'] = $this->dosen->getStatusBimbingan($this->input->post('nip'), $data['star_date'], $data['end_date']);
+            } else {
+                $data['bimbingan'] = $this->dosen->getStatusBimbingan($data['user_login']['nip'], $data['star_date'], $data['end_date']);
+            }
         } else {
-            $data['bimbingan'] = $this->dosen->getStatusBimbingan($this->input->post('nip'), null, null);
+            if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
+                $data['bimbingan'] = $this->dosen->getStatusBimbingan($this->input->post('nip'), null, null);
+            } else {
+                $data['bimbingan'] = $this->dosen->getStatusBimbingan($data['user_login']['nip'], null, null);
+            }
         }
         $this->loadTemplate($data);
         $this->load->view('dosen/bimbingan', $data);

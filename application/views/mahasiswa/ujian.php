@@ -2,11 +2,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-10 ">
-            <h1 class="h3 mb-4 text-gray-800"><?= $title; ?> - <?= $user['nama']  ?>(<?= $user['nim']  ?>)</h1>
+            <h1 class="h3 mb-4 text-gray-800"><?= $title; ?> - <?= $user_login['nama']  ?>(<?= $user_login['nim']  ?>)</h1>
         </div>
         <div class="col-xl-2">
             <?php if ($jumlah_ujian < 4) :  ?>
-                <form action="<?= base_url('mahasiswa/tambahUjian/') . $user['nim']  ?>">
+                <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
                     <button type="submit" class="btn btn-success float-right mb-2 tombol">
                         <span class="icon text-white-50">
                             <i class="fas fa-fw fa-plus-circle"></i>

@@ -210,7 +210,7 @@
                                         <div class="card shadow mb-4">
                                             <div class="card-body">
                                                 <div class="table-responsive">
-                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <table class="table table-bordered" width="100%" cellspacing="0">
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
@@ -361,7 +361,7 @@
                                         <div class="card shadow mb-4">
                                             <div class="card-body">
                                                 <div class="table-responsive">
-                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <table class="table table-bordered" width="100%" cellspacing="0">
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
@@ -394,7 +394,7 @@
                                                             <p>:</p>
                                                         </div>
                                                         <div class="col-sm-8">
-                                                            <p></p>
+                                                            <p class="judulTA"></p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -403,7 +403,7 @@
                                                             <p>:</p>
                                                         </div>
                                                         <div class="col-sm-8">
-
+                                                            <p class="paradigma"></p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -412,7 +412,7 @@
                                                             <p>:</p>
                                                         </div>
                                                         <div class="col-sm-8">
-
+                                                            <p class="kataKunci"></p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -421,7 +421,7 @@
                                                             <p>:</p>
                                                         </div>
                                                         <div class="col-sm-8">
-
+                                                            <p class="tujuanP"></p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -430,7 +430,7 @@
                                                             <p>:</p>
                                                         </div>
                                                         <div class="col-sm-8">
-
+                                                            <p class="metpen1"></p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -439,7 +439,7 @@
                                                             <p>:</p>
                                                         </div>
                                                         <div class="col-sm-8">
-
+                                                            <p class="metpen1"></p>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -448,7 +448,16 @@
                                                             <p>:</p>
                                                         </div>
                                                         <div class="col-sm-8">
-
+                                                            <p class="temuan"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kontribusi dan Implikasi</label>
+                                                        <div class="col-sm-1">
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <p class="kontribusiImplikasi"></p>
                                                         </div>
                                                     </div>
                                                 </form>

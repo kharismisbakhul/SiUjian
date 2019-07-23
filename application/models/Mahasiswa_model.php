@@ -193,7 +193,7 @@ class Mahasiswa_model extends CI_Model
         return $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
     }
 
-    public function getDetailLaporanMahasiswa($prodi = 0)
+    public function getAllDetailLaporanMahasiswa($prodi = 0)
     {
         if ($prodi == 0) {
             $mahasiswa = $this->getMahasiswaPlusProdi();
@@ -210,27 +210,27 @@ class Mahasiswa_model extends CI_Model
         }
     }
 
-    // public function getDetailLaporanMahasiswa($star_date = null, $end_date = null)
-    // {
-    //     $this->db->select('mhs.nim,MAX(kodeujian.kode) as K');
-    //     $this->db->from('mahasiswa as mhs');
-    //     $this->db->join('ujian', 'ujian.mahasiswanim = mhs.nim', 'left');
-    //     $this->db->join('kodeujian', 'ujian.kodeujiankode = kodeujian.kode', 'left');
-    //     if ($star_date != null && $end_date != null) {
-    //         $this->db->where('mhs.tglMulaiTA >=', $star_date);
-    //         $this->db->where('mhs.tglMulaiTA <=', $end_date);
-    //     }
-    //     $this->db->group_by('mhs.nim');
-    //     $this->db->order_by('mhs.nim');
-    //     $from_clause = $this->db->get_compiled_select();
-    //     $this->db->select('kode.*,kodeujian.nama_ujian,ujian.id,ujian.statusUjian,mahasiswa.nama,prodi.nama_prodi,mahasiswa.jenjang,mahasiswa.statusKelulusan,mahasiswa.tglMulaiTA');
-    //     $this->db->from('kodeujian');
-    //     $this->db->join('(' . $from_clause . ') as kode', 'kode.K = kodeujian.kode', 'right');
-    //     $this->db->join('ujian', 'kode.nim = ujian.mahasiswanim and kode.K = ujian.kodeujiankode', 'left');
-    //     $this->db->join('mahasiswa', 'mahasiswa.nim=kode.nim', 'left');
-    //     $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
-    //     return $this->db->get()->result_array();
-    // }
+    public function getDetailLaporanMahasiswa($star_date = null, $end_date = null)
+    {
+        $this->db->select('mhs.nim,MAX(kodeujian.kode) as K');
+        $this->db->from('mahasiswa as mhs');
+        $this->db->join('ujian', 'ujian.mahasiswanim = mhs.nim', 'left');
+        $this->db->join('kodeujian', 'ujian.kodeujiankode = kodeujian.kode', 'left');
+        if ($star_date != null && $end_date != null) {
+            $this->db->where('mhs.tglMulaiTA >=', $star_date);
+            $this->db->where('mhs.tglMulaiTA <=', $end_date);
+        }
+        $this->db->group_by('mhs.nim');
+        $this->db->order_by('mhs.nim');
+        $from_clause = $this->db->get_compiled_select();
+        $this->db->select('kode.*,kodeujian.nama_ujian,ujian.id,ujian.statusUjian,mahasiswa.nama,prodi.nama_prodi,mahasiswa.jenjang,mahasiswa.statusKelulusan,mahasiswa.tglMulaiTA');
+        $this->db->from('kodeujian');
+        $this->db->join('(' . $from_clause . ') as kode', 'kode.K = kodeujian.kode', 'right');
+        $this->db->join('ujian', 'kode.nim = ujian.mahasiswanim and kode.K = ujian.kodeujiankode', 'left');
+        $this->db->join('mahasiswa', 'mahasiswa.nim=kode.nim', 'left');
+        $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
+        return $this->db->get()->result_array();
+    }
 
 
     public function getDosenPembimbing($nim)

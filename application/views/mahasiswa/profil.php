@@ -268,7 +268,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user_login['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['judulAkhir'];  ?></span>
                      </div>
                   </div>
 
@@ -276,7 +276,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Paradigma</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user_login['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['paradigma'];  ?></span>
                      </div>
                   </div>
 
@@ -284,7 +284,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kata Kunci</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user_login['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['kataKunci'];  ?></span>
                      </div>
                   </div>
 
@@ -292,7 +292,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tujuan Penelitian</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user_login['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['tujuanPenelitian'];  ?></span>
                      </div>
                   </div>
 
@@ -300,7 +300,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 1</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user_login['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['metodePenelitian1'];  ?></span>
                      </div>
                   </div>
 
@@ -308,7 +308,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 2</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user_login['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['metodePenelitian2'];  ?></span>
                      </div>
                   </div>
 
@@ -316,12 +316,20 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Temuan</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user_login['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['temuan'];  ?></span>
+                     </div>
+                  </div>
+
+                  <div class="form-group row  mb-1">
+                     <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kontribusi dan Implikasi</label>
+                     <div class="col-sm-9">
+                        <span>:</span>
+                        <span><?= $isianMahasiswa['kontribusiDanImplikasi'];  ?></span>
                      </div>
                   </div>
 
                   <div class="row float-right mr-3">
-                     <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalIsianMahasiswa">
+                     <button type="button" class="btn btn-primary btn-icon-split modalIsian" data-toggle="modal" data-target="#ModalIsianMahasiswa" data-id="<?= $isianMahasiswa['Mahasiswanim'] ?>">
                         <span class="icon text-white-50">
                            <i class="fas fa-pencil-alt"></i>
                         </span>
@@ -511,81 +519,81 @@
 
 <!-- Modal Edit Isian Mahasiswa-->
 <div class="modal fade" id="ModalIsianMahasiswa" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Detail Isian</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Detail Isian</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <form class="formIsian" action="<?= base_url('mahasiswa/insertIsianMahasiswa') ?>" method="post">
+            <div class="modal-body">
+               <div class="form-group row">
+                  <label for="judulTA" class="col-sm-4 col-form-label">Judul Tugas Akhir</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="judulTA" name="judulTA" placeholder="Judul Tugas Akhir" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('judulTA', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="paradigma" class="col-sm-4 col-form-label">Paradigma</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="paradigma" name="paradigma" placeholder="Paradigma" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('paradigma', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="kataKunci" class="col-sm-4 col-form-label">Kata Kunci</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="kataKunci" name="kataKunci" placeholder="Kata Kunci" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('kataKunci', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="tujuanP" class="col-sm-4 col-form-label">Tujuan Penelitian</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="tujuanP" name="tujuanP" placeholder="Tujuan Penelitian" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('tujuanP', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="metpen1" class="col-sm-4 col-form-label">Metode Penelitian 1</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="metpen1" name="metpen1" placeholder="Metode Penelitian 1" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('metpen1', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="metpen2" class="col-sm-4 col-form-label">Metode Penelitian 2</label>
+                  <div class="col-sm-8">
+                     <textarea type="text" class="form-control" id="metpen2" name="metpen2" placeholder="Metode Penelitian 2" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('metpen2', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="temuan" class="col-sm-4 col-form-label">Temuan</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="temuan" name="temuan" placeholder="Temuan" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('temuan', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="kontribusiImplikasi" class="col-sm-4 col-form-label">Kontribusi dan Implikasi</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="kontribusiImplikasi" name="kontribusiImplikasi" placeholder="Kontribusi dan Implikasi" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('kontribusiImplikasi', '<small class="text-danger pl-3">', '</small>'); ?>
+                     <input type="hidden" name="nim" id="nim" value="<?= $user_login['nim'];  ?>">
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary tombolIsian">Tambah</button>
+            </div>
+         </form>
       </div>
-      <form class="formIsian" action="<?= base_url('mahasiswa/insertIsianMahasiswa') ?>" method="post">
-        <div class="modal-body">
-          <div class="form-group row">
-            <label for="judulTA" class="col-sm-4 col-form-label">Judul Tugas Akhir</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="judulTA" name="judulTA" placeholder="Judul Tugas Akhir" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('judulTA', '<small class="text-danger pl-3">', '</small>'); ?>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="paradigma" class="col-sm-4 col-form-label">Paradigma</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="paradigma" name="paradigma" placeholder="Paradigma" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('paradigma', '<small class="text-danger pl-3">', '</small>'); ?>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="kataKunci" class="col-sm-4 col-form-label">Kata Kunci</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="kataKunci" name="kataKunci" placeholder="Kata Kunci" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('kataKunci', '<small class="text-danger pl-3">', '</small>'); ?>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="tujuanP" class="col-sm-4 col-form-label">Tujuan Penelitian</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="tujuanP" name="tujuanP" placeholder="Tujuan Penelitian" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('tujuanP', '<small class="text-danger pl-3">', '</small>'); ?>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="metpen1" class="col-sm-4 col-form-label">Metode Penelitian 1</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="metpen1" name="metpen1" placeholder="Metode Penelitian 1" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('metpen1', '<small class="text-danger pl-3">', '</small>'); ?>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="metpen2" class="col-sm-4 col-form-label">Metode Penelitian 2</label>
-            <div class="col-sm-8">
-              <textarea type="text" class="form-control" id="metpen2" name="metpen2" placeholder="Metode Penelitian 2" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('metpen2', '<small class="text-danger pl-3">', '</small>'); ?>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="temuan" class="col-sm-4 col-form-label">Temuan</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="temuan" name="temuan" placeholder="Temuan" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('temuan', '<small class="text-danger pl-3">', '</small>'); ?>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="kontribusiImplikasi" class="col-sm-4 col-form-label">Kontribusi dan Implikasi</label>
-            <div class="col-sm-8">
-              <textarea class="form-control" id="kontribusiImplikasi" name="kontribusiImplikasi" placeholder="Kontribusi dan Implikasi" style="resize:none; max-height: 100px;"></textarea>
-              <?= form_error('kontribusiImplikasi', '<small class="text-danger pl-3">', '</small>'); ?>
-              <input type="hidden" name="nim" id="nim" value="<?= $user_login['nim'];  ?>">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary tombolIsian">Tambah</button>
-        </div>
-      </form>
-    </div>
-  </div>
+   </div>
 </div>
 
 <!-- Modal Mahasiswa -->
@@ -598,20 +606,20 @@
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
-         <form action="<?= base_url('mahasiswa/profil') ?>" method="post">
+         <form action="<?= base_url('mahasiswa/updateProfil') ?>" method="post">
             <div class="modal-body">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">No Telepon:</label>
-                  <input type="text" class="form-control" id="noTelp" name="noTelp" value="<?= $user['noTelp'] ?>">
+                  <input type="text" class="form-control" id="noTelp" name="noTelp" value="<?= $user_login['noTelp'] ?>">
                </div>
                <div class="form-group">
                   <label for="message-text" class="col-form-label">Alamat:</label>
-                  <textarea class="form-control" id="alamat" name="alamat"><?= $user['alamat'] ?></textarea>
+                  <textarea class="form-control" id="alamat" name="alamat"><?= $user_login['alamat'] ?></textarea>
                </div>
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Tanggal Mulai Tugas Akhir</label>
-                  <input type="date" class="form-control" id="tglMulaiTA" name="tglMulaiTA" value="<?= $user['tglMulaiTA'] ?>">
-                  <input type="hidden" name="nim" value="<?= $user['nim']; ?>">
+                  <input type="date" class="form-control" id="tglMulaiTA" name="tglMulaiTA" value="<?= $user_login['tglMulaiTA'] ?>">
+                  <input type="hidden" name="nim" value="<?= $user_login['nim']; ?>">
                </div>
             </div>
             <div class="modal-footer">

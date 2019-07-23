@@ -24,11 +24,11 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Tambah Publikasi</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <?= form_open_multipart('mahasiswa/tambahPublikasi/' . $user['nim']); ?>
+                    <?= form_open_multipart('mahasiswa/tambahPublikasi/' . $user_login['nim']); ?>
                     <div class="form-group row mb-3">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Artikel</label>
                         <div class="col-sm-8">

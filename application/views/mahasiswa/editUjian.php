@@ -32,19 +32,19 @@
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama mahasiswa..." readonly value="<?= $user['nama'] ?>">
+                            <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama mahasiswa..." readonly value="<?= $user_login['nama'] ?>">
                         </div>
                     </div>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">NIM</label>
                         <div class="col-sm-3">
-                            <input type="email" class="form-control" name="nim" id="nim" placeholder="Nim.." readonly value="<?= $user['nim'] ?>">
+                            <input type="email" class="form-control" name="nim" id="nim" placeholder="Nim.." readonly value="<?= $user_login['nim'] ?>">
                         </div>
                     </div>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
                         <div class="col-sm-9">
-                            <textarea type="text" class="form-control" id="judulTA" placeholder="Tugas Akhir..." readonly name="judulTA" id="" cols="10" rows="2"><?= $user['judulTugasAkhir'] ?> </textarea>
+                            <textarea type="text" class="form-control" id="judulTA" placeholder="Tugas Akhir..." readonly name="judulTA" id="" cols="10" rows="2"><?= $user_login['judulTugasAkhir'] ?> </textarea>
                         </div>
                     </div>
 

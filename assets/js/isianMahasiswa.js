@@ -1,4 +1,4 @@
-$('.modalIsianMahasiswa').on('click', function () {
+$('.modalIsian').on('click', function () {
     var nim = $(this).data('id');
     if (cekData() == true) {
         $(".formIsian").attr('action', '');

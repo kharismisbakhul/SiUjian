@@ -252,7 +252,6 @@
 															<tbody>
 																<?php $i = 1;
 																foreach ($pembimbing as $pmb) : ?>
-
 																	<tr>
 																		<td><?= $i++  ?></td>
 																		<td><?= $pmb['nama_dosen']; ?></td>
@@ -407,4 +406,4 @@
 		</div>
 	</div>
 </div>
-<!-- Akhir Input Nilia -->
+<!-- Akhir Input Nilai -->

@@ -22,7 +22,7 @@ class Pimpinan extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $this->load->model('dosen_model', 'dosen');
         $this->load->model('mahasiswa_model', 'mahasiswa');
-        // $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
         // $data['dosen'] = $this->dosen->getListDosen($data['user_login']['nip']);
         // var_dump($data['user_login']['nip']);die;
         $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
@@ -40,7 +40,7 @@ class Pimpinan extends CI_Controller
         $data = $this->initData();
         $data['title'] = 'Dashboard';
         $this->loadTemplate($data);
-        $this->load->view('dashboard/dash_pimpinan', $data);
+        $this->load - s > view('dashboard/dash_pimpinan', $data);
         $this->load->view('templates/footer');
     }
 
@@ -58,18 +58,17 @@ class Pimpinan extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = $this->initData();
         if ($data['user_login']['jabatan_pimpinan'] != "") {
-            if($data['user_login']['jabatan_pimpinan'] == "Dekan"){
-                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
-            }
-            else{
-                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['user_login']['prodi_dosen']);
+            if ($data['user_login']['jabatan_pimpinan'] == "Dekan") {
+                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa();
+            } else {
+                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa($data['user_login']['prodi_dosen']);
             }
         }
         if ($this->uri->segment(3) && $this->uri->segment(4)) {
             if ($this->uri->segment(3) == "Dekan") {
-                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
+                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa();
             } else {
-                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($this->uri->segment(4));
+                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa($this->uri->segment(4));
             }
         }
         $data['title'] = 'Laporan Status Mahasiswa';
@@ -83,13 +82,12 @@ class Pimpinan extends CI_Controller
         $data = $this->initData();
         $data['dosen'] = "";
         $data['user_login'] = "";
-        if($this->session->userdata("user_profile_kode") == 3){
+        if ($this->session->userdata("user_profile_kode") == 3) {
             $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
             if ($data['user_login']['jabatan_pimpinan'] != "") {
-                if($data['user_login']['jabatan_pimpinan'] == "Dekan"){
+                if ($data['user_login']['jabatan_pimpinan'] == "Dekan") {
                     $data['dosen'] = $this->dosen->getListDosen($data['user_login']['nip']);
-                }
-                else{
+                } else {
                     $data['dosen'] = $this->dosen->getListDosen($data['user_login']['nip'], $data['user_login']['prodi_dosen']);
                 }
             }
@@ -98,7 +96,7 @@ class Pimpinan extends CI_Controller
             if ($this->uri->segment(3) == "Dekan") {
                 $data['dosen'] = $this->dosen->getListDosen($this->uri->segment(5));
             } else {
-                
+
                 $data['dosen'] = $this->dosen->getListDosen($this->uri->segment(5), $this->uri->segment(4));
             }
         }
@@ -112,17 +110,16 @@ class Pimpinan extends CI_Controller
     {
         $this->load->model('dosen_model', 'dosen');
         $data = $this->initData();
-        if($this->session->userdata("user_profile_kode") == 3){
+        if ($this->session->userdata("user_profile_kode") == 3) {
             $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
             if ($data['user_login']['jabatan_pimpinan'] != "") {
-                if($data['user_login']['jabatan_pimpinan'] == "Dekan"){
+                if ($data['user_login']['jabatan_pimpinan'] == "Dekan") {
                     $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip']);
-                }
-                else{
+                } else {
                     $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip'], $data['user_login']['prodi_dosen']);
                 }
             }
-        }    
+        }
         if ($this->uri->segment(3) && $this->uri->segment(4)) {
             if ($this->uri->segment(3) == "Dekan") {
                 $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5));

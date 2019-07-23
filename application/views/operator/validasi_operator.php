@@ -105,11 +105,11 @@
 
                             <!-- valid ujian -->
                             <?php if ($v['valid'] == 1) { ?>
-                              <td class="badge badge-pill badge-success">Valid</td>
+                              <td class="text-success font-weight-bold">Valid</td>
                             <?php } elseif ($v['valid'] == 2) { ?>
-                              <td class="badge badge-pill badge-primary">Proses</td>
+                              <td class="text-primary font-weight-bold">Proses</td>
                             <?php } else { ?>
-                              <td class="badge badge-pill badge-danger">Tidak Valid</td>
+                              <td class="text-danger font-weight-bold">Tidak Valid</td>
                             <?php } ?>
 
                             <td class="text-center">

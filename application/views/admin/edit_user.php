@@ -54,18 +54,17 @@
                     </div>
 
                     <!-- Privileges -->
-                    <!-- <div class="form-group row">
-                            <label for="privileges" class="col-sm-4 col-form-label">Privileges</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="privileges" id="privileges">
-                                    <option><?= $privileges_user['jenisUser']; ?></option>
-                                    <?php foreach ($another_privileges as $ap) : ?>
-                                                                                                                    <option><?= $ap ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div> -->
-
+                    <div class="form-group row">
+                        <label for="privileges" class="col-sm-4 col-form-label">Privileges</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="privileges" id="privileges">
+                                <option><?= $privileges_user['jenisUser']; ?></option>
+                                <?php foreach ($another_privileges as $ap) : ?>
+                                    <option><?= $ap ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-sm-4">
                             Gambar Profil
@@ -113,7 +112,7 @@
                             </button>
                         </div>
                     </div>
-                    </!-->
+                    </>
 
                 </div>
             </div>

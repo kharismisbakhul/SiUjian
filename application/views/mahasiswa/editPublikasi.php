@@ -24,7 +24,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Edit Publikasi</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-lg-4">
                             <a href="<?= base_url('mahasiswa') ?>/publikasi" class="btn btn-primary">kembali</a>
-                            <button type="submit" class="btn btn-success ">Save changes</button>
+                            <button type="submit" class="btn btn-success ">Edit</button>
                         </div>
                     </div>
 

@@ -62,7 +62,6 @@ class Operator extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = $this->initData();
         $data['title'] = 'Mahasiswa';
-        $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
         $data['star_date'] = "";
         $data['end_date'] = "";
         if ($this->input->post('submit') && $this->input->post('star_date') && $this->input->post('end_date')) {
@@ -76,7 +75,7 @@ class Operator extends CI_Controller
             $Id = $this->uri->segment(4);
             $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $Id])->row_array();
             $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
-            $data['pembimbing'] = $this->mahasiswa->getDosenPembimbing($data['user_login']['nim']);
+            $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
             $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $Id])->num_rows();
             $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $Id])->num_rows();
             $data['ujian'] = $this->mahasiswa->getUjian($Id);
@@ -123,6 +122,7 @@ class Operator extends CI_Controller
     }
     public function dosen()
     {
+        $this->load->model('Operator_model', 'operator');
         $type = $this->uri->segment(3);
         $this->load->model('dosen_model', 'dosen');
         $data = $this->initData();
@@ -134,7 +134,7 @@ class Operator extends CI_Controller
             $data['end_date'] = $this->input->post('end_date');
             $data['dosen'] = $this->operator->getDataPeriodeDosen($data['star_date'], $data['end_date']);
         } else {
-            $data['dosen'] = $this->dosen->getListDosen();
+            $data['dosen'] = $this->operator->getDataPeriodeDosen();
         }
         if ($type != "list") {
             $Id = $this->uri->segment(4);

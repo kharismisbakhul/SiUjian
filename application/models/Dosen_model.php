@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dosen_model extends CI_Model
 {
-    public function getListDosen($nip, $prodi=0)
+    public function getListDosen($nip, $prodi = 0)
     {
         if ($prodi == 0) {
             $query = "SELECT dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as 'jumlah_bimbingan' FROM dosen left join pembimbing on dosen.nip = pembimbing.Dosennip WHERE dosen.nip != $nip GROUP BY dosen.nama_dosen";
@@ -16,8 +16,8 @@ class Dosen_model extends CI_Model
     }
     public function getListAllDosen()
     {
-            $query = "SELECT dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as 'jumlah_bimbingan' FROM dosen left join pembimbing on dosen.nip = pembimbing.Dosennip GROUP BY dosen.nama_dosen";
-            return $this->db->query($query)->result_array();
+        $query = "SELECT dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as 'jumlah_bimbingan' FROM dosen left join pembimbing on dosen.nip = pembimbing.Dosennip GROUP BY dosen.nama_dosen";
+        return $this->db->query($query)->result_array();
     }
 
     public function getRekapDosen($nip, $prodi = 0)
@@ -45,7 +45,7 @@ class Dosen_model extends CI_Model
         }
         return $dosen;
     }
-    
+
     public function getRekapAllDosen()
     {
         //list Dosen
@@ -151,7 +151,7 @@ class Dosen_model extends CI_Model
     public function getMahasiswaBimbingan($dosen_nip)
     {
         $this->db->where('pembimbing.Dosennip', $dosen_nip);
-        $this->db->select('Mahasiswanim, Dosennip, id, statusPembimbing, nama, statusKelulusan, statusWisuda, statusTOEFL, statusTPA, mahasiswa.jenjang, nama_prodi, nama_jurusan, pembimbing.tahun');
+        $this->db->select('Mahasiswanim, Dosennip, id, statusPembimbing, nama, statusKelulusan, statusWisuda, statusTOEFL, statusTPA, mahasiswa.jenjang, nama_prodi, nama_jurusan');
         $this->db->from('pembimbing');
         // $this->db->join('pembimbing', 'pembimbing.Dosennip = ' . $dosen_nip);
         $this->db->join('mahasiswa', 'mahasiswa.nim = pembimbing.Mahasiswanim', 'right');
@@ -183,6 +183,7 @@ class Dosen_model extends CI_Model
         $this->db->join('mahasiswa', 'mahasiswa.nim = kode.mahasiswanim', 'left');
         $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
         $this->db->join('ujian', 'kode.mahasiswanim = ujian.mahasiswanim AND ujian.kodeujiankode = kode.K', 'left');
+        $this->db->order_by('kode.tgl_tambah_pembimbing', 'ASC');
         return $this->db->get()->result_array();
     }
 
