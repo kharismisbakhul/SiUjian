@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2019 at 03:34 AM
+-- Generation Time: Jul 17, 2019 at 03:33 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -35,26 +35,22 @@ CREATE TABLE `dosen` (
   `statusAktif` int(1) NOT NULL,
   `jenjang` varchar(50) NOT NULL,
   `noTlpnDosen` varchar(20) NOT NULL,
-  `AlamatDosen` varchar(256) NOT NULL,
-  `prodi_dosen` int(11) NOT NULL,
-  `jabatan_pimpinan` varchar(128) NOT NULL
+  `AlamatDosen` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dosen`
 --
 
-INSERT INTO `dosen` (`nip`, `nama_dosen`, `posisi`, `statusAktif`, `jenjang`, `noTlpnDosen`, `AlamatDosen`, `prodi_dosen`, `jabatan_pimpinan`) VALUES
-('1001', 'Dosen A', 0, 1, '', '', '', 1, ''),
-('1002', 'Dosen B', 0, 1, '', '', '', 1, ''),
-('1003', 'Dosen C', 0, 1, '', '', '', 2, ''),
-('123', 'Madi Aryo Kuncoro', 0, 0, '', '', '', 2, 'Kaprodi'),
-('165150201111200', 'Bayu Priambadha', 1, 1, '', '081339678088', 'Malang Selatan aja', 7, 'Kaprodi'),
-('165150201111230', 'Johny Kurniawan', 1, 1, '', '081687231', 'Mataram', 3, ''),
-('165150201111300', 'Fajar Pradana', 1, 1, '', '', '', 3, ''),
-('17515', 'Dimas', 0, 0, '', '', '', 4, ''),
-('7000', 'Wahyudi', 1, 1, 'S2', '', '', 2, 'Dekan'),
-('9001', 'Jumadi', 0, 1, 'S2', '', '', 8, 'Kaprodi');
+INSERT INTO `dosen` (`nip`, `nama_dosen`, `posisi`, `statusAktif`, `jenjang`, `noTlpnDosen`, `AlamatDosen`) VALUES
+('1001', 'Dosen A', 0, 1, '', '', ''),
+('1002', 'Dosen B', 0, 1, '', '', ''),
+('1003', 'Dosen C', 0, 1, '', '', ''),
+('123', 'Madi Aryo Kuncoro', 0, 0, '', '', ''),
+('165150201111200', 'Bayu Priambadha', 1, 1, '', '', ''),
+('165150201111230', 'Johny Kurniawan', 1, 1, '', '', ''),
+('165150201111300', 'Fajar Pradana', 1, 1, '', '', ''),
+('17515', 'Dimas', 0, 0, '', '', '');
 
 -- --------------------------------------------------------
 
@@ -74,16 +70,6 @@ CREATE TABLE `isianmahasiswa` (
   `kontribusiDanImplikasi` varchar(50) NOT NULL,
   `Mahasiswanim` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `isianmahasiswa`
---
-
-INSERT INTO `isianmahasiswa` (`id`, `judulAkhir`, `paradigma`, `kataKunci`, `tujuanPenelitian`, `metodePenelitian1`, `metodePenelitian2`, `temuan`, `kontribusiDanImplikasi`, `Mahasiswanim`) VALUES
-('1', 'Wahahahaha', 'bcdasasasasa', 'ddddddddddddddddd', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'bcd', 'bcd', 'ggggg', 'ddddd', '100'),
-('2', 'abc', 'abc', 'abc', 'abc', 'abc', 'abc', 'abc', 'aahahahhaha', '101'),
-('3', 'Wadidaw', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', '165150201111231'),
-('4', 'jkl', 'jkl', 'jkl', 'jkl', 'jkl', 'aaaaa', 'vvvvvvvvvvv', '', '2003');
 
 -- --------------------------------------------------------
 
@@ -160,7 +146,7 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`nim`, `nama`, `noTest`, `prodikode`, `password`, `angkatan`, `semester`, `jalur`, `konsentrasi`, `alamat`, `noTelp`, `asalStudi`, `judulTugasAkhir`, `tglMasuk`, `tglMulaiTA`, `statusKelulusan`, `statusWisuda`, `statusTOEFL`, `statusTPA`, `jenjang`) VALUES
-('100', 'Kharis Saja', '0spZ', 8, '$2y$10$cGdEqGQuHAMjA.8HuI1iKO71WMOgwVYF/v2QpPaUv0MKm0ggjMChe', 0, 0, '', '', 'Semlehur', '090908080', '', '', '0000-00-00', '2019-07-18', 1, 0, 0, 0, 'S2'),
+('100', 'Kharis Saja', '0spZ', 8, '$2y$10$cGdEqGQuHAMjA.8HuI1iKO71WMOgwVYF/v2QpPaUv0MKm0ggjMChe', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 1, 0, 0, 0, 'S2'),
 ('101', 'Badudu', '', 1, '123', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3'),
 ('165150201111001', 'Adi Saputra', 'AAA', 7, '123', 2016, 0, 'snmptn', '', 'Jl. Kucing', '0888', 'SMAN 1 Malang', 'How To Be Mature to Economics', '2019-07-01', '2019-07-10', 1, 1, 1, 1, 'S2'),
 ('165150201111231', 'Aditya Yusril Fikri', '1234', 4, '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 2017, 2, 'snmptn', 'rpl', 'jln. malang aja', '0987654322', 'UB', 'pengaruh senyawa x terhadap senyawa y menggunakan metode z', '2017-06-14', '2019-07-01', 1, 0, 1, 1, 'S3'),
@@ -178,22 +164,22 @@ CREATE TABLE `pembimbing` (
   `Mahasiswanim` varchar(15) NOT NULL,
   `Dosennip` varchar(20) NOT NULL,
   `id` int(11) NOT NULL,
-  `statusPembimbing` int(1) NOT NULL,
-  `tgl_tambah_pembimbing` date NOT NULL
+  `statusPembimbing` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pembimbing`
 --
 
-INSERT INTO `pembimbing` (`Mahasiswanim`, `Dosennip`, `id`, `statusPembimbing`, `tgl_tambah_pembimbing`) VALUES
-('100', '1001', 21, 1, '2019-07-14'),
-('100', '1003', 22, 2, '2019-07-15'),
-('165150201111231', '1001', 23, 1, '2019-07-15'),
-('165150201111231', '1002', 24, 2, '2019-07-19'),
-('165150201111001', '1001', 25, 1, '2019-07-13'),
-('165150201111001', '1002', 27, 2, '2019-07-15'),
-('165150201111231', '1003', 28, 3, '2019-07-22');
+INSERT INTO `pembimbing` (`Mahasiswanim`, `Dosennip`, `id`, `statusPembimbing`) VALUES
+('165150201111001', '165150201111230', 1, 1),
+('165150201111001', '165150201111300', 2, 2),
+('165150201111231', '165150201111230', 3, 1),
+('2001', '165150201111300', 5, 1),
+('2002', '165150201111300', 6, 2),
+('100', '1001', 7, 1),
+('100', '1002', 8, 2),
+('100', '1003', 9, 3);
 
 -- --------------------------------------------------------
 
@@ -206,59 +192,23 @@ CREATE TABLE `penguji` (
   `Ujianid` int(10) NOT NULL,
   `statusPenguji` int(1) NOT NULL,
   `id` int(11) NOT NULL,
-  `nilai` int(11) NOT NULL DEFAULT '0',
-  `tgl_tambah_penguji` date NOT NULL
+  `nilai` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `penguji`
 --
 
-INSERT INTO `penguji` (`Dosennip`, `Ujianid`, `statusPenguji`, `id`, `nilai`, `tgl_tambah_penguji`) VALUES
-('1001', 31, 1, 22, 88, '0000-00-00'),
-('1002', 31, 2, 23, 99, '0000-00-00'),
-('1003', 31, 7, 30, 88, '0000-00-00'),
-('123', 31, 8, 31, 90, '0000-00-00'),
-('1001', 19, 8, 50, 90, '0000-00-00'),
-('1001', 1, 8, 51, 90, '0000-00-00'),
-('1002', 1, 9, 52, 90, '0000-00-00'),
-('1003', 1, 1, 53, 90, '0000-00-00'),
-('123', 1, 10, 55, 90, '0000-00-00'),
-('165150201111200', 1, 7, 56, 90, '0000-00-00'),
-('1001', 18, 8, 57, 0, '0000-00-00'),
-('1001', 2, 1, 58, 0, '0000-00-00'),
-('1001', 32, 1, 59, 0, '2019-07-22'),
-('1003', 32, 2, 60, 0, '2019-07-22');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `posisi`
---
-
-CREATE TABLE `posisi` (
-  `id` int(11) NOT NULL,
-  `status_dosen` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `posisi`
---
-
-INSERT INTO `posisi` (`id`, `status_dosen`) VALUES
-(1, 'Pembimbing Ketua'),
-(2, 'Pembimbing 1'),
-(3, 'Pembimbing 2'),
-(4, 'Promotor'),
-(5, 'Co Promotor 1'),
-(6, 'Co Promotor 2'),
-(7, 'Penguji Ketua'),
-(8, 'Penguji 1'),
-(9, 'Penguji 2'),
-(10, 'Penguji 3'),
-(11, 'Punguji Tamu 1'),
-(12, 'Penguji Tamu 2'),
-(13, 'Ketua Program Studi');
+INSERT INTO `penguji` (`Dosennip`, `Ujianid`, `statusPenguji`, `id`, `nilai`) VALUES
+('1001', 17, 1, 3, 90),
+('1002', 17, 2, 4, 88),
+('123', 18, 1, 6, 0),
+('1002', 18, 2, 9, 88),
+('1003', 17, 3, 12, 90),
+('165150201111300', 18, 3, 15, 0),
+('1001', 19, 1, 17, 90),
+('1002', 19, 2, 18, 88),
+('1003', 19, 3, 19, 70);
 
 -- --------------------------------------------------------
 
@@ -325,8 +275,7 @@ CREATE TABLE `reviewer` (
   `Dosennip` varchar(20) NOT NULL,
   `publikasiidJurnal` int(11) NOT NULL,
   `statusReviewer` int(1) NOT NULL,
-  `id` int(11) NOT NULL,
-  `tgl_tambah_reviewer` date NOT NULL
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -346,21 +295,18 @@ CREATE TABLE `ujian` (
   `bukti` varchar(255) NOT NULL DEFAULT 'kosong',
   `valid` int(3) NOT NULL DEFAULT '2',
   `tgl_tambah_ujian` date NOT NULL,
-  `komentar` varchar(255) NOT NULL DEFAULT 'kosong',
-  `nilai_huruf` varchar(2) NOT NULL
+  `komentar` varchar(255) NOT NULL DEFAULT 'kosong'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ujian`
 --
 
-INSERT INTO `ujian` (`id`, `tgl_ujian`, `bobot`, `nilai_akhir`, `statusUjian`, `kodeUjiankode`, `MahasiswaNim`, `bukti`, `valid`, `tgl_tambah_ujian`, `komentar`, `nilai_huruf`) VALUES
-(1, '2019-07-12', 4, 90, 3, 1, '100', '', 1, '2019-07-12', 'sip', 'A'),
-(2, '2019-07-28', 0, 0, 3, 3, '100', 'kosong', 2, '2019-07-21', 'kosong', 'K'),
-(18, '0000-00-00', 0, 0, 3, 2, '165150201111231', '1563053544_165150201111231_603-951-1-SM.pdf', 1, '2019-07-13', '', 'K'),
-(19, '2019-07-19', 0, 90, 3, 3, '165150201111231', '1563155019_165150201111231_603-951-1-SM.pdf', 1, '2019-07-15', 'bagus boss', ''),
-(31, '2019-07-17', 0, 91.25, 3, 4, '165150201111231', 'kosong', 2, '2019-07-17', 'kosong', ''),
-(32, '2019-07-15', 0, 0, 3, 2, '100', 'kosong', 3, '2019-07-22', 'kosong', 'K');
+INSERT INTO `ujian` (`id`, `tgl_ujian`, `bobot`, `nilai_akhir`, `statusUjian`, `kodeUjiankode`, `MahasiswaNim`, `bukti`, `valid`, `tgl_tambah_ujian`, `komentar`) VALUES
+(1, '2019-07-15', 0, 0, 1, 1, '100', '', 1, '2019-07-12', ''),
+(17, '2019-07-15', 0, 89.3333, 1, 1, '165150201111231', '1563007447_165150201111231_603-951-1-SM.pdf', 1, '2019-07-13', '-'),
+(18, '2019-07-20', 0, 29.3333, 1, 2, '165150201111231', '1563053544_165150201111231_603-951-1-SM.pdf', 1, '2019-07-13', 'kosong'),
+(19, '2019-07-19', 0, 82.6667, 2, 3, '165150201111231', '1563155019_165150201111231_603-951-1-SM.pdf', 1, '2019-07-15', 'bagus boss');
 
 -- --------------------------------------------------------
 
@@ -390,6 +336,7 @@ INSERT INTO `user` (`id`, `user_profile_kode`, `username`, `password`, `is_activ
 (4, 2, '165150201111233', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini operator', 1, 'default.png'),
 (5, 1, '165150201111234', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini admin', 1, 'default.png'),
 (7, 1, 'Kharis', '$2y$10$EPlufTRpiNhfdmbWxkbguOEAx7mfTJcWflTTU74IqTL1lJxaBSGlS', 1, 'Misbakhul', 0, 'default.png'),
+(12, 4, 'Madi', '$2y$10$UIavJUuWT.tTDUrDOjcDA.R85nORim.czgbktH6Pv/9KF.3BuYWri', 1, 'Madi Aryo Kuncoro', 0, 'default.png'),
 (13, 4, '17515', '$2y$10$P518PNI6bxGtJdAN5JxagO.lY4zNTv6o5sHBZSswybzToYy3.LqPi', 1, 'Dimas', 0, 'default.png'),
 (15, 5, '100', '$2y$10$wmMl75.67I/1nQA6VyOY7uATnV7VaoCIByR1rLvCg6ZIG7EPFnSGG', 1, 'Kharis Saja', 0, '237627.jpg'),
 (16, 4, '1001', '$2y$10$/wsRGXhiBswtY1hf5S.6t.4GFCi23ebi26KH6y/DkpYmEg7tFsFwu', 1, 'Dosen A', 0, 'default.png'),
@@ -398,12 +345,7 @@ INSERT INTO `user` (`id`, `user_profile_kode`, `username`, `password`, `is_activ
 (19, 5, '2001', '$2y$10$DL0fW0HcYL7ZhGrtZcY.juSbDUbhaW9vOs1Gh.mkf0SMTVys4c0Du', 1, 'Mahasiswa A', 0, 'default.png'),
 (20, 5, '2002', '$2y$10$7OmB4W1VU.iQ7UIUctqrauX3qeCeDGG/1bCHgQF1T3BXaQhgBTvmm', 1, 'Mahasiswa B', 0, 'default.png'),
 (21, 5, '2003', '$2y$10$aWBD9.9kxTSnwGW5jTq2ReN/mKiDkAbMRqRfzdkeYXN4WaFZ5EtTu', 1, 'Mahasiswa C', 0, 'default.png'),
-(22, 2, '5001', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Operator A', 0, 'default.png'),
-(23, 3, '6001', '$2y$10$jOig2AsVDGmRVLai7IW89ubPwmC86pqlxGZrCwcv0T8H7UzmARHhG', 1, 'Pimpinan A', 0, 'default.png'),
-(24, 3, '165150201111200', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Bayu Priambadha', 0, 'default.png'),
-(25, 3, '123', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Madi Aryo Kuncoro', 0, 'default.png'),
-(26, 3, '7000', '$2y$10$grFq2x0zUjzGRV6lZ1IB5uvwhktgXGy.tL3CeXrKghJZChZQX/05S', 1, 'Wahyudi', 0, 'default.png'),
-(27, 3, '9001', '$2y$10$K2tDryvvgWYFE9jVVPJ2puimZAunCBeFqWejifXlhnbvpIRfBCCGm', 1, 'Jumadi', 0, 'default.png');
+(22, 2, '5001', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Operator A', 0, 'default.png');
 
 -- --------------------------------------------------------
 
@@ -512,9 +454,8 @@ INSERT INTO `user_sub_menu` (`id`, `judul`, `url`, `ikon`, `is_active`, `menu_id
 (9, 'Rekap Dosen', 'pimpinan/rekapDosen', 'fas fa-fw fa-book', '1', 3),
 (10, 'Mahasiswa', 'operator/mahasiswa/list', 'fas fa-fw fa-graduation-cap', '1', 2),
 (11, 'Dosen', 'operator/dosen/list', 'fas fa-fw fa-chalkboard-teacher', '1', 2),
-(12, 'Pimpinan', 'operator/pimpinan', 'fas fa-fw fa-users', '1', 2),
-(13, 'Ujian', 'operator/ujian', 'fas fa-fw fa-check-circle', '1', 2),
-(14, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1);
+(12, 'Validasi', 'operator/validasi', 'fas fa-fw fa-check-circle', '1', 2),
+(13, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1);
 
 --
 -- Indexes for dumped tables
@@ -525,14 +466,13 @@ INSERT INTO `user_sub_menu` (`id`, `judul`, `url`, `ikon`, `is_active`, `menu_id
 --
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`nip`),
-  ADD UNIQUE KEY `nama` (`nama_dosen`),
-  ADD KEY `prodi_dosen` (`prodi_dosen`);
+  ADD UNIQUE KEY `nama` (`nama_dosen`);
 
 --
 -- Indexes for table `isianmahasiswa`
 --
 ALTER TABLE `isianmahasiswa`
-  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD PRIMARY KEY (`id`,`Mahasiswanim`),
   ADD KEY `FKisianMahas737699` (`Mahasiswanim`);
 
 --
@@ -563,8 +503,7 @@ ALTER TABLE `mahasiswa`
 ALTER TABLE `pembimbing`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pembimbing_ibfk_1` (`Dosennip`),
-  ADD KEY `pembimbing_ibfk_2` (`Mahasiswanim`),
-  ADD KEY `statusPembimbing` (`statusPembimbing`);
+  ADD KEY `pembimbing_ibfk_2` (`Mahasiswanim`);
 
 --
 -- Indexes for table `penguji`
@@ -572,14 +511,7 @@ ALTER TABLE `pembimbing`
 ALTER TABLE `penguji`
   ADD PRIMARY KEY (`id`),
   ADD KEY `Ujianid` (`Ujianid`),
-  ADD KEY `Dosennip` (`Dosennip`),
-  ADD KEY `statusPenguji` (`statusPenguji`);
-
---
--- Indexes for table `posisi`
---
-ALTER TABLE `posisi`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `Dosennip` (`Dosennip`);
 
 --
 -- Indexes for table `prodi`
@@ -602,8 +534,7 @@ ALTER TABLE `publikasi`
 ALTER TABLE `reviewer`
   ADD PRIMARY KEY (`id`),
   ADD KEY `Dosennip` (`Dosennip`),
-  ADD KEY `publikasiidJurnal` (`publikasiidJurnal`),
-  ADD KEY `statusReviewer` (`statusReviewer`);
+  ADD KEY `publikasiidJurnal` (`publikasiidJurnal`);
 
 --
 -- Indexes for table `ujian`
@@ -663,13 +594,13 @@ ALTER TABLE `kodeujian`
 -- AUTO_INCREMENT for table `pembimbing`
 --
 ALTER TABLE `pembimbing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `penguji`
 --
 ALTER TABLE `penguji`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `prodi`
@@ -693,13 +624,13 @@ ALTER TABLE `reviewer`
 -- AUTO_INCREMENT for table `ujian`
 --
 ALTER TABLE `ujian`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `userprofile`
@@ -723,23 +654,17 @@ ALTER TABLE `user_menu`
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `dosen`
---
-ALTER TABLE `dosen`
-  ADD CONSTRAINT `dosen_ibfk_1` FOREIGN KEY (`prodi_dosen`) REFERENCES `prodi` (`kode`);
-
---
 -- Constraints for table `isianmahasiswa`
 --
 ALTER TABLE `isianmahasiswa`
-  ADD CONSTRAINT `isianmahasiswa_ibfk_1` FOREIGN KEY (`Mahasiswanim`) REFERENCES `mahasiswa` (`nim`);
+  ADD CONSTRAINT `FKisianMahas737699` FOREIGN KEY (`Mahasiswanim`) REFERENCES `mahasiswa` (`nim`);
 
 --
 -- Constraints for table `mahasiswa`
@@ -752,15 +677,13 @@ ALTER TABLE `mahasiswa`
 --
 ALTER TABLE `pembimbing`
   ADD CONSTRAINT `pembimbing_ibfk_1` FOREIGN KEY (`Dosennip`) REFERENCES `dosen` (`nip`),
-  ADD CONSTRAINT `pembimbing_ibfk_2` FOREIGN KEY (`Mahasiswanim`) REFERENCES `mahasiswa` (`nim`),
-  ADD CONSTRAINT `pembimbing_ibfk_3` FOREIGN KEY (`statusPembimbing`) REFERENCES `posisi` (`id`);
+  ADD CONSTRAINT `pembimbing_ibfk_2` FOREIGN KEY (`Mahasiswanim`) REFERENCES `mahasiswa` (`nim`);
 
 --
 -- Constraints for table `penguji`
 --
 ALTER TABLE `penguji`
-  ADD CONSTRAINT `penguji_ibfk_1` FOREIGN KEY (`Dosennip`) REFERENCES `dosen` (`nip`),
-  ADD CONSTRAINT `penguji_ibfk_2` FOREIGN KEY (`statusPenguji`) REFERENCES `posisi` (`id`);
+  ADD CONSTRAINT `penguji_ibfk_1` FOREIGN KEY (`Dosennip`) REFERENCES `dosen` (`nip`);
 
 --
 -- Constraints for table `prodi`
@@ -779,8 +702,7 @@ ALTER TABLE `publikasi`
 --
 ALTER TABLE `reviewer`
   ADD CONSTRAINT `reviewer_ibfk_1` FOREIGN KEY (`Dosennip`) REFERENCES `dosen` (`nip`),
-  ADD CONSTRAINT `reviewer_ibfk_2` FOREIGN KEY (`publikasiidJurnal`) REFERENCES `publikasi` (`idJurnal`),
-  ADD CONSTRAINT `reviewer_ibfk_3` FOREIGN KEY (`statusReviewer`) REFERENCES `posisi` (`id`);
+  ADD CONSTRAINT `reviewer_ibfk_2` FOREIGN KEY (`publikasiidJurnal`) REFERENCES `publikasi` (`idJurnal`);
 
 --
 -- Constraints for table `ujian`
