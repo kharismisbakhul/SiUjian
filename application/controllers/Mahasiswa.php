@@ -114,8 +114,6 @@ class Mahasiswa extends CI_Controller
                 'MahasiswaNim' => $data['user']['nim']
             ];
             // Tambah Penguji dengan dosen pembimbing
-
-
             if ($_FILES['buktiUjian']['name']) {
                 $dataUjian['bukti_ujian'] = $_FILES['buktiUjian']['name'];
                 $config['allowed_types'] = 'jpg|png|pdf';

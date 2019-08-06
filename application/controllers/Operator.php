@@ -291,4 +291,41 @@ class Operator extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">penguji berhasil di hapus ! </div>');
         redirect('operator/validasi_cek/' . $id_ujian);
     }
+
+    public function publikasi()
+    {
+        $data = $this->initData();
+        $data['title'] = 'Publikasi';
+        $this->loadTemplate($data);
+        $this->load->model('Operator_model', 'operator');
+        $data['star_date'] = "";
+        $data['end_date'] = "";
+        if ($this->input->post('submit') && $this->input->post('star_date') && $this->input->post('end_date')) {
+            $data['star_date'] = $this->input->post('star_date');
+            $data['end_date'] = $this->input->post('end_date');
+            $data['valid_publikasi'] = $this->operator->getDataPublikasi($data['star_date'], $data['end_date']);
+        } else {
+            $data['valid_publikasi'] = $this->operator->getDataPublikasi();
+        }
+        $this->load->view('operator/validasi_operator_publikasi', $data);
+        $this->load->view('templates/footer');
+    }
+    public function validasi_publikasi($idJurnal)
+    {
+        $data = $this->initData();
+        $data['title'] = 'Publikasi';
+        $this->loadTemplate($data);
+        $this->load->model('Operator_model', 'operator');
+        $data['publikasi'] = $this->db->get_where('publikasi', ['idJurnal' => $idJurnal])->row_array();
+        if ($this->input->post('valid')) {
+            $this->db->set('kategoriJurnal', $this->input->post('kategoriJurnal'));
+            $this->db->set('valid', $this->input->post('valid'));
+            $this->db->where('idJurnal', $idJurnal);
+            $this->db->update('publikasi');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data publikasi berhasil di perbaharui ! </div>');
+            redirect('operator/validasi_publikasi/' . $idJurnal);
+        }
+        $this->load->view('operator/validasi_operator_publikasi_cek', $data);
+        $this->load->view('templates/footer');
+    }
 }

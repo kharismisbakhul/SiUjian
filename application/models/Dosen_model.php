@@ -51,6 +51,7 @@ class Dosen_model extends CI_Model
         $this->db->join('mahasiswa', 'mahasiswa.nim = kode.mahasiswanim', 'left');
         $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode', 'left');
         $this->db->join('ujian', 'kode.mahasiswanim = ujian.mahasiswanim AND ujian.kodeujiankode = kode.K', 'left');
+        $this->db->order_by('kode.tgl_tambah_pembimbing', 'ASC');
         return $this->db->get()->result_array();
     }
 
