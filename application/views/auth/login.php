@@ -9,7 +9,7 @@
           <!-- Nested Row within Card Body -->
           <div class="row">
             <div class="col-lg-5 d-none d-lg-block haha text-center ml-2 clr-white">
-              <img src="<?= base_url('assets/') ?>img/profile/default.png" class="rounded mx-auto d-block mt-4 " alt="" style="width: 50%;">
+              <img src="<?= base_url('assets/') ?>img/logo-ub-removebg-preview.png" class="rounded mx-auto d-block mt-4 " alt="" style="width: 50%;">
               <h1 class="h2 title mt-3 font-weight-bold" style="color:white;">Si-Ujian</h1>
               <h6 class="h6 title mt-5 ml-2 font-weight-bold" style="color:white;">Fakultas Ekonomi dan Bisnis</h6>
               <h6 class="h6 title mt-0 ml-2 font-weight-bold" style="color:white;">Universitas Brawijaya</h6>
@@ -37,7 +37,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small text-primary text-decoration-none forget" href="<?= base_url('auth/forgotpassword') ?>">Forgot Password?</a>
+                    <a class="small text-primary text-decoration-none forget" href="<?= base_url('auth/forgotpassword') ?>">Lupa Password?</a>
                   </div>
               </div>
             </div>

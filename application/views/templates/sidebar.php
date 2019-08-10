@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-siujian sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url(); ?> ">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-rocket"></i>
         </div>
@@ -39,7 +39,7 @@
     <!-- LOOPING MENU -->
     <?php foreach ($menu as $m) : ?>
         <div class="sidebar-heading <?= $m['id'] ?>">
-            <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($m['id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4)) : ?>
+            <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($m['id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
             <?php else : ?>
                 <?= $m['menu']; ?>
             <?php endif; ?>
@@ -61,12 +61,12 @@
             <?php if ($title == $sm['judul']) : ?>
                 <li class="nav-item active">
                 <?php else : ?>
-                    <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4)) : ?>
+                    <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
                     <?php else : ?>
                     <li class="nav-item <?= $sm['menu_id'] ?>">
                     <?php endif; ?>
                 <?php endif; ?>
-                <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4)) : ?>
+                <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
                 <?php else : ?>
                     <a class="nav-link pb-0" href="<?= base_url($sm['url'])  ?>">
                         <i class="<?= $sm['ikon']; ?>"></i>
@@ -77,7 +77,7 @@
         <?php endforeach; ?>
 
         <!-- Divider -->
-        <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4)) : ?>
+        <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
         <?php else : ?>
             <hr class="sidebar-divider mt-3 <?= $m['id'] ?>">
         <?php endif; ?>
@@ -86,7 +86,7 @@
 
 
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('auth/logout') ?>">
+        <a class="nav-link logout" href="#">
             <i class="fas fa-fw fa-sign-out-alt"></i>
             <span>logout</span></a>
     </li>

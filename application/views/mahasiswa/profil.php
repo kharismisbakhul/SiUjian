@@ -33,7 +33,7 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['nama'];  ?></span>
+                              <span><?= $user_login['nama'];  ?></span>
                            </div>
                         </div>
 
@@ -41,14 +41,14 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nim</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['nim'];  ?></span>
+                              <span><?= $user_login['nim'];  ?></span>
                            </div>
                         </div>
                         <div class="form-group row  mb-1">
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tanggal terdaftar</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['tglMasuk'];  ?></span>
+                              <span><?= $user_login['tglMasuk'];  ?></span>
                            </div>
                         </div>
 
@@ -72,7 +72,7 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Angkatan</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['angkatan'];  ?></span>
+                              <span><?= $user_login['angkatan'];  ?></span>
                            </div>
                         </div>
 
@@ -80,7 +80,7 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Konsentrasi</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['konsentrasi'];  ?></span>
+                              <span><?= $user_login['konsentrasi'];  ?></span>
                            </div>
                         </div>
 
@@ -88,7 +88,7 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Alamat</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['alamat'];  ?></span>
+                              <span><?= $user_login['alamat'];  ?></span>
                            </div>
                         </div>
 
@@ -96,7 +96,7 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">No.Telepon</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['noTelp'];  ?></span>
+                              <span><?= $user_login['noTelp'];  ?></span>
                            </div>
                         </div>
 
@@ -104,7 +104,7 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Asal Studi</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['asalStudi'];  ?></span>
+                              <span><?= $user_login['asalStudi'];  ?></span>
                            </div>
                         </div>
 
@@ -112,7 +112,7 @@
                            <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tanggal Mulai Tugas Akhir</label>
                            <div class="col-sm-9">
                               <span>:</span>
-                              <span><?= $user['tglMulaiTA'];  ?></span>
+                              <span><?= $user_login['tglMulaiTA'];  ?></span>
                            </div>
                         </div>
                         <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalMahasiswa">
@@ -160,7 +160,7 @@
                               </tbody>
                            </table>
                            <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-                              <button type="button" class="btn btn-success btn-icon-split tambah-dosbing" data-toggle="modal" data-target="#ModalProfil" data-nim="<?= $user['nim'] ?>">
+                              <button type="button" class="btn btn-success btn-icon-split tambah-dosbing" data-toggle="modal" data-target="#ModalProfil" data-nim="<?= $user_login['nim'] ?>">
                                  <span class="icon text-white-50">
                                     <i class="fas fa-pencil-alt"></i>
                                  </span>
@@ -195,7 +195,7 @@
                      <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Kelulusan</label>
                      <div class="col-sm-8">
                         <span>:</span>
-                        <?php if ($user['statusKelulusan'] == 0) { ?>
+                        <?php if ($user_login['statusKelulusan'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
@@ -205,7 +205,7 @@
                      <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Wisuda</label>
                      <div class="col-sm-8">
                         <span>:</span>
-                        <?php if ($user['statusWisuda'] == 0) { ?>
+                        <?php if ($user_login['statusWisuda'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
@@ -215,7 +215,7 @@
                      <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">TOEFL</label>
                      <div class="col-sm-8">
                         <span>:</span>
-                        <?php if ($user['statusTOEFL'] == 0) { ?>
+                        <?php if ($user_login['statusTOEFL'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
@@ -225,7 +225,7 @@
                      <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">TPA</label>
                      <div class="col-sm-8">
                         <span>:</span>
-                        <?php if ($user['statusTPA'] == 0) { ?>
+                        <?php if ($user_login['statusTPA'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
@@ -268,7 +268,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['judulAkhir'];  ?></span>
                      </div>
                   </div>
 
@@ -276,7 +276,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Paradigma</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['paradigma'];  ?></span>
                      </div>
                   </div>
 
@@ -284,7 +284,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kata Kunci</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['kataKunci'];  ?></span>
                      </div>
                   </div>
 
@@ -292,7 +292,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tujuan Penelitian</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['tujuanPenelitian'];  ?></span>
                      </div>
                   </div>
 
@@ -300,7 +300,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 1</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['metodePenelitian1'];  ?></span>
                      </div>
                   </div>
 
@@ -308,7 +308,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 2</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['metodePenelitian2'];  ?></span>
                      </div>
                   </div>
 
@@ -316,12 +316,20 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Temuan</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $user['tglMulaiTA'];  ?></span>
+                        <span><?= $isianMahasiswa['temuan'];  ?></span>
+                     </div>
+                  </div>
+
+                  <div class="form-group row  mb-1">
+                     <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kontribusi dan Implikasi</label>
+                     <div class="col-sm-9">
+                        <span>:</span>
+                        <span><?= $isianMahasiswa['kontribusiDanImplikasi'];  ?></span>
                      </div>
                   </div>
 
                   <div class="row float-right mr-3">
-                     <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalIsianMahasiswa">
+                     <button type="button" class="btn btn-primary btn-icon-split modalIsian" data-toggle="modal" data-target="#ModalIsianMahasiswa" data-id="<?= $isianMahasiswa['Mahasiswanim'] ?>">
                         <span class="icon text-white-50">
                            <i class="fas fa-pencil-alt"></i>
                         </span>
@@ -424,12 +432,12 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kelulusan</label>
                      <div class="col-sm-5">
                         <span>:</span>
-                        <?php if ($user['statusKelulusan'] == 0) { ?>
+                        <?php if ($user_login['statusKelulusan'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                      <div class="col-sm-3">
-                        <?php if ($user['statusKelulusan'] == 0) : ?>
+                        <?php if ($user_login['statusKelulusan'] == 0) : ?>
                            <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=1>
                            <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=0 checked>
                         <?php else : ?>
@@ -443,12 +451,12 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Wisuda</label>
                      <div class="col-sm-5">
                         <span>:</span>
-                        <?php if ($user['statusWisuda'] == 0) { ?>
+                        <?php if ($user_login['statusWisuda'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                      <div class="col-sm-3">
-                        <?php if ($user['statusWisuda'] == 0) : ?>
+                        <?php if ($user_login['statusWisuda'] == 0) : ?>
                            <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=1>
                            <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=0 checked>
                         <?php else : ?>
@@ -462,12 +470,12 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TOEFL</label>
                      <div class="col-sm-5">
                         <span>:</span>
-                        <?php if ($user['statusTOEFL'] == 0) { ?>
+                        <?php if ($user_login['statusTOEFL'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                      <div class="col-sm-3">
-                        <?php if ($user['statusTOEFL'] == 0) : ?>
+                        <?php if ($user_login['statusTOEFL'] == 0) : ?>
                            <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=1>
                            <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=0 checked>
                         <?php else : ?>
@@ -481,12 +489,12 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TPA</label>
                      <div class="col-sm-5">
                         <span>:</span>
-                        <?php if ($user['statusTPA'] == 0) { ?>
+                        <?php if ($user_login['statusTPA'] == 0) { ?>
                            <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
                            <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                      <div class="col-sm-3">
-                        <?php if ($user['statusTPA'] == 0) : ?>
+                        <?php if ($user_login['statusTPA'] == 0) : ?>
                            <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="1">
                            <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="0" checked>
                         <?php else : ?>
@@ -508,6 +516,86 @@
    <!-- Akhir Modal Kelulusan -->
 <?php endif; ?>
 
+
+<!-- Modal Edit Isian Mahasiswa-->
+<div class="modal fade" id="ModalIsianMahasiswa" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Detail Isian</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <form class="formIsian" action="<?= base_url('mahasiswa/insertIsianMahasiswa') ?>" method="post">
+            <div class="modal-body">
+               <div class="form-group row">
+                  <label for="judulTA" class="col-sm-4 col-form-label">Judul Tugas Akhir</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="judulTA" name="judulTA" placeholder="Judul Tugas Akhir" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('judulTA', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="paradigma" class="col-sm-4 col-form-label">Paradigma</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="paradigma" name="paradigma" placeholder="Paradigma" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('paradigma', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="kataKunci" class="col-sm-4 col-form-label">Kata Kunci</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="kataKunci" name="kataKunci" placeholder="Kata Kunci" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('kataKunci', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="tujuanP" class="col-sm-4 col-form-label">Tujuan Penelitian</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="tujuanP" name="tujuanP" placeholder="Tujuan Penelitian" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('tujuanP', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="metpen1" class="col-sm-4 col-form-label">Metode Penelitian 1</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="metpen1" name="metpen1" placeholder="Metode Penelitian 1" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('metpen1', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="metpen2" class="col-sm-4 col-form-label">Metode Penelitian 2</label>
+                  <div class="col-sm-8">
+                     <textarea type="text" class="form-control" id="metpen2" name="metpen2" placeholder="Metode Penelitian 2" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('metpen2', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="temuan" class="col-sm-4 col-form-label">Temuan</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="temuan" name="temuan" placeholder="Temuan" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('temuan', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="kontribusiImplikasi" class="col-sm-4 col-form-label">Kontribusi dan Implikasi</label>
+                  <div class="col-sm-8">
+                     <textarea class="form-control" id="kontribusiImplikasi" name="kontribusiImplikasi" placeholder="Kontribusi dan Implikasi" style="resize:none; max-height: 100px;"></textarea>
+                     <?= form_error('kontribusiImplikasi', '<small class="text-danger pl-3">', '</small>'); ?>
+                     <input type="hidden" name="nim" id="nim" value="<?= $user_login['nim'];  ?>">
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary tombolIsian">Tambah</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+
 <!-- Modal Mahasiswa -->
 <div class="modal fade" id="ModalMahasiswa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -518,20 +606,20 @@
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
-         <form action="<?= base_url('mahasiswa/profil') ?>" method="post">
+         <form action="<?= base_url('mahasiswa/updateProfil') ?>" method="post">
             <div class="modal-body">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">No Telepon:</label>
-                  <input type="text" class="form-control" id="noTelp" name="noTelp" value="<?= $user['noTelp'] ?>">
+                  <input type="text" class="form-control" id="noTelp" name="noTelp" value="<?= $user_login['noTelp'] ?>">
                </div>
                <div class="form-group">
                   <label for="message-text" class="col-form-label">Alamat:</label>
-                  <textarea class="form-control" id="alamat" name="alamat"><?= $user['alamat'] ?></textarea>
+                  <textarea class="form-control" id="alamat" name="alamat"><?= $user_login['alamat'] ?></textarea>
                </div>
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Tanggal Mulai Tugas Akhir</label>
-                  <input type="date" class="form-control" id="tglMulaiTA" name="tglMulaiTA" value="<?= $user['tglMulaiTA'] ?>">
-                  <input type="hidden" name="nim" value="<?= $user['nim']; ?>">
+                  <input type="date" class="form-control" id="tglMulaiTA" name="tglMulaiTA" value="<?= $user_login['tglMulaiTA'] ?>">
+                  <input type="hidden" name="nim" value="<?= $user_login['nim']; ?>">
                </div>
             </div>
             <div class="modal-footer">

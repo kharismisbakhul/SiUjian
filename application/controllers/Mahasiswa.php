@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Mahasiswa extends CI_Controller
 {
     public function __construct()
@@ -9,19 +8,22 @@ class Mahasiswa extends CI_Controller
         is_logged_in();
         $this->load->library('form_validation');
     }
-
     public function index()
     {
-
+        if ($this->session->userdata('user_profile_kode') != 5) {
+            redirect('auth/blocked');
+        }
         $data['title'] = 'Dashboard';
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
         $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
+        $data['ujian_selanjutnya'] = $this->mahasiswa->getUjianSelanjutnya($data['username']);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('mahasiswa/index', $data);
+        $this->load->view('dashboard/dash_mahasiswa', $data);
         $this->load->view('templates/footer');
     }
 
@@ -29,38 +31,57 @@ class Mahasiswa extends CI_Controller
     public function profil()
     {
         if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
-            $this->_updateProfil();
-            redirect('operator/mahasiswa/profile/' . $this->input->post('nim'));
+            if ($this->session->userdata('statusIsianMahasiswa') == 'insert') {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil ditambahan </div>');
+            } else if ($this->session->userdata('statusIsianMahasiswa') == 'update') {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil diperbarui </div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di perbaharui ! </div>');
+            }
+            //ini isian
+            redirect('operator/mahasiswa/profile/' . $this->session->userdata('nim_mhsnya'));
+        } else {
+            $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
         }
-        $this->load->model('mahasiswa_model', 'mahasiswa');
-        $data['title'] = 'Profil';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
-        $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user']['prodikode']);
-        $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user']['nim']);
-        $data['dosen'] = $this->mahasiswa->getDaftarPembimbing($data['user']['nim']);
 
         $this->form_validation->set_rules('noTelp', 'No Telepon', 'trim');
+        $this->form_validation->set_rules('judulTA', 'Judul Tugas Akhir', 'required|trim');
+        $this->form_validation->set_rules('paradigma', 'Paradigma', 'required|trim');
+        $this->form_validation->set_rules('kataKunci', 'Kata Kunci', 'required|trim');
+        $this->form_validation->set_rules('tujuanP', 'Tujuan Penelitian', 'required|trim');
+        $this->form_validation->set_rules('metpen1', 'Metode Penelitian 1', 'required|trim');
+        $this->form_validation->set_rules('metpen2', 'Metode Penelitian 2', 'required|trim');
+        $this->form_validation->set_rules('temuan', 'Temuan', 'required|trim');
+        $this->form_validation->set_rules('kontribusiImplikasi', 'Kontribusi dan Implikasi', 'required|trim');
+
         if ($this->form_validation->run() == false) {
+            $this->load->model('mahasiswa_model', 'mahasiswa');
+            $data['title'] = 'Profil';
+            $data['username'] = $this->session->userdata('username');
+            $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+            $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
+            $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
+            $data['dosen'] = $this->mahasiswa->getDaftarPembimbing($data['user_login']['nim']);
+            $data['isianMahasiswa'] = $this->db->get_where('isianMahasiswa', ['Mahasiswanim' => $this->session->userdata('username')])->row_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('mahasiswa/profil', $data);
             $this->load->view('templates/footer');
-        } else {
-            $this->_updateProfil();
-            redirect('mahasiswa/profil');
         }
     }
-    private function _updateProfil()
+    public function updateProfil()
     {
         $mhs['alamat'] = $this->input->post('alamat');
         $mhs['noTelp'] = $this->input->post('noTelp');
         $mhs['tglMulaiTA'] = $this->input->post('tglMulaiTA');
         $this->db->where('nim', $this->input->post('nim'));
         $this->db->update('mahasiswa', $mhs);
+        $this->session->set_userdata('nim_mhsnya', $this->input->post('nim'));
+        $this->session->set_userdata('statusIsianMahasiswa', 'edit');
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di perbaharui ! </div>');
+        redirect('mahasiswa/profil');
     }
-
     // cek dosbing
     public function getDosbing($nim)
     {
@@ -68,16 +89,16 @@ class Mahasiswa extends CI_Controller
         $data['dosen'] = $this->mahasiswa->getDaftarPembimbing($nim);
         echo json_encode($data['dosen']);
     }
-
     public function ujian()
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Ujian';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->mahasiswa->getDataMahasiswa($this->session->userdata('username'));
         $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
-        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user']['nim']])->num_rows();
-        $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user']['nim']);
-
+        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
+        $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -89,16 +110,20 @@ class Mahasiswa extends CI_Controller
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Tambah Ujian';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
-        $data['belumUjian'] = $this->mahasiswa->getBelumUjian($data['user']['nim']);
-        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user']['nim']])->num_rows();
-        if ($data['jumlah_ujian'] > 3) {
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->mahasiswa->getDataMahasiswa($nim);
+        $jurusan_kode = $this->db->select('jurusankode as kode')->get_where('prodi', ['kode' => $data['user_login']['prodikode']])->row_array();
+        $data['belumUjian'] = $this->mahasiswa->getBelumUjian($data['user_login']['nim'], $jurusan_kode['kode'], $data['user_login']['jenjang']);
+        $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
+        if ($data['user_login']['jenjang'] == 'S3' && $data['user_login']['jurusankode'] == 1  && $data['jumlah_ujian'] > 11) {
+            redirect('mahasiswa/ujian');
+        } elseif (($data['user_login']['jenjang'] == 'S3' || $data['user_login']['jenjang'] == 'S2') && $data['user_login']['jurusankode'] != 1  && $data['jumlah_ujian'] > 3) {
             redirect('mahasiswa/ujian');
         }
-        $data['pembimbing'] = $this->db->select('Dosennip,statusPembimbing as statusPenguji')->get_where('pembimbing', ['Mahasiswanim' => $data['user']['nim']])->result_array();
+        $data['pembimbing'] = $this->db->select('Dosennip,statusPembimbing as statusPenguji')->get_where('pembimbing', ['Mahasiswanim' => $data['user_login']['nim']])->result_array();
         $this->form_validation->set_rules('kodeUjian', 'Ujian', 'required|trim');
         $this->form_validation->set_rules('tanggalUjian', 'Tanggal Ujian', 'required|trim');
-
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -106,12 +131,11 @@ class Mahasiswa extends CI_Controller
             $this->load->view('mahasiswa/tambahUjian', $data);
             $this->load->view('templates/footer');
         } else {
-
             $dataUjian = [
                 'tgl_ujian' => $this->input->post('tanggalUjian'),
                 'kodeUjiankode' => $this->input->post('kodeUjian'),
                 'tgl_tambah_ujian' => date("Y/m/d"),
-                'MahasiswaNim' => $data['user']['nim']
+                'MahasiswaNim' => $data['user_login']['nim']
             ];
             // Tambah Penguji dengan dosen pembimbing
             if ($_FILES['buktiUjian']['name']) {
@@ -119,8 +143,7 @@ class Mahasiswa extends CI_Controller
                 $config['allowed_types'] = 'jpg|png|pdf';
                 $config['max_size']     = '2048'; //kb
                 $config['upload_path'] = './assets/ujian/';
-                $config['file_name'] = time() . '_' . $data['user']['nim'] . '_' . $dataUjian['bukti_ujian'];
-
+                $config['file_name'] = time() . '_' . $data['user_login']['nim'] . '_' . $dataUjian['bukti_ujian'];
                 $this->load->library('upload', $config);
                 if ($this->upload->do_upload('buktiUjian')) {
                     $dataUjian['bukti_ujian'] = $this->upload->data('file_name');
@@ -129,8 +152,10 @@ class Mahasiswa extends CI_Controller
                     echo $this->upload->display_errors();
                 }
             }
+
+
             $this->mahasiswa->insertUjian($dataUjian);
-            $idUjian = $this->mahasiswa->getNewIdUjian($data['user']['nim'], $dataUjian['kodeUjiankode']);
+            $idUjian = $this->mahasiswa->getNewIdUjian($data['user_login']['nim'], $dataUjian['kodeUjiankode']);
             foreach ($data['pembimbing'] as $pmb) {
                 $this->mahasiswa->updatePenguji($pmb, $idUjian['id']);
             }
@@ -144,21 +169,16 @@ class Mahasiswa extends CI_Controller
 
     public function hapusUjian($id)
     {
-
         $user = [
             'ujian' => $this->db->get_where('ujian', ['id' => $id])->row_array()
         ];
-
         $data['pembimbing'] = $this->db->select('Dosennip')->get_where('pembimbing', ['Mahasiswanim' => $user['ujian']['MahasiswaNim']])->result_array();
-
         foreach ($data['pembimbing'] as $pmb) {
             $this->db->delete('penguji', ['Dosennip' => $pmb['Dosennip'], 'Ujianid' => $id]);
         }
-
         $this->load->library('upload');
         unlink(FCPATH . "assets/ujian/" . $user['ujian']['bukti']);
         $this->db->delete('ujian', ['id' => $id]);
-
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ujian terhapus</div>');
         if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
             redirect('operator/mahasiswa/ujian/' . $user['ujian']['MahasiswaNim']);
@@ -171,17 +191,14 @@ class Mahasiswa extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Edit Ujian';
         $data['ujian'] = $this->db->get_where('ujian', ['id' => $id])->row_array();
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $data['ujian']['MahasiswaNim']])->row_array();
-
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $data['ujian']['MahasiswaNim']])->row_array();
         $ujianBelum = $this->mahasiswa->getBelumUjian($data['ujian']['MahasiswaNim']);
         $data['listUjian'] = ($ujianBelum);
         $data['pilihanUjian'] =  $this->mahasiswa->getUjian_Edit($id);
-
-
         $this->form_validation->set_rules('kodeUjian', 'Ujian', 'required|trim');
         $this->form_validation->set_rules('tanggalUjian', 'Tanggal Ujian', 'required|trim');
-
-
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -193,21 +210,16 @@ class Mahasiswa extends CI_Controller
                 'tgl_ujian' => $this->input->post('tanggalUjian'),
                 'kodeUjiankode' => $this->input->post('kodeUjian'),
                 'tgl_tambah_ujian' => date("Y/m/d"),
-                'MahasiswaNim' => $data['user']['nim'],
+                'MahasiswaNim' => $data['user_login']['nim'],
                 'bukti' => $data['ujian']['bukti']
             ];
-
             $upload_bukti = $_FILES['buktiUjian'];
-
             if ($upload_bukti['name'] != '') {
                 $config['allowed_types'] = 'jpg|png|pdf';
                 $config['max_size']     = '2048'; //kb
                 $config['upload_path'] = './assets/ujian/';
-                $config['file_name'] = time() . '_' . $data['user']['nim'] . '_' . $upload_bukti['name'];
-
-
+                $config['file_name'] = time() . '_' . $data['user_login']['nim'] . '_' . $upload_bukti['name'];
                 $this->load->library('upload', $config);
-
                 if ($this->upload->do_upload('buktiUjian')) {
                     unlink(FCPATH . 'assets/ujian/' . $data['ujian']['bukti']);
                     $dataUjian['bukti'] = $this->upload->data('file_name');
@@ -215,50 +227,46 @@ class Mahasiswa extends CI_Controller
                     echo $this->upload->display_errors();
                 }
             }
-
             $this->mahasiswa->editUjian($dataUjian, $id);
-
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data ujian berhasil di perbaharui ! </div>');
             if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
-                redirect('operator/mahasiswa/ujian/' . $data['user']['nim']);
+                redirect('operator/mahasiswa/ujian/' . $data['user_login']['nim']);
             }
             redirect('mahasiswa/ujian');
         }
     }
-
-
     public function publikasi()
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Publikasi';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
-        $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user']['nim']);
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
         $data['publikasi'] = $this->mahasiswa->getPublikasi($this->session->userdata('username'));
-        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user']['nim']])->num_rows();
-
+        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
+        $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('mahasiswa/publikasi', $data);
         $this->load->view('templates/footer');
     }
-
     public function tambahPublikasi($nim)
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Tambah Publikasi';
-        $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
-        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user']['nim']])->num_rows();
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+
+        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         if ($data['jumlah_publikasi'] > 2) {
             redirect('mahasiswa/publikasi');
         }
-
         $this->form_validation->set_rules('judulArtikel', 'Judul Artikel', 'required|trim');
         $this->form_validation->set_rules('namaJurnal', 'Nama Jurnal', 'required|trim');
         $this->form_validation->set_rules('volumDanNo', 'Volume Dan No Terbitan', 'required|trim');
         $this->form_validation->set_rules('statusJurnal', 'Status Jurnal', 'required|trim');
-
-
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -272,18 +280,15 @@ class Mahasiswa extends CI_Controller
                 'volumeDanNoTerbitan' => $this->input->post('volumDanNo'),
                 'kategoriJurnal' => 'kosong',
                 'statusJurnal' => $this->input->post('statusJurnal'),
-                'Mahasiswanim' => $data['user']['nim'],
+                'Mahasiswanim' => $data['user_login']['nim'],
                 'bukti' => $_FILES['buktiPublikasi']['name'],
                 'tanggal' => date("Y/m/d"),
-
             ];
             if ($dataPublikasi['bukti']) {
                 $config['allowed_types'] = 'jpg|png|pdf';
                 $config['max_size']     = '2048'; //kb
                 $config['upload_path'] = './assets/publikasi/';
-                $config['file_name'] = time() . '_' . $data['user']['nim'] . '_' . $dataPublikasi['bukti'];
-
-
+                $config['file_name'] = time() . '_' . $data['user_login']['nim'] . '_' . $dataPublikasi['bukti'];
                 $this->load->library('upload', $config);
                 if ($this->upload->do_upload('buktiPublikasi')) {
                     $dataPublikasi['bukti'] = $this->upload->data('file_name');
@@ -300,39 +305,35 @@ class Mahasiswa extends CI_Controller
             redirect('mahasiswa/publikasi');
         }
     }
-
     public function hapusPublikasi($idJurnal)
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $user = [
             'publikasi' => $this->db->get_where('publikasi', ['idJurnal' => $idJurnal])->row_array()
         ];
-
         $this->load->library('upload');
         unlink(FCPATH . "assets/publikasi/" . $user['publikasi']['bukti']);
         $this->db->delete('publikasi', ['idJurnal' => $idJurnal]);
-
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Publikasi terhapus</div>');
         if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
             redirect('operator/mahasiswa/publikasi/' . $user['publikasi']['Mahasiswanim']);
         }
         redirect('mahasiswa/publikasi');
     }
-
-
     public function editPublikasi($id)
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Edit Publikasi';
         $data['jurnal'] = $this->db->get_where('publikasi', ['idJurnal' => $id])->row_array();
         $data['statusJurnal'] = ['Internasional Bereputasi', 'Internasional', 'Nasional Terakreditasi', 'Nasional'];
+        $data['username'] = $this->session->userdata('username');
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
 
         $this->form_validation->set_rules('judulArtikel', 'Judul Artikel', 'required|trim');
         $this->form_validation->set_rules('namaJurnal', 'Nama Jurnal', 'required|trim');
         $this->form_validation->set_rules('volumDanNo', 'Volume Dan No Terbitan', 'required|trim');
         $this->form_validation->set_rules('statusJurnal', 'Status Jurnal', 'required|trim');
-
-
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -349,20 +350,14 @@ class Mahasiswa extends CI_Controller
                 'Mahasiswanim' => $data['jurnal']['Mahasiswanim'],
                 'bukti' => $data['jurnal']['bukti'],
                 'tanggal' => date("Y/m/d")
-
             ];
-
             $upload_publikasi = $_FILES['buktiPublikasi'];
-
             if ($upload_publikasi['name'] != '') {
-
                 $config['allowed_types'] = 'jpg|png|pdf';
                 $config['max_size']     = '2048'; //kb
                 $config['upload_path'] = './assets/publikasi/';
                 $config['file_name'] = time() . '_' . $data['user']['nim'] . '_' . $upload_publikasi['name'];
-
                 $this->load->library('upload', $config);
-
                 if ($this->upload->do_upload('buktiPublikasi')) {
                     unlink(FCPATH . 'assets/publikasi/' . $data['user']['bukti']);
                     $dataPublikasi['bukti'] = $this->upload->data('file_name');
@@ -370,8 +365,6 @@ class Mahasiswa extends CI_Controller
                     echo $this->upload->display_errors();
                 }
             }
-
-
             $this->mahasiswa->editPublikasi($dataPublikasi, $id);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data publikasi berhasil di perbaharui ! </div>');
             if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
@@ -384,7 +377,6 @@ class Mahasiswa extends CI_Controller
     {
         echo json_encode($this->db->get_where('publikasi', ['idJurnal' => $data])->row_array());
     }
-
     public function getDetailUjian($id_ujian)
     {
         $this->load->model('Operator_model', 'operator');
@@ -393,6 +385,51 @@ class Mahasiswa extends CI_Controller
             'ujian' => $this->mahasiswa->getDetailUjian($id_ujian),
             'penguji' => $this->operator->getPenguji($id_ujian)
         ];
+        echo json_encode($data);
+    }
+
+    public function insertIsianMahasiswa()
+    {
+        $data = [
+            'judulAkhir' => $this->input->post('judulTA'),
+            'paradigma' => $this->input->post('paradigma'),
+            'kataKunci' => $this->input->post('kataKunci'),
+            'tujuanPenelitian' => $this->input->post('tujuanP'),
+            'metodePenelitian1' => $this->input->post('metpen1'),
+            'metodePenelitian2' => $this->input->post('metpen2'),
+            'temuan' => $this->input->post('temuan'),
+            'kontribusiDanImplikasi' => $this->input->post('kontribusiImplikasi'),
+            'Mahasiswanim' => $this->input->post('nim')
+        ];
+        $this->db->insert('isianMahasiswa', $data);
+        $this->session->set_userdata('nim_mhsnya', $data['Mahasiswanim']);
+        $this->session->set_userdata('statusIsianMahasiswa', 'insert');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil ditambahan </div>');
+        redirect('mahasiswa/profil');
+    }
+    public function updateIsianMahasiswa($nim)
+    {
+        $data = [
+            'judulAkhir' => $this->input->post('judulTA'),
+            'paradigma' => $this->input->post('paradigma'),
+            'kataKunci' => $this->input->post('kataKunci'),
+            'tujuanPenelitian' => $this->input->post('tujuanP'),
+            'metodePenelitian1' => $this->input->post('metpen1'),
+            'metodePenelitian2' => $this->input->post('metpen2'),
+            'temuan' => $this->input->post('temuan'),
+            'kontribusiDanImplikasi' => $this->input->post('kontribusiImplikasi'),
+            'Mahasiswanim' => $this->input->post('nim')
+        ];
+        $this->db->where('Mahasiswanim', $nim);
+        $this->db->update('isianMahasiswa', $data);
+        $this->session->set_userdata('nim_mhsnya', $data['Mahasiswanim']);
+        $this->session->set_userdata('statusIsianMahasiswa', 'update');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil diperbarui </div>');
+        redirect('mahasiswa/profil');
+    }
+    public function getDataEditIsian($nim)
+    {
+        $data = $this->db->get_where('isianMahasiswa', ['MahasiswaNim' => $nim])->row_array();
         echo json_encode($data);
     }
 }

@@ -14,23 +14,36 @@
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-
-                <div class="topbar-divider d-none d-sm-block"></div>
-
+                <!-- Nav Item - Alerts -->
+                <li class="nav-item dropdown no-arrow mx-1 icon-notif">
+                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell fa-fw"></i>
+                        <!-- Counter - Alerts -->
+                        <span class="badge badge-danger badge-counter counter"></span>
+                    </a>
+                    <!-- Dropdown - Alerts -->
+                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in notifications" aria-labelledby="alertsDropdown" id="notifications">
+                        <h6 class="dropdown-header">
+                            Pemberitahuan
+                        </h6>
+                    </div>
+                </li>
+                <div class="topbar-divider d-none d-sm-block mr-0 ml-0"></div>
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                        <img class="img-profile rounded-circle" src="">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small username-topbar" id="username-topbar"><?= $username; ?></span>
+                        <img class="img-profile rounded-circle" src="<?= base_url('assets/img/profile/') . $user['image']; ?>">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">
+                        <?php $role_id = $this->session->userdata('user_profile_kode'); ?>
+                        <a class="dropdown-item" href="<?= base_url(link_profil($role_id)) ?>">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            My Profile
+                            Profil
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="<?= base_url('auth/logout');  ?>" data-toggle="modal" data-target="#logoutModal">
+                        <a class="dropdown-item logout" href="#">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
                         </a>

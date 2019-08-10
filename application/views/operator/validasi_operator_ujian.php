@@ -17,6 +17,7 @@
 
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col-lg-6">
 					<?= $this->session->flashdata('message');  ?>
@@ -251,7 +252,6 @@
 															<tbody>
 																<?php $i = 1;
 																foreach ($pembimbing as $pmb) : ?>
-
 																	<tr>
 																		<td><?= $i++  ?></td>
 																		<td><?= $pmb['nama_dosen']; ?></td>
@@ -389,7 +389,7 @@
 								<tr>
 									<td><?= $i++  ?></td>
 									<td><?= $pngj['nama_dosen']  ?></td>
-									<td>Penguji<?= $pngj['statusPenguji']  ?></td>
+									<td><?= $pngj['status_dosen']  ?></td>
 									<td><input type="text" class="form-control" placeholder="Nilai..." value="<?= $pngj['nilai'] ?>" name="<?= $pngj['id']; ?>">
 										<input type="hidden" value="<?= $pngj['Ujianid'] ?>" name="idujian">
 									</td>
@@ -406,4 +406,4 @@
 		</div>
 	</div>
 </div>
-<!-- Akhir Input Nilia -->
+<!-- Akhir Input Nilai -->

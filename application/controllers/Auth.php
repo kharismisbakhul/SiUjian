@@ -12,8 +12,8 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('username')) {
-            redirect('mahasiswa');
+        if ($this->session->userdata('user_profile_kode')) {
+            redirect(link_dashboard($this->session->userdata('user_profile_kode')));
         }
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
@@ -48,7 +48,6 @@ class Auth extends CI_Controller
                         'user_profile_kode' => $user['user_profile_kode']
                     ];
 
-
                     $this->session->set_userdata($data);
                     if ($user['user_profile_kode'] == 1) {
                         redirect('admin');
@@ -81,14 +80,14 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('user_profile_kode');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">You have been logged out!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success text-center" role="alert">Logout Success</div>');
         redirect('auth');
     }
 
 
     public function blocked()
     {
-        $this->load->view('auth/blocked');
+        $this->load->view('error403');
     }
 
     public function forgotPassword()

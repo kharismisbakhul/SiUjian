@@ -48,11 +48,35 @@
                                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Mahasiswa Keseluruhan</h6>
                                 </div>
                                 <div class="card-body">
+                                    <form action="<?= base_url('pimpinan/laporanStatusMahasiswa') ?>" method="post">
+                                        <div class="row mb-2">
+                                            <div class="col-md-3">
+                                                <small>Mulai Periode</small>
+                                                <?php if ($star_date != null) : ?>
+                                                    <small> <?= $star_date ?></small>
+                                                <?php endif; ?>
+                                                <input type="date" class="form-control" name="star_date">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <small>Akhir Periode</small>
+                                                <?php if ($end_date != null) : ?>
+                                                    <small> <?= $end_date ?></small>
+                                                <?php endif; ?>
+                                                <div class="input-group mb-3">
+                                                    <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                                                    <div class="input-group-append">
+                                                        <input type="submit" class="btn btn-primary" name="submit" value="cari" id="basic-addon2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered text-center" id="dataTableLaporanMhs" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Tanggal Mulai Tugas Akhir</th>
                                                     <th>Nama Mahasiswa</th>
                                                     <th>Jenjang</th>
                                                     <th>Program Studi</th>
@@ -66,26 +90,24 @@
                                                 foreach ($mahasiswa as $m) : ?>
                                                     <tr>
                                                         <td><?= $i; ?></td>
+                                                        <td><?= $m['tglMulaiTA'] ?></td>
                                                         <td><?= $m['nama']; ?></td>
                                                         <td><?= $m['jenjang']; ?></td>
                                                         <td><?= $m['nama_prodi']; ?></td>
-                                                        <?php
-                                                        if (!$m['ujian_terakhir']['kode']) {
-                                                            $m['ujian_terakhir']['nama_ujian'] = "Baru Mulai";
-                                                        }
-                                                        ?>
-                                                        <td class='font-weight-bold'><?= $m['ujian_terakhir']['nama_ujian']; ?></td>
-                                                        <?php
-                                                        if (!$m['ujian_terakhir']['kode']) {
-                                                            echo "<td class='font-weight-bold'>-</td>";
-                                                        } else if ($m['ujian_terakhir']['statusUjian'] == 1) {
-                                                            echo "<td class='text-success font-weight-bold'>Lulus</td>";
-                                                        } else if ($m['ujian_terakhir']['statusUjian'] == 2) {
-                                                            echo "<td class='text-primary font-weight-bold'>Proses</td>";
-                                                        } else if ($m['ujian_terakhir']['statusUjian'] == 3) {
-                                                            echo "<td class='text-danger font-weight-bold'>Tidak Lulus</td>";
-                                                        }
-                                                        ?>
+                                                        <?php if ($m['nama_ujian']) : ?>
+                                                            <td><?= $m['nama_ujian']; ?></td>
+                                                        <?php else : ?>
+                                                            <td>Belum Mulai</td>
+                                                        <?php endif; ?>
+                                                        <?php if ($m['statusUjian'] == 1) : ?>
+                                                            <td class="text-success font-weight-bold">Lulus</td>
+                                                        <?php elseif ($m['statusUjian'] == 2) : ?>
+                                                            <td class="text-primary font-weight-bold">Proses</td>
+                                                        <?php elseif ($m['statusUjian'] == 3) : ?>
+                                                            <td class="text-danger font-weight-bold">Tidak Lulus</td>
+                                                        <?php else : ?>
+                                                            <td>-</td>
+                                                        <?php endif; ?>
                                                         <td class="text-center">
                                                             <button class="btn btn-info btn-icon-split btn-sm modalDetail" data-toggle="modal" data-target=".modalDetailMahasiswa" data-id="<?= $m['nim']; ?>">
                                                                 <span class="icon text-white-50">
@@ -98,6 +120,16 @@
                                                     <?php $i++;
                                                 endforeach; ?>
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3"></th>
+                                                    <th>Jenjang</th>
+                                                    <th>Program Studi</th>
+                                                    <th>Status 1</th>
+                                                    <th>Status 2</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

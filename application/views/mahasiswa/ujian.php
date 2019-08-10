@@ -2,11 +2,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-10 ">
-            <h1 class="h3 mb-4 text-gray-800"><?= $title; ?> - <?= $user['nama']  ?>(<?= $user['nim']  ?>)</h1>
+            <h1 class="h3 mb-4 text-gray-800"><?= $title; ?> - <?= $user_login['nama']  ?>(<?= $user_login['nim']  ?>)</h1>
         </div>
         <div class="col-xl-2">
-            <?php if ($jumlah_ujian < 4) :  ?>
-                <form action="<?= base_url('mahasiswa/tambahUjian/') . $user['nim']  ?>">
+            <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1 && $jumlah_ujian < 12) :  ?>
+                <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
                     <button type="submit" class="btn btn-success float-right mb-2 tombol">
                         <span class="icon text-white-50">
                             <i class="fas fa-fw fa-plus-circle"></i>
@@ -59,12 +59,24 @@
                             <thead>
                                 <tr style="background-color: 	#f8f8f8; color: #101010">
                                     <th scope="col">#</th>
-                                    <th scope="col">Tanggal Tambah Ujian</th>
-                                    <th scope="col">Jenis Ujian</th>
                                     <th scope="col">Tanggal Ujian</th>
+                                    <th scope="col">Jenis Ujian</th>
+
                                     <th scope="col">Status Ujian</th>
                                     <th scope="col">Validate</th>
                                     <th scope="col">Nilai</th>
+                                    <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
+                                        <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                            <th scope="col">Bobot</th>
+                                            <th scope="col">Nilai Angka</th>
+                                            <th scope="col">Angka Mutu (%)</th>
+                                            <th scope="col">Angka Mutu x Nilai</th>
+                                        <?php else : ?>
+
+                                            <th scope="col">Angka Mutu (%)</th>
+                                            <th scope="col">Angka Mutu x Nilai</th>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -72,28 +84,45 @@
                                 <?php $i = 1;
                                 foreach ($ujian as $u) :  ?>
                                     <tr>
-                                        <th scope="row"><?= $i++;  ?></th>
-                                        <td><?= $u['tgl_tambah_ujian']  ?></td>
-                                        <td><?= $u['nama_ujian']  ?></td>
-                                        <td><?= $u['tgl_ujian']  ?></td>
+                                        <th class="align-middle" scope="row"><?= $i++;  ?></th>
+                                        <td class="align-middle"><small><?= $u['tgl_ujian']  ?></small></td>
+                                        <td class="align-middle"><?= $u['nama_ujian']  ?></td>
+
                                         <!-- status Ujian -->
                                         <?php if ($u['statusUjian'] == 1) { ?>
-                                            <td><span class="badge badge-pill badge-success">Lulus</span></td>
+                                            <td class="align-middle"><span class="badge badge-pill badge-success">Lulus</span></td>
                                         <?php } elseif ($u['statusUjian'] == 2) { ?>
-                                            <td><span class="badge badge-pill badge-primary">Proses</span></td>
+                                            <td class="align-middle"><span class="badge badge-pill badge-primary">Proses</span></td>
                                         <?php } else { ?>
-                                            <td><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
+                                            <td class="align-middle"><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
                                         <?php } ?>
 
                                         <!-- valid ujian -->
                                         <?php if ($u['valid'] == 1) { ?>
-                                            <td><span class="badge badge-pill badge-success">Valid</span></td>
+                                            <td class="align-middle"><span class="badge badge-pill badge-success">Valid</span></td>
                                         <?php } elseif ($u['valid'] == 2) { ?>
-                                            <td><span class="badge badge-pill badge-primary">Proses</span></td>
+                                            <td class="align-middle"><span class="badge badge-pill badge-primary">Proses</span></td>
                                         <?php } else { ?>
-                                            <td><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
+                                            <td class="align-middle"><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
                                         <?php } ?>
-                                        <td><?= $u['nilai_akhir']  ?></td>
+                                        <td class="align-middle"><?= $u['nilai_akhir']  ?></td>
+                                        <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
+                                            <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                                <th scope="col" class="align-middle"><?= $u['bobot_nilai'] * 100 ?>%</th>
+                                                <?php if ($u['kode'] == 5 || $u['kode'] == 7) : ?>
+                                                    <th class="align-middle" scope="col" rowspan="2"><?= $u['nilai_akhir_angka'] ?></th>
+                                                    <td class="align-middle" scope="col" rowspan="2"><?= $u['angka_mutu'] ?></td>
+                                                    <td class="align-middle" scope="col" rowspan="2"><?= $u['angka_mutu_x_nilai'] ?></td>
+                                                <?php elseif ($u['kode'] == 9) : ?>
+                                                    <th scope="col" class="align-middle" rowspan="4"><?= $u['nilai_akhir_angka'] ?></th>
+                                                    <td scope="col" class="align-middle" rowspan="4"><?= $u['angka_mutu'] ?></td>
+                                                    <td scope="col" class="align-middle" rowspan="4"><?= $u['angka_mutu_x_nilai'] ?></td>
+                                                <?php endif; ?>
+                                            <?php else : ?>
+                                                <td class="align-middle" scope="col"><?= $u['angka_mutu'] ?></td>
+                                                <td class="align-middle" scope="col"><?= $u['angka_mutu_x_nilai'] ?></td>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
                                         <td>
                                             <?php if ($u['valid'] == 1) :  ?>
                                                 <button class="btn btn-secondary btn-icon-split btn-sm">
@@ -139,8 +168,20 @@
 
                                     </tr>
                                 <?php endforeach; ?>
-
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                        <td colspan="8">Jumlah</td>
+                                        <td>1.0</td>
+                                        <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                    <?php else : ?>
+                                        <td colspan="6">Jumlah</td>
+                                        <td>1.0</td>
+                                        <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                    <?php endif; ?>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

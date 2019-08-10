@@ -55,14 +55,23 @@
                                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Nama Dosen</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form style="float: right;">
-                                        <div class="form-row mb-3">
-                                            <!-- Isi Form AutoComplete nya disini -->
-                                            <!-- <div class="md-form">
-                                                <input type="text" id="dosenSearch" name="dosenSearch" placeholder="Nama Dosen" value="">
-                                            </div> -->
+
+                                    <div class="row mb-2">
+                                        <div class="col-md-3">
+                                            <small>Mulai Periode</small>
+                                            <input type="date" class="form-control star_date" name="star_date">
                                         </div>
-                                    </form>
+                                        <div class="col-md-3">
+                                            <small>Akhir Periode</small>
+                                            <div class="input-group mb-3">
+                                                <input type="date" class="form-control end_date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                                                <div class="input-group-append">
+                                                    <input type="button" class="btn btn-primary " name="submit" value="cari" id="basic-addon2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead class="text-center">

@@ -17,8 +17,9 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/')  ?>css/sb-admin-2.css" rel="stylesheet">
-    <link href="<?= base_url('assets/')  ?>css/style-yusril.css" rel="stylesheet">
 
+    <!-- Own CSS -->
+    <link href="<?= base_url('assets/') ?>css/style.css" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>css/custom/dashboard.css" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>css/custom/dosen.css" rel="stylesheet">
     <link href="<?= base_url('assets/') ?>css/custom/operator.css" rel="stylesheet">
@@ -30,7 +31,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-
 
 </head>
 

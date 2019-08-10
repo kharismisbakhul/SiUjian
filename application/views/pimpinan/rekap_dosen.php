@@ -125,6 +125,17 @@
                                     <form action="">
                                         <div class="form-row">
                                             <div class="col-5">
+                                                <h6 class="">Pembimbing Ketua</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="jPembimbingKetua"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
                                                 <h6 class="">Pembimbing 1</h6>
                                             </div>
                                             <div class="col-3">
@@ -143,6 +154,39 @@
                                             </div>
                                             <div class="col-4">
                                                 <h6 class="jPembimbing2"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Promotor</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="jPromotor"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Co Promotor 1</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="jCoPromotor1"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Co Promotor 2</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="jCoPromotor2"></h6>
                                             </div>
                                         </div>
                                         <br class="mt-1">
@@ -174,6 +218,17 @@
                                     <form>
                                         <div class="form-row">
                                             <div class="col-5">
+                                                <h6 class="">Penguji Ketua</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="jPengujiKetua"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
                                                 <h6 class="">Penguji 1</h6>
                                             </div>
                                             <div class="col-3">
@@ -203,6 +258,28 @@
                                             </div>
                                             <div class="col-4">
                                                 <h6 class="jPenguji3"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Penguji Tamu 1</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="jPengujiTamu1"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Penguji Tamu 2</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="jPengujiTamu2"></h6>
                                             </div>
                                         </div>
                                         <hr>

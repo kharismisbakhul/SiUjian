@@ -150,7 +150,6 @@
  										</div>
  										<div class="col-sm-8">
  											<input type="text" class="form-control" id="jenisUjian" placeholder="Ujian Komisi">
-
  										</div>
  									</div>
  									<div class=" form-group row">

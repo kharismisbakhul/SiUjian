@@ -37,7 +37,6 @@ function check_access($role_id, $menu_id)
     }
 }
 
-
 function link_dashboard($user_profil_kode)
 {
     if ($user_profil_kode == 1) {
@@ -52,6 +51,7 @@ function link_dashboard($user_profil_kode)
         return "mahasiswa";
     }
 }
+
 function link_profil($user_profil_kode)
 {
     if ($user_profil_kode == 1) {

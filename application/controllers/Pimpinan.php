@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
 class Pimpinan extends CI_Controller
 {
     public function __construct()
@@ -7,12 +8,14 @@ class Pimpinan extends CI_Controller
         parent::__construct();
         is_logged_in();
     }
+
     private function loadTemplate($data)
     {
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
     }
+
     private function initData()
     {
         $data['username'] = $this->session->userdata('username');
@@ -20,14 +23,13 @@ class Pimpinan extends CI_Controller
         $this->load->model('dosen_model', 'dosen');
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
-        // $data['dosen'] = $this->dosen->getListDosen($data['user_login']['nip']);
-        // var_dump($data['user_login']['nip']);die;
         $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
         $data['bimbingan_jumlah'] = $this->dosen->getMahasiswaBimbingan($this->session->userdata('username'))->num_rows();
         $data['pembimbing_terbanyak'] = $this->dosen->getPembimbingTerbanyak();
         $data['rekap_dosen'] = $this->dosen->getRekapAllDosen();
         return $data;
     }
+
     public function index()
     {
         if ($this->session->userdata('user_profile_kode') != 3) {
@@ -36,9 +38,10 @@ class Pimpinan extends CI_Controller
         $data = $this->initData();
         $data['title'] = 'Dashboard';
         $this->loadTemplate($data);
-        $this->load - s > view('dashboard/dash_pimpinan', $data);
+        $this->load->view('dashboard/dash_pimpinan', $data);
         $this->load->view('templates/footer');
     }
+
     public function profil()
     {
         $data = $this->initData();
@@ -47,25 +50,35 @@ class Pimpinan extends CI_Controller
         $this->load->view('pimpinan/profil', $data);
         $this->load->view('templates/footer');
     }
+
     public function laporanStatusMahasiswa()
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = $this->initData();
+        $data['title'] = 'Laporan Status Mahasiswa';
+        $data['star_date'] = "";
+        $data['end_date'] = "";
+
+        if ($this->input->post('star_date') && $this->input->post('end_date')) {
+            $data['star_date'] = $this->input->post('star_date');
+            $data['end_date'] = $this->input->post('end_date');
+        }
+
         if ($data['user_login']['jabatan_pimpinan'] != "") {
             if ($data['user_login']['jabatan_pimpinan'] == "Dekan") {
-                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa();
+                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
             } else {
-                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa($data['user_login']['prodi_dosen']);
+
+                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date'], $data['user_login']['prodi_dosen']);
             }
-        }
-        if ($this->uri->segment(3) && $this->uri->segment(4)) {
+        } elseif ($this->uri->segment(3) || $this->uri->segment(4)) {
             if ($this->uri->segment(3) == "Dekan") {
-                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa();
+                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa();
             } else {
-                $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa($this->uri->segment(4));
+                $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date'], $this->uri->segment(4));
             }
         }
-        $data['title'] = 'Laporan Status Mahasiswa';
+
         $this->loadTemplate($data);
         $this->load->view('pimpinan/laporan_status_mahasiswa', $data);
         $this->load->view('templates/footer');
@@ -74,8 +87,12 @@ class Pimpinan extends CI_Controller
     {
         $this->load->model('dosen_model', 'dosen');
         $data = $this->initData();
+        $data['star_date'] = "";
+        $data['end_date'] = "";
         $data['dosen'] = "";
         $data['user_login'] = "";
+
+
         if ($this->session->userdata("user_profile_kode") == 3) {
             $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
             if ($data['user_login']['jabatan_pimpinan'] != "") {
@@ -95,9 +112,11 @@ class Pimpinan extends CI_Controller
         }
         $data['title'] = 'Laporan Dosen';
         $this->loadTemplate($data);
+
         $this->load->view('pimpinan/laporan_dosen', $data);
         $this->load->view('templates/footer');
     }
+
     public function rekapDosen()
     {
         $this->load->model('dosen_model', 'dosen');
@@ -124,11 +143,13 @@ class Pimpinan extends CI_Controller
         $this->load->view('pimpinan/rekap_dosen', $data);
         $this->load->view('templates/footer');
     }
+
     public function detailRekapDosen($nip)
     {
         $this->load->model('dosen_model', 'dosen');
         $data['rekap_dosen'] = $this->dosen->getDetailRekapDosen($nip);
     }
+
     public function detailMahasiswa($nim)
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
@@ -144,7 +165,9 @@ class Pimpinan extends CI_Controller
     {
         $this->load->model('dosen_model', 'dosen');
         $this->load->model('mahasiswa_model', 'mahasiswa');
-        $result = $this->dosen->getMahasiswaBimbingan($nip)->result_array();
+        $star_date = $this->input->get('star_date');
+        $end_date = $this->input->get('end_date');
+        $result = $this->dosen->getMahasiswaBimbingan($nip, $star_date, $end_date)->result_array();
         $dosenA = $this->dosen->getDetailDosen($nip);
         $dosen['nama_dosen'] = $dosenA['nama_dosen'];
         $dosen['mahasiswa_bimbingan'] = $result;
