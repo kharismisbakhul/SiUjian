@@ -171,14 +171,24 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
-                                        <td colspan="8">Jumlah</td>
-                                        <td>1.0</td>
-                                        <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                    <?php if ($this->session->userdata('user_profile_kode') != 5) : ?>
+                                        <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                            <td colspan="8">Jumlah</td>
+                                            <td>1.0</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php else : ?>
+                                            <td colspan="6">Jumlah</td>
+                                            <td>1.0</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php endif; ?>
                                     <?php else : ?>
-                                        <td colspan="6">Jumlah</td>
-                                        <td>1.0</td>
-                                        <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                            <td colspan="5">Jumlah</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php else : ?>
+                                            <td colspan="5">Jumlah</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </tr>
                             </tfoot>
@@ -202,81 +212,77 @@
     <div class="modal fade bd-example-modal-xl" id="ModalDetailUjian" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
+
                 <div class="modal-header bg-primary">
                     <h5 class="modal-title text-white" id="exampleModalLabel">Detail Ujian</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body  transisi">
-                    <div class="table-responsive test">
-                        <div class="form-group row">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Nama Ujian</label>
-                            <div class="col-sm-9">
-                                <p id="nama_ujian"></p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Tanggal Ujian</label>
-                            <div class="col-sm-9">
-                                <p id="tgl_ujian"></p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Nilai</label>
-                            <div class="col-sm-9">
-                                <p id="nilai"></p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Bobot</label>
-                            <div class="col-sm-9">
-                                <p id="bobot"></p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Status Ujian</label>
-                            <div class="col-sm-9">
-                                <span class="statusUjian"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Validate</label>
-                            <div class="col-sm-9">
-                                <span class="valid"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Bukti</label>
-                            <div class="col-sm-9">
-                                <a id="bukti"></a>
-                            </div>
-                        </div>
-                        <div class="form-group row cls">
-                            <label for="nomorInduk" class="col-sm-3 col-form-label">Komentar</label>
-                            <div class="col-sm-9">
-                                <p id="komentar"></p>
-                            </div>
-                        </div>
-                        <table class="table table-bordered text-center" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th scope="col">Nama Dosen</th>
-                                    <th scope="col">Status Dosen</th>
-                                    <th scope="col">Nilai</th>
-                                </tr>
-                            </thead>
-                            <tbody class="penguji">
+                <div class="modal-body transisi">
+                    <div class="table-responsive test col-lg-11">
+                        <div class="card">
+                            <div class="card-body">
+                                <table>
+                                    <tr>
+                                        <td>Jenis Ujian&nbsp;&nbsp;</td>
+                                        <td id="nama_ujian"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanggal Ujian&nbsp;&nbsp;</td>
+                                        <td id="tgl_ujian"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nilai&nbsp;&nbsp;</td>
+                                        <td id="nilai"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bobot&nbsp;&nbsp;</td>
+                                        <td id="bobot"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status Ujian&nbsp;&nbsp;</td>
+                                        <td>:&nbsp;<span class="statusUjian"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Validate&nbsp;&nbsp;</td>
+                                        <td>:&nbsp;<span class="valid"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bukti&nbsp;&nbsp;</td>
+                                        <td id="bukti"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Komentar&nbsp;&nbsp;</td>
+                                        <td id="komentar"></td>
+                                    </tr>
+                                </table>
 
-                            </tbody>
-                            <tfoot>
-                                <th>Nilai akhir</th>
-                                <td></td>
-                                <td></td>
-                                <td id="nilai-akhir"></td>
-                            </tfoot>
-                        </table>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <table class="table table-sm  table-striped text-center" cellspacing="0" style="font-size: 16px">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th scope="col">Nama Dosen</th>
+                                            <th scope="col">Status Dosen</th>
+                                            <th scope="col">Nilai</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="penguji">
+
+                                    </tbody>
+                                    <tfoot>
+                                        <th>Nilai akhir</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td id="nilai-akhir"></td>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

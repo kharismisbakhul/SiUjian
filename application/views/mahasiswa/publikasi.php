@@ -103,13 +103,13 @@
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-fw fa-trash-alt"></i>
                                                     </span>
-                                                    <span class="text">Hapus</span>
+                                                    <span class="text text-white-50">Hapus</span>
                                                 </a>
                                                 <a class="btn btn-secondary btn-icon-split btn-sm" id="editPublikasi">
                                                     <span class="icon text-white-50">
                                                         <i class="fas fa-fw fa-pencil-alt"></i>
                                                     </span>
-                                                    <span class="text">Edit</span>
+                                                    <span class="text text-white-50">Edit</span>
                                                 </a>
                                             <?php endif; ?>
                                             <button type="button" class=" detail btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target="#modalDetail" data-id="<?= $p['idJurnal'] ?>">
@@ -141,95 +141,97 @@
 <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Detail Publikasi <img class="loader" style="width: 80px; height: 40px;"></h5>
-
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Detail Publikasi</h5>
                 <button type="button" class="close cls" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p>Tanggal</p>
+                <div class="publikasi-body">
+                    <div class=" row">
+                        <div class="col-lg-2">
+                            <p>Tanggal</p>
+                        </div>
+                        <div class="col-lg-1">
+                            <p>:</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <p id="tanggal" name="tanggal" class="tanggal"></p>
+                        </div>
                     </div>
-                    <div class="col-lg-1">
-                        <p>:</p>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p>Judul Artikel</p>
+                        </div>
+                        <div class="col-lg-1">
+                            <p>:</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <p id="judulArtikel" name="judulArtikel" class="judulArtikel"></p>
+                        </div>
                     </div>
-                    <div class="col-lg-8">
-                        <p id="tanggal" name="tanggal" class="tanggal"></p>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p>Nama Jurnal</p>
+                        </div>
+                        <div class="col-lg-1">
+                            <p>:</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <p id="namaJurnal" name="namaJurnal" class="namaJurnal"></p>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p>Judul Artikel</p>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p>Volume dan No terbitan</p>
+                        </div>
+                        <div class="col-lg-1">
+                            <p>:</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <p id="volumeDanNoTerbitan" name="volumeDanNoTerbitan" class="volumeDanNoTerbitan"></p>
+                        </div>
                     </div>
-                    <div class="col-lg-1">
-                        <p>:</p>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p>Status Jurnal</p>
+                        </div>
+                        <div class="col-lg-1">
+                            <p>:</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <p id="statusJurnal" name="judulArtikel" class="judulArtikel"></p>
+                        </div>
                     </div>
-                    <div class="col-lg-8">
-                        <p id="judulArtikel" name="judulArtikel" class="judulArtikel"></p>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p>Kategori Jurnal</p>
+                        </div>
+                        <div class="col-lg-1">
+                            <p>:</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <p id="kategoriJurnal" name="kategoriJurnal" class="kategoriJurnal"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p>Bukti</p>
+                        </div>
+                        <div class="col-lg-1">
+                            <p>:</p>
+                        </div>
+                        <div class="bukti col-lg-8">
+                            <a id="bukti" name="bukti" class="bukti"></a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p>Nama Jurnal</p>
-                    </div>
-                    <div class="col-lg-1">
-                        <p>:</p>
-                    </div>
-                    <div class="col-lg-8">
-                        <p id="namaJurnal" name="namaJurnal" class="namaJurnal"></p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p>Volume dan No terbitan</p>
-                    </div>
-                    <div class="col-lg-1">
-                        <p>:</p>
-                    </div>
-                    <div class="col-lg-8">
-                        <p id="volumeDanNoTerbitan" name="volumeDanNoTerbitan" class="volumeDanNoTerbitan"></p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p>Status Jurnal</p>
-                    </div>
-                    <div class="col-lg-1">
-                        <p>:</p>
-                    </div>
-                    <div class="col-lg-8">
-                        <p id="statusJurnal" name="judulArtikel" class="judulArtikel"></p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p>Kategori Jurnal</p>
-                    </div>
-                    <div class="col-lg-1">
-                        <p>:</p>
-                    </div>
-                    <div class="col-lg-8">
-                        <p id="kategoriJurnal" name="kategoriJurnal" class="kategoriJurnal"></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-2">
-                        <p>Bukti</p>
-                    </div>
-                    <div class="col-lg-1">
-                        <p>:</p>
-                    </div>
-                    <div class="bukti col-lg-8">
-                        <a id="bukti" name="bukti" class="bukti"></a>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary cls" id="cls" name="cls" data-dismiss="modal">Close</button>

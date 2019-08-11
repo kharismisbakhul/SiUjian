@@ -115,12 +115,14 @@
                               <span><?= $user_login['tglMulaiTA'];  ?></span>
                            </div>
                         </div>
-                        <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalMahasiswa">
-                           <span class="icon text-white-50">
-                              <i class="fas fa-pencil-alt"></i>
-                           </span>
-                           <span class="text">Edit</span>
-                        </button>
+                        <div class="col-lg-12">
+                           <button type="button" class="btn btn-primary btn-icon-split float-right" data-toggle="modal" data-target="#ModalMahasiswa">
+                              <span class="icon text-white-50">
+                                 <i class="fas fa-pencil-alt"></i>
+                              </span>
+                              <span class="text">Edit</span>
+                           </button>
+                        </div>
                      </form>
                   </div>
                </div>
@@ -519,72 +521,79 @@
 
 <!-- Modal Edit Isian Mahasiswa-->
 <div class="modal fade" id="ModalIsianMahasiswa" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+   <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
       <div class="modal-content">
-         <div class="modal-header">
+         <div class="modal-header bg-blue text-white">
             <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Detail Isian</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <form class="formIsian" action="<?= base_url('mahasiswa/insertIsianMahasiswa') ?>" method="post">
-            <div class="modal-body">
-               <div class="form-group row">
-                  <label for="judulTA" class="col-sm-4 col-form-label">Judul Tugas Akhir</label>
-                  <div class="col-sm-8">
-                     <textarea class="form-control" id="judulTA" name="judulTA" placeholder="Judul Tugas Akhir" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('judulTA', '<small class="text-danger pl-3">', '</small>'); ?>
+            <div class="table-responsive" style="height: 500px">
+               <div class="modal-body ">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="form-group row">
+                           <label for="judulTA" class="col-sm-4 col-form-label">Judul Tugas Akhir</label>
+                           <div class="col-sm-8">
+                              <textarea class="form-control" id="judulTA" name="judulTA" placeholder="Judul Tugas Akhir" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('judulTA', '<small class="text-danger pl-3">', '</small>'); ?>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="paradigma" class="col-sm-4 col-form-label">Paradigma</label>
+                           <div class="col-sm-8">
+                              <textarea class="form-control" id="paradigma" name="paradigma" placeholder="Paradigma" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('paradigma', '<small class="text-danger pl-3">', '</small>'); ?>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="kataKunci" class="col-sm-4 col-form-label">Kata Kunci</label>
+                           <div class="col-sm-8">
+                              <textarea class="form-control" id="kataKunci" name="kataKunci" placeholder="Kata Kunci" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('kataKunci', '<small class="text-danger pl-3">', '</small>'); ?>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="tujuanP" class="col-sm-4 col-form-label">Tujuan Penelitian</label>
+                           <div class="col-sm-8">
+                              <textarea class="form-control" id="tujuanP" name="tujuanP" placeholder="Tujuan Penelitian" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('tujuanP', '<small class="text-danger pl-3">', '</small>'); ?>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="metpen1" class="col-sm-4 col-form-label">Metode Penelitian 1</label>
+                           <div class="col-sm-8">
+                              <textarea class="form-control" id="metpen1" name="metpen1" placeholder="Metode Penelitian 1" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('metpen1', '<small class="text-danger pl-3">', '</small>'); ?>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="metpen2" class="col-sm-4 col-form-label">Metode Penelitian 2</label>
+                           <div class="col-sm-8">
+                              <textarea type="text" class="form-control" id="metpen2" name="metpen2" placeholder="Metode Penelitian 2" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('metpen2', '<small class="text-danger pl-3">', '</small>'); ?>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="temuan" class="col-sm-4 col-form-label">Temuan</label>
+                           <div class="col-sm-8">
+                              <textarea class="form-control" id="temuan" name="temuan" placeholder="Temuan" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('temuan', '<small class="text-danger pl-3">', '</small>'); ?>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label for="kontribusiImplikasi" class="col-sm-4 col-form-label">Kontribusi dan Implikasi</label>
+                           <div class="col-sm-8">
+                              <textarea class="form-control" id="kontribusiImplikasi" name="kontribusiImplikasi" placeholder="Kontribusi dan Implikasi" style="resize:none; max-height: 100px;"></textarea>
+                              <?= form_error('kontribusiImplikasi', '<small class="text-danger pl-3">', '</small>'); ?>
+                              <input type="hidden" name="nim" id="nim" value="<?= $user_login['nim'];  ?>">
+                           </div>
+                        </div>
+                     </div>
                   </div>
-               </div>
-               <div class="form-group row">
-                  <label for="paradigma" class="col-sm-4 col-form-label">Paradigma</label>
-                  <div class="col-sm-8">
-                     <textarea class="form-control" id="paradigma" name="paradigma" placeholder="Paradigma" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('paradigma', '<small class="text-danger pl-3">', '</small>'); ?>
-                  </div>
-               </div>
-               <div class="form-group row">
-                  <label for="kataKunci" class="col-sm-4 col-form-label">Kata Kunci</label>
-                  <div class="col-sm-8">
-                     <textarea class="form-control" id="kataKunci" name="kataKunci" placeholder="Kata Kunci" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('kataKunci', '<small class="text-danger pl-3">', '</small>'); ?>
-                  </div>
-               </div>
-               <div class="form-group row">
-                  <label for="tujuanP" class="col-sm-4 col-form-label">Tujuan Penelitian</label>
-                  <div class="col-sm-8">
-                     <textarea class="form-control" id="tujuanP" name="tujuanP" placeholder="Tujuan Penelitian" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('tujuanP', '<small class="text-danger pl-3">', '</small>'); ?>
-                  </div>
-               </div>
-               <div class="form-group row">
-                  <label for="metpen1" class="col-sm-4 col-form-label">Metode Penelitian 1</label>
-                  <div class="col-sm-8">
-                     <textarea class="form-control" id="metpen1" name="metpen1" placeholder="Metode Penelitian 1" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('metpen1', '<small class="text-danger pl-3">', '</small>'); ?>
-                  </div>
-               </div>
-               <div class="form-group row">
-                  <label for="metpen2" class="col-sm-4 col-form-label">Metode Penelitian 2</label>
-                  <div class="col-sm-8">
-                     <textarea type="text" class="form-control" id="metpen2" name="metpen2" placeholder="Metode Penelitian 2" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('metpen2', '<small class="text-danger pl-3">', '</small>'); ?>
-                  </div>
-               </div>
-               <div class="form-group row">
-                  <label for="temuan" class="col-sm-4 col-form-label">Temuan</label>
-                  <div class="col-sm-8">
-                     <textarea class="form-control" id="temuan" name="temuan" placeholder="Temuan" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('temuan', '<small class="text-danger pl-3">', '</small>'); ?>
-                  </div>
-               </div>
-               <div class="form-group row">
-                  <label for="kontribusiImplikasi" class="col-sm-4 col-form-label">Kontribusi dan Implikasi</label>
-                  <div class="col-sm-8">
-                     <textarea class="form-control" id="kontribusiImplikasi" name="kontribusiImplikasi" placeholder="Kontribusi dan Implikasi" style="resize:none; max-height: 100px;"></textarea>
-                     <?= form_error('kontribusiImplikasi', '<small class="text-danger pl-3">', '</small>'); ?>
-                     <input type="hidden" name="nim" id="nim" value="<?= $user_login['nim'];  ?>">
-                  </div>
+
                </div>
             </div>
             <div class="modal-footer">
@@ -592,6 +601,7 @@
                <button type="submit" class="btn btn-primary tombolIsian">Tambah</button>
             </div>
          </form>
+
       </div>
    </div>
 </div>

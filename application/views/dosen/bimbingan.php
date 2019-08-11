@@ -250,7 +250,7 @@
                                         <!-- Approach -->
                                         <div class="card shadow mb-4">
                                             <div class="card-body">
-                                                <div class="table-responsive">
+                                                <div class="table-responsive col-11">
                                                     <form>
                                                         <div class="form-group row mb-1">
                                                             <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
@@ -342,8 +342,8 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">#</th>
-                                                                        <th scope="col">Status</th>
                                                                         <th scope="col">Nama Dosen</th>
+                                                                        <th scope="col">Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody class="pembimbing">
