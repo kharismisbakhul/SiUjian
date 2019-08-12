@@ -19,6 +19,12 @@ class Mahasiswa extends CI_Controller
         $data['username'] = $this->session->userdata('username');
         $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
         $data['ujian_selanjutnya'] = $this->mahasiswa->getUjianSelanjutnya($data['username']);
+        // $this->db->select('jumlah_notifikasi');
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -43,6 +49,7 @@ class Mahasiswa extends CI_Controller
         } else {
             $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
         }
+
 
         $this->form_validation->set_rules('noTelp', 'No Telepon', 'trim');
         $this->form_validation->set_rules('judulTA', 'Judul Tugas Akhir', 'required|trim');
@@ -100,6 +107,12 @@ class Mahasiswa extends CI_Controller
         $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
 
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -120,6 +133,12 @@ class Mahasiswa extends CI_Controller
             redirect('mahasiswa/ujian');
         }
         $data['pembimbing'] = $this->db->select('Dosennip,statusPembimbing as statusPenguji')->get_where('pembimbing', ['Mahasiswanim' => $data['user_login']['nim']])->result_array();
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
+
         $this->form_validation->set_rules('kodeUjian', 'Ujian', 'required|trim');
         $this->form_validation->set_rules('tanggalUjian', 'Tanggal Ujian', 'required|trim');
         if ($this->form_validation->run() == false) {
@@ -150,6 +169,17 @@ class Mahasiswa extends CI_Controller
                     echo $this->upload->display_errors();
                 }
             }
+
+            //Update notifications
+            // $dataNotif = [
+            //     'notif' => $data['user_login']['nama'] . " (Mahasiswa) Menambahkan Ujian",
+            //     'user' => $data['user']['id'],
+            //     'jenis_notif' => 1,
+            //     'tgl_notif' => date("Y/m/d")
+            // ];
+
+            // $this->db->insert('notifications', $dataNotif);
+
             $this->mahasiswa->insertUjian($dataUjian);
             $idUjian = $this->mahasiswa->getNewIdUjian($data['user_login']['nim'], $dataUjian['kodeUjiankode']);
             foreach ($data['pembimbing'] as $pmb) {
@@ -241,6 +271,12 @@ class Mahasiswa extends CI_Controller
         $data['publikasi'] = $this->mahasiswa->getPublikasi($this->session->userdata('username'));
         $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -254,6 +290,12 @@ class Mahasiswa extends CI_Controller
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
 
         $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         if ($data['jumlah_publikasi'] > 2) {
@@ -325,6 +367,11 @@ class Mahasiswa extends CI_Controller
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
 
         $this->form_validation->set_rules('judulArtikel', 'Judul Artikel', 'required|trim');
         $this->form_validation->set_rules('namaJurnal', 'Nama Jurnal', 'required|trim');

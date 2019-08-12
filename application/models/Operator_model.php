@@ -136,4 +136,17 @@ class Operator_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('penguji', $data);
     }
+    // publikasi
+    public function getDataPublikasi($star_date = null, $end_date = null)
+    {
+        $this->db->select('mhs.nama,publikasi.judulArtikel,publikasi.namaJurnal,p.nama_prodi,publikasi.valid,publikasi.tanggal,mhs.jenjang,publikasi.idJurnal');
+        $this->db->from('publikasi');
+        $this->db->join('mahasiswa as mhs', 'publikasi.mahasiswanim=mhs.nim', 'left');
+        $this->db->join('prodi as p', 'p.kode=mhs.prodikode', 'left');
+        if ($star_date != null && $end_date != null) {
+            $this->db->where('tanggal >=', $star_date);
+            $this->db->where('tanggal <=', $end_date);
+        }
+        return $this->db->get()->result_array();
+    }
 }

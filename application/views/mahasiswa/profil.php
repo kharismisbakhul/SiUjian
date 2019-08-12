@@ -268,7 +268,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['judulAkhir'];  ?></span>
+                        <span id="mjudulTA"><?= $isianMahasiswa['judulAkhir'];  ?></span>
                      </div>
                   </div>
 
@@ -276,7 +276,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Paradigma</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['paradigma'];  ?></span>
+                        <span id="mparadigma"><?= $isianMahasiswa['paradigma'];  ?></span>
                      </div>
                   </div>
 
@@ -284,7 +284,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kata Kunci</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['kataKunci'];  ?></span>
+                        <span id="mkataKunci"><?= $isianMahasiswa['kataKunci'];  ?></span>
                      </div>
                   </div>
 
@@ -292,7 +292,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tujuan Penelitian</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['tujuanPenelitian'];  ?></span>
+                        <span id="mtujuanP"><?= $isianMahasiswa['tujuanPenelitian'];  ?></span>
                      </div>
                   </div>
 
@@ -300,7 +300,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 1</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['metodePenelitian1'];  ?></span>
+                        <span id="mmetpen1"><?= $isianMahasiswa['metodePenelitian1'];  ?></span>
                      </div>
                   </div>
 
@@ -308,7 +308,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 2</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['metodePenelitian2'];  ?></span>
+                        <span id="mmetpen2"><?= $isianMahasiswa['metodePenelitian2'];  ?></span>
                      </div>
                   </div>
 
@@ -316,7 +316,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Temuan</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['temuan'];  ?></span>
+                        <span id="mtemuan"><?= $isianMahasiswa['temuan'];  ?></span>
                      </div>
                   </div>
 
@@ -324,7 +324,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kontribusi dan Implikasi</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['kontribusiDanImplikasi'];  ?></span>
+                        <span id="mkontribusiImplikasi"><?= $isianMahasiswa['kontribusiDanImplikasi'];  ?></span>
                      </div>
                   </div>
 
@@ -333,7 +333,7 @@
                         <span class="icon text-white-50">
                            <i class="fas fa-pencil-alt"></i>
                         </span>
-                        <span class="text">Edit</span>
+                        <span class="text isianTambahEdit">Tambah</span>
                      </button>
                   </div>
                </form>

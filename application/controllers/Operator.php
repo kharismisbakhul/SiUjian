@@ -27,6 +27,11 @@ class Operator extends CI_Controller
         $data['jumlah_ujian_hari_ini'] = $this->db->get_where('ujian', ['tgl_ujian' => $time])->num_rows();
         $this->load->model('dosen_model', 'dosen');
         $data['jumlah_penguji_hari_ini'] = $this->dosen->getPengujiHariIni();
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
 
         //list validasi hari_ini
         $this->load->model('Operator_model', 'operator');
@@ -305,5 +310,43 @@ class Operator extends CI_Controller
         // akhir update nilai
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">penguji berhasil di hapus ! </div>');
         redirect('operator/validasi_cek/' . $id_ujian);
+    }
+    public function publikasi()
+    {
+        $data = $this->initData();
+        $data['title'] = 'Publikasi';
+        $this->loadTemplate($data);
+        $this->load->model('Operator_model', 'operator');
+        $data['star_date'] = "";
+        $data['end_date'] = "";
+        if ($this->input->post('submit') && $this->input->post('star_date') && $this->input->post('end_date')) {
+            $data['star_date'] = $this->input->post('star_date');
+            $data['end_date'] = $this->input->post('end_date');
+            $data['valid_publikasi'] = $this->operator->getDataPublikasi($data['star_date'], $data['end_date']);
+        } else {
+            $data['valid_publikasi'] = $this->operator->getDataPublikasi();
+        }
+        $this->load->view('operator/validasi_operator_publikasi', $data);
+        $this->load->view('templates/footer');
+    }
+    public function validasi_publikasi($idJurnal)
+    {
+        $data = $this->initData();
+        $data['title'] = 'Publikasi';
+        $this->loadTemplate($data);
+        $this->load->model('Operator_model', 'operator');
+        $data['publikasi'] = $this->db->get_where('publikasi', ['idJurnal' => $idJurnal])->row_array();
+        $this->db->select('nama');
+        $data['nama_mhs'] = $this->db->get_where('mahasiswa', ['nim' => $data['publikasi']['Mahasiswanim']])->row_array();
+        if ($this->input->post('valid')) {
+            $this->db->set('kategoriJurnal', $this->input->post('kategoriJurnal'));
+            $this->db->set('valid', $this->input->post('valid'));
+            $this->db->where('idJurnal', $idJurnal);
+            $this->db->update('publikasi');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data publikasi berhasil di perbaharui ! </div>');
+            redirect('operator/validasi_publikasi/' . $idJurnal);
+        }
+        $this->load->view('operator/validasi_operator_publikasi_cek', $data);
+        $this->load->view('templates/footer');
     }
 }

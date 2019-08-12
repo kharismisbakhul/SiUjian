@@ -40,7 +40,7 @@ class Pimpinan extends CI_Controller
         $data = $this->initData();
         $data['title'] = 'Dashboard';
         $this->loadTemplate($data);
-        $this->load - s > view('dashboard/dash_pimpinan', $data);
+        $this->load->view('dashboard/dash_pimpinan', $data);
         $this->load->view('templates/footer');
     }
 
@@ -64,13 +64,16 @@ class Pimpinan extends CI_Controller
                 $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa($data['user_login']['prodi_dosen']);
             }
         }
-        if ($this->uri->segment(3) && $this->uri->segment(4)) {
+        if ($this->uri->segment(3) || $this->uri->segment(4)) {
             if ($this->uri->segment(3) == "Dekan") {
                 $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa();
             } else {
                 $data['mahasiswa'] = $this->mahasiswa->getAllDetailLaporanMahasiswa($this->uri->segment(4));
             }
         }
+        // header("Content-type: application/json");
+        // echo json_encode($data);
+        // die;
         $data['title'] = 'Laporan Status Mahasiswa';
         $this->loadTemplate($data);
         $this->load->view('pimpinan/laporan_status_mahasiswa', $data);

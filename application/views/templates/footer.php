@@ -50,6 +50,7 @@
 <script src="<?= base_url('assets/') ?>js/laporanDosen.js"></script>
 <script src="<?= base_url('assets/') ?>js/laporanStatusMahasiswa.js"></script>
 <script src="<?= base_url('assets/') ?>js/rekapDosen.js"></script>
+<script src="<?= base_url('assets/') ?>js/notifications.js"></script>
 
 </body>
 

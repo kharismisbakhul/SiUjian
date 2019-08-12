@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2019 at 08:53 AM
+-- Generation Time: Jul 23, 2019 at 03:34 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -80,29 +80,10 @@ CREATE TABLE `isianmahasiswa` (
 --
 
 INSERT INTO `isianmahasiswa` (`id`, `judulAkhir`, `paradigma`, `kataKunci`, `tujuanPenelitian`, `metodePenelitian1`, `metodePenelitian2`, `temuan`, `kontribusiDanImplikasi`, `Mahasiswanim`) VALUES
-('1', 'ASD', 'bcdasasasasa', 'ddddddddddddddddd', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'bcd', 'bcd', 'ggggg', 'ddddd', '100'),
+('1', 'Wahahahaha', 'bcdasasasasa', 'ddddddddddddddddd', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'bcd', 'bcd', 'ggggg', 'ddddd', '100'),
 ('2', 'abc', 'abc', 'abc', 'abc', 'abc', 'abc', 'abc', 'aahahahhaha', '101'),
 ('3', 'Wadidaw', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', '165150201111231'),
 ('4', 'jkl', 'jkl', 'jkl', 'jkl', 'jkl', 'aaaaa', 'vvvvvvvvvvv', '', '2003');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `jenis_notif`
---
-
-CREATE TABLE `jenis_notif` (
-  `id` int(11) NOT NULL,
-  `keterangan` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jenis_notif`
---
-
-INSERT INTO `jenis_notif` (`id`, `keterangan`) VALUES
-(1, 'Tambah Publikasi (Mahasiswa)'),
-(2, 'Tambah Ujian (Mahasiswa)');
 
 -- --------------------------------------------------------
 
@@ -179,28 +160,13 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`nim`, `nama`, `noTest`, `prodikode`, `password`, `angkatan`, `semester`, `jalur`, `konsentrasi`, `alamat`, `noTelp`, `asalStudi`, `judulTugasAkhir`, `tglMasuk`, `tglMulaiTA`, `statusKelulusan`, `statusWisuda`, `statusTOEFL`, `statusTPA`, `jenjang`) VALUES
-('100', 'Kharis Saja', '0spZ', 8, '$2y$10$cGdEqGQuHAMjA.8HuI1iKO71WMOgwVYF/v2QpPaUv0MKm0ggjMChe', 0, 0, '', '', 'Jl. Bunga No. 21', '090908080', '', '', '0000-00-00', '2019-07-18', 1, 0, 0, 0, 'S2'),
+('100', 'Kharis Saja', '0spZ', 8, '$2y$10$cGdEqGQuHAMjA.8HuI1iKO71WMOgwVYF/v2QpPaUv0MKm0ggjMChe', 0, 0, '', '', 'Semlehur', '090908080', '', '', '0000-00-00', '2019-07-18', 1, 0, 0, 0, 'S2'),
 ('101', 'Badudu', '', 1, '123', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3'),
 ('165150201111001', 'Adi Saputra', 'AAA', 7, '123', 2016, 0, 'snmptn', '', 'Jl. Kucing', '0888', 'SMAN 1 Malang', 'How To Be Mature to Economics', '2019-07-01', '2019-07-10', 1, 1, 1, 1, 'S2'),
 ('165150201111231', 'Aditya Yusril Fikri', '1234', 4, '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 2017, 2, 'snmptn', 'rpl', 'jln. malang aja', '0987654322', 'UB', 'pengaruh senyawa x terhadap senyawa y menggunakan metode z', '2017-06-14', '2019-07-01', 1, 0, 1, 1, 'S3'),
 ('2001', 'Mahasiswa A', 'hQ4H', 6, '$2y$10$BlrYhlM/nz4ccGzS0WcRIuXxPNw5746lxe3hdhpMyIfWxZDYytXSa', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3'),
 ('2002', 'Mahasiswa B', 'Jter', 10, '$2y$10$gMz.Jv7IlcAdOndPo6God.gupoE./UQFcV5yFmUxzu7wibG2lUsLi', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3'),
 ('2003', 'Mahasiswa C', 'Qg2C', 4, '$2y$10$31H.DK.qcBIgtJM3ugsay.pSrlTZvgpOQXUmq1kgaDEaxle7O2viO', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notifications`
---
-
-CREATE TABLE `notifications` (
-  `id` int(11) NOT NULL,
-  `notif` varchar(256) NOT NULL,
-  `user` int(11) NOT NULL,
-  `jenis_notif` varchar(256) NOT NULL,
-  `tgl_notif` date NOT NULL,
-  `status_baca` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -347,8 +313,7 @@ CREATE TABLE `publikasi` (
 --
 
 INSERT INTO `publikasi` (`idJurnal`, `judulArtikel`, `namaJurnal`, `volumeDanNoTerbitan`, `kategoriJurnal`, `statusJurnal`, `Mahasiswanim`, `bukti`, `tanggal`, `valid`) VALUES
-(18, 'pengaruh air a dengan kandungan y', 'IEEE', '12/1', 'kosong', 'Internasional', '165150201111231', '1562572581__checker_2.jpg', '2019-07-13', 1),
-(19, 'Analisis A', 'JTIIK', '1/2', 'kosong', 'Nasional', '100', '', '2019-08-02', 2);
+(18, 'pengaruh air a dengan kandungan y', 'IEEE', '12/1', 'kosong', 'Internasional', '165150201111231', '1562572581__checker_2.jpg', '2019-07-13', 2);
 
 -- --------------------------------------------------------
 
@@ -549,8 +514,7 @@ INSERT INTO `user_sub_menu` (`id`, `judul`, `url`, `ikon`, `is_active`, `menu_id
 (11, 'Dosen', 'operator/dosen/list', 'fas fa-fw fa-chalkboard-teacher', '1', 2),
 (12, 'Pimpinan', 'operator/pimpinan', 'fas fa-fw fa-users', '1', 2),
 (13, 'Ujian', 'operator/ujian', 'fas fa-fw fa-check-circle', '1', 2),
-(14, 'Publikasi', 'operator/publikasi', 'fas fa-fw fa-check-circle', '1', 2),
-(15, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1);
+(14, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1);
 
 --
 -- Indexes for dumped tables
@@ -570,12 +534,6 @@ ALTER TABLE `dosen`
 ALTER TABLE `isianmahasiswa`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `FKisianMahas737699` (`Mahasiswanim`);
-
---
--- Indexes for table `jenis_notif`
---
-ALTER TABLE `jenis_notif`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `jurusan`
@@ -598,13 +556,6 @@ ALTER TABLE `mahasiswa`
   ADD UNIQUE KEY `nama` (`nama`),
   ADD UNIQUE KEY `noTest` (`noTest`),
   ADD KEY `prodikode` (`prodikode`);
-
---
--- Indexes for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user` (`user`);
 
 --
 -- Indexes for table `pembimbing`
@@ -703,22 +654,10 @@ ALTER TABLE `user_sub_menu`
 --
 
 --
--- AUTO_INCREMENT for table `jenis_notif`
---
-ALTER TABLE `jenis_notif`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `kodeujian`
 --
 ALTER TABLE `kodeujian`
   MODIFY `kode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `notifications`
---
-ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pembimbing`
@@ -742,7 +681,7 @@ ALTER TABLE `prodi`
 -- AUTO_INCREMENT for table `publikasi`
 --
 ALTER TABLE `publikasi`
-  MODIFY `idJurnal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idJurnal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `reviewer`
@@ -784,7 +723,7 @@ ALTER TABLE `user_menu`
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -807,12 +746,6 @@ ALTER TABLE `isianmahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`prodikode`) REFERENCES `prodi` (`kode`);
-
---
--- Constraints for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `pembimbing`
