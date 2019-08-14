@@ -73,7 +73,7 @@
                                     </div>
 
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="dataTableLaporanDsn" width="100%" cellspacing="0">
                                             <thead class="text-center">
                                                 <tr>
                                                     <th>#</th>
@@ -84,19 +84,19 @@
                                             <tbody>
                                                 <?php $i = 1;
                                                 foreach ($dosen as $d) : ?>
-                                                    <tr>
-                                                        <td class="text-center"><?= $i; ?></td>
-                                                        <td><?= $d['nama_dosen']; ?></td>
-                                                        <td class="text-center">
-                                                            <button class="btn btn-info btn-icon-split btn-sm modalDetailBimbingan" data-toggle="modal" data-target=".modalBimbingan" data-id="<?= $d['nip']; ?>">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-eye"></i>
-                                                                </span>
-                                                                <span class="text">See Detail</span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <?php $i++;
+                                                <tr>
+                                                    <td class="text-center"><?= $i; ?></td>
+                                                    <td><?= $d['nama_dosen']; ?></td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-icon-split btn-sm modalDetailBimbingan" data-toggle="modal" data-target=".modalBimbingan" data-id="<?= $d['nip']; ?>">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-eye"></i>
+                                                            </span>
+                                                            <span class="text">See Detail</span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <?php $i++;
                                                 endforeach; ?>
                                             </tbody>
                                         </table>

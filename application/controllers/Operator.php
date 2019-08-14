@@ -28,6 +28,12 @@ class Operator extends CI_Controller
         $this->load->model('dosen_model', 'dosen');
         $data['jumlah_penguji_hari_ini'] = $this->dosen->getPengujiHariIni();
 
+        $this->load->model('Notif_model', 'notif');
+        $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
+
+
         //list validasi hari_ini
         $this->load->model('Operator_model', 'operator');
         $data['valid_ujian'] = $this->operator->cekValidasiHariIni();
@@ -393,10 +399,11 @@ class Operator extends CI_Controller
                 $whereCondition .= ($whereCondition == '') ? "'$id'" : ',' . "'$id'";
                 $nilai_angka = $u['bobot_nilai'] * $u['angka_mutu'] * $u['nilai_akhir'];
                 $case .= " WHEN id = " . $u['id'] . " THEN " . $nilai_angka . "";
+                $case2 .= " WHEN id = " . $u['id'] . " THEN " . $nilai_angka . "";
                 $nilaiTA += $u['bobot_nilai'] * $u['angka_mutu'] * $u['nilai_akhir'];
             }
         }
-        $sql = "UPDATE ujian set angka_mutu_x_nilai = CASE $case END ,nilai_akhir_angka = CASE $case2 END WHERE id in($whereCondition)";
+        $sql = "UPDATE ujian set angka_mutu_x_nilai = CASE $case END ,nilai_akhir_angka = CASE $case2 END WHERE id in ($whereCondition)";
         $this->db->query($sql);
         $this->operator->updateNilaiTA(round($nilaiTA, 2), $nim);
     }

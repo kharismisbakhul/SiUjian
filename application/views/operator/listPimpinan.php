@@ -64,11 +64,12 @@
                                         </div>
                                     </form>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead class="text-center">
+                                        <table class="table table-striped table-hover text-left text-nowrap table-sm" id="dataTable" width="100%" cellspacing="0">
+                                            <thead class="text-center" style="background-color: #2980b9;color:#ecf0f1 ">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Nama Pimpinan</th>
+                                                    <th>Nip</th>
                                                     <th>Posisi</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -76,38 +77,39 @@
                                             <tbody>
                                                 <?php $i = 1;
                                                 foreach ($pimpinan as $p) : ?>
-                                                    <tr>
-                                                        <td class="text-center"><?= $i; ?></td>
-                                                        <td><?= $p['nama_dosen']; ?></td>
-                                                        <?php
+                                                <tr>
+                                                    <td class="text-center"><?= $i; ?></td>
+                                                    <td><?= $p['nama_dosen']; ?></td>
+                                                    <td><?= $p['nip']; ?></td>
+                                                    <?php
                                                         if ($p['jabatan_pimpinan'] == "Dekan") {
                                                             echo "<td>" . $p['jabatan_pimpinan'] . "</td>";
                                                         } else {
                                                             echo "<td>" . $p['jabatan_pimpinan'] . " " . $p['nama_prodi'] . "</td>";
                                                         }
                                                         ?>
-                                                        <td class="text-center">
-                                                            <a href="<?= base_url('pimpinan/laporanStatusMahasiswa/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] ?>" class="btn btn-info btn-icon-split btn-sm">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-eye"></i>
-                                                                </span>
-                                                                <span class="text">Laporan Mahasiswa</span>
-                                                            </a>
-                                                            <a href="<?= base_url('pimpinan/laporanDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] . "/" . $p['nip'] ?>" class="btn btn-ujian btn-icon-split btn-sm">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-paste"></i>
-                                                                </span>
-                                                                <span class="text clr-white">Laporan Dosen</span>
-                                                            </a>
-                                                            <a href="<?= base_url('pimpinan/rekapDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen']. "/" . $p['nip'] ?>" class="btn btn-publikasi btn-icon-split btn-sm">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-book"></i>
-                                                                </span>
-                                                                <span class="text clr-white">Rekap Dosen</span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <?php $i++;
+                                                    <td class="text-center">
+                                                        <a href="<?= base_url('pimpinan/laporanStatusMahasiswa/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] ?>" class="btn btn-info btn-icon-split btn-sm">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-eye"></i>
+                                                            </span>
+                                                            <span class="text">Mahasiswa</span>
+                                                        </a>
+                                                        <a href="<?= base_url('pimpinan/laporanDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] . "/" . $p['nip'] ?>" class="btn btn-ujian btn-icon-split btn-sm">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-paste"></i>
+                                                            </span>
+                                                            <span class="text clr-white">Dosen</span>
+                                                        </a>
+                                                        <a href="<?= base_url('pimpinan/rekapDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] . "/" . $p['nip'] ?>" class="btn btn-publikasi btn-icon-split btn-sm">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-book"></i>
+                                                            </span>
+                                                            <span class="text clr-white">Rekap</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <?php $i++;
                                                 endforeach; ?>
                                             </tbody>
                                         </table>

@@ -16,7 +16,7 @@ $('.privileges').on('change', function () {
 		success: function (data) {
 			var d = [];
 			for (i = 0; i < data.length; i++) {
-				d.push(data[i]['nama_prodi']);
+				d.push(data[i]);
 			}
 			if ($('.privileges').val() === "Mahasiswa") {
 				clear();
@@ -102,5 +102,5 @@ function clear() {
 }
 
 function myFunction(item) {
-	document.getElementById("prodi").innerHTML += `<option>` + item + `</option>`;
+	document.getElementById("prodi").innerHTML += `<option value="` + item.kode + `">` + item.nama_prodi + `</option>`;
 }

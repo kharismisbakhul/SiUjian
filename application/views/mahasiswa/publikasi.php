@@ -8,21 +8,21 @@
         </div>
         <div class="col-xl-2 ">
             <?php if ($jumlah_publikasi < 2) : ?>
-                <form action="<?= base_url('mahasiswa/tambahPublikasi/') . $user_login['nim'] ?>">
-                    <button type="submit" class="btn btn-success float-right mb-2 tombol">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-fw fa-plus-circle"></i>
-                        </span>
-                        <span class="text">Tambah</span>
-                    </button>
-                </form>
-            <?php else : ?>
-                <button type="submit" class="btn btn-secondary float-right mb-2 tombol">
+            <form action="<?= base_url('mahasiswa/tambahPublikasi/') . $user_login['nim'] ?>">
+                <button type="submit" class="btn btn-success float-right mb-2 tombol">
                     <span class="icon text-white-50">
                         <i class="fas fa-fw fa-plus-circle"></i>
                     </span>
                     <span class="text">Tambah</span>
                 </button>
+            </form>
+            <?php else : ?>
+            <button type="submit" class="btn btn-secondary float-right mb-2 tombol">
+                <span class="icon text-white-50">
+                    <i class="fas fa-fw fa-plus-circle"></i>
+                </span>
+                <span class="text">Tambah</span>
+            </button>
             <?php endif; ?>
         </div>
     </div>
@@ -39,7 +39,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <?php foreach ($pembimbing as $pmb) : ?>
-                            <p><?= $pmb['nama_dosen'] ?> - <span><?= $pmb['status_dosen'] ?></span></p>
+                        <p><?= $pmb['nama_dosen'] ?> - <span><?= $pmb['status_dosen'] ?></span></p>
 
                         <?php endforeach; ?>
                     </div>
@@ -59,9 +59,9 @@
                 <!-- Card Body -->
                 <div class="card-body ">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar row ml-1 mr-1 ">
-                        <table class="table table-bordered text-center">
+                        <table class="table table-striped table-hover text-left text-nowrap">
                             <thead>
-                                <tr style="background-color: 	#f8f8f8; color: #101010">
+                                <tr style="background-color: #2980b9;color:#ecf0f1 ">
                                     <th scope="col">#</th>
                                     <th scope="col">Tanggal</th>
                                     <th scope="col">Judul Artikel</th>
@@ -72,56 +72,43 @@
                             <tbody>
                                 <?php $i = 1; ?>
                                 <?php foreach ($publikasi as $p) : ?>
-                                    <tr>
-                                        <th scope="row"><?= $i++  ?></th>
-                                        <td><?= $p['tanggal']  ?></td>
-                                        <td><?= $p['judulArtikel'] ?></td>
-                                        <?php if ($p['valid'] == 1) {  ?>
-                                            <td><span class="badge badge-pill badge-success">Valid</span></td>
-                                        <?php } elseif ($p['valid'] == 2) { ?>
-                                            <td><span class="badge badge-pill badge-primary">Proses</span></td>
-                                        <?php } else { ?>
-                                            <td><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
-                                        <?php } ?>
+                                <tr>
+                                    <th scope="row"><?= $i++  ?></th>
+                                    <td><?= $p['tanggal']  ?></td>
+                                    <td><?= $p['judulArtikel'] ?></td>
+                                    <?php if ($p['valid'] == 1) {  ?>
+                                    <td><span class="badge badge-pill badge-success">Valid</span></td>
+                                    <?php } elseif ($p['valid'] == 2) { ?>
+                                    <td><span class="badge badge-pill badge-primary">Proses</span></td>
+                                    <?php } else { ?>
+                                    <td><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
+                                    <?php } ?>
 
-                                        <td>
-                                            <?php if ($p['valid'] == 2 || $p['valid'] == 3) :  ?>
-                                                <a href="<?= base_url(); ?>mahasiswa/hapusPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-danger btn-icon-split btn-sm">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-fw fa-trash-alt"></i>
-                                                    </span>
-                                                    <span class="text">Hapus</span>
-                                                </a>
-                                                <a href="<?= base_url(); ?>mahasiswa/editPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-primary btn-icon-split btn-sm" id="editPublikasi">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-fw fa-pencil-alt"></i>
-                                                    </span>
-                                                    <span class="text">Edit</span>
-                                                </a>
-                                            <?php else : ?>
-                                                <a class="btn btn-secondary btn-icon-split btn-sm">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-fw fa-trash-alt"></i>
-                                                    </span>
-                                                    <span class="text text-white-50">Hapus</span>
-                                                </a>
-                                                <a class="btn btn-secondary btn-icon-split btn-sm" id="editPublikasi">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-fw fa-pencil-alt"></i>
-                                                    </span>
-                                                    <span class="text text-white-50">Edit</span>
-                                                </a>
-                                            <?php endif; ?>
-                                            <button type="button" class=" detail btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target="#modalDetail" data-id="<?= $p['idJurnal'] ?>">
-                                                <span class="icon text-white-50">
-                                                    <i class="fas fa-fw fa-eye"></i>
-                                                </span>
-                                                <span class="text">Detail</span>
-                                            </button>
-                                        </td>
+                                    <td>
+                                        <?php if ($p['valid'] == 2 || $p['valid'] == 3) :  ?>
+                                        <a href="<?= base_url(); ?>mahasiswa/hapusPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-danger btn-icon-split btn-sm">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-fw fa-trash-alt"></i>
+                                            </span>
+                                            <span class="text">Hapus</span>
+                                        </a>
+                                        <a href="<?= base_url(); ?>mahasiswa/editPublikasi/<?= $p['idJurnal']  ?>" class="btn btn-primary btn-icon-split btn-sm" id="editPublikasi">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-fw fa-pencil-alt"></i>
+                                            </span>
+                                            <span class="text">Edit</span>
+                                        </a>
+                                        <?php endif; ?>
+                                        <button type="button" class=" detail btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target="#modalDetail" data-id="<?= $p['idJurnal'] ?>">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-fw fa-eye"></i>
+                                            </span>
+                                            <span class="text">Detail</span>
+                                        </button>
+                                    </td>
 
 
-                                    </tr>
+                                </tr>
                                 <?php endforeach; ?>
 
                             </tbody>

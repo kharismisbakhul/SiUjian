@@ -41,6 +41,11 @@ class Admin extends CI_Controller
         $this->load->model('dosen_model', 'dosen');
         $data['jumlah_penguji_hari_ini'] = $this->dosen->getPengujiHariIni();
 
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
+
         //list validasi hari_ini
         $this->load->model('Operator_model', 'operator');
         $data['valid_ujian'] = $this->operator->cekValidasiHariIni();
@@ -127,7 +132,7 @@ class Admin extends CI_Controller
             $username = $this->input->post('usernameadd');
             $password = $this->input->post('passwordadd');
             $nama = $this->input->post('namaadd');
-            $prodi_kode = $this->getKodeProdi($this->input->post('prodi'));
+            $prodi_kode = $this->input->post('prodi');
             $jenjang = $this->input->post('jenjang');
             $user_profile_kode = $this->getProfilKode($this->input->post('privileges'));
             $is_active = $this->getStatus($this->input->post('status'));
@@ -171,7 +176,7 @@ class Admin extends CI_Controller
 
     public function getListProdi()
     {
-        $this->db->select('nama_prodi');
+        $this->db->select('nama_prodi,kode');
         echo json_encode($this->db->get('prodi')->result_array());
     }
 

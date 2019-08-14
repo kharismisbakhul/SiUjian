@@ -111,11 +111,11 @@
                     <td><?= $u['nama_ujian']  ?></td>
                     <!-- status Ujian -->
                     <?php if ($u['statusUjian'] == 1) { ?>
-                      <td class="font-weight-bold text-success">LULUS</td>
+                      <td ><span class="badge badge-pill badge-success">Lulus</span></td>
                     <?php } elseif ($u['statusUjian'] == 2) { ?>
-                      <td class="font-weight-bold text-primary">PROSES</td>
+                      <td ><span class="badge badge-pill badge-primary">Proses</span></td>
                     <?php } else { ?>
-                      <td class="font-weight-bold text-danger">TIDAK LULUS</td>
+                      <td ><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
                     <?php } ?>
                   </tr>
                 <?php endforeach; ?>

@@ -78,6 +78,7 @@
                                                     <th>#</th>
                                                     <th>Tanggal Mulai Tugas Akhir</th>
                                                     <th>Nama Mahasiswa</th>
+                                                    <th>Nim</th>
                                                     <th>Jenjang</th>
                                                     <th>Program Studi</th>
                                                     <th>Status 1</th>
@@ -92,6 +93,7 @@
                                                         <td><?= $i; ?></td>
                                                         <td><?= $m['tglMulaiTA'] ?></td>
                                                         <td><?= $m['nama']; ?></td>
+                                                        <td><?= $m['nim']; ?></td>
                                                         <td><?= $m['jenjang']; ?></td>
                                                         <td><?= $m['nama_prodi']; ?></td>
                                                         <?php if ($m['nama_ujian']) : ?>
@@ -122,7 +124,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th colspan="3"></th>
+                                                    <th colspan="4"></th>
                                                     <th>Jenjang</th>
                                                     <th>Program Studi</th>
                                                     <th>Status 1</th>

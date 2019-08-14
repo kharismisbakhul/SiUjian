@@ -139,7 +139,7 @@
                                     <th>Nama Dosen</th>
                                     <th>Status</th>
                                     <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-                                       <th>Action</th>
+                                    <th>Action</th>
                                     <?php endif; ?>
                                  </tr>
                               </thead>
@@ -147,29 +147,29 @@
                                  <form action="<?= base_url('operator/hapusPembimbing/') . $this->uri->segment(4);  ?>" method="post">
                                     <?php $i = 1;
                                     foreach ($pembimbing as $pmb) : ?>
-                                       <tr>
-                                          <td><?= $i++  ?></td>
-                                          <td><?= $pmb['nama_dosen']; ?></td>
-                                          <td><?= $pmb['status_dosen']  ?></td>
-                                          <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-                                             <td>
-                                                <button type="submit" class="btn btn-danger btn-sm text-white" name="pembimbing" value="<?= $pmb['id']; ?>">hapus</button>
-                                             </td>
-                                          <?php endif; ?>
-                                       </tr>
+                                    <tr>
+                                       <td><?= $i++  ?></td>
+                                       <td><?= $pmb['nama_dosen']; ?></td>
+                                       <td><?= $pmb['status_dosen']  ?></td>
+                                       <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
+                                       <td>
+                                          <button type="submit" class="btn btn-danger btn-sm text-white" name="pembimbing" value="<?= $pmb['id']; ?>">hapus</button>
+                                       </td>
+                                       <?php endif; ?>
+                                    </tr>
                                     <?php endforeach; ?>
                                  </form>
                               </tbody>
                            </table>
                            <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-                              <button type="button" class="btn btn-success btn-icon-split tambah-dosbing" data-toggle="modal" data-target="#ModalProfil" data-nim="<?= $user_login['nim'] ?>">
-                                 <span class="icon text-white-50">
-                                    <i class="fas fa-pencil-alt"></i>
-                                 </span>
+                           <button type="button" class="btn btn-success btn-icon-split tambah-dosbing" data-toggle="modal" data-target="#ModalProfil" data-nim="<?= $user_login['nim'] ?>">
+                              <span class="icon text-white-50">
+                                 <i class="fas fa-pencil-alt"></i>
+                              </span>
 
-                                 <span class="text">Tambah Dosbing</span>
+                              <span class="text">Tambah Dosbing</span>
 
-                              </button>
+                           </button>
                            <?php endif; ?>
                         </div>
                      </div>
@@ -198,8 +198,8 @@
                      <div class="col-sm-8">
                         <span>:</span>
                         <?php if ($user_login['statusKelulusan'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                        <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                        <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                   </div>
 
@@ -208,8 +208,8 @@
                      <div class="col-sm-8">
                         <span>:</span>
                         <?php if ($user_login['statusWisuda'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                        <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                        <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                   </div>
 
@@ -218,8 +218,8 @@
                      <div class="col-sm-8">
                         <span>:</span>
                         <?php if ($user_login['statusTOEFL'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                        <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                        <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                   </div>
 
@@ -228,18 +228,18 @@
                      <div class="col-sm-8">
                         <span>:</span>
                         <?php if ($user_login['statusTPA'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                        <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                        <span class="text-success font-weight-bold">LULUS</span><?php } ?>
                      </div>
                   </div>
                </form>
                <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-                  <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalStatus">
-                     <span class="icon text-white-50">
-                        <i class="fas fa-pencil-alt"></i>
-                     </span>
-                     <span class="text">Edit</span>
-                  </button>
+               <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#ModalStatus">
+                  <span class="icon text-white-50">
+                     <i class="fas fa-pencil-alt"></i>
+                  </span>
+                  <span class="text">Edit</span>
+               </button>
                <?php endif; ?>
             </div>
          </div>
@@ -248,7 +248,6 @@
 
    </div>
    <!-- /.container-fluid -->
-
 
 
    <!-- Isian mahaiswa -->
@@ -270,7 +269,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['judulAkhir'];  ?></span>
+                        <span id="mjudulTA"><?= $isianMahasiswa['judulAkhir'];  ?></span>
                      </div>
                   </div>
 
@@ -278,7 +277,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Paradigma</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['paradigma'];  ?></span>
+                        <span id="mparadigma"><?= $isianMahasiswa['paradigma'];  ?></span>
                      </div>
                   </div>
 
@@ -286,7 +285,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kata Kunci</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['kataKunci'];  ?></span>
+                        <span id="mkataKunci"><?= $isianMahasiswa['kataKunci'];  ?></span>
                      </div>
                   </div>
 
@@ -294,7 +293,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tujuan Penelitian</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['tujuanPenelitian'];  ?></span>
+                        <span id="mtujuanP"><?= $isianMahasiswa['tujuanPenelitian'];  ?></span>
                      </div>
                   </div>
 
@@ -302,7 +301,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 1</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['metodePenelitian1'];  ?></span>
+                        <span id="mmetpen1"><?= $isianMahasiswa['metodePenelitian1'];  ?></span>
                      </div>
                   </div>
 
@@ -310,7 +309,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Metode Penelitian 2</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['metodePenelitian2'];  ?></span>
+                        <span id="mmetpen2"><?= $isianMahasiswa['metodePenelitian2'];  ?></span>
                      </div>
                   </div>
 
@@ -318,7 +317,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Temuan</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['temuan'];  ?></span>
+                        <span id="mtemuan"><?= $isianMahasiswa['temuan'];  ?></span>
                      </div>
                   </div>
 
@@ -326,7 +325,7 @@
                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kontribusi dan Implikasi</label>
                      <div class="col-sm-9">
                         <span>:</span>
-                        <span><?= $isianMahasiswa['kontribusiDanImplikasi'];  ?></span>
+                        <span id="mkontribusiImplikasi"><?= $isianMahasiswa['kontribusiDanImplikasi'];  ?></span>
                      </div>
                   </div>
 
@@ -335,7 +334,7 @@
                         <span class="icon text-white-50">
                            <i class="fas fa-pencil-alt"></i>
                         </span>
-                        <span class="text">Edit</span>
+                        <span class="text isianTambahEdit">Tambah</span>
                      </button>
                   </div>
                </form>
@@ -351,19 +350,20 @@
 <!-- End of Main Content -->
 
 <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-   <!-- Modal Edit Profil-->
-   <div class="modal fade" id="ModalProfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalScrollableTitle">Daftar Dosen</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
+<!-- Modal Edit Profil-->
+<div class=" modal fade" id="ModalProfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Daftar Dosen</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="table-responsive">
             <form action="<?= base_url('operator/tambahPembimbing/') . $this->uri->segment(4);  ?>" method="post">
-               <div class="modal-body">
-                  <div class="table-responsive pembimbing">
+               <div class="modal-body ">
+                  <div class="pembimbing">
                      <table class="table table-bordered text-left" cellspacing="0" id="dataTable">
                         <thead>
                            <tr>
@@ -375,18 +375,19 @@
                         </thead>
                         <tbody>
                            <?php $i = 1;
-                           foreach ($dosen as $pmb) : ?>
-                              <tr>
-                                 <td><?= $i++  ?></td>
-                                 <td><?= $pmb['nama_dosen']; ?></td>
-                                 <td><?= $pmb['nip']  ?></td>
-                                 <td><input type="radio" name="nip" value="<?= $pmb['nip'] ?>"></td>
-                              </tr>
+                              foreach ($dosen as $pmb) : ?>
+                           <tr>
+                              <td><?= $i++  ?></td>
+                              <td><?= $pmb['nama_dosen']; ?></td>
+                              <td><?= $pmb['nip']  ?></td>
+                              <td><input type="radio" name="nip" value="<?= $pmb['nip'] ?>"></td>
+                           </tr>
                            <?php endforeach; ?>
                         </tbody>
                      </table>
                   </div>
                </div>
+
                <div class="modal-footer">
                   <div class="input-group">
                      <div class="input-group-prepend">
@@ -394,7 +395,7 @@
                      </div>
                      <select class="custom-select" id="pembimbing" name="pembimbing">
                         <?php foreach ($posisiPembimbing as $posisi) : ?>
-                           <option value="<?= $posisi['id'] ?>"><?= $posisi['status_dosen']  ?></option>
+                        <option value="<?= $posisi['id'] ?>"><?= $posisi['status_dosen']  ?></option>
                         <?php endforeach; ?>
                      </select>
                   </div>
@@ -403,119 +404,121 @@
                </div>
             </form>
          </div>
+
       </div>
    </div>
+</div>
 
-   <!-- Modal Edit Kelulusan -->
-   <div class="modal fade" id="ModalStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalLabel">Status Kelulusan</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <form action="<?= base_url('operator/updateStatusMahasiswa/') . $this->uri->segment(4); ?>" method="post">
-               <div class="modal-body">
-                  <div class="form-group row  mb-1">
-                     <label for="colFormLabelSm" class="col-sm-3  font-weight-bold">STATUS</label>
-                     <div class="col-sm-5">
-                        <span></span>
-                        <span class="font-weight-bold">KETERANGAN</span>
-                     </div>
-                     <div class="col-sm-3 font-weight-bold">
-                        <span>L /</span>
-                        <span>BL</span>
-                     </div>
-                     <hr>
-                  </div>
-                  <div class="form-group row  mb-1">
-                     <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kelulusan</label>
-                     <div class="col-sm-5">
-                        <span>:</span>
-                        <?php if ($user_login['statusKelulusan'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
-                     </div>
-                     <div class="col-sm-3">
-                        <?php if ($user_login['statusKelulusan'] == 0) : ?>
-                           <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=1>
-                           <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=0 checked>
-                        <?php else : ?>
-                           <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=1 checked>
-                           <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=0>
-                        <?php endif; ?>
-                     </div>
-                  </div>
-
-                  <div class="form-group row  mb-1">
-                     <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Wisuda</label>
-                     <div class="col-sm-5">
-                        <span>:</span>
-                        <?php if ($user_login['statusWisuda'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
-                     </div>
-                     <div class="col-sm-3">
-                        <?php if ($user_login['statusWisuda'] == 0) : ?>
-                           <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=1>
-                           <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=0 checked>
-                        <?php else : ?>
-                           <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=1 checked>
-                           <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=0>
-                        <?php endif; ?>
-                     </div>
-                  </div>
-
-                  <div class="form-group row  mb-1">
-                     <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TOEFL</label>
-                     <div class="col-sm-5">
-                        <span>:</span>
-                        <?php if ($user_login['statusTOEFL'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
-                     </div>
-                     <div class="col-sm-3">
-                        <?php if ($user_login['statusTOEFL'] == 0) : ?>
-                           <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=1>
-                           <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=0 checked>
-                        <?php else : ?>
-                           <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=1 checked>
-                           <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=0>
-                        <?php endif; ?>
-                     </div>
-                  </div>
-
-                  <div class="form-group row  mb-1">
-                     <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TPA</label>
-                     <div class="col-sm-5">
-                        <span>:</span>
-                        <?php if ($user_login['statusTPA'] == 0) { ?>
-                           <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
-                           <span class="text-success font-weight-bold">LULUS</span><?php } ?>
-                     </div>
-                     <div class="col-sm-3">
-                        <?php if ($user_login['statusTPA'] == 0) : ?>
-                           <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="1">
-                           <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="0" checked>
-                        <?php else : ?>
-                           <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="1" checked>
-                           <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="0">
-                        <?php endif; ?>
-                     </div>
-                  </div>
-
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Simpan</button>
-               </div>
-            </form>
+<!-- Modal Edit Kelulusan -->
+<div class="modal fade" id="ModalStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Status Kelulusan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
          </div>
+         <form action="<?= base_url('operator/updateStatusMahasiswa/') . $this->uri->segment(4); ?>" method="post">
+            <div class="modal-body">
+               <div class="form-group row  mb-1">
+                  <label for="colFormLabelSm" class="col-sm-3  font-weight-bold">STATUS</label>
+                  <div class="col-sm-5">
+                     <span></span>
+                     <span class="font-weight-bold">KETERANGAN</span>
+                  </div>
+                  <div class="col-sm-3 font-weight-bold">
+                     <span>L /</span>
+                     <span>BL</span>
+                  </div>
+                  <hr>
+               </div>
+               <div class="form-group row  mb-1">
+                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Kelulusan</label>
+                  <div class="col-sm-5">
+                     <span>:</span>
+                     <?php if ($user_login['statusKelulusan'] == 0) { ?>
+                     <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                     <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                  </div>
+                  <div class="col-sm-3">
+                     <?php if ($user_login['statusKelulusan'] == 0) : ?>
+                     <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=1>
+                     <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=0 checked>
+                     <?php else : ?>
+                     <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=1 checked>
+                     <input type="radio" id="check-statusKelulusan" name="cekStatusKelulusan" value=0>
+                     <?php endif; ?>
+                  </div>
+               </div>
+
+               <div class="form-group row  mb-1">
+                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Wisuda</label>
+                  <div class="col-sm-5">
+                     <span>:</span>
+                     <?php if ($user_login['statusWisuda'] == 0) { ?>
+                     <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                     <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                  </div>
+                  <div class="col-sm-3">
+                     <?php if ($user_login['statusWisuda'] == 0) : ?>
+                     <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=1>
+                     <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=0 checked>
+                     <?php else : ?>
+                     <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=1 checked>
+                     <input type="radio" id="check-statusWisuda" name="cekstatusWisuda" value=0>
+                     <?php endif; ?>
+                  </div>
+               </div>
+
+               <div class="form-group row  mb-1">
+                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TOEFL</label>
+                  <div class="col-sm-5">
+                     <span>:</span>
+                     <?php if ($user_login['statusTOEFL'] == 0) { ?>
+                     <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                     <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                  </div>
+                  <div class="col-sm-3">
+                     <?php if ($user_login['statusTOEFL'] == 0) : ?>
+                     <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=1>
+                     <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=0 checked>
+                     <?php else : ?>
+                     <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=1 checked>
+                     <input type="radio" id="check-statusTOEFL" name="cekstatusTOEFL" value=0>
+                     <?php endif; ?>
+                  </div>
+               </div>
+
+               <div class="form-group row  mb-1">
+                  <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">TPA</label>
+                  <div class="col-sm-5">
+                     <span>:</span>
+                     <?php if ($user_login['statusTPA'] == 0) { ?>
+                     <span class="text-danger font-weight-bold">BELUM LULUS</span><?php } else { ?>
+                     <span class="text-success font-weight-bold">LULUS</span><?php } ?>
+                  </div>
+                  <div class="col-sm-3">
+                     <?php if ($user_login['statusTPA'] == 0) : ?>
+                     <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="1">
+                     <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="0" checked>
+                     <?php else : ?>
+                     <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="1" checked>
+                     <input type="radio" id="check-statusTPA" name="cekstatusTPA" value="0">
+                     <?php endif; ?>
+                  </div>
+               </div>
+
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+         </form>
       </div>
    </div>
-   <!-- Akhir Modal Kelulusan -->
+</div>
+<!-- Akhir Modal Kelulusan -->
 <?php endif; ?>
 
 

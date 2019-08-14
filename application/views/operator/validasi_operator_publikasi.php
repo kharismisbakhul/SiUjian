@@ -59,14 +59,14 @@
                                             <div class="col-md-3">
                                                 <small>Mulai Periode</small>
                                                 <?php if ($star_date != null) : ?>
-                                                    <small> <?= $star_date ?></small>
+                                                <small> <?= $star_date ?></small>
                                                 <?php endif; ?>
                                                 <input type="date" class="form-control" name="star_date">
                                             </div>
                                             <div class="col-md-3">
                                                 <small>Akhir Periode</small>
                                                 <?php if ($end_date != null) : ?>
-                                                    <small> <?= $end_date ?></small>
+                                                <small> <?= $end_date ?></small>
                                                 <?php endif; ?>
                                                 <div class="input-group mb-3">
                                                     <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
@@ -79,12 +79,13 @@
                                     </form>
 
                                     <div class="table-responsive">
-                                        <table class="display table table-bordered text-wrap table-sm text-center" id="dataTablePublikasi" width="100%" cellspacing="0">
-                                            <thead>
+                                        <table class="display table table-striped table-hover text-left text-nowrap table-sm" id="dataTablePublikasi" width="100%" cellspacing="0">
+                                            <thead style="background-color: #2980b9;color:#ecf0f1 ">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Tanggal Data Masuk</th>
                                                     <th>Nama Mahasiswa</th>
+                                                    <th>Nim</th>
                                                     <th>Jenjang</th>
                                                     <th>Program Studi</th>
                                                     <th>Judul Artikel</th>
@@ -96,38 +97,39 @@
                                             <tbody>
                                                 <?php $i = 1;
                                                 foreach ($valid_publikasi as $v) : ?>
-                                                    <tr>
-                                                        <td><?= $i++;  ?></td>
-                                                        <td><small><?= $v['tanggal']  ?></small></td>
-                                                        <td><?= $v['nama']  ?></td>
-                                                        <td><?= $v['jenjang']  ?></td>
-                                                        <td><?= $v['nama_prodi']  ?></td>
-                                                        <td><?= $v['judulArtikel']  ?></td>
-                                                        <td><?= $v['namaJurnal']  ?></td>
+                                                <tr>
+                                                    <td><?= $i++;  ?></td>
+                                                    <td><small><?= $v['tanggal']  ?></small></td>
+                                                    <td><?= $v['nama']  ?></td>
+                                                    <td><?= $v['nim']  ?></td>
+                                                    <td><?= $v['jenjang']  ?></td>
+                                                    <td><?= $v['nama_prodi']  ?></td>
+                                                    <td><?= $v['judulArtikel']  ?></td>
+                                                    <td><?= $v['namaJurnal']  ?></td>
 
-                                                        <!-- valid ujian -->
-                                                        <?php if ($v['valid'] == 1) { ?>
-                                                            <td class="text-success font-weight-bold">Valid</td>
-                                                        <?php } elseif ($v['valid'] == 2) { ?>
-                                                            <td class="text-primary font-weight-bold">Proses</td>
-                                                        <?php } else { ?>
-                                                            <td class="text-danger font-weight-bold">Tidak Valid</td>
-                                                        <?php } ?>
+                                                    <!-- valid ujian -->
+                                                    <?php if ($v['valid'] == 1) { ?>
+                                                    <td class="text-success font-weight-bold">Valid</td>
+                                                    <?php } elseif ($v['valid'] == 2) { ?>
+                                                    <td class="text-primary font-weight-bold">Proses</td>
+                                                    <?php } else { ?>
+                                                    <td class="text-danger font-weight-bold">Tidak Valid</td>
+                                                    <?php } ?>
 
-                                                        <td class="text-center">
-                                                            <a href="<?= base_url('operator')  ?>/validasi_publikasi/<?= $v['idJurnal']  ?>" class="btn btn-success btn-icon-split btn-sm">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-check-circle"></i>
-                                                                </span>
-                                                                <span class="text">Detail</span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    <td class="text-center">
+                                                        <a href="<?= base_url('operator')  ?>/validasi_publikasi/<?= $v['idJurnal']  ?>" class="btn btn-success btn-icon-split btn-sm">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-check-circle"></i>
+                                                            </span>
+                                                            <span class="text">Detail</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th colspan="3"></th>
+                                                    <th colspan="4"></th>
                                                     <th>Jenjang</th>
                                                     <th>Program Studi</th>
                                                     <th></th>

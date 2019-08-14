@@ -4,12 +4,12 @@ class Operator_model extends CI_Model
 {
     public function cekValidasi()
     {
-        $this->db->select('mahasiswa.nama,mahasiswa.jenjang,ujian.*,kodeujian.nama_ujian,prodi.nama_prodi');
+        $this->db->select('mahasiswa.nama,mahasiswa.jenjang,ujian.*,kodeujian.nama_ujian,prodi.nama_prodi,mahasiswa.nim');
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.mahasiswanim=mahasiswa.nim');
         $this->db->join('kodeujian', 'ujian.kodeujiankode=kodeujian.kode');
         $this->db->join('prodi', 'prodi.kode=mahasiswa.prodikode');
-        $this->db->order_by('ujian.tgl_tambah_ujian', 'DSC');
+        $this->db->order_by('ujian.statusUjian', 'DESC');
         return $this->db->get()->result_array();
     }
     public function cekValidasiHariIni()
@@ -31,11 +31,13 @@ class Operator_model extends CI_Model
         mahasiswa.nim,
         mahasiswa.judulTugasAkhir,
         ujian.*,
-        kodeujian.nama_ujian');
+        kodeujian.nama_ujian,is.judulAkhir');
         $this->db->from('ujian');
         $this->db->where('ujian.id=' . $id_ujian);
         $this->db->join('kodeujian', 'kodeujian.kode=ujian.kodeujiankode');
         $this->db->join('mahasiswa', 'mahasiswa.nim=ujian.mahasiswanim');
+        $this->db->join('isianmahasiswa as is', 'is.Mahasiswanim=mahasiswa.nim', 'left');
+
         return $this->db->get()->row_array();
     }
     // ujian
@@ -139,7 +141,7 @@ class Operator_model extends CI_Model
     // publikasi
     public function getDataPublikasi($star_date = null, $end_date = null)
     {
-        $this->db->select('mhs.nama,publikasi.judulArtikel,publikasi.namaJurnal,p.nama_prodi,publikasi.valid,publikasi.tanggal,mhs.jenjang,publikasi.idJurnal');
+        $this->db->select('mhs.nama,publikasi.judulArtikel,publikasi.namaJurnal,p.nama_prodi,publikasi.valid,publikasi.tanggal,mhs.jenjang,publikasi.idJurnal,mhs.nim');
         $this->db->from('publikasi');
         $this->db->join('mahasiswa as mhs', 'publikasi.mahasiswanim=mhs.nim', 'left');
         $this->db->join('prodi as p', 'p.kode=mhs.prodikode', 'left');
@@ -147,6 +149,7 @@ class Operator_model extends CI_Model
             $this->db->where('tanggal >=', $star_date);
             $this->db->where('tanggal <=', $end_date);
         }
+        $this->db->order_by('publikasi.valid', 'DESC');
         return $this->db->get()->result_array();
     }
 

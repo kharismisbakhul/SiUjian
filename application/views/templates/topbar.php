@@ -15,24 +15,33 @@
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Nav Item - Alerts -->
+                <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2 || $this->session->userdata('user_profile_kode') == 5) : ?>
                 <li class="nav-item dropdown no-arrow mx-1 icon-notif">
                     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell fa-fw"></i>
                         <!-- Counter - Alerts -->
+                        <?php if ($counter == 0) { ?>
                         <span class="badge badge-danger badge-counter counter"></span>
+                        <?php } else { ?>
+                        <span class="badge badge-danger badge-counter counter"><?= $counter; ?></span>
+                        <?php } ?>
                     </a>
                     <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in notifications" aria-labelledby="alertsDropdown" id="notifications">
+                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" id="notifications">
                         <h6 class="dropdown-header">
                             Pemberitahuan
                         </h6>
+                        <div class="table-responsive notifications" style="max-height: 200px;">
+                        </div>
                     </div>
                 </li>
+                <?php endif; ?>
+
                 <div class="topbar-divider d-none d-sm-block mr-0 ml-0"></div>
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small username-topbar" id="username-topbar"><?= $username; ?></span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small username-topbar" id="username-topbar" value="<?= $user['user_profile_kode'] ?>"><?= $username; ?></span>
                         <img class="img-profile rounded-circle" src="<?= base_url('assets/img/profile/') . $user['image']; ?>">
                     </a>
                     <!-- Dropdown - User Information -->

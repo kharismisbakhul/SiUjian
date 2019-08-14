@@ -140,7 +140,7 @@ $('.input-nilai').on('click', function () {
 $(document).ready(function () {
 	$('#test').DataTable({
 		initComplete: function () {
-			this.api().columns([3, 4, 5, 6]).every(function () {
+			this.api().columns([4, 5, 6, 7]).every(function () {
 				var column = this;
 				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
 					.appendTo($(column.footer()).empty())
@@ -224,7 +224,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	$('#dataTablePublikasi').DataTable({
 		initComplete: function () {
-			this.api().columns([3, 4, 6, 7]).every(function () {
+			this.api().columns([4, 5, 7, 8]).every(function () {
 				var column = this;
 				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
 					.appendTo($(column.footer()).empty())
@@ -252,7 +252,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	$('#dataTableLaporanMhs').DataTable({
 		initComplete: function () {
-			this.api().columns([3, 4, 5, 6]).every(function () {
+			this.api().columns([4, 5, 6, 7]).every(function () {
 				var column = this;
 				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
 					.appendTo($(column.footer()).empty())
@@ -275,3 +275,58 @@ $(document).ready(function () {
 	});
 });
 // akhir dataTable Dosen-operator
+
+// dataTable Dosen
+$(document).ready(function () {
+	$('#dataTableLaporanDsn').DataTable({
+		initComplete: function () {
+			this.api().columns([3, 4, 5, 6, 7]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Dosen
+
+// dataTable Dosen
+$(document).ready(function () {
+	$('#dataTableMhsOperator').DataTable({
+		initComplete: function () {
+			this.api().columns([4, 5, 6, 7]).every(function () {
+				var column = this;
+				var select = $('<select class="form-control-sm" ><option value=""></option></select>')
+					.appendTo($(column.footer()).empty())
+					.on('change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+						);
+						column
+							.search(val ? '^' + val + '$' : '', true, false)
+							.draw();
+					});
+				console.log(select);
+
+				column.data().unique().sort().each(function (d, j) {
+					select.append('<option value="' + d + '">' + d + '</option>')
+				});
+			});
+		}
+	});
+});
+// akhir dataTable Dosen

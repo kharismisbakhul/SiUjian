@@ -68,6 +68,7 @@ $('.info-bimbingan').on('click', function () {
 	$('.list-ujian').remove();
 	$('.list-pembimbing').remove();
 	$('.list-publikasi').remove();
+	console.log(nim)
 	$.ajax({
 		url: segments[0] + '/SiUjian/dosen/getDetailBimbingan/' + nim,
 		method: 'get',

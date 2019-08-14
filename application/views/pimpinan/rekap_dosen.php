@@ -51,9 +51,27 @@
                                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Rekapitulasi Laporan Dosen</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form style="float: right;">
-                                        <div class="form-row mb-5">
-                                            <!-- Isi Form AutoComplete nya disini -->
+                                    <form action="<?= base_url('pimpinan/rekapDosen/') . $this->uri->segment(3) . '/' . $this->uri->segment(4) . '/' . $this->uri->segment(5); ?>" method="post">
+                                        <div class="row mb-2">
+                                            <div class="col-md-3">
+                                                <small>Mulai Periode</small>
+                                                <?php if ($star_date != null) : ?>
+                                                    <small class="str"> <?= $star_date ?></small>
+                                                <?php endif; ?>
+                                                <input type="date" class="form-control" name="star_date">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <small>Akhir Periode</small>
+                                                <?php if ($end_date != null) : ?>
+                                                    <small class="end"> <?= $end_date ?></small>
+                                                <?php endif; ?>
+                                                <div class="input-group mb-3">
+                                                    <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                                                    <div class="input-group-append">
+                                                        <input type="submit" class="btn btn-primary submit" name="submit" value="cari" id="basic-addon2">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
                                     <div class="table-responsive">
@@ -73,7 +91,7 @@
                                                     <tr>
                                                         <td><?= $i; ?></td>
                                                         <td><?= $rd['nama_dosen']; ?></td>
-                                                        <td><?= $rd['jumlah_bimbingan']; ?></td>
+                                                        <td><?= $rd['jumlah_mahasiswa_bimbingan']; ?></td>
                                                         <td><?= $rd['jumlah_menguji']; ?></td>
                                                         <td class="text-center">
                                                             <button href="#" class="btn btn-info btn-icon-split btn-sm modalRekap" data-toggle="modal" data-target=".modalDetailRekap" data-id="<?= $rd['nip']; ?>">
@@ -304,7 +322,7 @@
                         <div class="col-lg-6">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-capitalize">Status Mahasiswa Bimbingan</h6>
+                                    <h6 class="m-0 font-weight-bold text-capitalize">Status Mahasiswa Bimbingan S2</h6>
                                 </div>
                                 <div class="card-body">
                                     <form action="">
@@ -373,6 +391,152 @@
                                             </div>
                                             <div class="col-4">
                                                 <h6 class="font-weight-bold statusTotalUjian"></h6>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Jumlah Ujian -->
+                        <!-- Start Jumlah Ujian -->
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-capitalize">Status Mahasiswa Bimbingan S3</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form action="">
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Makalah 1</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="makalah1"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Makalah 2</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="makalah2"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Seminar Proposal</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="seminarProposal"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Proposal</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="proposal"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Ujian Proposal</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="ujianProposal"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Pelaksanaan Penelitian</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="pelaksanaanPenelitian"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Persentasi 3</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="persentasi3"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Seminar Hasil</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="seminarHasil"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Eksternal Review</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="ekternalReview"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Ujian Disertai</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="ujianDisertasi"></h6>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="">Wisuda</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="wisudas3"></h6>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-row">
+                                            <div class="col-5">
+                                                <h6 class="font-weight-bold">Jumlah</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <h6>:</h6>
+                                            </div>
+                                            <div class="col-4">
+                                                <h6 class="font-weight-bold totalUjian"></h6>
                                             </div>
                                         </div>
                                     </form>

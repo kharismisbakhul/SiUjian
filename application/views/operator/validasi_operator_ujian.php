@@ -76,7 +76,7 @@
 												<div class="form-group row">
 													<label for="judulTesis" class="col-sm-3 col-form-label">Judul Tesis</label>
 													<div class="col-sm-9">
-														<textarea type="text" class="form-control" id="judulTesis" readonly><?= $ujian['judulTugasAkhir']  ?></textarea>
+														<textarea type="text" class="form-control" id="judulTesis" readonly><?= $ujian['judulAkhir']  ?></textarea>
 													</div>
 												</div>
 												<div class="form-group row">
@@ -103,11 +103,11 @@
 													<label for="buktiUjian" class="col-sm-3 col-form-label">Validate</label>
 													<div class="col-sm-9 pt-1">
 														<?php if ($ujian['valid'] == 1) : ?>
-															<p class="text-success font-weight-bold">VALID</p>
+														<p class="text-success font-weight-bold">VALID</p>
 														<?php elseif ($ujian['valid'] == 2) : ?>
-															<p class="text-primary font-weight-bold">PROSES</p>
+														<p class="text-primary font-weight-bold">PROSES</p>
 														<?php else : ?>
-															<p class="text-danger font-weight-bold">TIDAK VALID</p>
+														<p class="text-danger font-weight-bold">TIDAK VALID</p>
 														<?php endif; ?>
 													</div>
 												</div>
@@ -115,11 +115,11 @@
 													<label for="buktiUjian" class="col-sm-3 col-form-label">Status Ujian</label>
 													<div class="col-sm-9 pt-1">
 														<?php if ($ujian['statusUjian'] == 1) : ?>
-															<span class="badge badge-pill badge-success">Lulus</span>
+														<span class="badge badge-pill badge-success">Lulus</span>
 														<?php elseif ($ujian['statusUjian'] == 2) : ?>
-															<span class="badge badge-pill badge-primary">Proses</span>
+														<span class="badge badge-pill badge-primary">Proses</span>
 														<?php else : ?>
-															<span class="badge badge-pill badge-danger">Tidak Lulus</span>
+														<span class="badge badge-pill badge-danger">Tidak Lulus</span>
 														<?php endif; ?>
 													</div>
 												</div>
@@ -185,17 +185,17 @@
 															<tbody>
 																<?php $i = 1;
 																foreach ($penguji as $pngj) : ?>
-																	<tr>
-																		<td><?= $i++  ?></td>
-																		<td><?= $pngj['nama_dosen']  ?></td>
-																		<td><?= $pngj['status_dosen']  ?></td>
-																		<td><?= $pngj['nilai'] ?></td>
-																		<td><button type="submit" class="btn btn-danger btn-sm text-white" name="id_penguji" placeholder="hapus" value="<?= $pngj['id']; ?>">hapus</button>
-																			<input type="hidden" value="<?= $this->uri->segment(3); ?>" name="id_ujian" id="id_ujian">
+																<tr>
+																	<td><?= $i++  ?></td>
+																	<td><?= $pngj['nama_dosen']  ?></td>
+																	<td><?= $pngj['status_dosen']  ?></td>
+																	<td><?= $pngj['nilai'] ?></td>
+																	<td><button type="submit" class="btn btn-danger btn-sm text-white" name="id_penguji" placeholder="hapus" value="<?= $pngj['id']; ?>">hapus</button>
+																		<input type="hidden" value="<?= $this->uri->segment(3); ?>" name="id_ujian" id="id_ujian">
 
 
-																		</td>
-																	</tr>
+																	</td>
+																</tr>
 																<?php endforeach; ?>
 															</tbody>
 														</form>
@@ -252,11 +252,11 @@
 															<tbody>
 																<?php $i = 1;
 																foreach ($pembimbing as $pmb) : ?>
-																	<tr>
-																		<td><?= $i++  ?></td>
-																		<td><?= $pmb['nama_dosen']; ?></td>
-																		<td><?= $pmb['status_dosen']  ?></td>
-																	</tr>
+																<tr>
+																	<td><?= $i++  ?></td>
+																	<td><?= $pmb['nama_dosen']; ?></td>
+																	<td><?= $pmb['status_dosen']  ?></td>
+																</tr>
 																<?php endforeach; ?>
 															</tbody>
 														</table>
@@ -321,14 +321,14 @@
 									</thead>
 									<tbody id="pop-dosen">
 										<?php foreach ($dosen as $dsn) :  ?>
-											<tr>
-												<td></td>
-												<td><?= $dsn['nama_dosen'];  ?></td>
-												<td><?= $dsn['nip'] ?></td>
-												<td>
-													<input type="radio" name="nip" value="<?= $dsn['nip']  ?>">
-												</td>
-											</tr>
+										<tr>
+											<td></td>
+											<td><?= $dsn['nama_dosen'];  ?></td>
+											<td><?= $dsn['nip'] ?></td>
+											<td>
+												<input type="radio" name="nip" value="<?= $dsn['nip']  ?>">
+											</td>
+										</tr>
 										<?php endforeach; ?>
 									</tbody>
 								</table>
@@ -346,7 +346,7 @@
 							</div>
 							<select class="custom-select" id="inputGroupSelect01" name="statuspenguji">
 								<?php foreach ($posisiPenguji as $pngj) : ?>
-									<option value="<?= $pngj['id'] ?>"><?= $pngj['status_dosen'] ?></option>
+								<option value="<?= $pngj['id'] ?>"><?= $pngj['status_dosen'] ?></option>
 								<?php endforeach; ?>
 							</select>
 						</div>
@@ -386,14 +386,14 @@
 						<tbody>
 							<?php $i = 1;
 							foreach ($penguji as $pngj) : ?>
-								<tr>
-									<td><?= $i++  ?></td>
-									<td><?= $pngj['nama_dosen']  ?></td>
-									<td><?= $pngj['status_dosen']  ?></td>
-									<td><input type="text" class="form-control" placeholder="Nilai..." value="<?= $pngj['nilai'] ?>" name="<?= $pngj['id']; ?>">
-										<input type="hidden" value="<?= $pngj['Ujianid'] ?>" name="idujian">
-									</td>
-								</tr>
+							<tr>
+								<td><?= $i++  ?></td>
+								<td><?= $pngj['nama_dosen']  ?></td>
+								<td><?= $pngj['status_dosen']  ?></td>
+								<td><input type="text" class="form-control" placeholder="Nilai..." value="<?= $pngj['nilai'] ?>" name="<?= $pngj['id']; ?>">
+									<input type="hidden" value="<?= $pngj['Ujianid'] ?>" name="idujian">
+								</td>
+							</tr>
 							<?php endforeach; ?>
 						</tbody>
 					</table>

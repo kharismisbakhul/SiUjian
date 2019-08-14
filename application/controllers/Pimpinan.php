@@ -27,6 +27,11 @@ class Pimpinan extends CI_Controller
         $data['bimbingan_jumlah'] = $this->dosen->getMahasiswaBimbingan($this->session->userdata('username'))->num_rows();
         $data['pembimbing_terbanyak'] = $this->dosen->getPembimbingTerbanyak();
         $data['rekap_dosen'] = $this->dosen->getRekapAllDosen();
+
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
         return $data;
     }
 
@@ -121,21 +126,27 @@ class Pimpinan extends CI_Controller
     {
         $this->load->model('dosen_model', 'dosen');
         $data = $this->initData();
+        $data['star_date'] = '';
+        $data['end_date'] = '';
+        if ($this->input->post('submit')) {
+            $data['star_date'] = $this->input->post('star_date');
+            $data['end_date'] = $this->input->post('end_date');
+        }
         if ($this->session->userdata("user_profile_kode") == 3) {
             $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
             if ($data['user_login']['jabatan_pimpinan'] != "") {
                 if ($data['user_login']['jabatan_pimpinan'] == "Dekan") {
-                    $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip']);
+                    $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip'], 0,  $data['star_date'], $data['end_date']);
                 } else {
-                    $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip'], $data['user_login']['prodi_dosen']);
+                    $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip'], $data['user_login']['prodi_dosen'],  $data['star_date'], $data['end_date']);
                 }
             }
         }
         if ($this->uri->segment(3) && $this->uri->segment(4)) {
             if ($this->uri->segment(3) == "Dekan") {
-                $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5));
+                $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5), 0,  $data['star_date'], $data['end_date']);
             } else {
-                $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5), $this->uri->segment(4));
+                $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5), $this->uri->segment(4),  $data['star_date'], $data['end_date']);
             }
         }
         $data['title'] = 'Rekap Dosen';
@@ -146,8 +157,14 @@ class Pimpinan extends CI_Controller
 
     public function detailRekapDosen($nip)
     {
+        $star_date = '';
+        $end_date = '';
+        if ($this->input->get('star_date') || $this->input->get('end_date')) {
+            $star_date = $this->input->get('star_date');
+            $end_date = $this->input->get('end_date');
+        }
         $this->load->model('dosen_model', 'dosen');
-        $data['rekap_dosen'] = $this->dosen->getDetailRekapDosen($nip);
+        $this->dosen->getDetailRekapDosen($nip, $star_date, $end_date);
     }
 
     public function detailMahasiswa($nim)
