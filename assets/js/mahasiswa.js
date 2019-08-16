@@ -8,11 +8,25 @@ $('.detail').on('click', function () {
 		url: segments[0] + '/SiUjian/mahasiswa/getDetailPublikasi/' + id,
 		method: 'get',
 		dataType: 'json',
-		beforeSend: function () {
-			$('.loader').attr('src', segments[0] + '/SiUjian/assets/img/loader2.gif')
+		beforeSend: function (data, options) {
+			$('.publikasi-body').hide();
+			$('.modal-body').append(`
+				<div class="pub" style="height:305px">
+					<img src="` + segments[0] + `/SiUjian/assets/img/loader.gif" class="transis rounded mx-auto d-block" style="width:50%;">
+				</div>
+				`);
+			setTimeout(function () {
+				// null beforeSend to prevent recursive ajax call
+				$.ajax($.extend(options, {
+					beforeSend: $.noop
+				}));
+			}, 500);
+			// $('dosen-penguji').addClass('hilang');
+			return false;
 		},
 		success: function (data) {
-			$('.loader').hide()
+			$('.pub').remove()
+			$('.publikasi-body').show()
 			$('#judulArtikel').html(data.judulArtikel);
 			$('#namaJurnal').html(data.namaJurnal);
 			$('#kategoriJurnal').html(data.kategoriJurnal);
@@ -51,7 +65,7 @@ $('.detail-ujian').on('click', function () {
 	if (action == 'operator' || action == 'admin') {
 
 	}
-	console.log(action);
+	console.log(segments[2]);
 	$.ajax({
 		url: segments[0] + '/SiUjian/mahasiswa/getDetailUjian/' + id,
 		method: 'get',
@@ -60,7 +74,7 @@ $('.detail-ujian').on('click', function () {
 			$('.test').hide();
 			$('.modal-body').append(`
 				<div class="dosen-penguji" style="height:550px">
-					<img src=segments[0]+"/SiUjian/assets/img/loader.gif" class="transis rounded mx-auto d-block" style="width:80%;">
+					<img src="` + segments[0] + `/SiUjian/assets/img/loader.gif" class="transis rounded mx-auto d-block" style="width:80%;">
 				</div>
 				`);
 			setTimeout(function () {
@@ -108,8 +122,8 @@ $('.detail-ujian').on('click', function () {
 			let i = 1;
 			data['penguji'].forEach(function (p) {
 				$('.penguji').append(`
-				<tr class="dosen-penguji">
-					<th scope="row">` + (i++) + `</th>
+				<tr class="dosen-penguji" style="font-size: 16px">
+					<td scope="row">` + (i++) + `</td>
 					<td>` + p.nama_dosen + `</td>
 					<td>` + p.status_dosen + `</td>
 					<td>` + p.nilai + `</td>

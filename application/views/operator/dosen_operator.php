@@ -52,14 +52,14 @@
                       <div class="col-md-3">
                         <small>Mulai Periode</small>
                         <?php if ($star_date != null) : ?>
-                          <small> <?= $star_date ?></small>
+                        <small> <?= $star_date ?></small>
                         <?php endif; ?>
                         <input type="date" class="form-control" name="star_date">
                       </div>
                       <div class="col-md-3">
                         <small>Akhir Periode</small>
                         <?php if ($end_date != null) : ?>
-                          <small><?= $end_date ?></small>
+                        <small><?= $end_date ?></small>
                         <?php endif; ?>
                         <div class="input-group mb-3">
                           <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
@@ -71,8 +71,8 @@
                     </div>
                   </form>
                   <div class="table-responsive">
-                    <table class="table table-bordered text-center text-nowrap table-sm" id="dataTableDosen" cellspacing="0">
-                      <thead>
+                    <table class="table table-striped table-hover text-left text-nowrap table-sm" id="dataTableDosen" cellspacing="0">
+                      <thead style="background-color: #2980b9;color:#ecf0f1 ">
                         <tr>
                           <th>#</th>
                           <th>Nama Dosen</th>
@@ -80,49 +80,52 @@
                           <th>Status Aktif</th>
                           <th>Jumlah Bimbingan</th>
                           <th>Action</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <?php $i = 1;
                           foreach ($dosen as $d) : ?>
-                            <td><?= $i; ?></td>
-                            <td><?= $d['nama_dosen'] ?></td>
-                            <td><?= $d['nip'] ?></td>
-                            <td>
-                              <?php if ($d['statusAktif'] == 1) : ?>
-                                Aktif
-                              <?php else : ?>
-                                Tidak Aktif
-                              <?php endif; ?>
-                            </td>
-                            <td><?= $d['jumlah_bimbingan'] ?></td>
-                            <td class="text-center">
-                              <a href="<?= base_url('operator/dosen/profile/') . $d['nip']; ?>" class="btn btn-info btn-icon-split btn-sm">
+                          <td><?= $i; ?></td>
+                          <td><?= $d['nama_dosen'] ?></td>
+                          <td><?= $d['nip'] ?></td>
+                          <td>
+                            <?php if ($d['statusAktif'] == 1) : ?>
+                            Aktif
+                            <?php else : ?>
+                            Tidak Aktif
+                            <?php endif; ?>
+                          </td>
+                          <td><?= $d['jumlah_bimbingan'] ?></td>
+                          <td class="text-center">
+                            <a href="<?= base_url('operator/dosen/profile/') . $d['nip']; ?>" class="btn btn-info btn-icon-split btn-sm">
+                              <span class="icon text-white-50">
+                                <i class="fas fa-eye"></i>
+                              </span>
+                              <span class="text">Profil</span>
+                            </a>
+                            <a href="<?= base_url('operator/dosen/ujian/') . $d['nip']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
+                              <span class="icon text-white-50">
+                                <i class="fas fa-paste"></i>
+                              </span>
+                              <span class="text clr-white">Ujian</span>
+                            </a>
+                          </td>
+                          <td>
+                            <form action="<?= base_url('operator/dosen/bimbingan/') . $d['nip']; ?>" method="post">
+                              <input type="hidden" name="tglMulai" value="<?= $star_date ?>">
+                              <input type="hidden" name="tglAkhir" value="<?= $end_date ?>">
+                              <button type="submit" class="btn btn-bimbingan btn-icon-split btn-sm" name="bimbingan">
                                 <span class="icon text-white-50">
-                                  <i class="fas fa-eye"></i>
+                                  <i class="fas fa-book"></i>
                                 </span>
-                                <span class="text">Profil</span>
-                              </a>
-                              <a href="<?= base_url('operator/dosen/ujian/') . $d['nip']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
-                                <span class="icon text-white-50">
-                                  <i class="fas fa-paste"></i>
-                                </span>
-                                <span class="text clr-white">Ujian</span>
-                              </a>
-                              <form action="<?= base_url('operator/dosen/bimbingan/') . $d['nip']; ?>" method="post">
-                                <input type="hidden" name="tglMulai" value="<?= $star_date ?>">
-                                <input type="hidden" name="tglAkhir" value="<?= $end_date ?>">
-                                <button type="submit" class="btn btn-bimbingan btn-icon-split btn-sm" name="bimbingan">
-                                  <span class="icon text-white-50">
-                                    <i class="fas fa-book"></i>
-                                  </span>
-                                  <span class="text clr-white">Bimbingan</span>
-                                </button>
-                              </form>
-                            </td>
-                          </tr>
-                          <?php $i++;
+                                <span class="text clr-white">Bimbingan</span>
+                              </button>
+                            </form>
+                          </td>
+                        </tr>
+                        <?php $i++;
                         endforeach; ?>
                       </tbody>
                       <tfoot>
@@ -132,6 +135,7 @@
                           <th></th>
                           <th>Status Aktif</th>
                           <th>Jumlah Bimbingan</th>
+                          <th></th>
                           <th></th>
                         </tr>
                       </tfoot>

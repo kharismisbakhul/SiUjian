@@ -162,8 +162,8 @@
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                          <thead>
+                        <table class="table table-striped table-hover text-left text-nowrap " id="dataTable" width="100%" cellspacing="0">
+                          <thead style="background-color: #2980b9;color:#ecf0f1 ">
                             <tr>
                               <th>#</th>
                               <th>Nama Mahasiswa</th>
@@ -174,12 +174,12 @@
                           <tbody>
                             <?php $i = 1;
                             foreach ($valid_ujian as $v) : ?>
-                              <tr>
-                                <td><?= $i++;  ?></td>
-                                <td><?= $v['nama']  ?></td>
-                                <td><?= $v['nama_prodi']  ?></td>
-                                <td><?= $v['nama_ujian']  ?></td>
-                              </tr>
+                            <tr>
+                              <td><?= $i++;  ?></td>
+                              <td><?= $v['nama']  ?></td>
+                              <td><?= $v['nama_prodi']  ?></td>
+                              <td><?= $v['nama_ujian']  ?></td>
+                            </tr>
                             <?php endforeach; ?>
                           </tbody>
                         </table>

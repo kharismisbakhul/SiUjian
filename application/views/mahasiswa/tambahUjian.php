@@ -38,7 +38,7 @@
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
                         <div class="col-sm-9">
-                            <textarea type="text" class="form-control" id="judulTA" placeholder="Tugas Akhir..." readonly name="judulTA" id="" cols="10" rows="2"><?= $user_login['judulTugasAkhir'] ?> </textarea>
+                            <textarea type="text" class="form-control" id="judulTA" placeholder="Tugas Akhir..." readonly name="judulTA" id="" cols="10" rows="2"><?= $user_login['judulAkhir'] ?> </textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-1">
@@ -46,7 +46,7 @@
                         <div class="col-sm-4">
                             <select class="custom-select" id="kodeUjian" name="kodeUjian">
                                 <?php foreach ($belumUjian as $u) : ?>
-                                    <option value="<?= $u['kode'] ?>"><?= $u['nama_ujian'] ?></option>
+                                <option value="<?= $u['kode'] ?>"><?= $u['nama_ujian'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                             <?= form_error('kodeUjian', '<small class="text-danger pl-3">', '</small>'); ?>

@@ -68,11 +68,15 @@ $('.info-bimbingan').on('click', function () {
 	$('.list-ujian').remove();
 	$('.list-pembimbing').remove();
 	$('.list-publikasi').remove();
+	console.log(nim)
 	$.ajax({
 		url: segments[0] + '/SiUjian/dosen/getDetailBimbingan/' + nim,
 		method: 'get',
 		dataType: 'json',
 		success: function (data) {
+			$('.list-ujian').remove();
+			$('.list-pembimbing').remove();
+			$('.list-publikasi').remove();
 			$('#nama-bimbingan').html(data['user'].nama)
 			let i = 1;
 			let td;
@@ -104,7 +108,8 @@ $('.info-bimbingan').on('click', function () {
 			$('#noTelp').html(data['user'].noTelp)
 			$('#asalStudi').html(data['user'].asalStudi)
 			$('#tglMulaiTA').html(data['user'].tglMulaiTA)
-
+			$('#nilaiTA').html(data['user'].nilaiTA)
+			$('#nilai_huruf').html(data['user'].nilai_huruf)
 
 			let j = 1;
 			data['pembimbing'].forEach(function (p) {

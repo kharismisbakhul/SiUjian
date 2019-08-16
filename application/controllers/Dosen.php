@@ -71,7 +71,7 @@ class Dosen extends CI_Controller
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['user'] = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
         $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user']['prodikode']);
-        $data['isianMahasiswa'] = $this->db->get('isianmahasiswa', ['mahasiswanim' => $nim])->row_array();
+        $data['isianMahasiswa'] = $this->db->get_where('isianmahasiswa', ['Mahasiswanim' => $nim])->row_array();
         $data['ujian'] = $this->mahasiswa->getUjian($data['user']['nim']);
         $data['publikasi'] = $this->mahasiswa->getPublikasi($data['user']['nim']);
         $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user']['nim']);

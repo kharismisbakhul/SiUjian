@@ -224,6 +224,15 @@
                                                         <tbody class="ujian">
 
                                                         </tbody>
+                                                        <tfoot class="hasil">
+                                                            <tr>
+                                                                <td colspan="5">Nilai Akhir</td>
+                                                                <td id="nilaiTA"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="6">Maka nilai tugas akhir mahasiswa tersebut adalah <span class="font-weight-bold" id="nilai_huruf"></span></td>
+                                                            </tr>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
                                             </div>
@@ -241,7 +250,7 @@
                                         <!-- Approach -->
                                         <div class="card shadow mb-4">
                                             <div class="card-body">
-                                                <div class="table-responsive">
+                                                <div class="table-responsive col-11">
                                                     <form>
                                                         <div class="form-group row mb-1">
                                                             <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
@@ -329,18 +338,18 @@
                                                         </div>
 
                                                         <div class=" row ml-1 mr-1">
-
                                                             <table class="table table-bordered table-sm">
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">#</th>
-                                                                        <th scope="col">Status</th>
                                                                         <th scope="col">Nama Dosen</th>
+                                                                        <th scope="col">Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody class="pembimbing">
 
                                                                 </tbody>
+
                                                             </table>
                                                         </div>
                                                     </form>

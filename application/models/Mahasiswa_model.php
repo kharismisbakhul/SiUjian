@@ -3,16 +3,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Mahasiswa_model extends CI_Model
 {
-
     public function getProfilJurusan($data)
     {
         $this->db->select('prodi.nama_prodi, jurusan.nama_jurusan');
-        // prodi -> nama -> kode
-        // jurusan -> nama -> kode
         $this->db->from('mahasiswa');
         $this->db->join('prodi', 'prodi.kode = ' . $data);
         $this->db->join('jurusan', 'jurusan.kode = prodi.jurusankode');
-
+        return $this->db->get()->row_array();
+    }
+    public function getDataMahasiswa($nim)
+    {
+        $this->db->select('mahasiswa.*,prodi.jurusankode,is.judulAkhir');
+        $this->db->from('mahasiswa');
+        $this->db->join('prodi', 'mahasiswa.prodikode=prodi.kode', 'left');
+        $this->db->join('isianmahasiswa as is', 'is.Mahasiswanim=mahasiswa.nim', 'left');
+        $this->db->where('mahasiswa.nim', $nim);
         return $this->db->get()->row_array();
     }
 
@@ -69,18 +74,25 @@ class Mahasiswa_model extends CI_Model
         $this->db->where('pmb.dosennip', null);
         return $this->db->get()->result_array();
     }
-    public function getBelumUjian($data)
+    public function getBelumUjian($data, $jurusan = null, $jenjang = null)
     {
         $this->db->select('kodeujian.*');
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
         $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode', 'right');
         $this->db->where('ujian.kodeUjianKode=', null);
+        if ($jurusan == 1 && $jenjang == 'S3') {
+            $this->db->where('status', 1);
+        } elseif ($jurusan != 1 && $jenjang == 'S3') {
+            $this->db->where('status', 2);
+        } else {
+            $this->db->where('status', 0);
+        }
         return $this->db->get()->result_array();
     }
     public function getUjian($data)
     {
-        $this->db->select('ujian.*,kodeujian.nama_ujian');
+        $this->db->select('ujian.*,kodeujian.*');
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.MahasiswaNim=' . $data);
         $this->db->join('kodeujian', 'ujian.kodeUjianKode = kodeujian.kode');
@@ -127,19 +139,27 @@ class Mahasiswa_model extends CI_Model
         $this->db->set($dataUjian);
         $this->db->insert('ujian');
     }
-    public function getMahasiswaPlusProdi($prodi = 0)
+    public function getMahasiswaPlusProdi($prodi = 0, $star_date = null, $end_date = null)
     {
         if ($prodi == 0) {
-            $this->db->select('mahasiswa.nim, mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang');
+            $this->db->select('mahasiswa.nim, mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang,mahasiswa.tglMulaiTA');
             $this->db->from('mahasiswa');
+            if ($star_date != null && $end_date != null) {
+                $this->db->where('mahasiswa.tglMulaiTA >=', $star_date);
+                $this->db->where('mahasiswa.tglMulaiTA <=', $end_date);
+            }
             $this->db->join('prodi', 'mahasiswa.prodikode= prodi.kode');
             return $this->db->get()->result_array();
         } else {
             // var_dump($prodi);
             // die;
             $this->db->where('mahasiswa.prodikode', intval($prodi));
-            $this->db->select('mahasiswa.nim, mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang');
+            $this->db->select('mahasiswa.nim, mahasiswa.nama, mahasiswa.prodikode, prodi.kode, prodi.nama_prodi, mahasiswa.jenjang,mahasiswa.tglMulaiTA');
             $this->db->from('mahasiswa');
+            if ($star_date != null && $end_date != null) {
+                $this->db->where('mahasiswa.tglMulaiTA >=', $star_date);
+                $this->db->where('mahasiswa.tglMulaiTA <=', $end_date);
+            }
             $this->db->join('prodi', 'mahasiswa.prodikode = prodi.kode');
             return $this->db->get()->result_array();
         }
@@ -193,24 +213,16 @@ class Mahasiswa_model extends CI_Model
         return $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
     }
 
-    public function getAllDetailLaporanMahasiswa($prodi = 0)
+    public function getAllDetailLaporanMahasiswa($star_date, $end_date, $prodi = 0)
     {
-        if ($prodi == 0) {
-            $mahasiswa = $this->getMahasiswaPlusProdi();
-            for ($i = 0; $i < count($mahasiswa); $i++) {
-                $mahasiswa[$i]['ujian_terakhir'] = $this->getUjianTerakhir($mahasiswa[$i]['nim']);
-            }
-            return $mahasiswa;
-        } else {
-            $mahasiswa = $this->getMahasiswaPlusProdi($prodi);
-            for ($i = 0; $i < count($mahasiswa); $i++) {
-                $mahasiswa[$i]['ujian_terakhir'] = $this->getUjianTerakhir($mahasiswa[$i]['nim']);
-            }
-            return $mahasiswa;
+        $mahasiswa = $this->getMahasiswaPlusProdi($prodi, $star_date, $end_date);
+        for ($i = 0; $i < count($mahasiswa); $i++) {
+            $mahasiswa[$i]['ujian_terakhir'] = $this->getUjianTerakhir($mahasiswa[$i]['nim']);
         }
+        return $mahasiswa;
     }
 
-    public function getDetailLaporanMahasiswa($star_date = null, $end_date = null)
+    public function getDetailLaporanMahasiswa($star_date = null, $end_date = null, $prodi = null)
     {
         $this->db->select('mhs.nim,MAX(kodeujian.kode) as K');
         $this->db->from('mahasiswa as mhs');
@@ -219,6 +231,9 @@ class Mahasiswa_model extends CI_Model
         if ($star_date != null && $end_date != null) {
             $this->db->where('mhs.tglMulaiTA >=', $star_date);
             $this->db->where('mhs.tglMulaiTA <=', $end_date);
+        }
+        if ($prodi != null) {
+            $this->db->where('mhs.prodikode', $prodi);
         }
         $this->db->group_by('mhs.nim');
         $this->db->order_by('mhs.nim');

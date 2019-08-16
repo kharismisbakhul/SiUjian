@@ -8,6 +8,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        // $this->load->library('excel_reader2');
         is_logged_in();
     }
 
@@ -43,7 +44,6 @@ class Admin extends CI_Controller
 
         $this->load->model('Notif_model', 'notif');
         $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
-
         $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['counter'] = intval($counter['jumlah_notifikasi']);
 
@@ -177,7 +177,7 @@ class Admin extends CI_Controller
 
     public function getListProdi()
     {
-        $this->db->select('nama_prodi, kode');
+        $this->db->select('nama_prodi,kode');
         echo json_encode($this->db->get('prodi')->result_array());
     }
 
@@ -282,9 +282,80 @@ class Admin extends CI_Controller
 
     public function deleteuser($id)
     {
-        $this->db->where('id', $id);
+        $result = $this->db->get_where('user', ['id' => $id])->row_array();
+        if (intval($result['user_profile_kode']) == 5) {
+            $this->db->where('nim', $result['username']);
+            $this->db->delete('mahasiswa');
+        } elseif (intval($result['user_profile_kode']) == 4 || intval($result['user_profile_kode']) == 3) {
+            $this->db->where('nip', $result['username']);
+            $this->db->delete('dosen');
+        }
+        $this->db->where('id', intval($id));
         $this->db->delete('user');
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Account has been deleted</div>');
+        redirect('admin/manajemenUser');
+    }
+
+    public function downloadTemplate($user)
+    {
+        if ($user == "Dosen") {
+            $this->load->view('admin/templateExcelDosen');
+        } else {
+            $this->load->view('admin/templateExcelMahasiswa');
+        }
+    }
+    public function importDataUser()
+    {
+        // menghubungkan dengan library excel reader
+
+        $status = $this->input->post('jenisUser');
+
+        // upload file xls
+        $target = basename($_FILES['import-data']['name']);
+        move_uploaded_file($_FILES['import-data']['tmp_name'], $target);
+
+        // beri permisi agar file xls dapat di baca
+        chmod($_FILES['import-data']['name'], 0777);
+
+        // mengambil isi file xls
+        $data = new Spreadsheet_Excel_Reader($_FILES['import-data']['name'], false);
+        // menghitung jumlah baris data yang ada
+        $jumlah_baris = $data->rowcount($sheet_index = 0);
+
+        for ($i = 2; $i <= $jumlah_baris; $i++) {
+            // menangkap data dan memasukkan ke variabel sesuai dengan kolumnya masing-masing
+            if ($status == "Mahasiswa") {
+                $result = [
+                    "nim" => $data->val($i, 1),
+                    "nama" => $data->val($i, 2),
+                    "noTest" => base64_encode(random_bytes(3)),
+                    "password" => password_hash(123, PASSWORD_DEFAULT),
+                    "prodikode" => 1
+                ];
+
+                $user = [
+                    "user_profile_kode" => 5,
+                    "username" => $result['nim'],
+                    "password" => password_hash(123, PASSWORD_DEFAULT),
+                    "nama" => $result['nama'],
+                    'is_active' => 1,
+                    'date_created' => date('Y-m-d')
+                ];
+
+                if ($result['nim'] != "" && $result['nama'] != "") {
+                    // input data ke database (table data_pegawai)
+                    $this->db->insert('mahasiswa', $result);
+                    $this->db->insert('user', $user);
+                }
+            }
+        }
+
+        // hapus kembali file .xls yang di upload tadi
+        // unlink($_FILES['import-data']['name']);
+
+        // alihkan halaman ke index.php
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Impor data berhasil</div>');
         redirect('admin/manajemenUser');
     }
 }

@@ -67,7 +67,7 @@ function notifikasi(data) {
 function userNotifikasi(data) {
 	if (data['keterangan'] == "ujian") {
 		$('.notifications').append(`
-		<a class="dropdown-item d-flex align-items-center" href=` + segments[0] + `/SiUjian/mahasiswa/ujian">
+		<a class="dropdown-item d-flex align-items-center" href="` + segments[0] + `/SiUjian/mahasiswa/ujian">
 			<div class="mr-3">
 				<div class="icon-circle bg-primary">
 					<i class="fas fa-book-open text-white"></i>

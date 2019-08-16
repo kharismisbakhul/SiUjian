@@ -4,12 +4,12 @@ class Operator_model extends CI_Model
 {
     public function cekValidasi()
     {
-        $this->db->select('mahasiswa.nama,mahasiswa.jenjang,ujian.*,kodeujian.nama_ujian,prodi.nama_prodi');
+        $this->db->select('mahasiswa.nama,mahasiswa.jenjang,ujian.*,kodeujian.nama_ujian,prodi.nama_prodi,mahasiswa.nim');
         $this->db->from('mahasiswa');
         $this->db->join('ujian', 'ujian.mahasiswanim=mahasiswa.nim');
         $this->db->join('kodeujian', 'ujian.kodeujiankode=kodeujian.kode');
         $this->db->join('prodi', 'prodi.kode=mahasiswa.prodikode');
-        $this->db->order_by('ujian.tgl_tambah_ujian', 'DSC');
+        $this->db->order_by('ujian.statusUjian', 'DESC');
         return $this->db->get()->result_array();
     }
     public function cekValidasiHariIni()
@@ -31,11 +31,13 @@ class Operator_model extends CI_Model
         mahasiswa.nim,
         mahasiswa.judulTugasAkhir,
         ujian.*,
-        kodeujian.nama_ujian');
+        kodeujian.nama_ujian,is.judulAkhir');
         $this->db->from('ujian');
         $this->db->where('ujian.id=' . $id_ujian);
         $this->db->join('kodeujian', 'kodeujian.kode=ujian.kodeujiankode');
         $this->db->join('mahasiswa', 'mahasiswa.nim=ujian.mahasiswanim');
+        $this->db->join('isianmahasiswa as is', 'is.Mahasiswanim=mahasiswa.nim', 'left');
+
         return $this->db->get()->row_array();
     }
     // ujian
@@ -72,6 +74,9 @@ class Operator_model extends CI_Model
     {
         $this->db->set('komentar', $data['komentar']);
         $this->db->set('tgl_ujian', $data['tanggal']);
+        if ($data['valid'] == 1 || $data['valid'] == 3) {
+            $this->db->set('status_notif', 0);
+        }
         $this->db->set('valid', $data['valid']);
         $this->db->where('id', $data['id']);
         $this->db->update('ujian');
@@ -139,7 +144,7 @@ class Operator_model extends CI_Model
     // publikasi
     public function getDataPublikasi($star_date = null, $end_date = null)
     {
-        $this->db->select('mhs.nama,publikasi.judulArtikel,publikasi.namaJurnal,p.nama_prodi,publikasi.valid,publikasi.tanggal,mhs.jenjang,publikasi.idJurnal');
+        $this->db->select('mhs.nama,publikasi.judulArtikel,publikasi.namaJurnal,p.nama_prodi,publikasi.valid,publikasi.tanggal,mhs.jenjang,publikasi.idJurnal,mhs.nim');
         $this->db->from('publikasi');
         $this->db->join('mahasiswa as mhs', 'publikasi.mahasiswanim=mhs.nim', 'left');
         $this->db->join('prodi as p', 'p.kode=mhs.prodikode', 'left');
@@ -147,6 +152,62 @@ class Operator_model extends CI_Model
             $this->db->where('tanggal >=', $star_date);
             $this->db->where('tanggal <=', $end_date);
         }
+        $this->db->order_by('publikasi.valid', 'DESC');
         return $this->db->get()->result_array();
+    }
+
+    //get daftar ujian mhs
+    public function getDetailMahasiswa($nim)
+    {
+        $this->db->select('prodi.jurusankode,mahasiswa.jenjang');
+        $this->db->from('mahasiswa');
+        $this->db->join('prodi', 'mahasiswa.prodikode=prodi.kode', 'left');
+        $this->db->where('mahasiswa.nim', $nim);
+        return $this->db->get()->row_array();
+    }
+    //get daftar nilai
+    public function getDetailUjian($nim)
+    {
+        $this->db->select('ujian.id,ujian.nilai_akhir,ujian.kodeUjiankode,kodeujian.*');
+        $this->db->from('ujian');
+        $this->db->join('kodeujian', 'ujian.kodeUjianKode=kodeujian.kode', 'left');
+        $this->db->where('ujian.MahasiswaNim', $nim);
+        return $this->db->get()->result_array();
+    }
+
+    //update nilaiTA
+    public function updateNilaiTA($nilaiTA, $nim)
+    {
+        if ($nilaiTA > 80) {
+            $this->db->set('nilai_huruf', 'A');
+            $this->db->set('statusKelulusan', 1);
+        } elseif ($nilaiTA > 75) {
+            $this->db->set('nilai_huruf', 'B+');
+            $this->db->set('statusKelulusan', 1);
+        } elseif ($nilaiTA > 69) {
+            $this->db->set('nilai_huruf', 'B');
+            $this->db->set('statusKelulusan', 1);
+        } elseif ($nilaiTA > 60) {
+            $this->db->set('nilai_huruf', 'C+');
+            $this->db->set('statusKelulusan', 0);
+        } elseif ($nilaiTA > 55) {
+            $this->db->set('nilai_huruf', 'C');
+            $this->db->set('statusKelulusan', 0);
+        } elseif ($nilaiTA > 50) {
+            $this->db->set('nilai_huruf', 'D+');
+            $this->db->set('statusKelulusan', 0);
+        } elseif ($nilaiTA > 44) {
+            $this->db->set('nilai_huruf', 'D');
+            $this->db->set('statusKelulusan', 0);
+        } elseif ($nilaiTA > 0) {
+            $this->db->set('nilai_huruf', 'E');
+            $this->db->set('statusKelulusan', 0);
+        } else {
+            $this->db->set('nilai_huruf', 'K');
+            $this->db->set('statusKelulusan', 0);
+        }
+        $this->db->set('nilaiTA', $nilaiTA);
+        $this->db->where('nim', $nim);
+        $this->db->update('mahasiswa');
     }
 }

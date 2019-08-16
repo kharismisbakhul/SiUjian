@@ -3,10 +3,16 @@ var url = $(location).attr("href");
 var segments = url.split("/");
 $('.modalDetailBimbingan').on("click", function () {
 	var nip = $(this).data('id');
+	let star_date = $('.star_date').val();
+	let end_date = $('.end_date').val();
+	console.log(star_date)
 	$.ajax({
-		url: segments[0] + '/SiUjian/Pimpinan/detailMahasiswaBimbingan/' + nip,
+		url: segments[0] + '/SiUjian/Pimpinan/detailMahasiswaBimbingan/' + nip + '?star_date=' + star_date + '&end_date=' + end_date,
 		dataType: 'json',
 		type: 'get',
+		beforeSend: function (data) {
+			console.log('cek')
+		},
 		success: function (data) {
 			$(".modal-body").html('');
 			$(".modal-title .nama_dosen").html(data.nama_dosen);
@@ -24,6 +30,7 @@ $('.modalDetailBimbingan').on("click", function () {
                     <tr>
                       <th>#</th>
                       <th>Nama Mahasiswa</th>
+                      <th>Tgl Mulai Tugas Akhir</th>
                       <th>Jenjang</th>
                       <th>Program Studi</th>
                       <th>Posisi Dosen</th>
@@ -75,6 +82,7 @@ function bimbinganLoop(mahasiswa_bimbingan) {
 		`<tr>
     <td>` + (i++) + `</td>
     <td>` + mahasiswa_bimbingan.nama + `</td>
+    <td>` + mahasiswa_bimbingan.tglMulaiTA + `</td>
     <td>` + mahasiswa_bimbingan.jenjang + `</td>
     <td>` + mahasiswa_bimbingan.nama_prodi + `</td>
     <td> Pembimbing ` + mahasiswa_bimbingan.statusPembimbing + `</td>

@@ -3,16 +3,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dosen_model extends CI_Model
 {
-    public function getListDosen($nip, $prodi = 0)
+    public function getListDosen($nip, $prodi = null)
     {
-        if ($prodi == 0) {
-            $query = "SELECT dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as 'jumlah_bimbingan' FROM dosen left join pembimbing on dosen.nip = pembimbing.Dosennip WHERE dosen.nip != $nip GROUP BY dosen.nama_dosen";
-            return $this->db->query($query)->result_array();
-        } else {
-            $prodi = intval($prodi);
-            $query = "SELECT dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as 'jumlah_bimbingan' FROM dosen left join pembimbing on dosen.nip = pembimbing.Dosennip WHERE dosen.prodi_dosen = $prodi AND dosen.nip != $nip GROUP BY dosen.nama_dosen";
-            return $this->db->query($query)->result_array();
+
+        $this->db->select('dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as jumlah_bimbingan');
+        $this->db->from('dosen');
+        $this->db->join('pembimbing', 'dosen.nip = pembimbing.Dosennip', 'left');
+        $this->db->where('dosen.nip  !=', $nip);
+        if ($prodi != null) {
+            $this->db->where('dosen.prodi_dosen', $prodi);
         }
+        $this->db->group_by('dosen.nama_dosen');
+        return $this->db->get()->result_array();
     }
     public function getListAllDosen()
     {
@@ -20,7 +22,7 @@ class Dosen_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function getRekapDosen($nip, $prodi = 0)
+    public function getRekapDosen($nip, $prodi = 0, $star_date = null, $end_date = null)
     {
         //list Dosen
         $dosen = $this->getListDosen($nip);
@@ -28,22 +30,44 @@ class Dosen_model extends CI_Model
         if ($prodi != 0) {
             $dosen = $this->getListDosen($nip, $prodi);
         }
-
         //get mahasiswa bimbingan + jumlah
         for ($i = 0; $i < count($dosen); $i++) {
             $jumlah_bimbingan_lulus = 0;
-            $mahasiswa_bimbingan = $this->getMahasiswaBimbingan($dosen[$i]['nip'])->result_array();
+            $mahasiswa_bimbingan = $this->getMahasiswaBimbingan($dosen[$i]['nip'], $star_date, $end_date)->result_array();
             $dosen[$i]['mahasiswa_bimbingan'] = $mahasiswa_bimbingan;
             for ($j = 0; $j < count($mahasiswa_bimbingan); $j++) {
                 if ($mahasiswa_bimbingan[$j]['statusKelulusan'] == 1) {
                     $jumlah_bimbingan_lulus++;
                 }
             }
-            $dosen[$i]['jumlah_mahasiswa_bimbingan'] = $this->getMahasiswaBimbingan($dosen[$i]['nip'])->num_rows();
+            $dosen[$i]['jumlah_mahasiswa_bimbingan'] = $this->getMahasiswaBimbingan($dosen[$i]['nip'], $star_date, $end_date)->num_rows();
             $dosen[$i]['jumlah_bimbingan_lulus'] = $jumlah_bimbingan_lulus;
-            $dosen[$i]['jumlah_menguji'] = $this->db->get_where('penguji', ['Dosennip' => $dosen[$i]['nip']])->num_rows();
+
+            $jumlah_penguji_ketua = $this->getJumlahMenguji($dosen[$i]['nip'], 7, $star_date, $end_date);
+            $jumlah_penguji_1 = $this->getJumlahMenguji($dosen[$i]['nip'], 8, $star_date, $end_date);
+            $jumlah_penguji_2 = $this->getJumlahMenguji($dosen[$i]['nip'], 9, $star_date, $end_date);
+            $jumlah_penguji_3 = $this->getJumlahMenguji($dosen[$i]['nip'], 10, $star_date, $end_date);
+            $jumlah_penguji_tamu_1 = $this->getJumlahMenguji($dosen[$i]['nip'], 11, $star_date, $end_date);
+            $jumlah_penguji_tamu_2 = $this->getJumlahMenguji($dosen[$i]['nip'], 12, $star_date, $end_date);
+
+            $jumlah_penguji_total = $jumlah_penguji_ketua + $jumlah_penguji_1 + $jumlah_penguji_2 + $jumlah_penguji_3 + $jumlah_penguji_tamu_1 + $jumlah_penguji_tamu_2;
+            $dosen[$i]['jumlah_menguji'] =  $jumlah_penguji_total;
         }
         return $dosen;
+    }
+
+    public function getJumlahMenguji($nip, $status_penguji, $star_date = null, $end_date = null)
+    {
+        $this->db->select('*');
+        $this->db->from('penguji');
+        $this->db->join('ujian', 'penguji.Ujianid=ujian.id', 'left');
+        $this->db->where('penguji.statusPenguji', $status_penguji);
+        $this->db->where('penguji.Dosennip', $nip);
+        if ($star_date != null & $end_date != null) {
+            $this->db->where('ujian.tgl_ujian >=', $star_date);
+            $this->db->where('ujian.tgl_ujian <=', $end_date);
+        }
+        return $this->db->get()->num_rows();
     }
 
     public function getRekapAllDosen()
@@ -67,40 +91,68 @@ class Dosen_model extends CI_Model
         }
         return $dosen;
     }
-    public function getDetailRekapDosen($nip)
+    public function getDetailRekapDosen($nip, $star_date = null, $end_date = null)
     {
         $dosen = $this->db->get_where('dosen', ['nip' => $nip])->row_array();
 
         //inisialisasi variabel
+        $jumlah_pembimbing_ketua = 0;
         $jumlah_pembimbing_1 = 0;
         $jumlah_pembimbing_2 = 0;
+        $jumlah_promotor = 0;
+        $jumlah_co_promotor_1 = 0;
+        $jumlah_co_promotor_2 = 0;
+        // S2
         $jumlah_komisi = 0;
         $jumlah_proposal = 0;
         $jumlah_semhas = 0;
         $jumlah_tesis = 0;
         $jumlah_wisuda = 0;
+
+        // S3
+        $jumlah_makalah1 = 0;
+        $jumlah_makalah2 = 0;
+        $jumlah_seminarProposal = 0;
+        $jumlah_proposal_s3 = 0;
+        $jumlah_ujian_proposal_s3 = 0;
+        $jumlah_pelaksanaan_penelitian = 0;
+        $jumlah_persentasi3 = 0;
+        $jumlah_seminarHasil = 0;
+        $jumlah_ekternalReview = 0;
+        $jumlah_ujianDisertasi = 0;
+        $jumlah_wisuda_s3 = 0;
+
         $jumlah_belum_lulus = 0;
         $jumlah_lulus = 0;
 
         //Jumlah Sebagai Pembimbing
-        $mahasiswa_bimbingan = $this->getMahasiswaBimbingan($nip)->result_array();
-        $dosen['mahasiswa_bimbingan'] = $mahasiswa_bimbingan;
+        $mahasiswa_bimbingan = $this->getMahasiswaBimbingan($nip, $star_date, $end_date)->result_array();
         for ($i = 0; $i < count($mahasiswa_bimbingan); $i++) {
             if ($mahasiswa_bimbingan[$i]['statusKelulusan'] == 1) {
                 $jumlah_lulus++;
             } else if ($mahasiswa_bimbingan[$i]['statusKelulusan'] == 0) {
                 $jumlah_belum_lulus++;
             };
-            if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 1) {
+            if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 2) {
                 $jumlah_pembimbing_1++;
-            } else if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 2) {
+            } else if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 3) {
                 $jumlah_pembimbing_2++;
-            };
-            if ($mahasiswa_bimbingan[$i]['statusWisuda'] == 1) {
+            } else if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 4) {
+                $jumlah_promotor++;
+            } else if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 5) {
+                $jumlah_co_promotor_1++;
+            } else if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 6) {
+                $jumlah_co_promotor_2++;
+            } else if ($mahasiswa_bimbingan[$i]['statusPembimbing'] == 1) {
+                $jumlah_pembimbing_ketua++;
+            }
+
+            if ($mahasiswa_bimbingan[$i]['statusWisuda'] == 1 && $mahasiswa_bimbingan[$i]['jenjang'] == 'S2') {
                 $jumlah_wisuda++;
-            };
+            } elseif ($mahasiswa_bimbingan[$i]['statusWisuda'] == 1 && $mahasiswa_bimbingan[$i]['jenjang'] == 'S3') {
+                $jumlah_wisuda_s3++;
+            }
             $ujian_mahasiswa = $this->db->get_where('ujian', ['MahasiswaNim' => $mahasiswa_bimbingan[$i]['Mahasiswanim']])->result_array();
-            $dosen['mahasiswa_bimbingan'][$i]['ujian'] = $ujian_mahasiswa;
             for ($j = 0; $j < count($ujian_mahasiswa); $j++) {
                 if ($ujian_mahasiswa[$j]['kodeUjiankode'] == 1) {
                     $jumlah_komisi++;
@@ -110,33 +162,92 @@ class Dosen_model extends CI_Model
                     $jumlah_semhas++;
                 } else if ($ujian_mahasiswa[$j]['kodeUjiankode'] == 4) {
                     $jumlah_tesis++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 5) {
+                    $jumlah_makalah1++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 6) {
+                    $jumlah_makalah2++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 7) {
+                    $jumlah_seminarProposal++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 8) {
+                    $jumlah_proposal_s3++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 9) {
+                    $jumlah_persentasi3++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 10 || $ujian_mahasiswa[$j]['kodeUjiankode'] == 15) {
+                    $jumlah_seminarHasil++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 11) {
+                    $jumlah_ekternalReview++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 12 || $ujian_mahasiswa[$j]['kodeUjiankode'] == 16) {
+                    $jumlah_ujianDisertasi++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 13) {
+                    $jumlah_ujian_proposal_s3++;
+                } elseif ($ujian_mahasiswa[$j]['kodeUjiankode'] == 14) {
+                    $jumlah_pelaksanaan_penelitian++;
                 }
             };
         };
 
         //Jumlah sebagai pembimbing
-        $jumlah_pembimbing_total = $jumlah_pembimbing_1 + $jumlah_pembimbing_2;
-        $dosen['jumlah_pembimbing'] = ['total' => $jumlah_pembimbing_total, 1 => $jumlah_pembimbing_1, 2 => $jumlah_pembimbing_2];
+        $jumlah_pembimbing_total = $jumlah_pembimbing_1 + $jumlah_pembimbing_2 + $jumlah_promotor + $jumlah_co_promotor_1 + $jumlah_co_promotor_2 + $jumlah_pembimbing_ketua;
+        $dosen['jumlah_pembimbing'] = [
+            'total' => $jumlah_pembimbing_total,
+            1 => $jumlah_pembimbing_1,
+            2 => $jumlah_pembimbing_2,
+            'promotor' => $jumlah_promotor,
+            'co_promotor_1' => $jumlah_co_promotor_1,
+            'co_promotor_2' => $jumlah_co_promotor_2,
+            'ketua' => $jumlah_pembimbing_ketua,
+        ];
 
         //Jumlah sebagai penguji
-        $jumlah_penguji_1 = $this->db->get_where('penguji', ['Dosennip' => $nip, 'statusPenguji' => 1])->num_rows();
-        $jumlah_penguji_2 = $this->db->get_where('penguji', ['Dosennip' => $nip, 'statusPenguji' => 2])->num_rows();;
-        $jumlah_penguji_3 = $this->db->get_where('penguji', ['Dosennip' => $nip, 'statusPenguji' => 3])->num_rows();;
+        $jumlah_penguji_ketua = $this->getJumlahMenguji($nip, 7, $star_date, $end_date);
+        $jumlah_penguji_1 = $this->getJumlahMenguji($nip, 8, $star_date, $end_date);
+        $jumlah_penguji_2 = $this->getJumlahMenguji($nip, 9, $star_date, $end_date);
+        $jumlah_penguji_3 = $this->getJumlahMenguji($nip, 10, $star_date, $end_date);
+        $jumlah_penguji_tamu_1 = $this->getJumlahMenguji($nip, 11, $star_date, $end_date);
+        $jumlah_penguji_tamu_2 = $this->getJumlahMenguji($nip, 12, $star_date, $end_date);
 
-        $jumlah_penguji_total = $jumlah_penguji_1 + $jumlah_penguji_2 + $jumlah_penguji_3;
-        $dosen['jumlah_penguji'] = ['total' => $jumlah_penguji_total, 1 => $jumlah_penguji_1, 2 => $jumlah_penguji_2, 3 => $jumlah_penguji_3];
+        $jumlah_penguji_total = $jumlah_penguji_ketua + $jumlah_penguji_1 + $jumlah_penguji_2 + $jumlah_penguji_3 + $jumlah_penguji_tamu_1 + $jumlah_penguji_tamu_2;
+        $dosen['jumlah_penguji'] = [
+            'total' => $jumlah_penguji_total,
+            'ketua' => $jumlah_penguji_ketua,
+            1 => $jumlah_penguji_1,
+            2 => $jumlah_penguji_2,
+            3 => $jumlah_penguji_3,
+            'tamu_1' => $jumlah_penguji_tamu_1,
+            'tamu_2' =>  $jumlah_penguji_tamu_2
+        ];
 
         //Jumlah Wisuda
         $dosen['jumlah_wisuda'] = $jumlah_wisuda;
+        $dosen['jumlah_wisuda_s3'] = $jumlah_wisuda_s3;
 
         //Jumlah detail ujian
         $jumlah_ujian_total = $jumlah_komisi + $jumlah_proposal + $jumlah_semhas + $jumlah_tesis + $jumlah_wisuda;
-        $dosen['jumlah_ujian'] = ['total' => $jumlah_ujian_total, 'komisi' => $jumlah_komisi, 'proposal' => $jumlah_proposal, 'semhas' => $jumlah_semhas, 'tesis' => $jumlah_tesis];
+        $jumlah_ujian_total_s3 =  $jumlah_makalah1 + $jumlah_makalah2 + $jumlah_seminarProposal + $jumlah_proposal_s3 + $jumlah_ujian_proposal_s3 + $jumlah_pelaksanaan_penelitian + $jumlah_persentasi3 + $jumlah_seminarHasil + $jumlah_ekternalReview + $jumlah_ujianDisertasi;
+
+
+        $dosen['jumlah_ujian'] = [
+            'total' => $jumlah_ujian_total,
+            'komisi' => $jumlah_komisi,
+            'proposal' => $jumlah_proposal,
+            'semhas' => $jumlah_semhas,
+            'tesis' => $jumlah_tesis,
+            'totals3' => $jumlah_ujian_total_s3,
+            'makalah1' => $jumlah_makalah1,
+            'makalah2' => $jumlah_makalah2,
+            'seminarProposal' => $jumlah_seminarProposal,
+            'proposal_s3' => $jumlah_proposal_s3,
+            'ujian_proposal_s3' => $jumlah_ujian_proposal_s3,
+            'pelaksanaan_penelitian' => $jumlah_pelaksanaan_penelitian,
+            'persentasi3' => $jumlah_persentasi3,
+            'seminarHasil' => $jumlah_seminarHasil,
+            'eksternalReview' =>  $jumlah_ekternalReview,
+            'ujianDisertasi' => $jumlah_ujianDisertasi
+        ];
 
         //Jumlah lulus/belum
         $jumlah_kelulusan_total = $jumlah_lulus + $jumlah_belum_lulus;
         $dosen['jumlah_kelulusan'] = ['total' => $jumlah_kelulusan_total, 'lulus' => $jumlah_lulus, 'belum' => $jumlah_belum_lulus];
-
 
         $dosen['jumlah_mahasiswa_bimbingan'] = $this->getMahasiswaBimbingan($nip)->num_rows();
         $dosen['jumlah_menguji'] = $this->db->get_where('penguji', ['Dosennip' => $nip])->num_rows();
@@ -148,19 +259,18 @@ class Dosen_model extends CI_Model
         return $this->db->get_where('dosen', ['nip' => $nip])->row_array();
     }
 
-    public function getMahasiswaBimbingan($dosen_nip)
+    public function getMahasiswaBimbingan($dosen_nip, $star_date = null, $end_date = null)
     {
         $this->db->where('pembimbing.Dosennip', $dosen_nip);
-        $this->db->select('Mahasiswanim, Dosennip, id, statusPembimbing, nama, statusKelulusan, statusWisuda, statusTOEFL, statusTPA, mahasiswa.jenjang, nama_prodi, nama_jurusan');
+        if ($star_date != null & $end_date != null) {
+            $this->db->where('mahasiswa.tglMulaiTA >=', $star_date);
+            $this->db->where('mahasiswa.tglMulaiTA <=', $end_date);
+        }
+        $this->db->select('Mahasiswanim, Dosennip, id, statusPembimbing, nama, statusKelulusan, statusWisuda, statusTOEFL, statusTPA, mahasiswa.jenjang, nama_prodi, nama_jurusan,mahasiswa.tglMulaiTA');
         $this->db->from('pembimbing');
-        // $this->db->join('pembimbing', 'pembimbing.Dosennip = ' . $dosen_nip);
         $this->db->join('mahasiswa', 'mahasiswa.nim = pembimbing.Mahasiswanim', 'right');
-
-        // prodi -> nama -> kode
-        // jurusan -> nama -> kode
         $this->db->join('prodi', 'prodi.kode = mahasiswa.prodikode');
         $this->db->join('jurusan', 'jurusan.kode = prodi.jurusankode');
-
         return $this->db->get();
     }
 

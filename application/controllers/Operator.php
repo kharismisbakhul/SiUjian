@@ -27,11 +27,12 @@ class Operator extends CI_Controller
         $data['jumlah_ujian_hari_ini'] = $this->db->get_where('ujian', ['tgl_ujian' => $time])->num_rows();
         $this->load->model('dosen_model', 'dosen');
         $data['jumlah_penguji_hari_ini'] = $this->dosen->getPengujiHariIni();
-        $this->load->model('Notif_model', 'notif');
-        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
 
+        $this->load->model('Notif_model', 'notif');
+        $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
         $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['counter'] = intval($counter['jumlah_notifikasi']);
+
 
         //list validasi hari_ini
         $this->load->model('Operator_model', 'operator');
@@ -78,7 +79,7 @@ class Operator extends CI_Controller
         }
         if ($type != "list") {
             $Id = $this->uri->segment(4);
-            $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $Id])->row_array();
+            $data['user_login'] = $this->mahasiswa->getDataMahasiswa($Id);
             $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
             $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
             $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $Id])->num_rows();
@@ -231,7 +232,13 @@ class Operator extends CI_Controller
             $this->operator->updateNilaiUjian($id['id'], $id['nilai']);
         }
         $NilaiAkhir = $this->dosen->cekNilaiAkhir($id_ujian);
-        $this->dosen->updateNilaiAkhir($NilaiAkhir['nilai'], $id_ujian);
+        $this->dosen->updateNilaiAkhir(round($NilaiAkhir['nilai'], 2), $id_ujian);
+        // update nilaiTA
+        // cek ujian
+        $ujian = $this->db->select('kodeUjiankode,MahasiswaNim as nim')->get_where('ujian', ['id' => $id_ujian])->row_array();
+        if ($ujian['kodeUjiankode'] == 4 || $ujian['kodeUjiankode'] == 12 || $ujian['kodeUjiankode'] == 16) {
+            $this->_kalkulasiNilaiTA($ujian['nim']);
+        }
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Nilai berhasil di perbaharui ! </div>');
         redirect('operator/validasi_cek/' . $id_ujian);
     }
@@ -336,11 +343,12 @@ class Operator extends CI_Controller
         $this->loadTemplate($data);
         $this->load->model('Operator_model', 'operator');
         $data['publikasi'] = $this->db->get_where('publikasi', ['idJurnal' => $idJurnal])->row_array();
-        $this->db->select('nama');
-        $data['nama_mhs'] = $this->db->get_where('mahasiswa', ['nim' => $data['publikasi']['Mahasiswanim']])->row_array();
         if ($this->input->post('valid')) {
             $this->db->set('kategoriJurnal', $this->input->post('kategoriJurnal'));
             $this->db->set('valid', $this->input->post('valid'));
+            if ($this->input->post('valid') == 1 || $this->input->post('valid') == 3) {
+                $this->db->set('status_notif', 0);
+            }
             $this->db->where('idJurnal', $idJurnal);
             $this->db->update('publikasi');
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data publikasi berhasil di perbaharui ! </div>');
@@ -348,5 +356,58 @@ class Operator extends CI_Controller
         }
         $this->load->view('operator/validasi_operator_publikasi_cek', $data);
         $this->load->view('templates/footer');
+    }
+
+    private function _kalkulasiNilaiTA($nim)
+    {
+        $this->load->model('Operator_model', 'operator');
+        $mhs['status'] = $this->operator->getDetailMahasiswa($nim);
+        $mhs['ujian'] = $this->operator->getDetailUjian($nim);
+        $nilaiTA = 0;
+        $nilai_angka = 0;
+        $angka_mutu_x_nilai = 0;
+        $whereCondition = '';
+        $case = '';
+        $case2 = '';
+
+        if ($mhs['status']['jurusankode'] == 1 && $mhs['status']['jenjang'] == 'S3') {
+            $nilai_angka = [];
+            foreach ($mhs['ujian'] as $u) {
+                $id = $u['id'];
+                $whereCondition .= ($whereCondition == '') ? "'$id'" : ',' . "'$id'";
+                $nilai_angka[$u['kode']] = $u['bobot_nilai'] * $u['nilai_akhir'];
+                if ($u['kode'] == 6 || $u['kode'] == 8) {
+                    $angka_mutu_x_nilai = ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1]) * $u['angka_mutu'];
+                    $case2 .= " WHEN id = " . $id . " THEN " . ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1])  . "";
+                    $case2 .= " WHEN id = " . ($id - 1) . " THEN " . ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1])  . "";
+                    $case .= " WHEN id = " . $id . " THEN " .  $angka_mutu_x_nilai . "";
+                    $case .= " WHEN id = " . ($id - 1) . " THEN " .  $angka_mutu_x_nilai . "";
+                    $nilaiTA += $angka_mutu_x_nilai;
+                } elseif ($u['kode'] == 12) {
+                    $angka_mutu_x_nilai = ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1] + $nilai_angka[$u['kode'] - 2] + $nilai_angka[$u['kode'] - 3]) * $u['angka_mutu'];
+                    $case2 .= " WHEN id = " . $id . " THEN " . ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1] + $nilai_angka[$u['kode'] - 2] + $nilai_angka[$u['kode'] - 3])  . "";
+                    $case2 .= " WHEN id = " . ($id - 1) . " THEN " . ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1] + $nilai_angka[$u['kode'] - 2] + $nilai_angka[$u['kode'] - 3])  . "";
+                    $case2 .= " WHEN id = " . ($id - 2) . " THEN " . ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1] + $nilai_angka[$u['kode'] - 2] + $nilai_angka[$u['kode'] - 3])  . "";
+                    $case2 .= " WHEN id = " . ($id - 3) . " THEN " . ($nilai_angka[$u['kode']] + $nilai_angka[$u['kode'] - 1] + $nilai_angka[$u['kode'] - 2] + $nilai_angka[$u['kode'] - 3])  . "";
+                    $case .= " WHEN id = " . $id . " THEN " .  $angka_mutu_x_nilai . "";
+                    $case .= " WHEN id = " . ($id - 1) . " THEN " .  $angka_mutu_x_nilai . "";
+                    $case .= " WHEN id = " . ($id - 2) . " THEN " .  $angka_mutu_x_nilai . "";
+                    $case .= " WHEN id = " . ($id - 3) . " THEN " .  $angka_mutu_x_nilai . "";
+                    $nilaiTA += $angka_mutu_x_nilai;
+                }
+            }
+        } else {
+            foreach ($mhs['ujian'] as $u) {
+                $id = $u['id'];
+                $whereCondition .= ($whereCondition == '') ? "'$id'" : ',' . "'$id'";
+                $nilai_angka = $u['bobot_nilai'] * $u['angka_mutu'] * $u['nilai_akhir'];
+                $case .= " WHEN id = " . $u['id'] . " THEN " . $nilai_angka . "";
+                $case2 .= " WHEN id = " . $u['id'] . " THEN " . $nilai_angka . "";
+                $nilaiTA += $u['bobot_nilai'] * $u['angka_mutu'] * $u['nilai_akhir'];
+            }
+        }
+        $sql = "UPDATE ujian set angka_mutu_x_nilai = CASE $case END ,nilai_akhir_angka = CASE $case2 END WHERE id in ($whereCondition)";
+        $this->db->query($sql);
+        $this->operator->updateNilaiTA(round($nilaiTA, 2), $nim);
     }
 }

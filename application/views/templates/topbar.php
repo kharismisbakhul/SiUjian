@@ -15,15 +15,15 @@
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Nav Item - Alerts -->
+                <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2 || $this->session->userdata('user_profile_kode') == 5) : ?>
                 <li class="nav-item dropdown no-arrow mx-1 icon-notif">
-
                     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell fa-fw"></i>
                         <!-- Counter - Alerts -->
                         <?php if ($counter == 0) { ?>
-                            <span class="badge badge-danger badge-counter counter"></span>
+                        <span class="badge badge-danger badge-counter counter"></span>
                         <?php } else { ?>
-                            <span class="badge badge-danger badge-counter counter"><?= $counter; ?></span>
+                        <span class="badge badge-danger badge-counter counter"><?= $counter; ?></span>
                         <?php } ?>
                     </a>
                     <!-- Dropdown - Alerts -->
@@ -35,6 +35,8 @@
                         </div>
                     </div>
                 </li>
+                <?php endif; ?>
+
                 <div class="topbar-divider d-none d-sm-block mr-0 ml-0"></div>
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">

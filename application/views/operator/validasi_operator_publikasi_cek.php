@@ -58,18 +58,6 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 0 auto;">
                                             <form action="<?= base_url('operator/validasi_publikasi/') . $publikasi['idJurnal'] ?>" method="post">
                                                 <div class="form-group row">
-                                                    <label for="nama_mhs" class="col-sm-3 col-form-label">Nama</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="nama_mhs" value="<?= $nama_mhs['nama'] ?>" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="nim_mhs" class="col-sm-3 col-form-label">NIM</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" id="nim_mhs" value="<?= $publikasi['Mahasiswanim'] ?>" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <label for="judulArtikel" class="col-sm-3 col-form-label">Judul Artikel</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control" id="judulArtikel" value="<?= $publikasi['judulArtikel'] ?>" readonly>

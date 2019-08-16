@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Notif_model extends CI_Model
 {
     public function notif($username, $kode)
@@ -13,10 +12,8 @@ class Notif_model extends CI_Model
         }
         $query = "SELECT ujian.id, MahasiswaNim as nim, nama, tgl_tambah_ujian as tanggal, kodeUjiankode, nama_ujian, status_notif, valid, CASE WHEN nama IS NOT NULL THEN 'ujian' END AS keterangan FROM ujian JOIN mahasiswa ON ujian.MahasiswaNim = mahasiswa.nim JOIN kodeujian ON ujian.kodeUjiankode = kodeujian.kode WHERE $valid ORDER BY tgl_tambah_ujian DESC";
         $ujian = $this->db->query($query)->result_array();
-
         $query = "SELECT idJurnal as id, Mahasiswanim as nim, nama, tanggal, status_notif, valid, CASE WHEN nama IS NOT NULL THEN 'publikasi' END AS keterangan FROM publikasi JOIN mahasiswa ON publikasi.Mahasiswanim = mahasiswa.nim WHERE $valid ORDER BY tanggal DESC";
         $publikasi = $this->db->query($query)->result_array();
-
         $result['all_notifikasi'] = [];
         $count = 0;
         // $result['all_notifikasi']['tanggal'] = ['2019-10-11', '2019-12-10', '2019-09-01'];
@@ -71,10 +68,8 @@ class Notif_model extends CI_Model
         if ($kode == 5) {
             $this->db->where('username', $username);
         }
-
         $this->db->where('user_profile_kode', $kode);
         $this->db->update('user', ['jumlah_notifikasi' => 0]);
-
         header("Content-type: application/json");
         echo json_encode(0);
     }

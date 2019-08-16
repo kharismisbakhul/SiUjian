@@ -2,7 +2,6 @@ var url = $(location).attr("href");
 var segments = url.split("/");
 
 $('.modalIsian').on('click', function () {
-	// alert("HAI");
 	var nim = $(this).data('id');
 	if (cekData() == true) {
 		$(".formIsian").attr('action', '');

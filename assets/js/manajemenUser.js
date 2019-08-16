@@ -14,7 +14,6 @@ $('.privileges').on('change', function () {
 		dataType: 'json',
 
 		success: function (data) {
-			console.log(data);
 			var d = [];
 			for (i = 0; i < data.length; i++) {
 				d.push(data[i]);
@@ -103,5 +102,5 @@ function clear() {
 }
 
 function myFunction(item) {
-	document.getElementById("prodi").innerHTML += `<option value="` + item['kode'] + `">` + item['nama_prodi'] + `</option>`;
+	document.getElementById("prodi").innerHTML += `<option value="` + item.kode + `">` + item.nama_prodi + `</option>`;
 }
