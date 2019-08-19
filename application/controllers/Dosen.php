@@ -25,6 +25,24 @@ class Dosen extends CI_Controller
         $this->load->model('dosen_model', 'dosen');
         $data['bimbingan_jumlah'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->num_rows();
         $data['bimbingan'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->result_array();
+
+        $data['ujian_hari_ini'] = [];
+        for ($i = 0; $i < count($data['bimbingan']); $i++) {
+            $nim = $data['bimbingan'][$i]['Mahasiswanim'];
+            $this->db->where('MahasiswaNim', $nim);
+            $this->db->select('id, kodeUjiankode, MahasiswaNim, tgl_ujian, nama_ujian');
+            $this->db->from('ujian');
+            $this->db->join('kodeujian', 'kodeujian.kode = ujian.kodeUjiankode');
+            $data['bimbingan'][$i]['ujian'] = $this->db->get()->result_array();
+            $jumlah_ujian = count($data['bimbingan'][$i]['ujian']);
+            for ($j = 0; $j < $jumlah_ujian; $j++) {
+                $data['bimbingan'][$i]['ujian'][$j]['nama'] = $data['bimbingan'][$i]['nama'];
+                if ($data['bimbingan'][$i]['ujian'][$j]['tgl_ujian'] === date('Y-m-d')) {
+                    array_push($data['ujian_hari_ini'], $data['bimbingan'][$i]['ujian'][$j]);
+                }
+            }
+        }
+
         return $data;
     }
 

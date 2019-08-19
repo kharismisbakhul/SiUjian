@@ -142,32 +142,21 @@
                       <th>#</th>
                       <th>Nama Mahasiswa</th>
                       <th>Jenis Ujian</th>
-                      <th>Tanggal</th>
                     </tr>
                   </thead>
                   <tbody>
+                    <?php $i = 1;
+                    foreach ($ujian_hari_ini as $uhi) : ?>
                     <tr>
-                      <td>1</td>
-                      <td>Reynald Daffa</td>
-                      <td>Ujian Komisi</td>
-                      <td>20 Juli 2019</td>
+                      <td><?= $i++; ?></td>
+                      <td><?= $uhi['nama'] ?></td>
+                      <td><?= $uhi['nama_ujian'] ?></td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Misbakhul Kharis</td>
-                      <td>Seminar Proposal</td>
-                      <td>20 Juli 2019</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Aditiya Yusril</td>
-                      <td>Ujian Tesis</td>
-                      <td>20 Juli 2019</td>
-                    </tr>
+                    <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>
-              <div class="text-xs pt-3 pb-3 see-more font-weight-normal">lihat selengkapnya</div>
+              <div class="text-xs pt-3 pb-3 see-more font-weight-normal"><a href="<?= base_url('dosen/bimbingan'); ?>">lihat selengkapnya</a></div>
             </div>
           </div>
 
