@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 14 Agu 2019 pada 19.13
--- Versi Server: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Generation Time: Aug 06, 2019 at 08:53 AM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `dosen`
+-- Table structure for table `dosen`
 --
 
 CREATE TABLE `dosen` (
@@ -41,11 +41,11 @@ CREATE TABLE `dosen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `dosen`
+-- Dumping data for table `dosen`
 --
 
 INSERT INTO `dosen` (`nip`, `nama_dosen`, `posisi`, `statusAktif`, `jenjang`, `noTlpnDosen`, `AlamatDosen`, `prodi_dosen`, `jabatan_pimpinan`) VALUES
-('1001', 'Dosen A', 0, 1, '', '08123456789', 'Btn Permata Jingga', 1, ''),
+('1001', 'Dosen A', 0, 1, '', '', '', 1, ''),
 ('1002', 'Dosen B', 0, 1, '', '', '', 1, ''),
 ('1003', 'Dosen C', 0, 1, '', '', '', 2, ''),
 ('123', 'Madi Aryo Kuncoro', 0, 0, '', '', '', 2, 'Kaprodi'),
@@ -59,7 +59,7 @@ INSERT INTO `dosen` (`nip`, `nama_dosen`, `posisi`, `statusAktif`, `jenjang`, `n
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `isianmahasiswa`
+-- Table structure for table `isianmahasiswa`
 --
 
 CREATE TABLE `isianmahasiswa` (
@@ -76,20 +76,19 @@ CREATE TABLE `isianmahasiswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `isianmahasiswa`
+-- Dumping data for table `isianmahasiswa`
 --
 
 INSERT INTO `isianmahasiswa` (`id`, `judulAkhir`, `paradigma`, `kataKunci`, `tujuanPenelitian`, `metodePenelitian1`, `metodePenelitian2`, `temuan`, `kontribusiDanImplikasi`, `Mahasiswanim`) VALUES
-('0', 'judul pertama', 'asd', 'asadsa', '', '', '', '', '', '2001'),
-('1', 'ASD', 'bcdasasasasasdascaiojc ', 'ddddddddddddddddd', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'bcd', 'bcd', 'ggggg', 'ddddd', '100'),
+('1', 'ASD', 'bcdasasasasa', 'ddddddddddddddddd', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'bcd', 'bcd', 'ggggg', 'ddddd', '100'),
 ('2', 'abc', 'abc', 'abc', 'abc', 'abc', 'abc', 'abc', 'aahahahhaha', '101'),
 ('3', 'Wadidaw', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', 'Hahaha', '165150201111231'),
-('4', 'BOARD OF DIRECTOR’S CHARACTERISTICS, INTELLECTUAL ', '-', 'Corporate Governance, Board of Directors, Intellec', 'Tujuan penelitian', 'Metode penelitian 1', 'Metode penelitian 2', 'temuan', 'kontribusi dan implikasi', '2003');
+('4', 'jkl', 'jkl', 'jkl', 'jkl', 'jkl', 'aaaaa', 'vvvvvvvvvvv', '', '2003');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jenis_notif`
+-- Table structure for table `jenis_notif`
 --
 
 CREATE TABLE `jenis_notif` (
@@ -98,7 +97,7 @@ CREATE TABLE `jenis_notif` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jenis_notif`
+-- Dumping data for table `jenis_notif`
 --
 
 INSERT INTO `jenis_notif` (`id`, `keterangan`) VALUES
@@ -108,7 +107,7 @@ INSERT INTO `jenis_notif` (`id`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jurusan`
+-- Table structure for table `jurusan`
 --
 
 CREATE TABLE `jurusan` (
@@ -117,7 +116,7 @@ CREATE TABLE `jurusan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jurusan`
+-- Dumping data for table `jurusan`
 --
 
 INSERT INTO `jurusan` (`kode`, `nama_jurusan`) VALUES
@@ -128,43 +127,28 @@ INSERT INTO `jurusan` (`kode`, `nama_jurusan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kodeujian`
+-- Table structure for table `kodeujian`
 --
 
 CREATE TABLE `kodeujian` (
   `kode` int(10) NOT NULL,
-  `nama_ujian` varchar(30) NOT NULL,
-  `status` int(11) NOT NULL,
-  `bobot_nilai` float NOT NULL,
-  `angka_mutu` float NOT NULL
+  `nama_ujian` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `kodeujian`
+-- Dumping data for table `kodeujian`
 --
 
-INSERT INTO `kodeujian` (`kode`, `nama_ujian`, `status`, `bobot_nilai`, `angka_mutu`) VALUES
-(1, 'Ujian Komisi Proposal', 0, 1, 0.1),
-(2, 'Ujian Proposal', 0, 1, 0.2),
-(3, 'Ujian Seminar Hasil', 0, 1, 0.3),
-(4, 'Ujian Tesis', 0, 1, 0.4),
-(5, 'Makalah 1', 1, 0.5, 0.2),
-(6, 'Makalah 2', 1, 0.5, 0.2),
-(7, 'Seminar Proposal', 1, 0.4, 0.1),
-(8, 'Proposal', 1, 0.6, 0.1),
-(9, 'Persentasi 3', 1, 0.2, 0.7),
-(10, 'Seminar Hasil', 1, 0.2, 0.7),
-(11, 'Eksternal Review', 1, 0.1, 0.7),
-(12, 'Ujian Akhir', 1, 0.5, 0.7),
-(13, 'Ujian Proposal', 2, 1, 0.1),
-(14, 'Pelaksanaan Penelitian', 2, 1, 0.2),
-(15, 'Seminar Hasil Peneltian', 2, 1, 0.3),
-(16, 'Ujian Disertasi', 2, 1, 0.4);
+INSERT INTO `kodeujian` (`kode`, `nama_ujian`) VALUES
+(1, 'Ujian Pra Komisi Proposal'),
+(2, 'Ujian Proposal'),
+(3, 'Ujian Seminar Hasil'),
+(4, 'Ujian Tesis');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `mahasiswa`
+-- Table structure for table `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
@@ -187,29 +171,26 @@ CREATE TABLE `mahasiswa` (
   `statusWisuda` int(1) NOT NULL,
   `statusTOEFL` int(1) NOT NULL,
   `statusTPA` int(1) NOT NULL,
-  `jenjang` varchar(50) NOT NULL,
-  `nilaiTA` float NOT NULL,
-  `nilai_huruf` varchar(5) NOT NULL
+  `jenjang` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `mahasiswa`
+-- Dumping data for table `mahasiswa`
 --
 
-INSERT INTO `mahasiswa` (`nim`, `nama`, `noTest`, `prodikode`, `password`, `angkatan`, `semester`, `jalur`, `konsentrasi`, `alamat`, `noTelp`, `asalStudi`, `judulTugasAkhir`, `tglMasuk`, `tglMulaiTA`, `statusKelulusan`, `statusWisuda`, `statusTOEFL`, `statusTPA`, `jenjang`, `nilaiTA`, `nilai_huruf`) VALUES
-('100', 'Kharis Saja', '0spZ', 8, '$2y$10$cGdEqGQuHAMjA.8HuI1iKO71WMOgwVYF/v2QpPaUv0MKm0ggjMChe', 0, 0, '', '', 'Jl. Bunga No. 21', '090908080', '', '', '0000-00-00', '2019-07-18', 1, 0, 1, 1, 'S2', 83.85, 'A'),
-('101', 'Badudu', '', 1, '123', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3', 0, 'K'),
-('12356854', 'Dava', 'DmSo', 5, '$2y$10$Hh1O5RPlpuaE.cnOqoAoVO3JK8x.5lQpLMtssGR0.DQ.THDi9/glG', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3', 0, ''),
-('165150201111001', 'Adi Saputra', 'AAA', 7, '123', 2016, 0, 'snmptn', '', 'Jl. Kucing', '0888', 'SMAN 1 Malang', 'How To Be Mature to Economics', '2019-07-01', '2019-07-10', 0, 1, 1, 1, 'S2', 0, 'K'),
-('165150201111231', 'Aditya Yusril Fikri', '1234', 4, '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 2017, 2, 'snmptn', 'rpl', 'jln. malang aja', '0987654322', 'UB', 'pengaruh senyawa x terhadap senyawa y menggunakan metode z', '2017-06-14', '2019-07-01', 1, 0, 1, 1, 'S3', 82.67, 'A'),
-('2001', 'Mahasiswa A', 'hQ4H', 6, '$2y$10$BlrYhlM/nz4ccGzS0WcRIuXxPNw5746lxe3hdhpMyIfWxZDYytXSa', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S2', 0, 'K'),
-('2002', 'Mahasiswa B', 'Jter', 10, '$2y$10$gMz.Jv7IlcAdOndPo6God.gupoE./UQFcV5yFmUxzu7wibG2lUsLi', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3', 0, 'K'),
-('2003', 'Mahasiswa C', 'Qg2C', 4, '$2y$10$31H.DK.qcBIgtJM3ugsay.pSrlTZvgpOQXUmq1kgaDEaxle7O2viO', 0, 0, '', '', 'di malang', '11234523', '', '', '0000-00-00', '2019-08-13', 1, 0, 0, 0, 'S2', 83.06, 'A');
+INSERT INTO `mahasiswa` (`nim`, `nama`, `noTest`, `prodikode`, `password`, `angkatan`, `semester`, `jalur`, `konsentrasi`, `alamat`, `noTelp`, `asalStudi`, `judulTugasAkhir`, `tglMasuk`, `tglMulaiTA`, `statusKelulusan`, `statusWisuda`, `statusTOEFL`, `statusTPA`, `jenjang`) VALUES
+('100', 'Kharis Saja', '0spZ', 8, '$2y$10$cGdEqGQuHAMjA.8HuI1iKO71WMOgwVYF/v2QpPaUv0MKm0ggjMChe', 0, 0, '', '', 'Jl. Bunga No. 21', '090908080', '', '', '0000-00-00', '2019-07-18', 1, 0, 0, 0, 'S2'),
+('101', 'Badudu', '', 1, '123', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3'),
+('165150201111001', 'Adi Saputra', 'AAA', 7, '123', 2016, 0, 'snmptn', '', 'Jl. Kucing', '0888', 'SMAN 1 Malang', 'How To Be Mature to Economics', '2019-07-01', '2019-07-10', 1, 1, 1, 1, 'S2'),
+('165150201111231', 'Aditya Yusril Fikri', '1234', 4, '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 2017, 2, 'snmptn', 'rpl', 'jln. malang aja', '0987654322', 'UB', 'pengaruh senyawa x terhadap senyawa y menggunakan metode z', '2017-06-14', '2019-07-01', 1, 0, 1, 1, 'S3'),
+('2001', 'Mahasiswa A', 'hQ4H', 6, '$2y$10$BlrYhlM/nz4ccGzS0WcRIuXxPNw5746lxe3hdhpMyIfWxZDYytXSa', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3'),
+('2002', 'Mahasiswa B', 'Jter', 10, '$2y$10$gMz.Jv7IlcAdOndPo6God.gupoE./UQFcV5yFmUxzu7wibG2lUsLi', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3'),
+('2003', 'Mahasiswa C', 'Qg2C', 4, '$2y$10$31H.DK.qcBIgtJM3ugsay.pSrlTZvgpOQXUmq1kgaDEaxle7O2viO', 0, 0, '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S3');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `notifications`
+-- Table structure for table `notifications`
 --
 
 CREATE TABLE `notifications` (
@@ -224,7 +205,7 @@ CREATE TABLE `notifications` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pembimbing`
+-- Table structure for table `pembimbing`
 --
 
 CREATE TABLE `pembimbing` (
@@ -236,7 +217,7 @@ CREATE TABLE `pembimbing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pembimbing`
+-- Dumping data for table `pembimbing`
 --
 
 INSERT INTO `pembimbing` (`Mahasiswanim`, `Dosennip`, `id`, `statusPembimbing`, `tgl_tambah_pembimbing`) VALUES
@@ -246,19 +227,12 @@ INSERT INTO `pembimbing` (`Mahasiswanim`, `Dosennip`, `id`, `statusPembimbing`, 
 ('165150201111231', '1002', 24, 2, '2019-07-19'),
 ('165150201111001', '1001', 25, 1, '2019-07-13'),
 ('165150201111001', '1002', 27, 2, '2019-07-15'),
-('165150201111231', '1003', 28, 3, '2019-07-22'),
-('2001', '1001', 29, 1, '2019-08-12'),
-('2001', '1002', 30, 2, '2019-08-12'),
-('2003', '165150201111200', 31, 1, '2019-08-12'),
-('2003', '165150201111230', 32, 2, '2019-08-12'),
-('2003', '165150201111300', 33, 3, '2019-08-12'),
-('12356854', '165150201111200', 36, 1, '2019-08-12'),
-('12356854', '165150201111230', 37, 2, '2019-08-12');
+('165150201111231', '1003', 28, 3, '2019-07-22');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `penguji`
+-- Table structure for table `penguji`
 --
 
 CREATE TABLE `penguji` (
@@ -266,73 +240,34 @@ CREATE TABLE `penguji` (
   `Ujianid` int(10) NOT NULL,
   `statusPenguji` int(1) NOT NULL,
   `id` int(11) NOT NULL,
-  `nilai` float NOT NULL DEFAULT '0',
+  `nilai` int(11) NOT NULL DEFAULT '0',
   `tgl_tambah_penguji` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `penguji`
+-- Dumping data for table `penguji`
 --
 
 INSERT INTO `penguji` (`Dosennip`, `Ujianid`, `statusPenguji`, `id`, `nilai`, `tgl_tambah_penguji`) VALUES
-('1001', 37, 1, 61, 80, '2019-08-09'),
-('1003', 37, 2, 62, 80, '2019-08-09'),
-('1001', 38, 1, 63, 78, '2019-08-09'),
-('1003', 38, 2, 64, 81, '2019-08-09'),
-('1001', 39, 1, 65, 88, '2019-08-09'),
-('1003', 39, 2, 66, 85, '2019-08-09'),
-('1001', 40, 1, 67, 80, '2019-08-09'),
-('1003', 40, 2, 68, 90, '2019-08-09'),
-('1001', 41, 1, 69, 82.3, '2019-08-09'),
-('1002', 41, 2, 70, 82.3, '2019-08-09'),
-('1003', 41, 3, 71, 82.3, '2019-08-09'),
-('1001', 42, 1, 72, 80.08, '2019-08-09'),
-('1002', 42, 2, 73, 80.08, '2019-08-09'),
-('1003', 42, 3, 74, 80.08, '2019-08-09'),
-('1001', 43, 1, 75, 82.7, '2019-08-09'),
-('1002', 43, 2, 76, 82.7, '2019-08-09'),
-('1003', 43, 3, 77, 82.7, '2019-08-09'),
-('1001', 45, 1, 81, 80, '2019-08-10'),
-('1002', 45, 2, 82, 80, '2019-08-10'),
-('1003', 45, 3, 83, 80, '2019-08-10'),
-('1001', 46, 1, 84, 80.83, '2019-08-10'),
-('1002', 46, 2, 85, 80.83, '2019-08-10'),
-('1003', 46, 3, 86, 80.83, '2019-08-10'),
-('1001', 47, 1, 87, 85, '2019-08-10'),
-('1002', 47, 2, 88, 85, '2019-08-10'),
-('1003', 47, 3, 89, 85, '2019-08-10'),
-('1001', 48, 1, 90, 83.59, '2019-08-10'),
-('1002', 48, 2, 91, 83.59, '2019-08-10'),
-('1003', 48, 3, 92, 83.59, '2019-08-10'),
-('1001', 49, 1, 93, 80, '2019-08-12'),
-('1002', 49, 2, 94, 81, '2019-08-12'),
-('1003', 49, 8, 95, 75, '0000-00-00'),
-('165150201111200', 49, 7, 96, 88, '0000-00-00'),
-('165150201111200', 51, 1, 97, 88, '2019-08-12'),
-('165150201111230', 51, 2, 98, 75, '2019-08-12'),
-('165150201111300', 51, 3, 99, 80, '2019-08-12'),
-('123', 51, 7, 100, 81, '0000-00-00'),
-('9001', 51, 8, 101, 85, '0000-00-00'),
-('165150201111200', 52, 1, 102, 88, '2019-08-12'),
-('165150201111230', 52, 2, 103, 90, '2019-08-12'),
-('165150201111300', 52, 3, 104, 81, '2019-08-12'),
-('165150201111200', 53, 1, 105, 90, '2019-08-12'),
-('165150201111230', 53, 2, 106, 75, '2019-08-12'),
-('165150201111300', 53, 3, 107, 77, '2019-08-12'),
-('165150201111200', 54, 1, 108, 90, '2019-08-12'),
-('165150201111230', 54, 2, 109, 88, '2019-08-12'),
-('165150201111300', 54, 3, 110, 75, '2019-08-12'),
-('1001', 52, 7, 111, 80, '0000-00-00'),
-('165150201111200', 56, 1, 113, 0, '2019-08-12'),
-('165150201111230', 56, 2, 114, 0, '2019-08-12'),
-('1001', 57, 1, 115, 90, '2019-08-13'),
-('1002', 57, 2, 116, 90, '2019-08-13'),
-('1003', 57, 3, 117, 90, '2019-08-13');
+('1001', 31, 1, 22, 88, '0000-00-00'),
+('1002', 31, 2, 23, 99, '0000-00-00'),
+('1003', 31, 7, 30, 88, '0000-00-00'),
+('123', 31, 8, 31, 90, '0000-00-00'),
+('1001', 19, 8, 50, 90, '0000-00-00'),
+('1001', 1, 8, 51, 90, '0000-00-00'),
+('1002', 1, 9, 52, 90, '0000-00-00'),
+('1003', 1, 1, 53, 90, '0000-00-00'),
+('123', 1, 10, 55, 90, '0000-00-00'),
+('165150201111200', 1, 7, 56, 90, '0000-00-00'),
+('1001', 18, 8, 57, 0, '0000-00-00'),
+('1001', 2, 1, 58, 0, '0000-00-00'),
+('1001', 32, 1, 59, 0, '2019-07-22'),
+('1003', 32, 2, 60, 0, '2019-07-22');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `posisi`
+-- Table structure for table `posisi`
 --
 
 CREATE TABLE `posisi` (
@@ -341,7 +276,7 @@ CREATE TABLE `posisi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `posisi`
+-- Dumping data for table `posisi`
 --
 
 INSERT INTO `posisi` (`id`, `status_dosen`) VALUES
@@ -362,7 +297,7 @@ INSERT INTO `posisi` (`id`, `status_dosen`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `prodi`
+-- Table structure for table `prodi`
 --
 
 CREATE TABLE `prodi` (
@@ -373,7 +308,7 @@ CREATE TABLE `prodi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `prodi`
+-- Dumping data for table `prodi`
 --
 
 INSERT INTO `prodi` (`kode`, `nama_prodi`, `jenjang`, `jurusankode`) VALUES
@@ -391,7 +326,7 @@ INSERT INTO `prodi` (`kode`, `nama_prodi`, `jenjang`, `jurusankode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `publikasi`
+-- Table structure for table `publikasi`
 --
 
 CREATE TABLE `publikasi` (
@@ -404,22 +339,21 @@ CREATE TABLE `publikasi` (
   `Mahasiswanim` varchar(15) NOT NULL,
   `bukti` varchar(50) NOT NULL,
   `tanggal` date NOT NULL,
-  `valid` int(1) NOT NULL DEFAULT '2',
-  `status_notif` int(1) NOT NULL DEFAULT '0'
+  `valid` int(1) NOT NULL DEFAULT '2'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `publikasi`
+-- Dumping data for table `publikasi`
 --
 
-INSERT INTO `publikasi` (`idJurnal`, `judulArtikel`, `namaJurnal`, `volumeDanNoTerbitan`, `kategoriJurnal`, `statusJurnal`, `Mahasiswanim`, `bukti`, `tanggal`, `valid`, `status_notif`) VALUES
-(18, 'pengaruh air a dengan kandungan y', 'IEEE', '12/1', 'kosong', 'Internasional', '165150201111231', '1562572581__checker_2.jpg', '2019-07-13', 1, 1),
-(19, 'Analisis A', 'JTIIK', '1/2', 'kosong', 'Nasional', '100', '', '2019-08-02', 2, 1);
+INSERT INTO `publikasi` (`idJurnal`, `judulArtikel`, `namaJurnal`, `volumeDanNoTerbitan`, `kategoriJurnal`, `statusJurnal`, `Mahasiswanim`, `bukti`, `tanggal`, `valid`) VALUES
+(18, 'pengaruh air a dengan kandungan y', 'IEEE', '12/1', 'kosong', 'Internasional', '165150201111231', '1562572581__checker_2.jpg', '2019-07-13', 1),
+(19, 'Analisis A', 'JTIIK', '1/2', 'kosong', 'Nasional', '100', '', '2019-08-02', 2);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `reviewer`
+-- Table structure for table `reviewer`
 --
 
 CREATE TABLE `reviewer` (
@@ -433,7 +367,7 @@ CREATE TABLE `reviewer` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `ujian`
+-- Table structure for table `ujian`
 --
 
 CREATE TABLE `ujian` (
@@ -441,8 +375,6 @@ CREATE TABLE `ujian` (
   `tgl_ujian` date NOT NULL,
   `bobot` double NOT NULL DEFAULT '0',
   `nilai_akhir` double DEFAULT '0',
-  `nilai_akhir_angka` float NOT NULL,
-  `angka_mutu_x_nilai` float NOT NULL,
   `statusUjian` int(1) NOT NULL DEFAULT '2',
   `kodeUjiankode` int(10) NOT NULL,
   `MahasiswaNim` varchar(15) NOT NULL,
@@ -450,38 +382,25 @@ CREATE TABLE `ujian` (
   `valid` int(3) NOT NULL DEFAULT '2',
   `tgl_tambah_ujian` date NOT NULL,
   `komentar` varchar(255) NOT NULL DEFAULT 'kosong',
-  `nilai_huruf` varchar(2) NOT NULL,
-  `status_notif` int(2) NOT NULL DEFAULT '0'
+  `nilai_huruf` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `ujian`
+-- Dumping data for table `ujian`
 --
 
-INSERT INTO `ujian` (`id`, `tgl_ujian`, `bobot`, `nilai_akhir`, `nilai_akhir_angka`, `angka_mutu_x_nilai`, `statusUjian`, `kodeUjiankode`, `MahasiswaNim`, `bukti`, `valid`, `tgl_tambah_ujian`, `komentar`, `nilai_huruf`, `status_notif`) VALUES
-(37, '2019-08-09', 3.5, 80, 0, 8, 1, 1, '100', 'kosong', 1, '2019-08-09', 'kosong', 'B+', 0),
-(38, '2019-08-10', 3.5, 79.5, 0, 15.9, 1, 2, '100', 'kosong', 1, '2019-08-09', 'kosong', 'B+', 0),
-(39, '2019-08-13', 4, 86.5, 0, 25.95, 1, 3, '100', 'kosong', 1, '2019-08-09', 'kosong', 'A', 0),
-(40, '2019-08-18', 4, 85, 0, 34, 1, 4, '100', 'kosong', 1, '2019-08-09', 'kosong', 'A', 0),
-(41, '2019-08-09', 4, 82.3, 81.19, 16.238, 1, 5, '165150201111231', 'kosong', 1, '2019-08-09', 'kosong', 'A', 1),
-(42, '2019-08-10', 4, 80.08, 81.19, 16.238, 1, 6, '165150201111231', 'kosong', 1, '2019-08-09', 'kosong', 'A', 1),
-(43, '2019-08-10', 4, 82.7, 0, 0, 1, 7, '165150201111231', 'kosong', 1, '2019-08-09', 'kosong', 'A', 1),
-(45, '2019-08-12', 3.5, 80, 82.461, 57.7227, 1, 9, '165150201111231', 'kosong', 1, '2019-08-10', 'kosong', 'B+', 1),
-(46, '2019-08-10', 4, 80.83, 82.461, 57.7227, 1, 10, '165150201111231', 'kosong', 1, '2019-08-10', 'kosong', 'A', 1),
-(47, '2019-08-12', 4, 85, 82.461, 57.7227, 1, 11, '165150201111231', 'kosong', 1, '2019-08-10', 'kosong', 'A', 1),
-(48, '2019-08-20', 4, 83.59, 82.461, 57.7227, 1, 12, '165150201111231', 'kosong', 1, '2019-08-10', 'kosong', 'A', 1),
-(49, '2019-08-13', 4, 81, 0, 0, 1, 13, '2001', 'kosong', 1, '2019-08-12', 'kosong', 'A', 0),
-(51, '2019-08-06', 4, 81.8, 8.18, 8.18, 1, 1, '2003', 'kosong', 1, '2019-08-12', 'kosong', 'A', 0),
-(52, '2019-08-13', 4, 84.75, 16.95, 16.95, 1, 2, '2003', 'kosong', 1, '2019-08-12', 'kosong', 'A', 0),
-(53, '2019-08-14', 4, 80.66666666666667, 24.2, 24.2, 1, 3, '2003', 'kosong', 1, '2019-08-12', 'kosong', 'A', 0),
-(54, '2019-08-21', 4, 84.33, 33.732, 33.732, 1, 4, '2003', 'kosong', 1, '2019-08-12', 'kosong', 'A', 0),
-(56, '2019-08-12', 0, 0, 0, 0, 2, 13, '12356854', 'kosong', 2, '2019-08-12', 'kosong', '', 1),
-(57, '2019-08-13', 4, 90, 87.08, 8.708, 1, 8, '165150201111231', 'kosong', 1, '2019-08-13', 'kosong', 'A', 1);
+INSERT INTO `ujian` (`id`, `tgl_ujian`, `bobot`, `nilai_akhir`, `statusUjian`, `kodeUjiankode`, `MahasiswaNim`, `bukti`, `valid`, `tgl_tambah_ujian`, `komentar`, `nilai_huruf`) VALUES
+(1, '2019-07-12', 4, 90, 3, 1, '100', '', 1, '2019-07-12', 'sip', 'A'),
+(2, '2019-07-28', 0, 0, 3, 3, '100', 'kosong', 2, '2019-07-21', 'kosong', 'K'),
+(18, '0000-00-00', 0, 0, 3, 2, '165150201111231', '1563053544_165150201111231_603-951-1-SM.pdf', 1, '2019-07-13', '', 'K'),
+(19, '2019-07-19', 0, 90, 3, 3, '165150201111231', '1563155019_165150201111231_603-951-1-SM.pdf', 1, '2019-07-15', 'bagus boss', ''),
+(31, '2019-07-17', 0, 91.25, 3, 4, '165150201111231', 'kosong', 2, '2019-07-17', 'kosong', ''),
+(32, '2019-07-15', 0, 0, 3, 2, '100', 'kosong', 3, '2019-07-22', 'kosong', 'K');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -492,41 +411,39 @@ CREATE TABLE `user` (
   `is_active` int(11) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `date_created` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL DEFAULT 'default.png',
-  `jumlah_notifikasi` int(11) NOT NULL DEFAULT '0'
+  `image` varchar(255) NOT NULL DEFAULT 'default.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `user_profile_kode`, `username`, `password`, `is_active`, `nama`, `date_created`, `image`, `jumlah_notifikasi`) VALUES
-(1, 4, '165150201111230', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'yusril', 1, 'default.png', 0),
-(2, 5, '165150201111231', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini mahasiswa', 1, 'default.png', 0),
-(3, 3, '165150201111232', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini pimpinan', 1, 'default.png', 0),
-(4, 2, '165150201111233', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini operator', 1, 'default.png', 0),
-(5, 1, '165150201111234', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini admin', 1, 'default.png', 0),
-(7, 1, 'Kharis', '$2y$10$EPlufTRpiNhfdmbWxkbguOEAx7mfTJcWflTTU74IqTL1lJxaBSGlS', 1, 'Misbakhul', 0, 'default.png', 0),
-(13, 4, '17515', '$2y$10$P518PNI6bxGtJdAN5JxagO.lY4zNTv6o5sHBZSswybzToYy3.LqPi', 1, 'Dimas', 0, 'default.png', 0),
-(15, 5, '100', '$2y$10$wmMl75.67I/1nQA6VyOY7uATnV7VaoCIByR1rLvCg6ZIG7EPFnSGG', 1, 'Kharis Saja', 0, '237627.jpg', 0),
-(16, 4, '1001', '$2y$10$/wsRGXhiBswtY1hf5S.6t.4GFCi23ebi26KH6y/DkpYmEg7tFsFwu', 1, 'Dosen A', 0, 'default.png', 0),
-(17, 4, '1002', '$2y$10$3tIf6ve9fv26a7eLNqFomOAG6gTHe1E3zW8W.W9FM3kk2bcFRQBmW', 1, 'Dosen B', 0, 'default.png', 0),
-(18, 4, '1003', '$2y$10$ChlyJ4qzT0HWTSQ5DKDisunMGjTd8IcKUUFjmJMxcw1rhwuvXhPNu', 1, 'Dosen C', 0, 'default.png', 0),
-(19, 5, '2001', '$2y$10$DL0fW0HcYL7ZhGrtZcY.juSbDUbhaW9vOs1Gh.mkf0SMTVys4c0Du', 1, 'Mahasiswa A', 0, 'default.png', 0),
-(20, 5, '2002', '$2y$10$7OmB4W1VU.iQ7UIUctqrauX3qeCeDGG/1bCHgQF1T3BXaQhgBTvmm', 1, 'Mahasiswa B', 0, 'default.png', 0),
-(21, 5, '2003', '$2y$10$aWBD9.9kxTSnwGW5jTq2ReN/mKiDkAbMRqRfzdkeYXN4WaFZ5EtTu', 1, 'Mahasiswa C', 0, 'default.png', 0),
-(22, 2, '5001', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Operator A', 0, 'default.png', 0),
-(23, 3, '6001', '$2y$10$jOig2AsVDGmRVLai7IW89ubPwmC86pqlxGZrCwcv0T8H7UzmARHhG', 1, 'Pimpinan A', 0, 'default.png', 0),
-(24, 3, '165150201111200', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Bayu Priambadha', 0, 'default.png', 0),
-(25, 3, '123', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Madi Aryo Kuncoro', 0, 'default.png', 0),
-(26, 3, '7000', '$2y$10$grFq2x0zUjzGRV6lZ1IB5uvwhktgXGy.tL3CeXrKghJZChZQX/05S', 1, 'Wahyudi', 0, 'default.png', 0),
-(27, 3, '9001', '$2y$10$K2tDryvvgWYFE9jVVPJ2puimZAunCBeFqWejifXlhnbvpIRfBCCGm', 1, 'Jumadi', 0, 'default.png', 0),
-(28, 5, '12356854', '$2y$10$MSqOqceEUzpVPJAyg1BN/.eXj5j/m7opOW4KB.aASdNTSpSPO7cNy', 1, 'Dava', 2019, 'default.png', 0);
+INSERT INTO `user` (`id`, `user_profile_kode`, `username`, `password`, `is_active`, `nama`, `date_created`, `image`) VALUES
+(1, 4, '165150201111230', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'yusril', 1, 'default.png'),
+(2, 5, '165150201111231', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini mahasiswa', 1, 'default.png'),
+(3, 3, '165150201111232', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini pimpinan', 1, 'default.png'),
+(4, 2, '165150201111233', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini operator', 1, 'default.png'),
+(5, 1, '165150201111234', '$2y$10$HgGBhJC.JrNcCcVPJ1UZQOgHmvwD3x8W9aRqNLqvzVuOy/qK5oEFa', 1, 'ini admin', 1, 'default.png'),
+(7, 1, 'Kharis', '$2y$10$EPlufTRpiNhfdmbWxkbguOEAx7mfTJcWflTTU74IqTL1lJxaBSGlS', 1, 'Misbakhul', 0, 'default.png'),
+(13, 4, '17515', '$2y$10$P518PNI6bxGtJdAN5JxagO.lY4zNTv6o5sHBZSswybzToYy3.LqPi', 1, 'Dimas', 0, 'default.png'),
+(15, 5, '100', '$2y$10$wmMl75.67I/1nQA6VyOY7uATnV7VaoCIByR1rLvCg6ZIG7EPFnSGG', 1, 'Kharis Saja', 0, '237627.jpg'),
+(16, 4, '1001', '$2y$10$/wsRGXhiBswtY1hf5S.6t.4GFCi23ebi26KH6y/DkpYmEg7tFsFwu', 1, 'Dosen A', 0, 'default.png'),
+(17, 4, '1002', '$2y$10$3tIf6ve9fv26a7eLNqFomOAG6gTHe1E3zW8W.W9FM3kk2bcFRQBmW', 1, 'Dosen B', 0, 'default.png'),
+(18, 4, '1003', '$2y$10$ChlyJ4qzT0HWTSQ5DKDisunMGjTd8IcKUUFjmJMxcw1rhwuvXhPNu', 1, 'Dosen C', 0, 'default.png'),
+(19, 5, '2001', '$2y$10$DL0fW0HcYL7ZhGrtZcY.juSbDUbhaW9vOs1Gh.mkf0SMTVys4c0Du', 1, 'Mahasiswa A', 0, 'default.png'),
+(20, 5, '2002', '$2y$10$7OmB4W1VU.iQ7UIUctqrauX3qeCeDGG/1bCHgQF1T3BXaQhgBTvmm', 1, 'Mahasiswa B', 0, 'default.png'),
+(21, 5, '2003', '$2y$10$aWBD9.9kxTSnwGW5jTq2ReN/mKiDkAbMRqRfzdkeYXN4WaFZ5EtTu', 1, 'Mahasiswa C', 0, 'default.png'),
+(22, 2, '5001', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Operator A', 0, 'default.png'),
+(23, 3, '6001', '$2y$10$jOig2AsVDGmRVLai7IW89ubPwmC86pqlxGZrCwcv0T8H7UzmARHhG', 1, 'Pimpinan A', 0, 'default.png'),
+(24, 3, '165150201111200', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Bayu Priambadha', 0, 'default.png'),
+(25, 3, '123', '$2y$10$cnqVtP5CJ77bgkKDdNy7gOx93L3Q/JtKj8YMUpT7xzGR4cZKfhzTq', 1, 'Madi Aryo Kuncoro', 0, 'default.png'),
+(26, 3, '7000', '$2y$10$grFq2x0zUjzGRV6lZ1IB5uvwhktgXGy.tL3CeXrKghJZChZQX/05S', 1, 'Wahyudi', 0, 'default.png'),
+(27, 3, '9001', '$2y$10$K2tDryvvgWYFE9jVVPJ2puimZAunCBeFqWejifXlhnbvpIRfBCCGm', 1, 'Jumadi', 0, 'default.png');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `userprofile`
+-- Table structure for table `userprofile`
 --
 
 CREATE TABLE `userprofile` (
@@ -535,7 +452,7 @@ CREATE TABLE `userprofile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `userprofile`
+-- Dumping data for table `userprofile`
 --
 
 INSERT INTO `userprofile` (`kode`, `jenisUser`) VALUES
@@ -548,7 +465,7 @@ INSERT INTO `userprofile` (`kode`, `jenisUser`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_access_menu`
+-- Table structure for table `user_access_menu`
 --
 
 CREATE TABLE `user_access_menu` (
@@ -558,7 +475,7 @@ CREATE TABLE `user_access_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user_access_menu`
+-- Dumping data for table `user_access_menu`
 --
 
 INSERT INTO `user_access_menu` (`id`, `user_profil_kode`, `menu_id`) VALUES
@@ -580,7 +497,7 @@ INSERT INTO `user_access_menu` (`id`, `user_profil_kode`, `menu_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_menu`
+-- Table structure for table `user_menu`
 --
 
 CREATE TABLE `user_menu` (
@@ -589,7 +506,7 @@ CREATE TABLE `user_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user_menu`
+-- Dumping data for table `user_menu`
 --
 
 INSERT INTO `user_menu` (`id`, `menu`) VALUES
@@ -602,7 +519,7 @@ INSERT INTO `user_menu` (`id`, `menu`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_sub_menu`
+-- Table structure for table `user_sub_menu`
 --
 
 CREATE TABLE `user_sub_menu` (
@@ -615,7 +532,7 @@ CREATE TABLE `user_sub_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user_sub_menu`
+-- Dumping data for table `user_sub_menu`
 --
 
 INSERT INTO `user_sub_menu` (`id`, `judul`, `url`, `ikon`, `is_active`, `menu_id`) VALUES
@@ -670,7 +587,8 @@ ALTER TABLE `jurusan`
 -- Indexes for table `kodeujian`
 --
 ALTER TABLE `kodeujian`
-  ADD PRIMARY KEY (`kode`);
+  ADD PRIMARY KEY (`kode`),
+  ADD UNIQUE KEY `jenisUjian` (`nama_ujian`);
 
 --
 -- Indexes for table `mahasiswa`
@@ -794,7 +712,7 @@ ALTER TABLE `jenis_notif`
 -- AUTO_INCREMENT for table `kodeujian`
 --
 ALTER TABLE `kodeujian`
-  MODIFY `kode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `kode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -806,13 +724,13 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `pembimbing`
 --
 ALTER TABLE `pembimbing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `penguji`
 --
 ALTER TABLE `penguji`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `prodi`
@@ -836,13 +754,13 @@ ALTER TABLE `reviewer`
 -- AUTO_INCREMENT for table `ujian`
 --
 ALTER TABLE `ujian`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `userprofile`
@@ -869,35 +787,35 @@ ALTER TABLE `user_sub_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `dosen`
+-- Constraints for table `dosen`
 --
 ALTER TABLE `dosen`
   ADD CONSTRAINT `dosen_ibfk_1` FOREIGN KEY (`prodi_dosen`) REFERENCES `prodi` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `isianmahasiswa`
+-- Constraints for table `isianmahasiswa`
 --
 ALTER TABLE `isianmahasiswa`
   ADD CONSTRAINT `isianmahasiswa_ibfk_1` FOREIGN KEY (`Mahasiswanim`) REFERENCES `mahasiswa` (`nim`);
 
 --
--- Ketidakleluasaan untuk tabel `mahasiswa`
+-- Constraints for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`prodikode`) REFERENCES `prodi` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `notifications`
+-- Constraints for table `notifications`
 --
 ALTER TABLE `notifications`
   ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `pembimbing`
+-- Constraints for table `pembimbing`
 --
 ALTER TABLE `pembimbing`
   ADD CONSTRAINT `pembimbing_ibfk_1` FOREIGN KEY (`Dosennip`) REFERENCES `dosen` (`nip`),
@@ -905,26 +823,26 @@ ALTER TABLE `pembimbing`
   ADD CONSTRAINT `pembimbing_ibfk_3` FOREIGN KEY (`statusPembimbing`) REFERENCES `posisi` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `penguji`
+-- Constraints for table `penguji`
 --
 ALTER TABLE `penguji`
   ADD CONSTRAINT `penguji_ibfk_1` FOREIGN KEY (`Dosennip`) REFERENCES `dosen` (`nip`),
   ADD CONSTRAINT `penguji_ibfk_2` FOREIGN KEY (`statusPenguji`) REFERENCES `posisi` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `prodi`
+-- Constraints for table `prodi`
 --
 ALTER TABLE `prodi`
   ADD CONSTRAINT `jurusankode` FOREIGN KEY (`jurusankode`) REFERENCES `jurusan` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `publikasi`
+-- Constraints for table `publikasi`
 --
 ALTER TABLE `publikasi`
   ADD CONSTRAINT `publikasi_ibfk_1` FOREIGN KEY (`Mahasiswanim`) REFERENCES `mahasiswa` (`nim`);
 
 --
--- Ketidakleluasaan untuk tabel `reviewer`
+-- Constraints for table `reviewer`
 --
 ALTER TABLE `reviewer`
   ADD CONSTRAINT `reviewer_ibfk_1` FOREIGN KEY (`Dosennip`) REFERENCES `dosen` (`nip`),
@@ -932,26 +850,26 @@ ALTER TABLE `reviewer`
   ADD CONSTRAINT `reviewer_ibfk_3` FOREIGN KEY (`statusReviewer`) REFERENCES `posisi` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `ujian`
+-- Constraints for table `ujian`
 --
 ALTER TABLE `ujian`
   ADD CONSTRAINT `FKUjian691129` FOREIGN KEY (`MahasiswaNim`) REFERENCES `mahasiswa` (`nim`),
   ADD CONSTRAINT `ujian_ibfk_1` FOREIGN KEY (`kodeUjiankode`) REFERENCES `kodeujian` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `user`
+-- Constraints for table `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_profile_kode`) REFERENCES `userprofile` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `user_access_menu`
+-- Constraints for table `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
   ADD CONSTRAINT `user_access_menu_ibfk_1` FOREIGN KEY (`user_profil_kode`) REFERENCES `userprofile` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `user_sub_menu`
+-- Constraints for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
   ADD CONSTRAINT `user_sub_menu_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `user_menu` (`id`);

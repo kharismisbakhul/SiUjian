@@ -19,7 +19,7 @@
                     <div class="shadow mb-1">
                         <a href="#collapseCardExample" class="d-block card-header py-3 bg-blue text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                             <div class="d-sm-flex align-items-center justify-content-between">
-                                <h6 class=" m-0 font-weight-bold clr-white">Tentang Validasi</h6> <i><i class="fas fa-chevron-down clr-white"></i></i>
+                                <h6 class=" m-0 font-weight-bold clr-white">Tentang Publikasi</h6> <i><i class="fas fa-chevron-down clr-white"></i></i>
                             </div>
                         </a>
                         <div class="collapse show" id="collapseCardExample">

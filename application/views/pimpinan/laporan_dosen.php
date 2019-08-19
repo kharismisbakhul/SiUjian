@@ -20,7 +20,7 @@
             <!-- Content Row -->
             <div class="row">
 
-                <div class="d-none d-lg-block col-md-12 mb-4">
+                <div class="d-none d-lg-block col-md-10 mb-4">
                     <div class="shadow mb-1">
                         <a href="#collapseCardExample" class="d-block card-header py-3 bg-blue text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                             <div class="d-sm-flex align-items-center justify-content-between">
@@ -29,12 +29,9 @@
                             </div>
                         </a>
                         <div class="collapse show" id="collapseCardExample">
-                            <div class="card-body pb-4">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam
-                                excepturi non ipsam
-                                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque
-                                consequuntur quae sit
-                                possimus!
+                            <div class="card-body pb-4 text-justify clr-black">
+                                <span class="font-weight-bold">Laporan Dosen</span> adalah daftar laporan seluruh dosen-dosen aktif dari Fakultas Ekonomi dan Bisnis (FEB) yang berisikan tentang mahasiswa S2 dan S3 yang dibimbing oleh dosen. Baik itu laporan tentang jumlah mahasiswa dan 
+                                laporan tahapan ujian terakhir dari mahasiswa yang dibimbing. 
                             </div>
                         </div>
                     </div>
@@ -55,16 +52,25 @@
                                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Nama Dosen</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form style="float: right;">
-                                        <div class="form-row mb-3">
-                                            <!-- Isi Form AutoComplete nya disini -->
-                                            <!-- <div class="md-form">
-                                                <input type="text" id="dosenSearch" name="dosenSearch" placeholder="Nama Dosen" value="">
-                                            </div> -->
+
+                                    <div class="row mb-2">
+                                        <div class="col-md-3">
+                                            <small>Mulai Periode</small>
+                                            <input type="date" class="form-control star_date" name="star_date">
                                         </div>
-                                    </form>
+                                        <div class="col-md-3">
+                                            <small>Akhir Periode</small>
+                                            <div class="input-group mb-3">
+                                                <input type="date" class="form-control end_date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                                                <div class="input-group-append">
+                                                    <input type="button" class="btn btn-primary " name="submit" value="cari" id="basic-addon2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="dataTableLaporanDsn" width="100%" cellspacing="0">
                                             <thead class="text-center">
                                                 <tr>
                                                     <th>#</th>
@@ -75,19 +81,19 @@
                                             <tbody>
                                                 <?php $i = 1;
                                                 foreach ($dosen as $d) : ?>
-                                                    <tr>
-                                                        <td class="text-center"><?= $i; ?></td>
-                                                        <td><?= $d['nama_dosen']; ?></td>
-                                                        <td class="text-center">
-                                                            <button class="btn btn-info btn-icon-split btn-sm modalDetailBimbingan" data-toggle="modal" data-target=".modalBimbingan" data-id="<?= $d['nip']; ?>">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-eye"></i>
-                                                                </span>
-                                                                <span class="text">See Detail</span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <?php $i++;
+                                                <tr>
+                                                    <td class="text-center"><?= $i; ?></td>
+                                                    <td><?= $d['nama_dosen']; ?></td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-icon-split btn-sm modalDetailBimbingan" data-toggle="modal" data-target=".modalBimbingan" data-id="<?= $d['nip']; ?>">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-eye"></i>
+                                                            </span>
+                                                            <span class="text">See Detail</span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <?php $i++;
                                                 endforeach; ?>
                                             </tbody>
                                         </table>

@@ -24,7 +24,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Edit Publikasi</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -90,10 +90,10 @@
                         <div class="col-sm-4">
                             <!-- apabila user sebagai mhs,dosen,pimpinan -->
                             <?php if ($this->session->userdata('user_profile_kode') == 5  || $this->session->userdata('user_profile_kode') == 4 || $this->session->userdata('user_profile_kode') == 3) { ?>
-                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="" readonly>
+                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>" readonly>
                             <?php } else { ?>
                                 <!-- apabila user sebagai admin,operator -->
-                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="">
+                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>">
                             <?php } ?>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-lg-4">
                             <a href="<?= base_url('mahasiswa') ?>/publikasi" class="btn btn-primary">kembali</a>
-                            <button type="submit" class="btn btn-success ">Save changes</button>
+                            <button type="submit" class="btn btn-success ">Edit</button>
                         </div>
                     </div>
 

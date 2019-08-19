@@ -26,7 +26,7 @@
 
  			<!-- Content Row -->
  			<div class="row">
- 				<div class="d-none d-lg-block col-md-12 mb-4">
+ 				<div class="d-none d-lg-block col-md-10 mb-4">
  					<div class="shadow mb-1">
  						<a href="#collapseCardExample" class="d-block card-header py-3 bg-blue-ocean text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
  							<div class="d-sm-flex align-items-center justify-content-between">
@@ -34,9 +34,10 @@
  							</div>
  						</a>
  						<div class="collapse show" id="collapseCardExample">
- 							<div class="card-body pb-4">
- 								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit possimus!
- 							</div>
+ 							<div class="card-body pb-4 clr-black text-justify">
+ 								<span class="font-weight-bold">Input nilai</span> adalah halaman untuk mengisikan nilai dari Ujian yang telah ditempuh oleh mahasiswa.
+								 Baik itu nilai sebagai penguji maupun sebagai pembimbing
+							</div>
  						</div>
  					</div>
  				</div>
@@ -168,7 +169,7 @@
  											<p>:</p>
  										</div>
  										<div class="col-sm-8">
- 											<input type="text" class="form-control" id="inputNilai" name="inputNilai" placeholder="">
+ 											<input type="text" class="form-control inputNilai" id="inputNilai" name="inputNilai" placeholder="">
  											<?= form_error('nilai', '<small class="text-danger pl-3">', '</small>'); ?>
  										</div>
  									</div>
@@ -187,6 +188,7 @@
  									<input type="hidden" id="ujian" name="ujian" value="0">
  									<button type="submit" class="btn btn-primary" id="simpan" style="float: right;"> Simpan
  									</button>
+ 									<input type="hidden" id="operator-nip" name="nip" value="">
  									</form>
  								</div>
  							</div>

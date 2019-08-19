@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="sticky-footer bg-white" style="margin-top: 6.5rem;">
+<footer class="sticky-footer bg-white" style="margin-top: 6.5rem; position: relative; bottom: 0; width: 100%">
     <div class=" container my-auto">
         <div class="copyright text-center my-auto">
             <span>Copyright &copy; AKD <?= date('Y')  ?></span>
@@ -42,10 +42,15 @@
 
 <!-- Script Modal -->
 <script src="<?= base_url('assets/'); ?>js/myscript.js"></script>
+<script src="<?= base_url('assets/') ?>js/isianMahasiswa.js"></script>
+<script src="<?= base_url('assets/') ?>js/mahasiswa.js"></script>
+<script src="<?= base_url('assets/') ?>js/dosen.js"></script>
+<script src="<?= base_url('assets/') ?>js/operator.js"></script>
 <script src="<?= base_url('assets/') ?>js/manajemenUser.js"></script>
 <script src="<?= base_url('assets/') ?>js/laporanDosen.js"></script>
 <script src="<?= base_url('assets/') ?>js/laporanStatusMahasiswa.js"></script>
 <script src="<?= base_url('assets/') ?>js/rekapDosen.js"></script>
+<script src="<?= base_url('assets/') ?>js/notifications.js"></script>
 
 </body>
 

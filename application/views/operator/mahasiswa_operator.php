@@ -20,7 +20,7 @@
       <!-- Content Row -->
       <div class="row">
 
-        <div class="d-none d-lg-block col-md-8 mb-4">
+        <div class="d-none d-lg-block col-md-10 mb-4">
           <div class="shadow mb-1">
             <a href="#collapseCardExample" class="d-block card-header py-3 bg-blue text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
               <div class="d-sm-flex align-items-center justify-content-between">
@@ -28,10 +28,8 @@
               </div>
             </a>
             <div class="collapse show" id="collapseCardExample">
-              <div class="card-body pb-4">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
-                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
-                possimus!
+              <div class="card-body pb-4 clr-black">
+                <span class="font-weight-bold">Daftar Mahasiswa</span>, adalah berisikan daftar mahasiswa S2 dan S3 aktif Fakultas Ekonomi dan Bisnis. Memiliki fungsi profil, ujian dan publikasi yang merujuk ke akun mahasiswa. 
               </div>
             </div>
           </div>
@@ -41,19 +39,44 @@
           <!-- Content Row -->
           <div class="row">
 
-            <div class="col-lg-12 col-md-6 mb-4">
+            <div class="col-lg-12 col-md-12 mb-4">
               <!-- Approach -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-blue">
                   <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Mahasiswa</h6>
                 </div>
                 <div class="card-body">
+                  <form action="<?= base_url('operator/mahasiswa/list') ?>" method="post">
+                    <div class="row mb-2">
+                      <div class="col-md-3">
+                        <small>Mulai Periode</small>
+                        <?php if ($star_date != null) : ?>
+                        <small> <?= $star_date ?></small>
+                        <?php endif; ?>
+                        <input type="date" class="form-control" name="star_date">
+                      </div>
+                      <div class="col-md-3">
+                        <small>Akhir Periode</small>
+                        <?php if ($end_date != null) : ?>
+                        <small> <?= $end_date ?></small>
+                        <?php endif; ?>
+                        <div class="input-group mb-3">
+                          <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                          <div class="input-group-append">
+                            <input type="submit" class="btn btn-primary" name="submit" value="cari" id="basic-addon2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                   <div class="table-responsive">
-                    <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
-                      <thead>
+                    <table class="table table-striped table-hover text-left text-nowrap table-sm" id="dataTableMhsOperator" cellspacing="0">
+                      <thead style="background-color: #2980b9;color:#ecf0f1 ">
                         <tr>
                           <th>#</th>
+                          <th>Tanggal Mulai Tugas Akhir</th>
                           <th>Nama Mahasiswa</th>
+                          <th>Nim</th>
                           <th>Jenjang</th>
                           <th>Program Studi</th>
                           <th>Status 1</th>
@@ -64,52 +87,63 @@
                       <tbody>
                         <?php $i = 1; ?>
                         <?php foreach ($mahasiswa as $m) : ?>
-                          <tr>
-                            <td><?= $i; ?></td>
-                            <td><?= $m['nama']; ?></td>
-                            <td><?= $m['jenjang']; ?></td>
-                            <td><?= $m['nama_prodi']; ?></td>
-                            <?php
-                            if (!$m['ujian_terakhir']['nama_ujian']) {
-                              $m['ujian_terakhir']['nama_ujian'] = "-";
-                            }
-                            ?>
-                            <td class='font-weight-bold'><?= $m['ujian_terakhir']['nama_ujian']; ?></td>
-                            <?php
-                            if ($m['ujian_terakhir']['statusUjian'] == 1) {
-                              echo "<td class='text-success font-weight-bold'>Lulus</td>";
-                            } else if ($m['ujian_terakhir']['statusUjian'] == 2) {
-                              echo "<td class='text-primary font-weight-bold'>Proses</td>";
-                            } else if ($m['ujian_terakhir']['statusUjian'] == 3) {
-                              echo "<td class='text-danger font-weight-bold'>Tidak Lulus</td>";
-                            } else {
-                              echo "<td class='font-weight-bold'>-</td>";
-                            }
-                            ?>
-                            <td class="text-center">
-                              <a href="<?= base_url('operator/mahasiswa/profile/') . $m['nim']; ?>" class="btn btn-info btn-icon-split btn-sm">
-                                <span class="icon text-white-50">
-                                  <i class="fas fa-eye"></i>
-                                </span>
-                                <span class="text">Profile</span>
-                              </a>
-                              <a href="<?= base_url('operator/mahasiswa/ujian/') . $m['nim']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
-                                <span class="icon text-white-50">
-                                  <i class="fas fa-paste"></i>
-                                </span>
-                                <span class="text clr-white">Ujian</span>
-                              </a>
-                              <a href="<?= base_url('operator/mahasiswa/publikasi/') . $m['nim']; ?>" class="btn btn-publikasi btn-icon-split btn-sm">
-                                <span class="icon text-white-50">
-                                  <i class="fas fa-book"></i>
-                                </span>
-                                <span class="text clr-white">Publikasi</span>
-                              </a>
-                            </td>
-                          </tr>
-                          <?php $i++; ?>
+                        <tr>
+                          <td><?= $i; ?></td>
+                          <th><?= $m['tglMulaiTA'] ?></th>
+                          <td><?= $m['nama']; ?></td>
+                          <td><?= $m['nim']; ?></td>
+                          <td><?= $m['jenjang']; ?></td>
+                          <td><?= $m['nama_prodi']; ?></td>
+                          <?php if ($m['statusKelulusan'] == 1) : ?>
+                          <td>Lulus</td>
+                          <td>-</td>
+                          <?php elseif ($m['nama_ujian'] != null) : ?>
+                          <td><?= $m['nama_ujian']  ?></td>
+                          <?php if ($m['statusUjian'] == 1) : ?>
+                          <td><span class="badge badge-pill badge-success">Lulus</span></td>
+                          <?php elseif ($m['statusUjian'] == 2) : ?>
+                          <td><span class="badge badge-pill badge-primary">Proses</span></td>
+                          <?php else : ?>
+                          <td><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
+                          <?php endif; ?>
+                          <?php elseif ($m['nama_ujian'] == null) : ?>
+                          <td>Baru Mulai</td>
+                          <td>-</td>
+                          <?php endif; ?>
+                          <td class="text-center">
+                            <a href="<?= base_url('operator/mahasiswa/profile/') . $m['nim']; ?>" class="btn btn-info btn-icon-split btn-sm">
+                              <span class="icon text-white-50">
+                                <i class="fas fa-eye"></i>
+                              </span>
+                              <span class="text">Profile</span>
+                            </a>
+                            <a href="<?= base_url('operator/mahasiswa/ujian/') . $m['nim']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
+                              <span class="icon text-white-50">
+                                <i class="fas fa-paste"></i>
+                              </span>
+                              <span class="text clr-white">Ujian</span>
+                            </a>
+                            <a href="<?= base_url('operator/mahasiswa/publikasi/') . $m['nim']; ?>" class="btn btn-publikasi btn-icon-split btn-sm">
+                              <span class="icon text-white-50">
+                                <i class="fas fa-book"></i>
+                              </span>
+                              <span class="text clr-white">Publikasi</span>
+                            </a>
+                          </td>
+                        </tr>
+                        <?php $i++; ?>
                         <?php endforeach; ?>
                       </tbody>
+                      <tfoot>
+                        <tr>
+                          <th colspan="4"></th>
+                          <th>Jenjang</th>
+                          <th>Program Studi</th>
+                          <th>Status 1</th>
+                          <th>Status 2</th>
+                          <th></th>
+                        </tr>
+                      </tfoot>
                     </table>
                   </div>
                 </div>

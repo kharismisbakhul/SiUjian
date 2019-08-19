@@ -8,6 +8,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        // $this->load->library('excel_reader2');
         is_logged_in();
     }
 
@@ -40,6 +41,11 @@ class Admin extends CI_Controller
         $data['jumlah_ujian_hari_ini'] = $this->db->get_where('ujian', ['tgl_ujian' => $time])->num_rows();
         $this->load->model('dosen_model', 'dosen');
         $data['jumlah_penguji_hari_ini'] = $this->dosen->getPengujiHariIni();
+
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
 
         //list validasi hari_ini
         $this->load->model('Operator_model', 'operator');
@@ -103,6 +109,14 @@ class Admin extends CI_Controller
         }
     }
 
+    private function getKodeProdi($prodi)
+    {
+        $this->db->select('kode');
+        $this->db->where('nama_prodi', $prodi);
+        $result = $this->db->get('prodi')->row_array();
+        return $result['kode'];
+    }
+
     public function adduser()
     {
         $this->form_validation->set_rules('namaadd', 'Nama', 'required|trim');
@@ -119,6 +133,8 @@ class Admin extends CI_Controller
             $username = $this->input->post('usernameadd');
             $password = $this->input->post('passwordadd');
             $nama = $this->input->post('namaadd');
+            $prodi_kode = $this->input->post('prodi');
+            $jenjang = $this->input->post('jenjang');
             $user_profile_kode = $this->getProfilKode($this->input->post('privileges'));
             $is_active = $this->getStatus($this->input->post('status'));
             $data = array(
@@ -126,33 +142,33 @@ class Admin extends CI_Controller
                 'password' => password_hash($password, PASSWORD_DEFAULT),
                 'nama' => $nama,
                 'user_profile_kode' => $user_profile_kode,
-                'is_active' => $is_active
+                'is_active' => $is_active,
+                'date_created' => date('Y-m-d')
             );
             if ($user_profile_kode == 5) {
-                $prodi = $this->input->post('prodi');
-                $this->db->select('kode');
-                $this->db->where('nama_prodi', $prodi);
-                $prodi_kode = $this->db->get('prodi')->row_array();
                 $data_mahasiswa = [
                     'nim' => $username,
                     'nama' => $nama,
                     'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'prodikode' => $prodi_kode['kode'],
+                    'prodikode' => $prodi_kode,
+                    'jenjang' => $jenjang,
                     'noTest' => base64_encode(random_bytes(3))
                 ];
                 $this->db->insert('mahasiswa', $data_mahasiswa);
-            }
-            if ($user_profile_kode == 4) {
+            } else if ($user_profile_kode == 4 || $user_profile_kode == 3) {
                 $data_dosen = [
                     'nip' => $username,
-                    'nama' => $nama,
+                    'nama_dosen' => $nama,
+                    'jenjang' => $jenjang,
+                    'prodi_dosen' => $prodi_kode,
                     'statusAktif' => $is_active
                 ];
+                if ($user_profile_kode == 3) {
+                    $data_dosen['jabatan_pimpinan'] = $this->input->post('posisi');
+                }
                 $this->db->insert('dosen', $data_dosen);
             }
             $this->db->insert('user', $data);
-            // var_dump($data);
-            // die;
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Account has been registered</div>');
             redirect('admin/manajemenUser');
         }
@@ -161,7 +177,7 @@ class Admin extends CI_Controller
 
     public function getListProdi()
     {
-        $this->db->select('nama_prodi');
+        $this->db->select('nama_prodi,kode');
         echo json_encode($this->db->get('prodi')->result_array());
     }
 
@@ -266,9 +282,80 @@ class Admin extends CI_Controller
 
     public function deleteuser($id)
     {
-        $this->db->where('id', $id);
+        $result = $this->db->get_where('user', ['id' => $id])->row_array();
+        if (intval($result['user_profile_kode']) == 5) {
+            $this->db->where('nim', $result['username']);
+            $this->db->delete('mahasiswa');
+        } elseif (intval($result['user_profile_kode']) == 4 || intval($result['user_profile_kode']) == 3) {
+            $this->db->where('nip', $result['username']);
+            $this->db->delete('dosen');
+        }
+        $this->db->where('id', intval($id));
         $this->db->delete('user');
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Account has been deleted</div>');
+        redirect('admin/manajemenUser');
+    }
+
+    public function downloadTemplate($user)
+    {
+        if ($user == "Dosen") {
+            $this->load->view('admin/templateExcelDosen');
+        } else {
+            $this->load->view('admin/templateExcelMahasiswa');
+        }
+    }
+    public function importDataUser()
+    {
+        // menghubungkan dengan library excel reader
+
+        $status = $this->input->post('jenisUser');
+
+        // upload file xls
+        $target = basename($_FILES['import-data']['name']);
+        move_uploaded_file($_FILES['import-data']['tmp_name'], $target);
+
+        // beri permisi agar file xls dapat di baca
+        chmod($_FILES['import-data']['name'], 0777);
+
+        // mengambil isi file xls
+        $data = new Spreadsheet_Excel_Reader($_FILES['import-data']['name'], false);
+        // menghitung jumlah baris data yang ada
+        $jumlah_baris = $data->rowcount($sheet_index = 0);
+
+        for ($i = 2; $i <= $jumlah_baris; $i++) {
+            // menangkap data dan memasukkan ke variabel sesuai dengan kolumnya masing-masing
+            if ($status == "Mahasiswa") {
+                $result = [
+                    "nim" => $data->val($i, 1),
+                    "nama" => $data->val($i, 2),
+                    "noTest" => base64_encode(random_bytes(3)),
+                    "password" => password_hash(123, PASSWORD_DEFAULT),
+                    "prodikode" => 1
+                ];
+
+                $user = [
+                    "user_profile_kode" => 5,
+                    "username" => $result['nim'],
+                    "password" => password_hash(123, PASSWORD_DEFAULT),
+                    "nama" => $result['nama'],
+                    'is_active' => 1,
+                    'date_created' => date('Y-m-d')
+                ];
+
+                if ($result['nim'] != "" && $result['nama'] != "") {
+                    // input data ke database (table data_pegawai)
+                    $this->db->insert('mahasiswa', $result);
+                    $this->db->insert('user', $user);
+                }
+            }
+        }
+
+        // hapus kembali file .xls yang di upload tadi
+        // unlink($_FILES['import-data']['name']);
+
+        // alihkan halaman ke index.php
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Impor data berhasil</div>');
         redirect('admin/manajemenUser');
     }
 }

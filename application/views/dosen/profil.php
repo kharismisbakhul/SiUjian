@@ -55,13 +55,11 @@
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Status Aktif</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <?php
-                                if ($user_login['nip'] == 1) {
-                                    echo "<span class='text-primary'>AKTIF</span>>";
-                                } else {
-                                    echo "<span class='text-danger'>TIDAK AKTIF</span>";
-                                }
-                                ?>
+                                <?php if ($user_login['statusAktif'] == 1) : ?>
+                                    <span class="badge badge-pill badge-success">Aktif</span>
+                                <?php else : ?>
+                                    <span class="badge badge-pill badge-secondary">Tidak Aktif</span>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -121,6 +119,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
                     <button type="submit" class="btn btn-success">Simpan</button>
+                    <input type="hidden" id="nip" name="nip" value="<?= $user_login['nip']; ?>">
                 </div>
             </form>
         </div>
