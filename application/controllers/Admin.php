@@ -324,6 +324,7 @@ class Admin extends CI_Controller
 
         for ($i = 2; $i <= $jumlah_baris; $i++) {
             // menangkap data dan memasukkan ke variabel sesuai dengan kolumnya masing-masing
+            $kode_user = 0;
             if ($status == "Mahasiswa") {
                 $result = [
                     "nim" => $data->val($i, 1),
@@ -332,19 +333,49 @@ class Admin extends CI_Controller
                     "password" => password_hash(123, PASSWORD_DEFAULT),
                     "prodikode" => 1
                 ];
-
+                $kode_user = 5;
                 $user = [
-                    "user_profile_kode" => 5,
+                    "user_profile_kode" => $kode_user,
                     "username" => $result['nim'],
                     "password" => password_hash(123, PASSWORD_DEFAULT),
                     "nama" => $result['nama'],
                     'is_active' => 1,
                     'date_created' => date('Y-m-d')
                 ];
-
+            } else {
+                $result = [
+                    "nip" => $data->val($i, 1),
+                    "nama_dosen" => $data->val($i, 2),
+                    "jenisKelamin" => $data->val($i, 3),
+                    "statusPNS" => $data->val($i, 4),
+                    "posisi" => $data->val($i, 5),
+                    "statusAktif" => $data->val($i, 6),
+                    "jenjang" => $data->val($i, 7),
+                    "noTlpnDosen" => $data->val($i, 8),
+                    "AlamatDosen" => $data->val($i, 9),
+                    "prodi_dosen" => $data->val($i, 10),
+                    "jabatan_pimpinan" => $data->val($i, 11)
+                ];
+                $kode_user = 4;
+                $user = [
+                    "user_profile_kode" => $kode_user,
+                    "username" => $result['nip'],
+                    "password" => password_hash(123, PASSWORD_DEFAULT),
+                    "nama" => $result['nama_dosen'],
+                    'is_active' => 1,
+                    'date_created' => date('Y-m-d')
+                ];
+            }
+            if ($kode_user == 5) {
                 if ($result['nim'] != "" && $result['nama'] != "") {
                     // input data ke database (table data_pegawai)
                     $this->db->insert('mahasiswa', $result);
+                    $this->db->insert('user', $user);
+                }
+            } else {
+                if ($result['nip'] != "" && $result['nama_dosen'] != "") {
+                    // input data ke database (table data_pegawai)
+                    $this->db->insert('dosen', $result);
                     $this->db->insert('user', $user);
                 }
             }

@@ -25,13 +25,6 @@
                 <div class="card-body">
                     <form>
                         <div class="form-group row mb-1">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
-                            <div class="col-sm-10">
-                                <span>:</span>
-                                <span><?= $user_login['nama_dosen']; ?></span>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">NIP</label>
                             <div class="col-sm-10">
                                 <span>:</span>
@@ -39,16 +32,38 @@
                             </div>
                         </div>
                         <div class="form-group row mb-1">
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
+                            <div class="col-sm-10">
+                                <span>:</span>
+                                <span><?= $user_login['nama_dosen']; ?></span>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Jenis Kelamin</label>
+                            <div class="col-sm-10">
+                                <span>:</span>
+                                <span><?= $user_login['jenisKelamin']; ?></span>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Status PNS</label>
+                            <div class="col-sm-10">
+                                <span>:</span>
+                                <span><?= $user_login['statusPNS']; ?></span>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Posisi</label>
                             <div class="col-sm-10">
                                 <span>:</span>
-                                <?php
-                                if ($user_login['posisi'] == 1) {
-                                    echo "<span'>Dosen FEB</span>";
-                                } else {
-                                    echo "<span'>Dosen Luar</span'>";
-                                }
-                                ?>
+                                <span><?= $user_login['posisi']; ?></span>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Prodi Dosen</label>
+                            <div class="col-sm-10">
+                                <span>:</span>
+                                <span><?= $user_login_prodi['nama_prodi']; ?></span>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -56,10 +71,17 @@
                             <div class="col-sm-10">
                                 <span>:</span>
                                 <?php if ($user_login['statusAktif'] == 1) : ?>
-                                    <span class="badge badge-pill badge-success">Aktif</span>
+                                <span class="badge badge-pill badge-success">Aktif</span>
                                 <?php else : ?>
-                                    <span class="badge badge-pill badge-secondary">Tidak Aktif</span>
+                                <span class="badge badge-pill badge-secondary">Tidak Aktif</span>
                                 <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Jenjang</label>
+                            <div class="col-sm-10">
+                                <span>:</span>
+                                <span><?= $user_login['jenjang']; ?></span>
                             </div>
                         </div>
                         <div class="form-group row mb-1">

@@ -145,6 +145,7 @@ class Operator extends CI_Controller
         if ($type != "list") {
             $Id = $this->uri->segment(4);
             $data['user_login'] = $this->db->get_where('dosen', ['nip' => $Id])->row_array();
+            $data['user_login_prodi'] = $this->db->get_where('prodi', ['kode' => intval($data['user_login']['prodi_dosen'])])->row_array();
             //Mahasiswa bimbingan
             $data['bimbingan_jumlah'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->num_rows();
             // $data['bimbingan'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->result_array();

@@ -19,6 +19,7 @@ class Dosen extends CI_Controller
     private function initData()
     {
         $data['user_login'] = $this->db->get_where('dosen', ['nip' => $this->session->userdata('username')])->row_array();
+        $data['user_login_prodi'] = $this->db->get_where('prodi', ['kode' => intval($data['user_login']['prodi_dosen'])])->row_array();
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['username'] = $this->session->userdata('username');
         //Mahasiswa bimbingan
