@@ -6,98 +6,69 @@ $('.custom-file-input').on('change', function () {
 	$(this).next('.custom-file-label').addClass("selected").html(fileName);
 });
 
-$('.privileges').on('change', function () {
-	// alert("<?php echo $aa; ?>");
-	$.ajax({
-		url: segments[0] + '/SiUjian/admin/getListProdi',
-		method: 'get',
-		dataType: 'json',
+$('.privileges').on('click', function () {
+	var clicked = $('.privileges');
+	clear();
+	if (clicked.val() === "Mahasiswa" || clicked.val() === "Dosen" || clicked.val() === "Pimpinan") {
+		$('.a').addClass('form-group row');
+		$('.a').append(`
+			<label for= "jenjang" class= "col-sm-4 col-form-label">Jenjang</label>
+			<div class="col-sm-8">
+				<select class="form-control jenjang" name="jenjang" id="jenjang">
+					<option>Pilih Jenjang</option>
+					<option>S2</option>
+					<option>S3</option>
+				</select>
+			</div>
+		`);
+	}
+});
 
-		success: function (data) {
-			var d = [];
-			for (i = 0; i < data.length; i++) {
-				d.push(data[i]);
+$('.a').on('click', '.jenjang', function () {
+	clear2();
+	var jenjang = $('.jenjang').val();
+	if (jenjang === "S2" || jenjang === "S3") {
+		$('.b').addClass('form-group row');
+		$('.b').append(`
+			<label for= "prodi" class= "col-sm-4 col-form-label">Prodi</label>
+			<div class="col-sm-8">
+				<select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
+				</select>
+			</div>`);
+		$.ajax({
+			url: segments[0] + '/SiUjian/admin/getListProdi/' + jenjang,
+			method: 'get',
+			dataType: 'json',
+
+			success: function (data) {
+				data.forEach(myFunction);
+
+				if ($('.privileges').val() === "Pimpinan") {
+					$('.c').addClass('form-group row');
+					$('.c').append(`
+						<label for= "posisi" class= "col-sm-4 col-form-label" >Posisi</label>
+						<div class="col-sm-8">
+							<textarea class="form-control posisi" name="posisi" id="posisi"></textarea>
+						</div>
+					`);
+				}
 			}
-			if ($('.privileges').val() === "Mahasiswa") {
-				clear();
-				$('.a').addClass('form-group row');
-				$('.a').append(`
-        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
-        <div class="col-sm-8">
-        <select class="form-control jenjang" name="jenjang" id="jenjang">
-        <option>S2</option>
-        <option>S3</option>
-        </select>
-        </div>
-        `);
-				$('.b').addClass('form-group row');
-				$('.b').append(`
-                <label for= "prodi" class= "col-sm-4 col-form-label">Prodi</label>
-                    <div class="col-sm-8">
-                        <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
-                        </select>
-                        </div>`);
-				d.forEach(myFunction);
-			} else if ($('.privileges').val() === "Dosen") {
-				clear();
-				$('.a').addClass('form-group row');
-				$('.a').append(`
-        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
-        <div class="col-sm-8">
-        <select class="form-control jenjang" name="jenjang" id="jenjang">
-        <option>S2</option>
-        <option>S3</option>
-        </select>
-        </div>
-        `);
-				$('.b').addClass('form-group row');
-				$('.b').append(`
-                <label for= "prodi" class= "col-sm-4 col-form-label">Prodi</label>
-                    <div class="col-sm-8">
-                        <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
-                        </select>
-                        </div>`);
-				d.forEach(myFunction);
-			} else if ($('.privileges').val() === "Pimpinan") {
-				clear();
-				$('.a').addClass('form-group row');
-				$('.a').append(`
-        <label for= "jenjang" class= "col-sm-4 col-form-label" >Jenjang</label >
-        <div class="col-sm-8">
-        <select class="form-control jenjang" name="jenjang" id="jenjang">
-        <option>S2</option>
-        <option>S3</option>
-        </select>
-        </div>
-        `);
-				$('.b').addClass('form-group row');
-				$('.b').append(`
-                <label for= "prodi" class= "col-sm-4 col-form-label">Prodi</label>
-                    <div class="col-sm-8">
-                        <select class="form-control listProdi" name="prodi" id="prodi" placeholder="prodi">
-                        </select>
-                        </div>`);
-				d.forEach(myFunction);
-				$('.c').addClass('form-group row');
-				$('.c').append(`
-        <label for= "posisi" class= "col-sm-4 col-form-label" >Posisi</label >
-        <div class="col-sm-8">
-        <textarea class="form-control posisi" name="posisi" id="posisi"></textarea>
-        </div>
-        `);
-			} else {
-				clear();
-			}
-		}
-	})
+		})
+	} else {
+		clear2();
+	}
 });
 
 function clear() {
 	$('.a').removeClass('form-group row');
-	$('.b').removeClass('form-group row');
-	$('.c').removeClass('form-group row');
 	$('.a').html(``);
+	clear2();
+}
+
+function clear2() {
+	$('.b').removeClass('form-group row');
 	$('.b').html(``);
+	$('.c').removeClass('form-group row');
 	$('.c').html(``);
 }
 

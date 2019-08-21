@@ -33,7 +33,7 @@ class Admin extends CI_Controller
 
         //Mahasiswa
         $data['jumlah_mahasiswa'] = $this->db->get_where('user', ['user_profile_kode' => 5])->num_rows();
-        $data['jumlah_operator'] = $this->db->get_where('user', ['user_profile_kode' => 4])->num_rows();
+        $data['jumlah_operator'] = $this->db->get_where('user', ['user_profile_kode' => 2])->num_rows();
         $this->db->select('Dosennip');
         $this->db->distinct();
         $data['jumlah_pembimbing'] = $this->db->get('pembimbing')->num_rows();
@@ -175,9 +175,10 @@ class Admin extends CI_Controller
     }
 
 
-    public function getListProdi()
+    public function getListProdi($jenjang)
     {
-        $this->db->select('nama_prodi,kode');
+        $this->db->where('jenjang', $jenjang);
+        $this->db->select('nama_prodi, kode');
         echo json_encode($this->db->get('prodi')->result_array());
     }
 
@@ -227,7 +228,7 @@ class Admin extends CI_Controller
             if ($user_profile_kode == 4) {
                 $data_dosen = [
                     'nip' => $username,
-                    'nama' => $nama,
+                    'nama_dosen' => $nama,
                     'statusAktif' => $is_active
                 ];
                 $this->db->set($data_dosen);
@@ -270,6 +271,7 @@ class Admin extends CI_Controller
     {
         $this->load->model('user_model', 'um');
         $data = $this->initData();
+        $data['image'] = $this->db->select('image')->get_where('user', ['id' => $id])->row_array();
         $data['title'] = 'Manajemen User';
         $data['detailUser'] = $this->um->getDetailUser($id);
         $data['privileges_user'] = $this->um->getPrivilegesUser($data['detailUser']['user_profile_kode']);

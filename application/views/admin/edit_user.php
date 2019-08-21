@@ -60,7 +60,7 @@
                             <select class="form-control" name="privileges" id="privileges">
                                 <option><?= $privileges_user['jenisUser']; ?></option>
                                 <?php foreach ($another_privileges as $ap) : ?>
-                                    <option><?= $ap ?></option>
+                                <option><?= $ap ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -72,7 +72,7 @@
                         <div class="col-sm-8">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <img src="<?= base_url('assets/img/profile/') . $user['image']; ?>" class="img-thumbnail">
+                                    <img src="<?= base_url('assets/img/profile/') . $image['image']; ?>" class="img-thumbnail">
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="custom-file">
