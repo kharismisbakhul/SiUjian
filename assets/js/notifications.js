@@ -3,15 +3,12 @@ var segments = url.split("/");
 var username = $('#username-topbar').html();
 var user_kode = $('.username-topbar').attr('value');
 $(window).on('load', function () {
-	// var username = 20;
-	// console.log(username);
-	// console.log(user_kode);
 	$.ajax({
 		url: segments[0] + '/SiUjian/notif/getNotifications/' + username,
 		dataType: 'json',
 		type: 'get',
 		success: function (data) {
-			// $('.counter').html(data.counter);
+			console.log(data);
 			if (user_kode == 1 || user_kode == 2) {
 				data['all_notifikasi'].forEach(notifikasi);
 			} else if (user_kode == 5) {

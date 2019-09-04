@@ -5,7 +5,8 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <?= $this->session->flashdata('message');  ?>
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
+            <div class="flash-data2" data-flashdata2="<?= $this->session->flashdata('error');  ?>"></div>
         </div>
     </div>
 

@@ -18,9 +18,9 @@
             </div>
 
             <!-- Content Row -->
-            <div class="row">
+            <div class="row box">
 
-                <div class="d-none d-lg-block col-md-12 mb-4">
+                <div class="d-none d-lg-block col-md-8 mb-4">
                     <div class="shadow mb-1">
                         <a href="#collapseCardExample" class="d-block card-header py-3 bg-blue text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                             <div class="d-sm-flex align-items-center justify-content-between">
@@ -29,12 +29,14 @@
                             </div>
                         </a>
                         <div class="collapse show" id="collapseCardExample">
-                            <div class="card-body pb-4">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam
-                                excepturi non ipsam
-                                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque
-                                consequuntur quae sit
-                                possimus!
+                            <div class="card-body pb-4 clr-black">
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    <span class="font-weight-bold">Daftar Pimpinan</span>, adalah berisikan daftar Pimpinan Fakultas Ekonomi dan Bisnis. Memiliki fungsi mahasiswa, dosen dan rekap yang merujuk ke akun Pimpinan.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -46,9 +48,9 @@
 
                 <div class="col-lg-12">
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row ">
 
-                        <div class="col-lg-12 col-md-6 mb-4">
+                        <div class="col-lg-12 col-md-12 mb-4">
                             <!-- Approach -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 bg-blue">
@@ -77,38 +79,40 @@
                                             <tbody>
                                                 <?php $i = 1;
                                                 foreach ($pimpinan as $p) : ?>
-                                                <tr>
-                                                    <td class="text-center"><?= $i; ?></td>
-                                                    <td><?= $p['nama_dosen']; ?></td>
-                                                    <td><?= $p['nip']; ?></td>
-                                                    <?php
-                                                        if ($p['jabatan_pimpinan'] == "Dekan") {
-                                                            echo "<td>" . $p['jabatan_pimpinan'] . "</td>";
-                                                        } else {
-                                                            echo "<td>" . $p['jabatan_pimpinan'] . " " . $p['nama_prodi'] . "</td>";
-                                                        }
-                                                        ?>
-                                                    <td class="text-center">
-                                                        <a href="<?= base_url('pimpinan/laporanStatusMahasiswa/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] ?>" class="btn btn-info btn-icon-split btn-sm">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-eye"></i>
-                                                            </span>
-                                                            <span class="text">Mahasiswa</span>
-                                                        </a>
-                                                        <a href="<?= base_url('pimpinan/laporanDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] . "/" . $p['nip'] ?>" class="btn btn-ujian btn-icon-split btn-sm">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-paste"></i>
-                                                            </span>
-                                                            <span class="text clr-white">Dosen</span>
-                                                        </a>
-                                                        <a href="<?= base_url('pimpinan/rekapDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] . "/" . $p['nip'] ?>" class="btn btn-publikasi btn-icon-split btn-sm">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-book"></i>
-                                                            </span>
-                                                            <span class="text clr-white">Rekap</span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td class="text-center"><?= $i; ?></td>
+                                                        <td><?= $p['nama_dosen']; ?></td>
+                                                        <td><?= $p['nip']; ?></td>
+                                                        <?php
+                                                            if ($p['jabatan_pimpinan'] == "Dekan" || $p['jabatan_pimpinan'] == "Wakil Dekan 1" || $p['jabatan_pimpinan'] == "Wakil Dekan 2" || $p['jabatan_pimpinan'] == "Wakil Dekan 3") {
+                                                                echo "<td>" . $p['jabatan_pimpinan'] . "</td>";
+                                                            } else if ($p['jabatan_pimpinan'] == "Kajur") {
+                                                                echo "<td>" . $p['jabatan_pimpinan'] . " " . $p['nama_prodi'] . "</td>";
+                                                            } else {
+                                                                echo "<td>" . $p['jabatan_pimpinan'] . " " . $p['nama_prodi'] . " " . $p['jenjang_prodi'] . "</td>";
+                                                            }
+                                                            ?>
+                                                        <td class="text-center">
+                                                            <a href="<?= base_url('pimpinan/laporanStatusMahasiswa/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] ?>" class="btn btn-info btn-icon-split btn-sm">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </span>
+                                                                <span class="text">Mahasiswa</span>
+                                                            </a>
+                                                            <a href="<?= base_url('pimpinan/laporanDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] . "/" . $p['nip'] ?>" class="btn btn-ujian btn-icon-split btn-sm">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fas fa-paste"></i>
+                                                                </span>
+                                                                <span class="text clr-white">Dosen</span>
+                                                            </a>
+                                                            <a href="<?= base_url('pimpinan/rekapDosen/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] . "/" . $p['nip'] ?>" class="btn btn-publikasi btn-icon-split btn-sm">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fas fa-book"></i>
+                                                                </span>
+                                                                <span class="text clr-white">Rekap</span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                 <?php $i++;
                                                 endforeach; ?>
                                             </tbody>

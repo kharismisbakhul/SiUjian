@@ -3,8 +3,8 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url(); ?> ">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-rocket"></i>
+        <div class="sidebar-brand-icon ">
+            <img src="<?= base_url('assets/img/profile/default.png') ?>" width="50px">
         </div>
         <div class="sidebar-brand-text mx-3">Si-Ujian</div>
     </a>
@@ -12,9 +12,9 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
     <?php if ($title == "Dashboard") : ?>
-        <li class="nav-item active">
+    <li class="nav-item active">
         <?php else : ?>
-        <li class="nav-item">
+    <li class="nav-item">
         <?php endif; ?>
         <?php $role_id = $this->session->userdata('user_profile_kode'); ?>
         <a class="nav-link mt-0 pt-0" href="<?= base_url(link_dashboard($role_id)); ?> ">
@@ -38,15 +38,15 @@
 
     <!-- LOOPING MENU -->
     <?php foreach ($menu as $m) : ?>
-        <div class="sidebar-heading <?= $m['id'] ?>">
-            <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($m['id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
-            <?php else : ?>
-                <?= $m['menu']; ?>
-            <?php endif; ?>
-        </div>
+    <div class="sidebar-heading <?= $m['id'] ?>">
+        <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($m['id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
+        <?php else : ?>
+        <?= $m['menu']; ?>
+        <?php endif; ?>
+    </div>
 
-        <!-- SUB-MENU SESUAI MENU -->
-        <?php
+    <!-- SUB-MENU SESUAI MENU -->
+    <?php
         $menuId = $m['id'];
         $querySubMenu = "SELECT *
                             FROM `user_sub_menu` JOIN `user_menu` 
@@ -57,30 +57,30 @@
         $subMenu = $this->db->query($querySubMenu)->result_array();
         ?>
 
-        <?php foreach ($subMenu as $sm) : ?>
-            <?php if ($title == $sm['judul']) : ?>
-                <li class="nav-item active">
-                <?php else : ?>
-                    <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
-                    <?php else : ?>
-                    <li class="nav-item <?= $sm['menu_id'] ?>">
-                    <?php endif; ?>
-                <?php endif; ?>
-                <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
-                <?php else : ?>
-                    <a class="nav-link pb-0" href="<?= base_url($sm['url'])  ?>">
-                        <i class="<?= $sm['ikon']; ?>"></i>
-                        <span><?= $sm['judul'];  ?></span></a>
-                <?php endif; ?>
-            </li>
-
-        <?php endforeach; ?>
-
-        <!-- Divider -->
+    <?php foreach ($subMenu as $sm) : ?>
+    <?php if ($title == $sm['judul']) : ?>
+    <li class="nav-item active">
+        <?php else : ?>
         <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
         <?php else : ?>
-            <hr class="sidebar-divider mt-3 <?= $m['id'] ?>">
+    <li class="nav-item <?= $sm['menu_id'] ?>">
         <?php endif; ?>
+        <?php endif; ?>
+        <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
+        <?php else : ?>
+        <a class="nav-link pb-0" href="<?= base_url($sm['url'])  ?>">
+            <i class="<?= $sm['ikon']; ?>"></i>
+            <span><?= $sm['judul'];  ?></span></a>
+        <?php endif; ?>
+    </li>
+
+    <?php endforeach; ?>
+
+    <!-- Divider -->
+    <?php if (($role_id == 1 || $role_id == 2 || $role_id == 4) && ($sm['menu_id'] == 5) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 4) || ($role_id == 1 || $role_id == 2) && ($m['id'] == 3)) : ?>
+    <?php else : ?>
+    <hr class="sidebar-divider mt-3 <?= $m['id'] ?>">
+    <?php endif; ?>
     <?php endforeach; ?>
 
 

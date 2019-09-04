@@ -3,15 +3,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dosen_model extends CI_Model
 {
-    public function getListDosen($nip, $prodi = null)
+    public function getDataDosen($nip)
+    {
+        $this->db->select('dosen.*,prodi.jurusankode');
+        $this->db->from('dosen');
+        $this->db->join('prodi', 'dosen.prodi_dosen=prodi.jurusankode', 'left');
+        $this->db->where('dosen.nip', $nip);
+        return $this->db->get()->row_array();
+    }
+
+
+    public function getListDosen($nip, $prodi = null, $jurusan = null)
     {
 
-        $this->db->select('dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as jumlah_bimbingan');
+        $this->db->select('dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as jumlah_bimbingan,dosen.prodi_dosen');
         $this->db->from('dosen');
         $this->db->join('pembimbing', 'dosen.nip = pembimbing.Dosennip', 'left');
         $this->db->where('dosen.nip  !=', $nip);
         if ($prodi != null) {
             $this->db->where('dosen.prodi_dosen', $prodi);
+        }
+        if ($jurusan != null) {
+            $this->db->join('prodi', 'prodi.kode=dosen.prodi_dosen', 'left');
+            $this->db->where('prodi.jurusankode', $jurusan);
         }
         $this->db->group_by('dosen.nama_dosen');
         return $this->db->get()->result_array();
@@ -22,13 +36,15 @@ class Dosen_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function getRekapDosen($nip, $prodi = 0, $star_date = null, $end_date = null)
+    public function getRekapDosen($nip, $prodi = 0, $jurusan = null, $star_date = null, $end_date = null)
     {
         //list Dosen
         $dosen = $this->getListDosen($nip);
 
         if ($prodi != 0) {
             $dosen = $this->getListDosen($nip, $prodi);
+        } elseif ($jurusan != null) {
+            $dosen = $this->getListDosen($nip, null, $jurusan);
         }
         //get mahasiswa bimbingan + jumlah
         for ($i = 0; $i < count($dosen); $i++) {
@@ -406,10 +422,22 @@ class Dosen_model extends CI_Model
     }
     public function getPimpinanPlusProdi()
     {
-        $this->db->where('jabatan_pimpinan != ""');
-        $this->db->select('dosen.nip, dosen.nama_dosen, dosen.prodi_dosen, prodi.nama_prodi, dosen.jabatan_pimpinan');
+        $this->db->where('jabatan_pimpinan != "" ');
+        $this->db->select('prodi.*, dosen.*');
         $this->db->from('dosen');
-        $this->db->join('prodi', 'dosen.prodi_dosen = prodi.kode');
+        $this->db->join('prodi', 'dosen.prodi_dosen=prodi.kode');
+        return $this->db->get()->result_array();
+    }
+
+    public function getUjianHariIni($nip)
+    {
+        $this->db->select('mhs.nama,kodeujian.nama_ujian');
+        $this->db->from('penguji');
+        $this->db->join('ujian', 'penguji.Ujianid = ujian.id', 'left');
+        $this->db->join('kodeujian', 'kodeujian.kode=ujian.kodeUjiankode', 'left');
+        $this->db->join('mahasiswa as mhs', 'mhs.nim = ujian.Mahasiswanim', 'left');
+        $this->db->where('tgl_ujian', date('Y/m/d'));
+        $this->db->where('penguji.Dosennip', $nip);
         return $this->db->get()->result_array();
     }
 }

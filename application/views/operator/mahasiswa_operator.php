@@ -18,7 +18,7 @@
       </div>
 
       <!-- Content Row -->
-      <div class="row">
+      <div class="row box">
 
         <div class="d-none d-lg-block col-md-8 mb-4">
           <div class="shadow mb-1">
@@ -29,9 +29,12 @@
             </a>
             <div class="collapse show" id="collapseCardExample">
               <div class="card-body pb-4">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
-                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
-                possimus!
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                  <span class="font-weight-bold">Daftar Mahasiswa</span>, adalah berisikan daftar mahasiswa S2 dan S3 aktif Fakultas Ekonomi dan Bisnis. Memiliki fungsi profil, ujian dan publikasi yang merujuk ke akun mahasiswa.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -102,11 +105,11 @@
                           <?php elseif ($m['nama_ujian'] != null) : ?>
                           <td><?= $m['nama_ujian']  ?></td>
                           <?php if ($m['statusUjian'] == 1) : ?>
-                          <td><span class="badge badge-pill badge-success">Lulus</span></td>
+                          <td class="text-success font-weight-bold">Lulus</td>
                           <?php elseif ($m['statusUjian'] == 2) : ?>
-                          <td><span class="badge badge-pill badge-primary">Proses</span></td>
+                          <td class="text-primary font-weight-bold">Proses</td>
                           <?php else : ?>
-                          <td><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
+                          <td class="text-danger font-weight-bold">Tidak Lulus</td>
                           <?php endif; ?>
                           <?php elseif ($m['nama_ujian'] == null) : ?>
                           <td>Baru Mulai</td>

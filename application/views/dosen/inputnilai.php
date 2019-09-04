@@ -25,8 +25,8 @@
 
 
  			<!-- Content Row -->
- 			<div class="row">
- 				<div class="d-none d-lg-block col-md-12 mb-4">
+ 			<div class="row box">
+ 				<div class="d-none d-lg-block col-md-8 mb-4">
  					<div class="shadow mb-1">
  						<a href="#collapseCardExample" class="d-block card-header py-3 bg-blue-ocean text-decoration-none" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
  							<div class="d-sm-flex align-items-center justify-content-between">
@@ -35,7 +35,13 @@
  						</a>
  						<div class="collapse show" id="collapseCardExample">
  							<div class="card-body pb-4">
- 								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit possimus!
+ 								<div class="alert alert-info alert-dismissible fade show" role="alert">
+ 									<span class="font-weight-bold">Input nilai</span> adalah halaman untuk mengisikan nilai dari Ujian yang telah ditempuh oleh mahasiswa.
+ 									Baik itu nilai sebagai penguji maupun sebagai pembimbing
+ 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+ 										<span aria-hidden="true">&times;</span>
+ 									</button>
+ 								</div>
  							</div>
  						</div>
  					</div>
@@ -47,12 +53,12 @@
  							<!-- Approach -->
  							<div class="card shadow mb-4">
  								<div class="card-header py-3 bg-blue-ocean">
- 									<h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Ujian Mahasiswa</h6>
+ 									<h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Ujian Mahasiswa - <?= $user_login['nama_dosen'] ?></h6>
  								</div>
  								<div class="card-body">
  									<div class="table-responsive">
- 										<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
- 											<thead style="text-align: center">
+ 										<table class="table table-bordered table-striped text-center" id="dataTable" width="100%" cellspacing="0">
+ 											<thead style="background-color: #2980b9;color:#ecf0f1 ">
  												<tr>
  													<th>#</th>
  													<th>Nama Mahasiswa</th>
@@ -65,22 +71,22 @@
  											<tbody>
  												<?php $i = 1;
 													foreach ($ujian as $u) : ?>
- 													<tr>
- 														<td><?= $i++; ?></td>
- 														<td><?= $u['nama'] ?></td>
- 														<td><?= $u['nama_ujian'] ?></td>
- 														<td><?= $u['tgl_ujian'] ?></td>
- 														<td><?= $u['nilai_akhir'] ?></td>
- 														<td class="text-center">
- 															<button data-id="<?= $u['id'] ?>" class="btn btn-warning btn-icon-split btn-sm input-nilai" data-toggle="modal" data-target=".modalDetailMahasiswa">
- 																<span class="icon text-white-50">
- 																	<i class="fas fa-pen-square"></i>
- 																</span>
- 																<span class="text">Nilai</span>
- 															</button>
- 															<input type="hidden" class="nip" id="nip" value="<?= $user['username'] ?>">
- 														</td>
- 													</tr>
+ 												<tr>
+ 													<td><?= $i++; ?></td>
+ 													<td class="text-left"><?= $u['nama'] ?></td>
+ 													<td><?= $u['nama_ujian'] ?></td>
+ 													<td><?= $u['tgl_ujian'] ?></td>
+ 													<td><?= $u['nilai_akhir'] ?></td>
+ 													<td class="text-center">
+ 														<button data-id="<?= $u['id'] ?>" class="btn btn-warning btn-icon-split btn-sm input-nilai" data-toggle="modal" data-target=".modalDetailMahasiswa">
+ 															<span class="icon text-white-50">
+ 																<i class="fas fa-pen-square"></i>
+ 															</span>
+ 															<span class="text">Nilai</span>
+ 														</button>
+ 														<input type="hidden" class="nip" id="nip" value="<?= $user['username'] ?>">
+ 													</td>
+ 												</tr>
  												<?php endforeach; ?>
  											</tbody>
  										</table>

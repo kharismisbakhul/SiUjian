@@ -18,7 +18,7 @@
             </div>
 
             <!-- Content Row -->
-            <div class="row">
+            <div class="row box">
 
                 <div class="d-none d-lg-block col-md-8 mb-4">
                     <div class="shadow mb-1">
@@ -29,9 +29,12 @@
                         </a>
                         <div class="collapse show" id="collapseCardExample">
                             <div class="card-body pb-4">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
-                                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
-                                possimus!
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    Laporan Status Mahasiswa adalah informasi detail mahasiswa yang berisi tahapan terbaru yang sedang dikerjakan oleh mahasiswa
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -39,7 +42,7 @@
 
                 <div class="col-lg-12">
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row ">
 
                         <div class="col-lg-12 col-md-6 mb-4">
                             <!-- Approach -->
@@ -48,92 +51,98 @@
                                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Mahasiswa Keseluruhan</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form action="<?= base_url('pimpinan/laporanStatusMahasiswa') ?>" method="post">
-                                        <div class="row mb-2">
-                                            <div class="col-md-3">
-                                                <small>Mulai Periode</small>
-                                                <?php if ($star_date != null) : ?>
-                                                    <small> <?= $star_date ?></small>
-                                                <?php endif; ?>
-                                                <input type="date" class="form-control" name="star_date">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <small>Akhir Periode</small>
-                                                <?php if ($end_date != null) : ?>
-                                                    <small> <?= $end_date ?></small>
-                                                <?php endif; ?>
-                                                <div class="input-group mb-3">
-                                                    <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
-                                                    <div class="input-group-append">
-                                                        <input type="submit" class="btn btn-primary" name="submit" value="cari" id="basic-addon2">
+                                    <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
+                                        <form action="<?= base_url('pimpinan/laporanStatusMahasiswa/') . $this->uri->segment(3) . '/' . $this->uri->segment(4); ?>" method="post">
+                                        <?php else : ?>
+                                            <form action="<?= base_url('pimpinan/laporanStatusMahasiswa') ?>" method="post">
+                                            <?php endif; ?>
+                                            <div class="row mb-2">
+                                                <div class="col-md-3">
+                                                    <small>Mulai Periode</small>
+                                                    <?php if ($star_date != null) : ?>
+                                                        <small> <?= $star_date ?></small>
+                                                    <?php endif; ?>
+                                                    <input type="date" class="form-control" name="star_date">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <small>Akhir Periode</small>
+                                                    <?php if ($end_date != null) : ?>
+                                                        <small> <?= $end_date ?></small>
+                                                    <?php endif; ?>
+                                                    <div class="input-group mb-3">
+                                                        <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                                                        <div class="input-group-append">
+                                                            <input type="submit" class="btn btn-primary" name="submit" value="cari" id="basic-addon2">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered text-center" id="dataTableLaporanMhs" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Tanggal Mulai Tugas Akhir</th>
-                                                    <th>Nama Mahasiswa</th>
-                                                    <th>Nim</th>
-                                                    <th>Jenjang</th>
-                                                    <th>Program Studi</th>
-                                                    <th>Status 1</th>
-                                                    <th>Status 2</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $i = 1;
-                                                foreach ($mahasiswa as $m) : ?>
-                                                    <tr>
-                                                        <td><?= $i; ?></td>
-                                                        <td><?= $m['tglMulaiTA'] ?></td>
-                                                        <td><?= $m['nama']; ?></td>
-                                                        <td><?= $m['nim']; ?></td>
-                                                        <td><?= $m['jenjang']; ?></td>
-                                                        <td><?= $m['nama_prodi']; ?></td>
-                                                        <?php if ($m['nama_ujian']) : ?>
-                                                            <td><?= $m['nama_ujian']; ?></td>
-                                                        <?php else : ?>
-                                                            <td>Belum Mulai</td>
-                                                        <?php endif; ?>
-                                                        <?php if ($m['statusUjian'] == 1) : ?>
-                                                            <td class="text-success font-weight-bold">Lulus</td>
-                                                        <?php elseif ($m['statusUjian'] == 2) : ?>
-                                                            <td class="text-primary font-weight-bold">Proses</td>
-                                                        <?php elseif ($m['statusUjian'] == 3) : ?>
-                                                            <td class="text-danger font-weight-bold">Tidak Lulus</td>
-                                                        <?php else : ?>
-                                                            <td>-</td>
-                                                        <?php endif; ?>
-                                                        <td class="text-center">
-                                                            <button class="btn btn-info btn-icon-split btn-sm modalDetail" data-toggle="modal" data-target=".modalDetailMahasiswa" data-id="<?= $m['nim']; ?>">
-                                                                <span class="icon text-white-50">
-                                                                    <i class="fas fa-eye"></i>
-                                                                </span>
-                                                                <span class="text">Info</span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <?php $i++;
-                                                endforeach; ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="4"></th>
-                                                    <th>Jenjang</th>
-                                                    <th>Program Studi</th>
-                                                    <th>Status 1</th>
-                                                    <th>Status 2</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                                            <input type="hidden" name="posisi" value="<?= $this->uri->segment(3); ?>">
+                                            <input type="hidden" name="prodi" value="<?= $this->uri->segment(4); ?>">
+                                            </form>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered text-center table-striped" id="dataTableLaporanMhs" width="100%" cellspacing="0">
+                                                    <thead style="background-color: #2980b9;color:#ecf0f1 ">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Tanggal Mulai Tugas Akhir</th>
+                                                            <th>Nama Mahasiswa</th>
+                                                            <th>Nim</th>
+                                                            <th>Jenjang</th>
+                                                            <th>Program Studi</th>
+                                                            <th>Status 1</th>
+                                                            <th>Status 2</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $i = 1;
+                                                        foreach ($mahasiswa as $m) : ?>
+                                                            <tr>
+                                                                <td><?= $i; ?></td>
+                                                                <td><?= $m['tglMulaiTA'] ?></td>
+                                                                <td><?= $m['nama']; ?></td>
+                                                                <td><?= $m['nim']; ?></td>
+                                                                <td><?= $m['jenjang']; ?></td>
+                                                                <td><?= $m['nama_prodi']; ?></td>
+                                                                <?php if ($m['nama_ujian']) : ?>
+                                                                    <td><?= $m['nama_ujian']; ?></td>
+                                                                <?php else : ?>
+                                                                    <td>Belum Mulai</td>
+                                                                <?php endif; ?>
+                                                                <?php if ($m['statusUjian'] == 1) : ?>
+                                                                    <td class="text-success font-weight-bold">Lulus</td>
+                                                                <?php elseif ($m['statusUjian'] == 2) : ?>
+                                                                    <td class="text-primary font-weight-bold">Proses</td>
+                                                                <?php elseif ($m['statusUjian'] == 3) : ?>
+                                                                    <td class="text-danger font-weight-bold">Tidak Lulus</td>
+                                                                <?php else : ?>
+                                                                    <td>-</td>
+                                                                <?php endif; ?>
+                                                                <td class="text-center">
+                                                                    <button class="btn btn-info btn-icon-split btn-sm modalDetail" data-toggle="modal" data-target=".modalDetailMahasiswa" data-id="<?= $m['nim']; ?>">
+                                                                        <span class="icon text-white-50">
+                                                                            <i class="fas fa-eye"></i>
+                                                                        </span>
+                                                                        <span class="text">Info</span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        <?php $i++;
+                                                        endforeach; ?>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="4"></th>
+                                                            <th>Jenjang</th>
+                                                            <th>Program Studi</th>
+                                                            <th>Status 1</th>
+                                                            <th>Status 2</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
                                 </div>
                             </div>
                         </div>

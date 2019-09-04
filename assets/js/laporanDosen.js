@@ -11,9 +11,10 @@ $('.modalDetailBimbingan').on("click", function () {
 		dataType: 'json',
 		type: 'get',
 		beforeSend: function (data) {
-			console.log('cek')
+
 		},
 		success: function (data) {
+			console.log(data)
 			$(".modal-body").html('');
 			$(".modal-title .nama_dosen").html(data.nama_dosen);
 			if (data.mahasiswa_bimbingan.length != 0) {

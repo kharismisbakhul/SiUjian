@@ -9,25 +9,23 @@ $('.input-nilai').on('click', function () {
 	let url = $(location).attr('href');
 	let segments = url.split('/');
 	let action = segments[7];
-	$('.daftar-penguji').remove();
-	$('.daftar-pembimbing').remove();
+
 	$.ajax({
 		url: segments[0] + '/SiUjian/dosen/getDetailUjian/' + id,
 		method: 'get',
 		dataType: 'json',
 		success: function (data) {
+			$('.daftar-penguji').remove();
+			$('.daftar-pembimbing').remove();
 			var nilai_akhir = data['ujian'].nilai_akhir
 			$('.namaMahasiswa').val(data['ujian'].nama)
 			$('.namaMahasiswa').html(data['ujian'].nama)
 			$('#nomorInduk').val(data['ujian'].nim)
-			$('#judulTA').val(data['ujian'].judulTugasAkhir)
+			$('#judulTA').val(data['ujian'].judulAkhir)
 			$('#jenisUjian').val(data['ujian'].nama_ujian)
 			$('#tanggalUjian').val(data['ujian'].tgl_ujian)
 			$('#bobotNilai').val(data['ujian'].bobot)
 			$('#nilai_akhir').html(nilai_akhir)
-
-
-			console.log(action)
 			let i = 1;
 			data['penguji'].forEach(function (p) {
 
@@ -52,7 +50,7 @@ $('.input-nilai').on('click', function () {
 				$('.pembimbing').append(`
 				<tr class="daftar-pembimbing">
 					<td>` + (j++) + `</td>
-					<td>Pembimbing ` + p.statuspembimbing + `</td>
+					<td>` + p.status_dosen + `</td>
 					<td>` + p.nama_dosen + `</td>
 				</tr>
 				`)

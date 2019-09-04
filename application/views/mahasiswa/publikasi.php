@@ -3,25 +3,25 @@
 
     <!-- Page Heading -->
     <div class="row">
-        <div class="col-xl-10">
+        <div class="col-xl-9">
             <h1 class="h3 mb-4 text-gray-800"><?= $title;  ?> - <?= $user_login['nama'] ?> (<?= $user_login['nim'] ?>) </h1>
         </div>
-        <div class="col-xl-2 ">
+        <div class="col-xl-3 mb-2">
             <?php if ($jumlah_publikasi < 2) : ?>
             <form action="<?= base_url('mahasiswa/tambahPublikasi/') . $user_login['nim'] ?>">
-                <button type="submit" class="btn btn-success float-right mb-2 tombol">
+                <button type="submit" class="btn btn-success btn-icon-split float-right">
                     <span class="icon text-white-50">
-                        <i class="fas fa-fw fa-plus-circle"></i>
+                        <i class="fas fa-plus-circle"></i>
                     </span>
-                    <span class="text">Tambah</span>
+                    <span class="text">Tambah Publikasi</span>
                 </button>
             </form>
             <?php else : ?>
-            <button type="submit" class="btn btn-secondary float-right mb-2 tombol">
+            <button type="button" class="btn btn-secondary btn-icon-split float-right">
                 <span class="icon text-white-50">
-                    <i class="fas fa-fw fa-plus-circle"></i>
+                    <i class="fas fa-plus-circle"></i>
                 </span>
-                <span class="text">Tambah</span>
+                <span class="text">Tambah Publikasi</span>
             </button>
             <?php endif; ?>
         </div>
@@ -29,7 +29,7 @@
 
     <div class="row">
         <div class="col-md-5">
-            <?= $this->session->flashdata('message');  ?>
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
             <div class="card shadow mb-3 box border-left-success">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

@@ -85,11 +85,16 @@ class Operator extends CI_Controller
             $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $Id])->num_rows();
             $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $Id])->num_rows();
             $data['ujian'] = $this->mahasiswa->getUjian($Id);
+            $data['cek_ujian'] = "";
+            if ($data['ujian']) {
+                $data['cek_ujian'] = $data['ujian'][count($data['ujian']) - 1];
+            }
             $data['publikasi'] = $this->mahasiswa->getPublikasi($Id);
             $data['isianMahasiswa'] = $this->db->get_where('isianMahasiswa', ['Mahasiswanim' => $Id])->row_array();
             $data['dosen'] = $this->mahasiswa->getDaftarPembimbing($Id);
             $data['posisiPembimbing'] = $this->mahasiswa->getPosisiPembimbing($Id);
             $data['belumUjian'] = $this->mahasiswa->getBelumUjian($Id);
+            $data['cek_pembimbing'] = $this->db->get_where('pembimbing', ['Mahasiswanim' => $Id])->data_seek();
         }
 
         $this->loadTemplate($data);
@@ -145,6 +150,7 @@ class Operator extends CI_Controller
         if ($type != "list") {
             $Id = $this->uri->segment(4);
             $data['user_login'] = $this->db->get_where('dosen', ['nip' => $Id])->row_array();
+            $data['user_login_prodi'] = $this->db->get_where('prodi', ['kode' => intval($data['user_login']['prodi_dosen'])])->row_array();
             //Mahasiswa bimbingan
             $data['bimbingan_jumlah'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->num_rows();
             // $data['bimbingan'] = $this->dosen->getMahasiswaBimbingan($data['user_login']['nip'])->result_array();
@@ -171,21 +177,25 @@ class Operator extends CI_Controller
     }
     public function tambahPembimbing($nim)
     {
-        $data = [
-            'Mahasiswanim' => $nim,
-            'Dosennip' => $this->input->post('nip'),
-            'statusPembimbing' => $this->input->post('pembimbing'),
-            'tgl_tambah_pembimbing' => date("Y/m/d")
-        ];
-        $this->db->insert('pembimbing', $data);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Pembimbing berhasil di tambah ! </div>');
+        if ($this->input->post('nip') != null) {
+            $data = [
+                'Mahasiswanim' => $nim,
+                'Dosennip' => $this->input->post('nip'),
+                'statusPembimbing' => $this->input->post('pembimbing'),
+                'tgl_tambah_pembimbing' => date('Y-m-d')
+            ];
+            $this->db->insert('pembimbing', $data);
+            $this->session->set_flashdata('message', 'Pembimbing berhasil ditambah !');
+        } else {
+            $this->session->set_flashdata('error', 'Pembimbing gagal ditambah !');
+        }
         redirect('operator/mahasiswa/profile/' . $nim);
     }
     public function hapusPembimbing($nim)
     {
         $id = $this->input->post('pembimbing');
         $this->db->delete('pembimbing', ['id' => $id]);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Pembimbing berhasil di hapus ! </div>');
+        $this->session->set_flashdata('message', 'Pembimbing berhasil dihapus !');
         redirect('operator/mahasiswa/profile/' . $nim);
     }
     public function updateStatusMahasiswa($nim)
@@ -196,7 +206,7 @@ class Operator extends CI_Controller
         $data['statusTPA'] = $this->input->post('cekstatusTPA');
         $this->db->where('nim', $nim);
         $this->db->update('mahasiswa', $data);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di perbaharui ! </div>');
+        $this->session->set_flashdata('message', 'Status mahasiswa berhasil diubah !');
         redirect('operator/mahasiswa/profile/' . $nim);
     }
     public function ujian()
@@ -239,7 +249,7 @@ class Operator extends CI_Controller
         if ($ujian['kodeUjiankode'] == 4 || $ujian['kodeUjiankode'] == 12 || $ujian['kodeUjiankode'] == 16) {
             $this->_kalkulasiNilaiTA($ujian['nim']);
         }
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Nilai berhasil di perbaharui ! </div>');
+        $this->session->set_flashdata('message', 'Nilai berhasil diperbaharui !');
         redirect('operator/validasi_cek/' . $id_ujian);
     }
     public function validasi_cek($id_ujian)
@@ -272,7 +282,6 @@ class Operator extends CI_Controller
             $this->load->model('Operator_model', 'operator');
             $this->operator->validasiUjian($data);
         }
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di ubah ! </div>');
         redirect('operator/validasi_cek/' . $id);
     }
     public function getInfoPenguji($nip)
@@ -287,7 +296,7 @@ class Operator extends CI_Controller
         $this->load->model('Dosen_model', 'dosen');
         $this->form_validation->set_rules('nip', 'Dosen', 'required');
         if ($this->form_validation->run() == false) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data penguji tidak berhasil di tambah ! </div>');
+            $this->session->set_flashdata('error', 'Penguji tidak berhasil ditambah !');
             redirect('operator/validasi_cek/' . $id_ujian);
         } else {
             $data = [
@@ -299,7 +308,7 @@ class Operator extends CI_Controller
             // update Nilai
             $NilaiAkhir = $this->dosen->cekNilaiAkhir($data['ujianid']);
             $this->dosen->updateNilaiAkhir($NilaiAkhir['nilai'], $data['ujianid']);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data penguji berhasil di tambah ! </div>');
+            $this->session->set_flashdata('message', 'Penguji berhasil ditambah !');
             redirect('operator/validasi_cek/' . $id_ujian);
         }
     }
@@ -315,7 +324,7 @@ class Operator extends CI_Controller
         $NilaiAkhir = $this->dosen->cekNilaiAkhir($id_ujian);
         $this->dosen->updateNilaiAkhir($NilaiAkhir['nilai'], $id_ujian);
         // akhir update nilai
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">penguji berhasil di hapus ! </div>');
+        $this->session->set_flashdata('message', 'Penguji berhasil dihapus !');
         redirect('operator/validasi_cek/' . $id_ujian);
     }
     public function publikasi()
@@ -346,9 +355,12 @@ class Operator extends CI_Controller
         if ($this->input->post('valid')) {
             $this->db->set('kategoriJurnal', $this->input->post('kategoriJurnal'));
             $this->db->set('valid', $this->input->post('valid'));
+            if ($this->input->post('valid') == 1 || $this->input->post('valid') == 3) {
+                $this->db->set('status_notif', 0);
+            }
             $this->db->where('idJurnal', $idJurnal);
             $this->db->update('publikasi');
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data publikasi berhasil di perbaharui ! </div>');
+            $this->session->set_flashdata('message', 'Publikasi berhasil divalidasi !');
             redirect('operator/validasi_publikasi/' . $idJurnal);
         }
         $this->load->view('operator/validasi_operator_publikasi_cek', $data);

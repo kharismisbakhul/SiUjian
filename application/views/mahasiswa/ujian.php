@@ -5,35 +5,39 @@
             <h1 class="h3 mb-4 text-gray-800"><?= $title; ?> - <?= $user_login['nama']  ?>(<?= $user_login['nim']  ?>)</h1>
         </div>
         <div class="col-xl-2">
+            <?php if ($cek_pembimbing) : ?>
+            <?php if ($cek_ujian['statusUjian'] == 1 && $cek_ujian['valid'] == 1) : ?>
             <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1 && $jumlah_ujian < 8) : ?>
             <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
-                <button type="submit" class="btn btn-success float-right mb-2 tombol">
+                <button type="submit" class="btn btn-success btn-icon-split float-right">
                     <span class="icon text-white-50">
-                        <i class="fas fa-fw fa-plus-circle"></i>
+                        <i class="fas fa-plus-circle"></i>
                     </span>
-                    <span class="text">Tambah</span>
+                    <span class="text">Tambah Ujian</span>
                 </button>
             </form>
             <?php elseif ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] != 1 &&  $jumlah_ujian < 4) : ?>
             <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
-                <button type="submit" class="btn btn-success float-right mb-2 tombol">
+                <button type="submit" class="btn btn-success btn-icon-split float-right">
                     <span class="icon text-white-50">
-                        <i class="fas fa-fw fa-plus-circle"></i>
+                        <i class="fas fa-plus-circle"></i>
                     </span>
-                    <span class="text">Tambah</span>
+                    <span class="text">Tambah Ujian</span>
                 </button>
             </form>
-            <?php elseif ($user_login['jenjang'] == 'S2' && $user_login['jurusankode'] != 1 && $jumlah_ujian < 4) : ?>
+            <?php elseif ($user_login['jenjang'] == 'S2'  && $jumlah_ujian < 4) : ?>
             <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
-                <button type="submit" class="btn btn-success float-right mb-2 tombol">
+                <button type="submit" class="btn btn-success btn-icon-split float-right">
                     <span class="icon text-white-50">
-                        <i class="fas fa-fw fa-plus-circle"></i>
+                        <i class="fas fa-plus-circle"></i>
                     </span>
-                    <span class="text">Tambah</span>
+                    <span class="text">Tambah Ujian</span>
                 </button>
             </form>
+            <?php endif; ?>
+            <?php endif; ?>
             <?php else : ?>
-            <button type="submit" class="btn btn-secondary float-right mb-2 tombol">
+            <button type="submit" class="btn btn-secondary btn-icon-split float-right mb-2 tombol">
                 <span class="icon text-white-50">
                     <i class="fas fa-fw fa-plus-circle"></i>
                 </span>
@@ -45,7 +49,7 @@
 
     <div class="row">
         <div class="col-md-5">
-            <?= $this->session->flashdata('message');  ?>
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
             <div class="card shadow mb-3 box border-left-primary">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -143,7 +147,7 @@
                                     <?php endif; ?>
                                     <td>
                                         <?php if ($u['valid'] != 1) :  ?>
-                                        <a href="<?= base_url('mahasiswa')  ?>/hapusUjian/<?= $u['id'];  ?>" class="btn btn-danger btn-icon-split btn-sm">
+                                        <a href="<?= base_url('mahasiswa')  ?>/hapusUjian/<?= $u['id'];  ?>" class="btn btn-danger btn-icon-split btn-sm tombol-hapus">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-fw fa-trash-alt"></i>
                                             </span>

@@ -59,11 +59,11 @@
                         <div class="col-sm-4">
                             <select class="form-control" id="statusJurnal" name="statusJurnal">
                                 <?php foreach ($statusJurnal as $j) : ?>
-                                    <?php if ($jurnal['statusJurnal'] == $j) : ?>
-                                        <option value="<?= $j; ?>" selected><?= $j ?> </option>
-                                    <?php else : ?>
-                                        <option value="<?= $j; ?>"><?= $j; ?></option>
-                                    <?php endif; ?>
+                                <?php if ($jurnal['statusJurnal'] == $j) : ?>
+                                <option value="<?= $j; ?>" selected><?= $j ?> </option>
+                                <?php else : ?>
+                                <option value="<?= $j; ?>"><?= $j; ?></option>
+                                <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -90,20 +90,22 @@
                         <div class="col-sm-4">
                             <!-- apabila user sebagai mhs,dosen,pimpinan -->
                             <?php if ($this->session->userdata('user_profile_kode') == 5  || $this->session->userdata('user_profile_kode') == 4 || $this->session->userdata('user_profile_kode') == 3) { ?>
-                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>" readonly>
+                            <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>" readonly>
                             <?php } else { ?>
-                                <!-- apabila user sebagai admin,operator -->
-                                <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>">
+                            <!-- apabila user sebagai admin,operator -->
+                            <input type="text" class="form-control" name="kategoriJurnal" id="kategoriJurnal" placeholder="Di isikan operator..." value="<?= $jurnal['kategoriJurnal'] ?>">
                             <?php } ?>
                         </div>
                     </div>
 
                     <div class="row mt-4">
-                        <div class="col-lg-8">
-                        </div>
-                        <div class="col-lg-4">
-                            <a href="<?= base_url('mahasiswa') ?>/publikasi" class="btn btn-primary">kembali</a>
-                            <button type="submit" class="btn btn-success ">Edit</button>
+                        <div class="col-lg-11">
+                            <button type="submit" class="btn btn-primary btn-icon-split float-right">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                                <span class="text">Edit</span>
+                            </button>
                         </div>
                     </div>
 

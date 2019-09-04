@@ -61,15 +61,15 @@ class Auth extends CI_Controller
                         redirect('Mahasiswa');
                     }
                 } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong Password !</div>');
+                    $this->session->set_flashdata('message', '<div class="px-5 alert alert-danger text-center" role="alert">Wrong Password !</div> ');
                     redirect('auth');
                 }
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">This username has not been activated !</div>');
+                $this->session->set_flashdata('message', '<div class="px-5 alert alert-danger text-center" role="alert">This username has not been activated !</div> ');
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username is not available !</div>');
+            $this->session->set_flashdata('message', '<div class="px-5 alert alert-danger text-center" role="alert" >Username is not available ! </div>');
             redirect('auth');
         }
     }
@@ -80,7 +80,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('user_profile_kode');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success text-center" role="alert">Logout Success</div>');
+        $this->session->set_flashdata('message', ' <div class="alert alert-success text-center" role="alert">Logout Success </div> ');
         redirect('auth');
     }
 

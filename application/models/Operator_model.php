@@ -74,6 +74,9 @@ class Operator_model extends CI_Model
     {
         $this->db->set('komentar', $data['komentar']);
         $this->db->set('tgl_ujian', $data['tanggal']);
+        if ($data['valid'] == 1 || $data['valid'] == 3) {
+            $this->db->set('status_notif', 0);
+        }
         $this->db->set('valid', $data['valid']);
         $this->db->where('id', $data['id']);
         $this->db->update('ujian');

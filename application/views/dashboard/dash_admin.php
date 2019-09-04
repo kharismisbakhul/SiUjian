@@ -38,18 +38,18 @@
               </div>
             </div>
 
-            <div class="col-xl-4 col-md-6 col-lg-4 mb-4">
+            <div class="col-xl-4 col-md-6 col-lg-4 mb-4 dftr">
               <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                      <div class="text-xs font-weight-bold text-danger  mb-1">
                         Jumlah Mahasiswa Ujian Hari Ini</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3">
                         <span><?= $jumlah_ujian_hari_ini; ?></span> Mahasiswa</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-graduation-cap fa-4x text-gray-300"></i>
+                      <i class="fas fa-graduation-cap fa-4x text-danger"></i>
                     </div>
                   </div>
                 </div>
@@ -57,18 +57,18 @@
             </div>
 
             <!-- Jadwal Ujian Selanjutnya -->
-            <div class="col-xl-4 col-md-6 col-lg-4 mb-4">
+            <div class="col-xl-4 col-md-6 col-lg-4 mb-4 dftr">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      <div class="text-xs font-weight-bold text-success  mb-1">
                         Jumlah Ujian Hari Ini</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><?= $jumlah_ujian_hari_ini; ?> Ujian
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar-alt fa-4x text-gray-300"></i>
+                      <i class="fas fa-file-alt fa-4x text-success"></i>
                     </div>
                   </div>
                 </div>
@@ -76,53 +76,53 @@
             </div>
 
             <!-- Jadwal Ujian Selanjutnya -->
-            <div class="col-xl-4 col-md-6 col-lg-4 mb-4">
+            <div class="col-xl-4 col-md-6 col-lg-4 mb-4 dftr">
               <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                        Jumlah Penguji Ujian Hari Ini</div>
+                      <div class="text-xs font-weight-bold text-warning mb-1">
+                        Jumlah Penguji Hari Ini</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><?= $jumlah_penguji_hari_ini; ?> Penguji
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar-alt fa-4x text-gray-300"></i>
+                      <i class="fas fa-user-tie fa-4x text-warning"></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-md-6 col-lg-4 mb-4">
+            <div class="col-xl-4 col-md-6 col-lg-4 mb-4 dftr">
               <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                      <div class="text-xs font-weight-bold text-danger mb-1">
                         Jumlah Mahasiswa Keseluruhan</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><span><?= $jumlah_mahasiswa; ?></span> Mahasiswa
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-graduation-cap fa-4x text-gray-300"></i>
+                      <i class="fas fa-users fa-4x text-danger"></i>
                     </div>
                   </div>
                   <div class="text-xs pt-2 see-more not-dosen font-weight-normal"><a href="<?= base_url('operator/mahasiswa/list') ?>">lihat selengkapnya</a></div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-md-6 col-lg-4 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
+            <div class="col-xl-4 col-md-6 col-lg-4 mb-4 dftr">
+              <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                      <div class="text-xs font-weight-bold text-success mb-1">
                         Jumlah Operator</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><span><?= $jumlah_operator; ?></span> Operator
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fab fa-redhat fa-4x text-gray-300"></i>
+                      <i class="fab fa-redhat fa-4x text-success"></i>
                     </div>
                   </div>
                   <div class="text-xs pt-2 see-more not-dosen font-weight-normal"><a href="<?= base_url('admin/manajemenUser') ?>">lihat selengkapnya</a></div>
@@ -130,18 +130,18 @@
               </div>
             </div>
 
-            <div class="col-xl-4 col-md-6 col-lg-4 mb-4">
+            <div class="col-xl-4 col-md-6 col-lg-4 mb-4 dftr">
               <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      <div class="text-xs font-weight-bold text-warning  mb-1">
                         Jumlah Dosen Pembimbing</div>
                       <div class="h4 mb-0 font-weight-bold text-gray-800 mt-3"><span><?= $jumlah_pembimbing; ?> Dosen
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-chalkboard-teacher fa-4x text-gray-300"></i>
+                      <i class="fas fa-chalkboard-teacher fa-4x text-warning"></i>
                     </div>
                   </div>
                   <div class="text-xs pt-2 see-more not-dosen font-weight-normal"><a href="<?= base_url('operator/dosen/list') ?>">lihat selengkapnya</a></div>
@@ -149,7 +149,7 @@
               </div>
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-12 box">
               <!-- Content Row -->
               <div class="row">
 

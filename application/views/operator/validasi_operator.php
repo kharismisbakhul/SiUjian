@@ -19,13 +19,13 @@
 
       <div class="row">
         <div class="col-lg-6">
-          <?= $this->session->flashdata('message');  ?>
+          <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
         </div>
       </div>
 
 
       <!-- Content Row -->
-      <div class="row">
+      <div class="row box">
 
         <div class="d-none d-lg-block col-md-8 mb-4">
           <div class="shadow mb-1">
@@ -36,9 +36,13 @@
             </a>
             <div class="collapse show" id="collapseCardExample">
               <div class="card-body pb-4">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
-                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
-                possimus!
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                  <span class="font-weight-bold">Detail Ujian</span> adalah halaman untuk memverifikasi permintaan ujian dari mahasiswa S2 dan S3 serta menambahkan penguji untuk ujiannya
+                  dan memberikan nilai untuk hasil ujian yang telah dilakukan serta memberikan status kelulusan dari ujian tersebut.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

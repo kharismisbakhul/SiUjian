@@ -91,25 +91,26 @@ $('.modalDetail').on("click", function () {
                   <span>` + data.tglMulaiTA + `</span>
                 </div>
               </div>
-  
-              <div class="row">
-                <h5 class="col-sm-6 mt-2 ">Daftar Dosen Pendamping</h5>
+
+              <div class="card">
+                <h6 class="card-header">Daftar Dosen Pendamping</h6>
+                <div class="card-body">
+                  <div class=" row ml-1 mr-1">
+                    <table class="table table-sm table-striped">
+                      <thead>
+                        <tr class="bg-primary text-white">
+                          <th scope="col">#</th>
+                          <th scope="col">Nama Dosen</th>
+                          <th scope="col">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="dosen_pembimbing">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-  
-              <div class=" row ml-1 mr-1">
-  
-                <table class="table table-sm ">
-                  <thead>
-                    <tr style="background-color: 	#C0C0C0; color: #101010">
-                      <th scope="col">#</th>
-                      <th scope="col">Nama Dosen</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody id="dosen_pembimbing">
-                  </tbody>
-                </table>
-              </div>
+
             </form>
               `);
 			data.dosen_pembimbing.forEach(dosenLoop);

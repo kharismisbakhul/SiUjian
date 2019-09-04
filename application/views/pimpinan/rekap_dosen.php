@@ -18,7 +18,7 @@
             </div>
 
             <!-- Content Row -->
-            <div class="row">
+            <div class="row box">
 
                 <div class="d-none d-lg-block col-md-8 mb-4">
                     <div class="shadow mb-1">
@@ -30,11 +30,12 @@
                         </a>
                         <div class="collapse show" id="collapseCardExample">
                             <div class="card-body pb-4">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam
-                                excepturi non ipsam
-                                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque
-                                consequuntur quae sit
-                                possimus!
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    <span class="font-weight-bold">Rekap Dosen</span> adalah rekapan keselurahan informasi detail dosen selama menjadi pembimbing maupun penguji mahasiswa
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,8 +76,8 @@
                                         </div>
                                     </form>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
+                                        <table class="table table-bordered text-center table-striped" id="dataTable" width="100%" cellspacing="0">
+                                            <thead style="background-color: #2980b9;color:#ecf0f1 ">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Nama Dosen</th>
@@ -90,7 +91,7 @@
                                                 foreach ($rekap_dosen as $rd) : ?>
                                                     <tr>
                                                         <td><?= $i; ?></td>
-                                                        <td><?= $rd['nama_dosen']; ?></td>
+                                                        <td class="text-left"><?= $rd['nama_dosen']; ?></td>
                                                         <td><?= $rd['jumlah_mahasiswa_bimbingan']; ?></td>
                                                         <td><?= $rd['jumlah_menguji']; ?></td>
                                                         <td class="text-center">
@@ -102,7 +103,7 @@
                                                             </button>
                                                         </td>
                                                     </tr>
-                                                    <?php $i++;
+                                                <?php $i++;
                                                 endforeach; ?>
                                             </tbody>
                                         </table>
@@ -122,7 +123,7 @@
 
     <!-- Detail profile modal -->
     <div class="modal fade bd-example-modal-lg modalDetailRekap" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header bg-blue">
                     <h5 class="modal-title clr-white ml-4" id="exampleModalLabel">Detail Rekapitulasi Dosen - <span class="nama-dosennya"></span></h5>
