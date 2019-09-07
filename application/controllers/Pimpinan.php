@@ -73,21 +73,20 @@ class Pimpinan extends CI_Controller
 
 
         if ($data['user_login']['jabatan_pimpinan'] != "") {
-            if ($data['user_login']['jabatan_pimpinan'] == "Dekan" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 1" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 2" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 3") {
+            if ($data['user_login']['jabatan_pimpinan'] >= 15) {
                 $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date']);
-            } elseif ($data['user_login']['jabatan_pimpinan'] == "Kajur") {
+            } elseif ($data['user_login']['jabatan_pimpinan'] == 14) {
                 $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date'], null, $data['user_login']['jurusankode']);
-            } elseif ($data['user_login']['jabatan_pimpinan'] == "KPS") {
+            } elseif ($data['user_login']['jabatan_pimpinan'] == 13) {
                 $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date'], $data['user_login']['prodi_dosen'], null);
             }
         } elseif ($this->uri->segment(3) || $this->uri->segment(4)) {
-            if ($this->uri->segment(3) == "Dekan" || $this->uri->segment(3) == "Wakil Dekan 1" || $this->uri->segment(3) == "Wakil Dekan 2" || $this->uri->segment(3) == "Wakil Dekan 3") {
-
+            if ($this->uri->segment(3) >= 15) {
                 $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date']);
-            } elseif ($this->uri->segment(3) == "Kajur") {
+            } elseif ($this->uri->segment(3) == 14) {
                 $jurusan = $this->db->select('jurusankode')->get_where('prodi', ['kode' => $this->uri->segment(4)])->row_array();
                 $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date'], null, $jurusan);
-            } elseif ($this->uri->segment(3) == "KPS") {
+            } elseif ($this->uri->segment(3) == 13) {
                 $jenjang = $this->db->select('jenjang_prodi')->get_where('prodi', ['kode' => $this->uri->segment(4)])->row_array();
 
                 $data['mahasiswa'] = $this->mahasiswa->getDetailLaporanMahasiswa($data['star_date'], $data['end_date'], $this->uri->segment(4), null, $jenjang['jenjang_prodi']);
@@ -104,25 +103,31 @@ class Pimpinan extends CI_Controller
         $data = $this->initData();
         $data['star_date'] = "";
         $data['end_date'] = "";
+
+        if ($this->input->post('star_date') && $this->input->post('end_date')) {
+            $data['star_date'] = $this->input->post('star_date');
+            $data['end_date'] = $this->input->post('end_date');
+        }
+
         if ($this->session->userdata("user_profile_kode") == 3) {
             if ($data['user_login']['jabatan_pimpinan'] != "") {
-                if ($data['user_login']['jabatan_pimpinan'] == "Dekan" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 1" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 2" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 3") {
-                    $data['dosen'] = $this->dosen->getListDosen($data['user_login']['nip']);
-                } elseif ($data['user_login']['jabatan_pimpinan'] == "Kajur") {
-                    $data['dosen'] = $this->dosen->getListDosen($data['user_login']['nip'], null, $data['user_login']['jurusankode']);
-                } elseif ($data['user_login']['jabatan_pimpinan'] == "KPS") {
-                    $data['dosen'] = $this->dosen->getListDosen($data['user_login']['nip'], $data['user_login']['prodi_dosen']);
+                if ($data['user_login']['jabatan_pimpinan'] >= 15) {
+                    $data['dosen'] = $this->dosen->getListDosen($data['star_date'], $data['end_date'], $data['user_login']['nip']);
+                } elseif ($data['user_login']['jabatan_pimpinan'] == 14) {
+                    $data['dosen'] = $this->dosen->getListDosen($data['star_date'], $data['end_date'], $data['user_login']['nip'], null, $data['user_login']['jurusankode']);
+                } elseif ($data['user_login']['jabatan_pimpinan'] == 13) {
+                    $data['dosen'] = $this->dosen->getListDosen($data['star_date'], $data['end_date'], $data['user_login']['nip'], $data['user_login']['prodi_dosen']);
                 }
             }
         }
         if ($this->uri->segment(3) && $this->uri->segment(4)) {
-            if ($this->uri->segment(3) == "Dekan" || $this->uri->segment(3) == "Wakil Dekan 1" || $this->uri->segment(3) == "Wakil Dekan 2" || $this->uri->segment(3) == "Wakil Dekan 3") {
-                $data['dosen'] = $this->dosen->getListDosen($this->uri->segment(5));
-            } elseif ($this->uri->segment(3) == "Kajur") {
+            if ($this->uri->segment(3) >= 15) {
+                $data['dosen'] = $this->dosen->getListDosen($data['star_date'], $data['end_date'], $this->uri->segment(5));
+            } elseif ($this->uri->segment(3) == 14) {
                 $jurusan = $this->db->select('jurusankode')->get_where('prodi', ['kode' => $this->uri->segment(4)])->row_array();
-                $data['dosen'] = $this->dosen->getListDosen($this->uri->segment(5), null, $jurusan['jurusankode']);
-            } elseif ($this->uri->segment(3) == "KPS") {
-                $data['dosen'] = $this->dosen->getListDosen($this->uri->segment(5), $this->uri->segment(4));
+                $data['dosen'] = $this->dosen->getListDosen($data['star_date'], $data['end_date'], $this->uri->segment(5), null, $jurusan['jurusankode']);
+            } elseif ($this->uri->segment(3) == 13) {
+                $data['dosen'] = $this->dosen->getListDosen($data['star_date'], $data['end_date'], $this->uri->segment(5), $this->uri->segment(4));
             }
         }
 
@@ -144,22 +149,22 @@ class Pimpinan extends CI_Controller
         }
         if ($this->session->userdata("user_profile_kode") == 3) {
             if ($data['user_login']['jabatan_pimpinan'] != "") {
-                if ($data['user_login']['jabatan_pimpinan'] == "Dekan" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 1" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 2" || $data['user_login']['jabatan_pimpinan'] == "Wakil Dekan 3") {
+                if ($data['user_login']['jabatan_pimpinan'] >= 15) {
                     $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip'], 0, null,  $data['star_date'], $data['end_date']);
-                } elseif ($data['user_login']['jabatan_pimpinan'] == "Kajur") {
+                } elseif ($data['user_login']['jabatan_pimpinan'] == 14) {
                     $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip'], 0, $data['user_login']['jurusankode'],  $data['star_date'], $data['end_date']);
-                } elseif ($data['user_login']['jabatan_pimpinan'] == "KPS") {
+                } elseif ($data['user_login']['jabatan_pimpinan'] == 13) {
                     $data['rekap_dosen'] = $this->dosen->getRekapDosen($data['user_login']['nip'], $data['user_login']['prodi_dosen'], null,  $data['star_date'], $data['end_date']);
                 }
             }
         }
         if ($this->uri->segment(3) && $this->uri->segment(4)) {
-            if ($this->uri->segment(3) == "Dekan" || $this->uri->segment(3) == "Wakil Dekan 1" || $this->uri->segment(3) == "Wakil Dekan 2" || $this->uri->segment(3) == "Wakil Dekan 3") {
+            if ($this->uri->segment(3) >= 15) {
                 $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5), 0, null,  $data['star_date'], $data['end_date']);
-            } elseif ($this->uri->segment(3) == "Kajur") {
+            } elseif ($this->uri->segment(3) == 14) {
                 $jurusan = $this->db->select('jurusankode')->get_where('prodi', ['kode' => $this->uri->segment(4)])->row_array();
                 $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5), 0, $jurusan,  $data['star_date'], $data['end_date']);
-            } elseif ($this->uri->segment(3) == "KPS") {
+            } elseif ($this->uri->segment(3) == 13) {
                 $data['rekap_dosen'] = $this->dosen->getRekapDosen($this->uri->segment(5), $this->uri->segment(4), null,  $data['star_date'], $data['end_date']);
             }
         }

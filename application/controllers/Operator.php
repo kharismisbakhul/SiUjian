@@ -115,10 +115,40 @@ class Operator extends CI_Controller
         $data = $this->initData();
         $this->load->model('dosen_model', 'dosen');
         $data['pimpinan'] = $this->dosen->getPimpinanPlusProdi();
+        $data['posisi'] = $this->dosen->getPosisiPimpinan();
+        $data['dosen'] = $this->operator->cekPimpinan();
         $data['title'] = 'Pimpinan';
         $this->loadTemplate($data);
         $this->load->view('operator/listPimpinan', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function ubahPimpinan()
+    {
+        $this->db->set('jabatan_pimpinan', 0);
+        $this->db->where('nip', $this->input->post('nip_pimpinan_old'));
+        $this->db->update('dosen');
+
+        if ($this->input->post('jabatan') == 13) {
+            $this->db->set('jabatan_pimpinan', $this->input->post('jabatan'));
+            $this->db->where('nip', $this->input->post('nip'));
+            $this->db->update('dosen');
+        } else if ($this->input->post('jabatan') == 14) {
+            $this->db->set('jabatan_pimpinan', $this->input->post('jabatan'));
+            $this->db->where('nip', $this->input->post('nip'));
+            $this->db->update('dosen');
+        } else {
+            $this->db->set('jabatan_pimpinan', $this->input->post('jabatan'));
+            $this->db->where('nip', $this->input->post('nip'));
+            $this->db->update('dosen');
+        }
+        redirect('operator/pimpinan');
+    }
+    public function getPosisiDosen($nip)
+    {
+        $this->load->model('dosen_model', 'dosen');
+        $dosen = $this->dosen->getDataDosen($nip);
+        echo json_encode($dosen);
     }
 
     public function getDetailUjian($id_ujian)

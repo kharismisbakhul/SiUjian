@@ -56,21 +56,29 @@
                                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Nama Dosen</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row mb-2">
-                                        <div class="col-md-3">
-                                            <small>Mulai Periode</small>
-                                            <input type="date" class="form-control star_date" name="star_date">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <small>Akhir Periode</small>
-                                            <div class="input-group mb-3">
-                                                <input type="date" class="form-control end_date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
-                                                <div class="input-group-append">
-                                                    <input type="button" class="btn btn-primary " name="submit" value="cari" id="basic-addon2">
+                                    <form action="<?= base_url('pimpinan/laporanDosen/') . $this->uri->segment(3) . '/' . $this->uri->segment(4) . '/' . $this->uri->segment(5); ?>" method="post">
+                                        <div class="row mb-2">
+                                            <div class="col-md-3">
+                                                <small>Mulai Periode</small>
+                                                <?php if ($star_date != null) : ?>
+                                                    <small class="str"> <?= $star_date ?></small>
+                                                <?php endif; ?>
+                                                <input type="date" class="form-control star_date" name="star_date">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <small>Akhir Periode</small>
+                                                <?php if ($end_date != null) : ?>
+                                                    <small class="end"> <?= $end_date ?></small>
+                                                <?php endif; ?>
+                                                <div class="input-group mb-3">
+                                                    <input type="date" class="form-control end_date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
+                                                    <div class="input-group-append">
+                                                        <input type="submit" class="btn btn-primary submit" name="submit" value="cari" id="basic-addon2">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
 
                                     <div class="table-responsive">
                                         <table class="table table-bordered text-center table-striped" id="dataTableLaporanDsn" width="100%" cellspacing="0">

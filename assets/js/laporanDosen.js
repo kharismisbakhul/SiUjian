@@ -3,8 +3,12 @@ var url = $(location).attr("href");
 var segments = url.split("/");
 $('.modalDetailBimbingan').on("click", function () {
 	var nip = $(this).data('id');
-	let star_date = $('.star_date').val();
-	let end_date = $('.end_date').val();
+	var star_date = ''
+	var end_date = ''
+	if ($('.str').html() != null || $('.end').html() != null) {
+		star_date = $('.str').html()
+		end_date = $('.end').html();
+	}
 	console.log(star_date)
 	$.ajax({
 		url: segments[0] + '/SiUjian/Pimpinan/detailMahasiswaBimbingan/' + nip + '?star_date=' + star_date + '&end_date=' + end_date,
@@ -14,7 +18,7 @@ $('.modalDetailBimbingan').on("click", function () {
 
 		},
 		success: function (data) {
-			console.log(data)
+
 			$(".modal-body").html('');
 			$(".modal-title .nama_dosen").html(data.nama_dosen);
 			if (data.mahasiswa_bimbingan.length != 0) {

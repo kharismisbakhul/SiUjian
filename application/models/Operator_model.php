@@ -101,6 +101,7 @@ class Operator_model extends CI_Model
         $this->db->from('posisi');
         $this->db->join('(' . $from_clause . ') as kode', 'kode.statusPenguji=posisi.id', 'left');
         $this->db->where('kode.statusPenguji', null);
+        $this->db->where('posisi.id <', 13);
         return $this->db->get()->result_array();
     }
     public function getPenguji($id_ujian)
@@ -112,6 +113,19 @@ class Operator_model extends CI_Model
         $this->db->join('posisi', 'posisi.id=penguji.statusPenguji', 'left');
         $this->db->where('penguji.ujianid=ujian.id');
         $this->db->order_by('posisi.id');
+        return $this->db->get()->result_array();
+    }
+
+    public function cekPimpinan()
+    {
+        $this->db->select('*');
+        $this->db->from('dosen as d');
+        $this->db->where('d.jabatan_pimpinan != ""');
+        $from_clause = $this->db->get_compiled_select();
+        $this->db->select('dosen.*');
+        $this->db->from('dosen');
+        $this->db->join('(' . $from_clause . ') as C', 'dosen.nip = C.nip ', 'left');
+        $this->db->where('C.nip', null);
         return $this->db->get()->result_array();
     }
     public function cekPenguji($id_ujian)

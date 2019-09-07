@@ -56,14 +56,14 @@
                       <div class="col-md-3">
                         <small>Mulai Periode</small>
                         <?php if ($star_date != null) : ?>
-                        <small> <?= $star_date ?></small>
+                          <small> <?= $star_date ?></small>
                         <?php endif; ?>
                         <input type="date" class="form-control" name="star_date">
                       </div>
                       <div class="col-md-3">
                         <small>Akhir Periode</small>
                         <?php if ($end_date != null) : ?>
-                        <small> <?= $end_date ?></small>
+                          <small> <?= $end_date ?></small>
                         <?php endif; ?>
                         <div class="input-group mb-3">
                           <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
@@ -92,51 +92,51 @@
                       <tbody>
                         <?php $i = 1; ?>
                         <?php foreach ($mahasiswa as $m) : ?>
-                        <tr>
-                          <td><?= $i; ?></td>
-                          <th><?= $m['tglMulaiTA'] ?></th>
-                          <td><?= $m['nama']; ?></td>
-                          <td><?= $m['nim']; ?></td>
-                          <td><?= $m['jenjang']; ?></td>
-                          <td><?= $m['nama_prodi']; ?></td>
-                          <?php if ($m['statusKelulusan'] == 1) : ?>
-                          <td>Lulus</td>
-                          <td>-</td>
-                          <?php elseif ($m['nama_ujian'] != null) : ?>
-                          <td><?= $m['nama_ujian']  ?></td>
-                          <?php if ($m['statusUjian'] == 1) : ?>
-                          <td class="text-success font-weight-bold">Lulus</td>
-                          <?php elseif ($m['statusUjian'] == 2) : ?>
-                          <td class="text-primary font-weight-bold">Proses</td>
-                          <?php else : ?>
-                          <td class="text-danger font-weight-bold">Tidak Lulus</td>
-                          <?php endif; ?>
-                          <?php elseif ($m['nama_ujian'] == null) : ?>
-                          <td>Baru Mulai</td>
-                          <td>-</td>
-                          <?php endif; ?>
-                          <td class="text-center">
-                            <a href="<?= base_url('operator/mahasiswa/profile/') . $m['nim']; ?>" class="btn btn-info btn-icon-split btn-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-eye"></i>
-                              </span>
-                              <span class="text">Profile</span>
-                            </a>
-                            <a href="<?= base_url('operator/mahasiswa/ujian/') . $m['nim']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-paste"></i>
-                              </span>
-                              <span class="text clr-white">Ujian</span>
-                            </a>
-                            <a href="<?= base_url('operator/mahasiswa/publikasi/') . $m['nim']; ?>" class="btn btn-publikasi btn-icon-split btn-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-book"></i>
-                              </span>
-                              <span class="text clr-white">Publikasi</span>
-                            </a>
-                          </td>
-                        </tr>
-                        <?php $i++; ?>
+                          <tr>
+                            <td><?= $i; ?></td>
+                            <th class="text-center"><?= date("d/m/Y", strtotime($m['tglMulaiTA'])) ?></th>
+                            <td><?= $m['nama']; ?></td>
+                            <td><?= $m['nim']; ?></td>
+                            <td><?= $m['jenjang']; ?></td>
+                            <td><?= $m['nama_prodi']; ?></td>
+                            <?php if ($m['statusKelulusan'] == 1) : ?>
+                              <td>Lulus</td>
+                              <td>-</td>
+                            <?php elseif ($m['nama_ujian'] != null) : ?>
+                              <td><?= $m['nama_ujian']  ?></td>
+                              <?php if ($m['statusUjian'] == 1) : ?>
+                                <td class="text-success font-weight-bold">Lulus</td>
+                              <?php elseif ($m['statusUjian'] == 2) : ?>
+                                <td class="text-primary font-weight-bold">Proses</td>
+                              <?php else : ?>
+                                <td class="text-danger font-weight-bold">Tidak Lulus</td>
+                              <?php endif; ?>
+                            <?php elseif ($m['nama_ujian'] == null) : ?>
+                              <td>Baru Mulai</td>
+                              <td>-</td>
+                            <?php endif; ?>
+                            <td class="text-center">
+                              <a href="<?= base_url('operator/mahasiswa/profile/') . $m['nim']; ?>" class="btn btn-info btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-eye"></i>
+                                </span>
+                                <span class="text">Profile</span>
+                              </a>
+                              <a href="<?= base_url('operator/mahasiswa/ujian/') . $m['nim']; ?>" class="btn btn-ujian btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-paste"></i>
+                                </span>
+                                <span class="text clr-white">Ujian</span>
+                              </a>
+                              <a href="<?= base_url('operator/mahasiswa/publikasi/') . $m['nim']; ?>" class="btn btn-publikasi btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-book"></i>
+                                </span>
+                                <span class="text clr-white">Publikasi</span>
+                              </a>
+                            </td>
+                          </tr>
+                          <?php $i++; ?>
                         <?php endforeach; ?>
                       </tbody>
                       <tfoot>

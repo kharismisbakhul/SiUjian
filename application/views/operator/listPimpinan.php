@@ -57,14 +57,6 @@
                                     <h6 class="m-0 font-weight-bold text-capitalize clr-white">Daftar Pimpinan</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form style="float: right;">
-                                        <div class="form-row mb-3">
-                                            <!-- Isi Form AutoComplete nya disini -->
-                                            <!-- <div class="md-form">
-                                                <input type="text" id="dosenSearch" name="dosenSearch" placeholder="Nama Dosen" value="">
-                                            </div> -->
-                                        </div>
-                                    </form>
                                     <div class="table-responsive">
                                         <table class="table table-striped table-hover text-left text-nowrap table-sm" id="dataTable" width="100%" cellspacing="0">
                                             <thead class="text-center" style="background-color: #2980b9;color:#ecf0f1 ">
@@ -83,15 +75,21 @@
                                                         <td class="text-center"><?= $i; ?></td>
                                                         <td><?= $p['nama_dosen']; ?></td>
                                                         <td><?= $p['nip']; ?></td>
-                                                        <?php
-                                                            if ($p['jabatan_pimpinan'] == "Dekan" || $p['jabatan_pimpinan'] == "Wakil Dekan 1" || $p['jabatan_pimpinan'] == "Wakil Dekan 2" || $p['jabatan_pimpinan'] == "Wakil Dekan 3") {
-                                                                echo "<td>" . $p['jabatan_pimpinan'] . "</td>";
-                                                            } else if ($p['jabatan_pimpinan'] == "Kajur") {
-                                                                echo "<td>" . $p['jabatan_pimpinan'] . " " . $p['nama_prodi'] . "</td>";
-                                                            } else {
-                                                                echo "<td>" . $p['jabatan_pimpinan'] . " " . $p['nama_prodi'] . " " . $p['jenjang_prodi'] . "</td>";
-                                                            }
-                                                            ?>
+                                                        <?php if ($p['jabatan_pimpinan'] >= 15) : ?>
+                                                            <td> <?= $p['status_dosen'] ?> <button type="button" data-target="#ubahPimpinan" class="btn btn-outline-primary btn-circle btn-sm float-right ubahPimpinan" data-toggle="modal" data-nip="<?= $p['nip'] ?>">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </button> </td>
+                                                        <?php elseif ($p['jabatan_pimpinan'] == 14) : ?>
+                                                            <td><?= $p['status_dosen'] . " " . $p['nama_prodi'] ?> <button data-target="#ubahPimpinan" class="btn btn-outline-primary btn-circle btn-sm float-right ubahPimpinan" data-toggle="modal" data-nip="<?= $p['nip'] ?>">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </button> </td>
+                                                        <?php else : ?>
+                                                            <td> <?= $p['status_dosen'] . " " . $p['nama_prodi'] . " " . $p['jenjang_prodi']   ?>
+                                                                <button data-target="#ubahPimpinan" class="btn btn-outline-primary btn-circle btn-sm float-right ubahPimpinan" data-toggle="modal" data-nip="<?= $p['nip'] ?>">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </button> </td>
+                                                        <?php endif; ?>
+
                                                         <td class="text-center">
                                                             <a href="<?= base_url('pimpinan/laporanStatusMahasiswa/') . $p['jabatan_pimpinan'] . "/" . $p['prodi_dosen'] ?>" class="btn btn-info btn-icon-split btn-sm">
                                                                 <span class="icon text-white-50">
@@ -131,3 +129,72 @@
         <!-- /.container-fluid -->
     </div>
     <!-- End of Main Content -->
+
+    <!-- Modal Ubah Pimpinan -->
+    <div class="modal fade" id="ubahPimpinan" tabindex="-1" role="dialog" aria-labelledby="ubahPimpinan" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-blue">
+                    <h5 class="modal-title clr-white" id="exampleModalLabel">Ubah Pimpinan</h5>
+                    <button type="button" class="close clr-white cls" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="<?= base_url('operator/ubahPimpinan') ?>" class="table-responsive" method="post">
+                    <div class="container">
+                        <div class="modal-body" style="height: 35rem;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12 ml-2 mx-auto">
+                                    <table class="table table-bordered text-center" id="dataTablePimpinan" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="row">#</th>
+                                                <th scope="row">Nama Dosen</th>
+                                                <th scope="row">Nip</th>
+                                                <th style="width: 50%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="pop-dosen">
+                                            <?php $i = 1;
+                                            foreach ($dosen as $dsn) :  ?>
+                                                <tr>
+                                                    <td><?= $i++ ?></td>
+                                                    <td class="text-left"><?= $dsn['nama_dosen'];  ?></td>
+                                                    <td><?= $dsn['nip'] ?></td>
+                                                    <td>
+                                                        <input type="radio" name="nip" value="<?= $dsn['nip']  ?>">
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="modal-footer">
+                            <div class="input-group input-group-sm ">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Jabatan</span>
+                                </div>
+                                <input type="text" class="form-control jabatan" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="jabatan" name="p_posisi" readonly>
+                                <input type="hidden" name="jurusan" id="jurusan_p">
+                                <input type="hidden" name="prodi" id="prodi_p">
+                                <input type="hidden" name="jabatan" id="jabatan_p">
+                                <input type="hidden" name="nip_pimpinan_old" id="nip_pimpinan_old">
+                            </div>
+                            <div class="ket">
+
+                            </div>
+                            <button type="button" class="btn btn-secondary cls" data-dismiss="modal">Tutup</button>
+                            <input type="submit" class="btn btn-success cls" name="ubah" value="ubah">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Akhir Modal Ubah Pimpinan -->

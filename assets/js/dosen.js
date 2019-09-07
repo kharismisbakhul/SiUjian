@@ -140,8 +140,33 @@ $('.info-bimbingan').on('click', function () {
 		}
 	})
 });
-
 // akhir bimbingan
+
+// pimpinan
+$('.ubahPimpinan').on('click', function () {
+	let nip = $(this).data('nip');
+	$.ajax({
+		url: segments[0] + '/SiUjian/operator/getPosisiDosen/' + nip,
+		method: 'get',
+		dataType: 'json',
+		success: function (data) {
+			$('#nip_pimpinan_old').val(data['nip']);
+			if (data['jabatan_pimpinan'] == 13) {
+				$('.jabatan').val(data['status_dosen'] + ' ' + data['nama_prodi'] + ' ' + data['jenjang_prodi'])
+			} else if (data['jabatan_pimpinan'] == 14) {
+				$('.jabatan').val(data['status_dosen'] + ' ' + data['nama_jurusan'])
+			} else {
+				$('.jabatan').val(data['status_dosen'])
+			}
+			$('#prodi_p').val(data['prodi_dosen']);
+			$('#jabatan_p').val(data['jabatan_pimpinan']);
+			$('#jurusan_p').val(data['jurusankode']);
+			$('#nip_pimpinan_old').val(data['nip']);
+		}
+	})
+})
+// akhir pimpinan
+
 
 
 

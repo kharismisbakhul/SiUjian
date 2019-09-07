@@ -5,21 +5,27 @@ class Dosen_model extends CI_Model
 {
     public function getDataDosen($nip)
     {
-        $this->db->select('dosen.*,prodi.jurusankode');
+        $this->db->select('dosen.*,prodi.*,posisi.*,jurusan.nama_jurusan');
         $this->db->from('dosen');
-        $this->db->join('prodi', 'dosen.prodi_dosen=prodi.jurusankode', 'left');
+        $this->db->join('prodi', 'dosen.prodi_dosen=prodi.kode', 'left');
+        $this->db->join('jurusan', 'jurusan.kode=prodi.jurusankode', 'left');
+        $this->db->join('posisi', 'posisi.id=dosen.jabatan_pimpinan', 'left');
         $this->db->where('dosen.nip', $nip);
         return $this->db->get()->row_array();
     }
 
 
-    public function getListDosen($nip, $prodi = null, $jurusan = null)
+    public function getListDosen($star_date = null, $end_date = null, $nip, $prodi = null, $jurusan = null)
     {
 
         $this->db->select('dosen.nama_dosen, dosen.nip, dosen.statusAktif, COUNT(pembimbing.Mahasiswanim) as jumlah_bimbingan,dosen.prodi_dosen');
         $this->db->from('dosen');
         $this->db->join('pembimbing', 'dosen.nip = pembimbing.Dosennip', 'left');
         $this->db->where('dosen.nip  !=', $nip);
+        if ($star_date != null && $end_date != null) {
+            $this->db->where('pembimbing.tgl_tambah_pembimbing >=', $star_date);
+            $this->db->where('pembimbing.tgl_tambah_pembimbing <=', $end_date);
+        }
         if ($prodi != null) {
             $this->db->where('dosen.prodi_dosen', $prodi);
         }
@@ -278,15 +284,16 @@ class Dosen_model extends CI_Model
     public function getMahasiswaBimbingan($dosen_nip, $star_date = null, $end_date = null)
     {
         $this->db->where('pembimbing.Dosennip', $dosen_nip);
-        if ($star_date != null & $end_date != null) {
-            $this->db->where('mahasiswa.tglMulaiTA >=', $star_date);
-            $this->db->where('mahasiswa.tglMulaiTA <=', $end_date);
-        }
+
         $this->db->select('Mahasiswanim, Dosennip, id, statusPembimbing, nama, statusKelulusan, statusWisuda, statusTOEFL, statusTPA, mahasiswa.jenjang, nama_prodi, nama_jurusan,mahasiswa.tglMulaiTA');
         $this->db->from('pembimbing');
         $this->db->join('mahasiswa', 'mahasiswa.nim = pembimbing.Mahasiswanim', 'right');
         $this->db->join('prodi', 'prodi.kode = mahasiswa.prodikode');
         $this->db->join('jurusan', 'jurusan.kode = prodi.jurusankode');
+        if ($star_date != null & $end_date != null) {
+            $this->db->where('pembimbing.tgl_tambah_pembimbing >=', $star_date);
+            $this->db->where('pembimbing.tgl_tambah_pembimbing <=', $end_date);
+        }
         return $this->db->get();
     }
 
@@ -423,9 +430,18 @@ class Dosen_model extends CI_Model
     public function getPimpinanPlusProdi()
     {
         $this->db->where('jabatan_pimpinan != "" ');
-        $this->db->select('prodi.*, dosen.*');
+        $this->db->select('prodi.*, dosen.*,posisi.*');
         $this->db->from('dosen');
         $this->db->join('prodi', 'dosen.prodi_dosen=prodi.kode');
+        $this->db->join('posisi', 'dosen.jabatan_pimpinan=posisi.id', 'left');
+        return $this->db->get()->result_array();
+    }
+
+    public function getPosisiPimpinan()
+    {
+        $this->db->select('status_dosen,id');
+        $this->db->from('posisi');
+        $this->db->where('posisi.id >', 12);
         return $this->db->get()->result_array();
     }
 

@@ -158,7 +158,7 @@ class Admin extends CI_Controller
     }
     public function getListProdi($jenjang)
     {
-        $this->db->where('jenjang', $jenjang);
+        $this->db->where('jenjang_prodi', $jenjang);
         $this->db->select('nama_prodi, kode');
         echo json_encode($this->db->get('prodi')->result_array());
     }
