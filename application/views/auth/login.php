@@ -13,6 +13,7 @@
               <h1 class="h2 title mt-3 font-weight-bold" style="color:white;">Si-Ujian</h1>
               <h6 class="h6 title mt-5 ml-2 font-weight-bold" style="color:white;">Fakultas Ekonomi dan Bisnis</h6>
               <h6 class="h6 title mt-0 ml-2 font-weight-bold" style="color:white;">Universitas Brawijaya</h6>
+              <a href="<?= base_url('agendaDosen/agenda') ?>" class="btn btn-warning mt-5" style="text-decoration:none; color: white;">Lihat Agenda Dosen</a>
             </div>
             <div class="col-lg-6 col-sm-12 mx-auto gatau">
               <div class="py-4">
@@ -37,7 +38,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small text-primary text-decoration-none forget" href="<?= base_url('auth/forgotpassword') ?>">Lupa Password?</a>
+                    <!-- <a class="small text-primary text-decoration-none forget" href="<?= base_url('auth/forgotpassword') ?>">Lupa Password?</a> -->
                   </div>
               </div>
             </div>
@@ -50,4 +51,4 @@
 
 </div>
 </div>
-<p class="text-center" style="margin-top: -30px; font-size: .7rem; color: white;">Copyright © 2019 PSIK FEB UB. All Rights Reserved. </p>
+<p class="text-center" style="margin-top: -30px; font-size: .7rem; color: white;">Copyright © 2019 FEB UB. All Rights Reserved. </p>

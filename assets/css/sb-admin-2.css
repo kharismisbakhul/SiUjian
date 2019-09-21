@@ -5308,7 +5308,7 @@ input[type="button"].btn-block {
 	background-color: #fff;
 	background-clip: border-box;
 	border: 1px solid #e3e6f0;
-	border-radius: 0.35rem;
+	border-radius: 0.0rem;
 }
 
 .card>hr {
@@ -5362,7 +5362,7 @@ input[type="button"].btn-block {
 }
 
 .card-header:first-child {
-	border-radius: calc(0.35rem - 1px) calc(0.35rem - 1px) 0 0;
+	/* border-radius: calc(0.35rem - 1px) calc(0.35rem - 1px) 0 0; */
 }
 
 .card-header+.list-group .list-group-item:first-child {
@@ -12753,7 +12753,7 @@ a:focus {
 }
 
 .card .card-header[data-toggle="collapse"].collapsed {
-	border-radius: 0.35rem;
+	border-radius: 0.0rem;
 }
 
 .card .card-header[data-toggle="collapse"].collapsed::after {

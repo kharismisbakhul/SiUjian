@@ -22,26 +22,25 @@
                 </div>
 
                 <!-- Card Body -->
-                <div class="card-body">
-                    <form>
-                        <div class="form-group row mb-1">
-                            <img src="<?= base_url('/assets/') ?>img/logo-ub-removebg-preview.png" alt="" id="profile_picture" style="max-width:10em; max-height:10em;">
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
-                            <div class="col-sm-10">
-                                <span>:</span>
-                                <span><?= $user['nama']; ?></span>
+                <div class="card-body box">
+                    <div class="card mb-3">
+                        <div class="row no-gutters">
+                            <div class="col-md-3">
+                                <img src="<?= base_url('/assets/') ?>img/logo-ub-removebg-preview.png" alt="" id="profile_picture" style="width: 180px; padding: 20px;">
+                            </div>
+                            <div class="col-md-8 mt-4">
+                                <div class="card-body">
+                                    <h5 class="card-title"><span><?= $user['nama']; ?></span></h5>
+                                    <p class="card-text"> <i class="fas fa-fw fa-user-alt"></i>
+                                        <span>Username <?= $user['username'] ?></span></p>
+                                    <?php
+                                    $newDate = date("d M Y", strtotime($user['date_created']));
+                                    ?>
+                                    <p class="card-text"><small class="text-muted">date created <?= $newDate  ?></small></p>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row mb-1">
-                            <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Posisi</label>
-                            <div class="col-sm-10">
-                                <span>:</span>
-                                <span>Admin</span>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -110,9 +110,15 @@ class Dosen extends CI_Controller
                 'noTlpnDosen' => $this->input->post('notlpn'),
                 'AlamatDosen' => $this->input->post('alamat')
             ];
-            $this->db->where('nip', $data['user_login']['nip']);
-            $this->db->update('dosen', $update);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Profil berhasil di perbaharui ! </div>');
+            if ($this->session->userdata('user_profile_kode') == 2 || $this->session->userdata('user_profile_kode') == 1) {
+                $this->db->where('nip', $this->uri->segment(3));
+                $this->db->update('dosen', $update);
+            } else {
+                $this->db->where('nip', $data['user_login']['nip']);
+                $this->db->update('dosen', $update);
+            }
+
+            $this->session->set_flashdata('message', 'Profile Berhasil diperbaharui');
             if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
                 redirect('operator/dosen/profile/' . $this->input->post('nip'));
             }
@@ -155,5 +161,14 @@ class Dosen extends CI_Controller
             'pembimbing' => $this->dosen->getPembimbing($id_ujian),
         ];
         echo json_encode($data);
+    }
+
+    public function agendaDosen()
+    {
+        $data = $this->initData();
+        $data['title'] = 'Lecturer Agenda';
+        $this->loadTemplate($data);
+        $this->load->view('dosen/agendaDosen', $data);
+        $this->load->view('templates/footer');
     }
 }

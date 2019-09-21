@@ -5,47 +5,51 @@
             <h1 class="h3 mb-4 text-gray-800"><?= $title; ?> - <?= $user_login['nama']  ?>(<?= $user_login['nim']  ?>)</h1>
         </div>
         <div class="col-xl-2">
-            <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1 && $jumlah_ujian < 8) : ?>
-            <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
-                <button type="submit" class="btn btn-success float-right mb-2 tombol">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-fw fa-plus-circle"></i>
-                    </span>
-                    <span class="text">Tambah</span>
-                </button>
-            </form>
-            <?php elseif ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] != 1 &&  $jumlah_ujian < 4) : ?>
-            <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
-                <button type="submit" class="btn btn-success float-right mb-2 tombol">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-fw fa-plus-circle"></i>
-                    </span>
-                    <span class="text">Tambah</span>
-                </button>
-            </form>
-            <?php elseif ($user_login['jenjang'] == 'S2' && $user_login['jurusankode'] != 1 && $jumlah_ujian < 4) : ?>
-            <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
-                <button type="submit" class="btn btn-success float-right mb-2 tombol">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-fw fa-plus-circle"></i>
-                    </span>
-                    <span class="text">Tambah</span>
-                </button>
-            </form>
+            <?php if ($cek_pembimbing) : ?>
+                <?php if ($cek_ujian['statusUjian'] == 1 && $cek_ujian['valid'] == 1) : ?>
+                    <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1 && $jumlah_ujian < 8) : ?>
+                        <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
+                            <button type="submit" class="btn btn-success btn-icon-split float-right">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus-circle"></i>
+                                </span>
+                                <span class="text">Tambah Ujian</span>
+                            </button>
+                        </form>
+                    <?php elseif ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] != 1 &&  $jumlah_ujian < 4) : ?>
+                        <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
+                            <button type="submit" class="btn btn-success btn-icon-split float-right">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus-circle"></i>
+                                </span>
+                                <span class="text">Tambah Ujian</span>
+                            </button>
+                        </form>
+                    <?php elseif ($user_login['jenjang'] == 'S2'  && $jumlah_ujian < 4) : ?>
+                        <form action="<?= base_url('mahasiswa/tambahUjian/') . $user_login['nim']  ?>">
+                            <button type="submit" class="btn btn-success btn-icon-split float-right">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus-circle"></i>
+                                </span>
+                                <span class="text">Tambah Ujian</span>
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                <?php endif; ?>
             <?php else : ?>
-            <button type="submit" class="btn btn-secondary float-right mb-2 tombol">
-                <span class="icon text-white-50">
-                    <i class="fas fa-fw fa-plus-circle"></i>
-                </span>
-                <span class="text">Tambah Ujian</span>
-            </button>
+                <button type="submit" class="btn btn-secondary btn-icon-split float-right mb-2 tombol">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-fw fa-plus-circle"></i>
+                    </span>
+                    <span class="text">Tambah Ujian</span>
+                </button>
             <?php endif; ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-5">
-            <?= $this->session->flashdata('message');  ?>
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
             <div class="card shadow mb-3 box border-left-primary">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -55,7 +59,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <?php foreach ($pembimbing as $pmb) : ?>
-                        <p><?= $pmb['nama_dosen'] ?> - <span><?= $pmb['status_dosen'] ?></span></p>
+                            <p><?= $pmb['nama_dosen'] ?> - <span><?= $pmb['status_dosen'] ?></span></p>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -84,16 +88,16 @@
                                     <th scope="col">Validate</th>
                                     <th scope="col">Nilai</th>
                                     <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-                                    <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
-                                    <th scope="col">Bobot</th>
-                                    <th scope="col">Nilai Angka</th>
-                                    <th scope="col">Angka Mutu (%)</th>
-                                    <th scope="col">Angka Mutu x Nilai</th>
-                                    <?php else : ?>
+                                        <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                            <th scope="col">Bobot</th>
+                                            <th scope="col">Nilai Angka</th>
+                                            <th scope="col">Angka Mutu (%)</th>
+                                            <th scope="col">Angka Mutu x Nilai</th>
+                                        <?php else : ?>
 
-                                    <th scope="col">Angka Mutu (%)</th>
-                                    <th scope="col">Angka Mutu x Nilai</th>
-                                    <?php endif; ?>
+                                            <th scope="col">Angka Mutu (%)</th>
+                                            <th scope="col">Angka Mutu x Nilai</th>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -101,96 +105,96 @@
                             <tbody>
                                 <?php $i = 1;
                                 foreach ($ujian as $u) :  ?>
-                                <tr>
-                                    <th class="align-middle" scope="row"><?= $i++;  ?></th>
-                                    <td class="align-middle"><small><?= $u['tgl_ujian']  ?></small></td>
-                                    <td class="align-middle"><?= $u['nama_ujian']  ?></td>
+                                    <tr>
+                                        <th class="align-middle" scope="row"><?= $i++;  ?></th>
+                                        <td class="align-middle"><small><?= $u['tgl_ujian']  ?></small></td>
+                                        <td class="align-middle"><?= $u['nama_ujian']  ?></td>
 
-                                    <!-- status Ujian -->
-                                    <?php if ($u['statusUjian'] == 1) { ?>
-                                    <td class="align-middle"><span class="badge badge-pill badge-success">Lulus</span></td>
-                                    <?php } elseif ($u['statusUjian'] == 2) { ?>
-                                    <td class="align-middle"><span class="badge badge-pill badge-primary">Proses</span></td>
-                                    <?php } else { ?>
-                                    <td class="align-middle"><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
-                                    <?php } ?>
+                                        <!-- status Ujian -->
+                                        <?php if ($u['statusUjian'] == 1) { ?>
+                                            <td class="align-middle"><span class="badge badge-pill badge-success">Lulus</span></td>
+                                        <?php } elseif ($u['statusUjian'] == 2) { ?>
+                                            <td class="align-middle"><span class="badge badge-pill badge-primary">Proses</span></td>
+                                        <?php } else { ?>
+                                            <td class="align-middle"><span class="badge badge-pill badge-danger">Tidak Lulus</span></td>
+                                        <?php } ?>
 
-                                    <!-- valid ujian -->
-                                    <?php if ($u['valid'] == 1) { ?>
-                                    <td class="align-middle"><span class="badge badge-pill badge-success">Valid</span></td>
-                                    <?php } elseif ($u['valid'] == 2) { ?>
-                                    <td class="align-middle"><span class="badge badge-pill badge-primary">Proses</span></td>
-                                    <?php } else { ?>
-                                    <td class="align-middle"><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
-                                    <?php } ?>
-                                    <td class="align-middle"><?= $u['nilai_akhir']  ?></td>
-                                    <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
-                                    <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
-                                    <th scope="col" class="align-middle"><?= $u['bobot_nilai'] * 100 ?>%</th>
-                                    <?php if ($u['kode'] == 5 || $u['kode'] == 7) : ?>
-                                    <th class="align-middle" scope="col" rowspan="2"><?= $u['nilai_akhir_angka'] ?></th>
-                                    <td class="align-middle" scope="col" rowspan="2"><?= $u['angka_mutu'] ?></td>
-                                    <td class="align-middle" scope="col" rowspan="2"><?= $u['angka_mutu_x_nilai'] ?></td>
-                                    <?php elseif ($u['kode'] == 9) : ?>
-                                    <th scope="col" class="align-middle" rowspan="4"><?= $u['nilai_akhir_angka'] ?></th>
-                                    <td scope="col" class="align-middle" rowspan="4"><?= $u['angka_mutu'] ?></td>
-                                    <td scope="col" class="align-middle" rowspan="4"><?= $u['angka_mutu_x_nilai'] ?></td>
-                                    <?php endif; ?>
-                                    <?php else : ?>
-                                    <td class="align-middle" scope="col"><?= $u['angka_mutu'] ?></td>
-                                    <td class="align-middle" scope="col"><?= $u['angka_mutu_x_nilai'] ?></td>
-                                    <?php endif; ?>
-                                    <?php endif; ?>
-                                    <td>
-                                        <?php if ($u['valid'] != 1) :  ?>
-                                        <a href="<?= base_url('mahasiswa')  ?>/hapusUjian/<?= $u['id'];  ?>" class="btn btn-danger btn-icon-split btn-sm">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                            </span>
-                                            <span class="text">Hapus</span>
-                                        </a>
+                                        <!-- valid ujian -->
+                                        <?php if ($u['valid'] == 1) { ?>
+                                            <td class="align-middle"><span class="badge badge-pill badge-success">Valid</span></td>
+                                        <?php } elseif ($u['valid'] == 2) { ?>
+                                            <td class="align-middle"><span class="badge badge-pill badge-primary">Proses</span></td>
+                                        <?php } else { ?>
+                                            <td class="align-middle"><span class="badge badge-pill badge-danger">Tidak Valid</span></td>
+                                        <?php } ?>
+                                        <td class="align-middle"><?= $u['nilai_akhir']  ?></td>
+                                        <?php if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) : ?>
+                                            <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                                <th scope="col" class="align-middle"><?= $u['bobot_nilai'] * 100 ?>%</th>
+                                                <?php if ($u['kode'] == 5 || $u['kode'] == 7) : ?>
+                                                    <th class="align-middle" scope="col" rowspan="2"><?= $u['nilai_akhir_angka'] ?></th>
+                                                    <td class="align-middle" scope="col" rowspan="2"><?= $u['angka_mutu'] ?></td>
+                                                    <td class="align-middle" scope="col" rowspan="2"><?= $u['angka_mutu_x_nilai'] ?></td>
+                                                <?php elseif ($u['kode'] == 9) : ?>
+                                                    <th scope="col" class="align-middle" rowspan="4"><?= $u['nilai_akhir_angka'] ?></th>
+                                                    <td scope="col" class="align-middle" rowspan="4"><?= $u['angka_mutu'] ?></td>
+                                                    <td scope="col" class="align-middle" rowspan="4"><?= $u['angka_mutu_x_nilai'] ?></td>
+                                                <?php endif; ?>
+                                            <?php else : ?>
+                                                <td class="align-middle" scope="col"><?= $u['angka_mutu'] ?></td>
+                                                <td class="align-middle" scope="col"><?= $u['angka_mutu_x_nilai'] ?></td>
+                                            <?php endif; ?>
                                         <?php endif; ?>
+                                        <td>
+                                            <?php if ($u['valid'] != 1) :  ?>
+                                                <a href="<?= base_url('mahasiswa')  ?>/hapusUjian/<?= $u['id'];  ?>" class="btn btn-danger btn-icon-split btn-sm tombol-hapus">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                                    </span>
+                                                    <span class="text">Hapus</span>
+                                                </a>
+                                            <?php endif; ?>
 
-                                        <?php if ($u['valid'] != 1) :  ?>
-                                        <a href="<?= base_url('mahasiswa')  ?>/editUjian/<?= $u['id'];  ?>" class="btn btn-primary btn-icon-split btn-sm">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-pencil-alt"></i>
-                                            </span>
-                                            <span class="text">Edit</span>
-                                        </a>
-                                        <?php endif; ?>
-                                        <button type="button" class="btn btn-info btn-icon-split detail-ujian btn-sm" data-toggle="modal" data-target="#ModalDetailUjian" data-id="<?= $u['id']  ?>">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-eye"></i>
-                                            </span>
-                                            <span class="text">Detail</span>
-                                        </button>
-                                    </td>
+                                            <?php if ($u['valid'] != 1) :  ?>
+                                                <a href="<?= base_url('mahasiswa')  ?>/editUjian/<?= $u['id'];  ?>" class="btn btn-primary btn-icon-split btn-sm">
+                                                    <span class="icon text-white-50">
+                                                        <i class="fas fa-fw fa-pencil-alt"></i>
+                                                    </span>
+                                                    <span class="text">Edit</span>
+                                                </a>
+                                            <?php endif; ?>
+                                            <button type="button" class="btn btn-info btn-icon-split detail-ujian btn-sm" data-toggle="modal" data-target="#ModalDetailUjian" data-id="<?= $u['id']  ?>">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-fw fa-eye"></i>
+                                                </span>
+                                                <span class="text">Detail</span>
+                                            </button>
+                                        </td>
 
 
-                                </tr>
+                                    </tr>
                                 <?php endforeach; ?>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <?php if ($this->session->userdata('user_profile_kode') != 5) : ?>
-                                    <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
-                                    <td colspan="8">Jumlah</td>
-                                    <td>1.0</td>
-                                    <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                            <td colspan="8">Jumlah</td>
+                                            <td>1.0</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php else : ?>
+                                            <td colspan="6">Jumlah</td>
+                                            <td>1.0</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php endif; ?>
                                     <?php else : ?>
-                                    <td colspan="6">Jumlah</td>
-                                    <td>1.0</td>
-                                    <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
-                                    <?php endif; ?>
-                                    <?php else : ?>
-                                    <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
-                                    <td colspan="5">Jumlah</td>
-                                    <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
-                                    <?php else : ?>
-                                    <td colspan="5">Jumlah</td>
-                                    <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
-                                    <?php endif; ?>
+                                        <?php if ($user_login['jenjang'] == 'S3' && $user_login['jurusankode'] == 1) : ?>
+                                            <td colspan="5">Jumlah</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php else : ?>
+                                            <td colspan="5">Jumlah</td>
+                                            <td class="font-weight-bold"><?= $user_login['nilaiTA'] ?> (<?= $user_login['nilai_huruf'] ?>)</td>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </tr>
                             </tfoot>

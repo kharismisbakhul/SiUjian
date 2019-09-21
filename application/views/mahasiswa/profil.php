@@ -5,8 +5,8 @@
 
    <div class="row">
       <div class="col-lg-6">
-         <?= $this->session->flashdata('message');  ?>
-
+         <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
+         <div class="flash-data2" data-flashdata2="<?= $this->session->flashdata('error');  ?>"></div>
       </div>
    </div>
 
@@ -30,87 +30,94 @@
                      <form>
 
                         <div class="form-group row mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nama</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['nama'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nim</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Nim</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['nim'];  ?></span>
                            </div>
                         </div>
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tanggal terdaftar</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal terdaftar</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['tglMasuk'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Jurusan</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Jurusan</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $fakultas['nama_jurusan'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Prodi</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Prodi</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $fakultas['nama_prodi'];  ?></span>
                            </div>
                         </div>
+                        <div class="form-group row  mb-1">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Jenjang</label>
+                           <div class="col-sm-8">
+                              <span>:</span>
+                              <span><?= $user_login['jenjang'];  ?></span>
+                           </div>
+                        </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Angkatan</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Angkatan</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['angkatan'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Konsentrasi</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Konsentrasi</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['konsentrasi'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Alamat</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Alamat</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['alamat'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">No.Telepon</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">No.Telepon</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['noTelp'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Asal Studi</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Asal Studi</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['asalStudi'];  ?></span>
                            </div>
                         </div>
 
                         <div class="form-group row  mb-1">
-                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tanggal Mulai Tugas Akhir</label>
-                           <div class="col-sm-9">
+                           <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label-sm">Tanggal Mulai Tugas Akhir</label>
+                           <div class="col-sm-8">
                               <span>:</span>
                               <span><?= $user_login['tglMulaiTA'];  ?></span>
                            </div>

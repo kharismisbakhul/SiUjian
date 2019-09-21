@@ -17,7 +17,7 @@
         </div>
       </div>
       <!-- Content Row -->
-      <div class="row">
+      <div class="row box">
 
         <div class="d-none d-lg-block col-md-8 mb-4">
           <div class="shadow mb-1">
@@ -28,9 +28,12 @@
             </a>
             <div class="collapse show" id="collapseCardExample">
               <div class="card-body pb-4">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
-                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
-                possimus!
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                  <span class="font-weight-bold">Daftar Dosen</span>, adalah berisikan daftar Dosen aktif Fakultas Ekonomi dan Bisnis. Memiliki fungsi profil, ujian dan bimbingan yang merujuk ke akun dosen.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -90,14 +93,20 @@
                           <td><?= $i; ?></td>
                           <td><?= $d['nama_dosen'] ?></td>
                           <td><?= $d['nip'] ?></td>
-                          <td>
-                            <?php if ($d['statusAktif'] == 1) : ?>
+                          <?php if ($d['statusAktif'] == 1) : ?>
+                          <td class="text-center text-success font-weight-bold">
                             Aktif
-                            <?php else : ?>
-                            Tidak Aktif
-                            <?php endif; ?>
                           </td>
-                          <td><?= $d['jumlah_bimbingan'] ?></td>
+                          <?php else : ?>
+                          <td class="text-center text-secondary font-weight-bold">
+                            Tidak Aktif
+                          </td>
+                          <?php endif; ?>
+                          <?php if ($d['jumlah_bimbingan'] == null) : ?>
+                          <td class="text-center">0</td>
+                          <?php else : ?>
+                          <td class="text-center"><?= $d['jumlah_bimbingan'] ?></td>
+                          <?php endif; ?>
                           <td class="text-center">
                             <a href="<?= base_url('operator/dosen/profile/') . $d['nip']; ?>" class="btn btn-info btn-icon-split btn-sm">
                               <span class="icon text-white-50">

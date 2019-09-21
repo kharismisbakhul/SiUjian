@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 20, 2019 at 08:50 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.1
+-- Host: localhost
+-- Generation Time: Sep 21, 2019 at 12:29 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `siujian`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `agendaDosen`
+--
+
+CREATE TABLE `agendaDosen` (
+  `id_agenda` int(11) NOT NULL,
+  `nip_dosen` varchar(50) NOT NULL,
+  `nama_agenda` varchar(256) NOT NULL,
+  `tanggalMulai` date NOT NULL,
+  `waktuMulai` varchar(10) NOT NULL DEFAULT '',
+  `tanggalSelesai` date NOT NULL DEFAULT '0000-00-00',
+  `waktuSelesai` varchar(10) NOT NULL DEFAULT '00:00:00',
+  `durasi` varchar(10) NOT NULL DEFAULT '00:00:00',
+  `hariAgenda` varchar(5) DEFAULT NULL,
+  `ruangan` varchar(50) DEFAULT NULL,
+  `kategoriAgenda` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -204,7 +224,8 @@ INSERT INTO `dosen` (`nip`, `nama_dosen`, `jenisKelamin`, `statusPNS`, `posisi`,
 ('2016078711241001', 'AMINNULLAH ACHMAD MUTTAQIN , M.Sc. Fin.', 'L', 'Non PNS', 'Tenaga Pengajar', 1, 'S2', '', '', 12, ''),
 ('2016079101181001', 'ATU BAGUS WIGUNA , S.E., M.E.', 'L', 'Non PNS', 'Tenaga Pengajar', 1, 'S2', '', '', 11, ''),
 ('2016079111051001', 'M. ABDI DZIL IKHRAM W , S.E., M.M.', 'L', 'Non PNS', 'Asisten Ahli', 1, 'S2', '', '', 7, ''),
-('2017028406041001', 'MOH. ERFAN ARIF , S.E., M.M.', 'L', 'Non PNS', 'Tenaga Pengajar', 1, 'S2', '', '', 7, '');
+('2017028406041001', 'MOH. ERFAN ARIF , S.E., M.M.', 'L', 'Non PNS', 'Tenaga Pengajar', 1, 'S2', '', '', 7, ''),
+('3000', 'Dosen', '', '', '', 1, 'S2', '', '', 3, '');
 
 -- --------------------------------------------------------
 
@@ -315,6 +336,13 @@ CREATE TABLE `mahasiswa` (
   `nilai_huruf` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `mahasiswa`
+--
+
+INSERT INTO `mahasiswa` (`nim`, `nama`, `noTest`, `prodikode`, `angkatan`, `semester`, `jalur`, `konsentrasi`, `alamat`, `noTelp`, `asalStudi`, `judulTugasAkhir`, `tglMasuk`, `tglMulaiTA`, `statusKelulusan`, `statusWisuda`, `statusTOEFL`, `statusTPA`, `jenjang`, `nilaiTA`, `nilai_huruf`) VALUES
+('5000', 'Misbakhul', 'xwB2', 2, 0, 0, '', '', '', '086', '', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 'S2', 0, '');
+
 -- --------------------------------------------------------
 
 --
@@ -329,6 +357,15 @@ CREATE TABLE `pembimbing` (
   `tgl_tambah_pembimbing` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pembimbing`
+--
+
+INSERT INTO `pembimbing` (`Mahasiswanim`, `Dosennip`, `id`, `statusPembimbing`, `tgl_tambah_pembimbing`) VALUES
+('5000', '195012081981031003', 1, 1, '2019-09-11'),
+('5000', '195204151974121001', 2, 2, '2019-09-11'),
+('5000', '195210241981031003', 3, 3, '2019-09-11');
+
 -- --------------------------------------------------------
 
 --
@@ -340,9 +377,21 @@ CREATE TABLE `penguji` (
   `Ujianid` int(10) NOT NULL,
   `statusPenguji` int(1) NOT NULL,
   `id` int(11) NOT NULL,
-  `nilai` float NOT NULL DEFAULT '0',
+  `nilai` float NOT NULL DEFAULT 0,
   `tgl_tambah_penguji` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `penguji`
+--
+
+INSERT INTO `penguji` (`Dosennip`, `Ujianid`, `statusPenguji`, `id`, `nilai`, `tgl_tambah_penguji`) VALUES
+('195012081981031003', 2, 1, 4, 90, '2019-09-13'),
+('195204151974121001', 2, 2, 5, 90, '2019-09-13'),
+('195210241981031003', 2, 3, 6, 90, '2019-09-13'),
+('195012081981031003', 3, 1, 7, 0, '2019-09-17'),
+('195204151974121001', 3, 2, 8, 0, '2019-09-17'),
+('195210241981031003', 3, 3, 9, 0, '2019-09-17');
 
 -- --------------------------------------------------------
 
@@ -425,9 +474,16 @@ CREATE TABLE `publikasi` (
   `Mahasiswanim` varchar(15) NOT NULL,
   `bukti` varchar(50) NOT NULL,
   `tanggal` date NOT NULL,
-  `valid` int(1) NOT NULL DEFAULT '2',
-  `status_notif` int(1) NOT NULL DEFAULT '0'
+  `valid` int(1) NOT NULL DEFAULT 2,
+  `status_notif` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `publikasi`
+--
+
+INSERT INTO `publikasi` (`idJurnal`, `judulArtikel`, `namaJurnal`, `volumeDanNoTerbitan`, `kategoriJurnal`, `statusJurnal`, `Mahasiswanim`, `bukti`, `tanggal`, `valid`, `status_notif`) VALUES
+(1, 'aa', 'asas', '12/3', 'kosong', 'Nasional Terakredita', '5000', '', '2019-09-13', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -452,20 +508,28 @@ CREATE TABLE `reviewer` (
 CREATE TABLE `ujian` (
   `id` int(10) NOT NULL,
   `tgl_ujian` date NOT NULL,
-  `bobot` double NOT NULL DEFAULT '0',
-  `nilai_akhir` double DEFAULT '0',
+  `bobot` double NOT NULL DEFAULT 0,
+  `nilai_akhir` double DEFAULT 0,
   `nilai_akhir_angka` float NOT NULL,
   `angka_mutu_x_nilai` float NOT NULL,
-  `statusUjian` int(1) NOT NULL DEFAULT '2',
+  `statusUjian` int(1) NOT NULL DEFAULT 2,
   `kodeUjiankode` int(10) NOT NULL,
   `MahasiswaNim` varchar(15) NOT NULL,
   `bukti` varchar(255) NOT NULL DEFAULT 'kosong',
-  `valid` int(3) NOT NULL DEFAULT '2',
+  `valid` int(3) NOT NULL DEFAULT 2,
   `tgl_tambah_ujian` date NOT NULL,
   `komentar` varchar(255) NOT NULL DEFAULT 'kosong',
   `nilai_huruf` varchar(2) NOT NULL,
-  `status_notif` int(2) NOT NULL DEFAULT '0'
+  `status_notif` int(2) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ujian`
+--
+
+INSERT INTO `ujian` (`id`, `tgl_ujian`, `bobot`, `nilai_akhir`, `nilai_akhir_angka`, `angka_mutu_x_nilai`, `statusUjian`, `kodeUjiankode`, `MahasiswaNim`, `bukti`, `valid`, `tgl_tambah_ujian`, `komentar`, `nilai_huruf`, `status_notif`) VALUES
+(2, '2019-09-13', 4, 90, 0, 0, 1, 1, '5000', 'kosong', 1, '2019-09-13', 'kosong', 'A', 1),
+(3, '2019-09-11', 0, 0, 0, 0, 2, 3, '5000', 'kosong', 2, '2019-09-17', 'kosong', '', 1);
 
 -- --------------------------------------------------------
 
@@ -482,7 +546,7 @@ CREATE TABLE `user` (
   `nama` varchar(50) NOT NULL,
   `date_created` date NOT NULL,
   `image` varchar(255) NOT NULL DEFAULT 'default.png',
-  `jumlah_notifikasi` int(11) NOT NULL DEFAULT '0'
+  `jumlah_notifikasi` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -490,7 +554,6 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `user_profile_kode`, `username`, `password`, `is_active`, `nama`, `date_created`, `image`, `jumlah_notifikasi`) VALUES
-(30, 1, '1000', '$2y$10$qkdbRXHXAgZowdnYHGYLweZykhyH2.wY1y0dvVL/qcO92oOYgy7aS', 1, 'Admin', '2019-08-20', 'default.png', 0),
 (189, 4, '195708131983031004', '$2y$10$MQN7/96fr8lBGC1opsJGH.Avcs2iGkHy.vBO0Jkk/VCzMaE.yLcsC', 1, 'Dr. Drs. BAMBANG HARIADI , M.Ec., Ak.', '2019-08-20', 'default.png', 0),
 (190, 4, '196211271988021001', '$2y$10$FJ3eMwB8Sn7i85OTCAEIG.ONQLn78aWCV80Pf8/MGoWrHwN/drTe2', 1, 'Dr. Drs. ROEKHUDIN , M.Si., Ak.', '2019-08-20', 'default.png', 0),
 (191, 4, '197804152005021001', '$2y$10$MoKYQd0PdYvwciFBS9jfmOGvaPuDrfdJVulYcug.kKbslPInQUoQ6', 1, 'Dr. MOHAMAD KHOIRU RUSYDI , SE., M.Ak., Ak.', '2019-08-20', 'default.png', 0),
@@ -648,7 +711,10 @@ INSERT INTO `user` (`id`, `user_profile_kode`, `username`, `password`, `is_activ
 (343, 4, '199301162019032015', '$2y$10$yRCUaBlMbgFa1RBjfU45ceWgshuy9ViLJZbYtZAcMIA766uiJ.Mh6', 1, 'LAILA MASRURO PIMADA , S.E., M.SEI.', '2019-08-20', 'default.png', 0),
 (344, 4, '198411212019031004', '$2y$10$lglBWR2sYR8SHfiLNZmy8u3jAUgDAl2QvNlF3B5yzTdud91y50dua', 1, 'MOH. ATHOILLAH , S.E., M.E.', '2019-08-20', 'default.png', 0),
 (345, 4, '198204232005022001', '$2y$10$nKcjC3gtB5QSDkdkMYpaUussd6N67uUApYTg5OEenGgljGckoXntG', 1, 'FARAH WULANDARI PANGESTUTY , SE., ME.', '2019-08-20', 'default.png', 0),
-(346, 4, '197403022005012001', '$2y$10$okGt2cOZRbMBT5ztVCAiLuolKfXHOGizHV7S9ih6A69ykyHh718Ve', 1, 'Dr. NURUL BADRIYAH , SE.,ME.', '2019-08-20', 'default.png', 0);
+(346, 4, '197403022005012001', '$2y$10$okGt2cOZRbMBT5ztVCAiLuolKfXHOGizHV7S9ih6A69ykyHh718Ve', 1, 'Dr. NURUL BADRIYAH , SE.,ME.', '2019-08-20', 'default.png', 0),
+(347, 5, '5000', '$2y$10$8f1/JJFI770bq4kOGRkSs.2DPSP/pTASfZzJmVUB4jbPTbnFSC/TW', 1, 'Misbakhul', '2019-09-11', 'default.png', 0),
+(348, 4, '3000', '$2y$10$GUNvfuhFSSmObsvMfogda.VVDvwjhasTePct7Aan/ZneSraHF7R7W', 1, 'Dosen', '2019-09-13', 'default.png', 0),
+(349, 2, '2000', '$2y$10$GpwEBJUM07KKMid5cVb9d.yAaIl/KnUvCHSMkYsz3v8KpqPIJwkYK', 1, 'Operator A', '2019-09-20', 'default.png', 0);
 
 -- --------------------------------------------------------
 
@@ -755,16 +821,26 @@ INSERT INTO `user_sub_menu` (`id`, `judul`, `url`, `ikon`, `is_active`, `menu_id
 (7, 'Laporan Status Mahasiswa', 'pimpinan/laporanStatusMahasiswa', 'fas fa-fw fa-user-graduate', '1', 3),
 (8, 'Laporan Dosen', 'pimpinan/laporanDosen', 'fas fa-fw fa-book-reader', '1', 3),
 (9, 'Rekap Dosen', 'pimpinan/rekapDosen', 'fas fa-fw fa-book', '1', 3),
-(10, 'Mahasiswa', 'operator/mahasiswa/list', 'fas fa-fw fa-graduation-cap', '1', 2),
-(11, 'Dosen', 'operator/dosen/list', 'fas fa-fw fa-chalkboard-teacher', '1', 2),
-(12, 'Pimpinan', 'operator/pimpinan', 'fas fa-fw fa-users', '1', 2),
-(13, 'Ujian', 'operator/ujian', 'fas fa-fw fa-check-circle', '1', 2),
-(14, 'Publikasi', 'operator/publikasi', 'fas fa-fw fa-check-circle', '1', 2),
-(15, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1);
+(10, 'Mahasiswa', 'operator/mahasiswa/list', 'fas fa-fw fa-graduation-cap', '0', 2),
+(11, 'Dosen', 'operator/dosen/list', 'fas fa-fw fa-chalkboard-teacher', '0', 2),
+(12, 'Pimpinan', 'operator/pimpinan', 'fas fa-fw fa-users', '0', 2),
+(13, 'Ujian', 'operator/ujian', 'fas fa-fw fa-check-circle', '0', 2),
+(14, 'Publikasi', 'operator/publikasi', 'fas fa-fw fa-check-circle', '0', 2),
+(15, 'Manajemen User', 'admin/manajemenUser', 'fas fa-fw fa-fingerprint', '1', 1),
+(16, 'Lecturer Agenda', 'mahasiswa/agendaDosen', 'fas fa-fw fa-user', '1', 5),
+(17, 'Lecturer Agenda', 'dosen/agendaDosen', 'fas fa-fw fa-user', '1', 4),
+(18, 'Lecturer Agenda', 'operator/agendaDosen', 'fas fa-fw fa-user', '1', 2);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `agendaDosen`
+--
+ALTER TABLE `agendaDosen`
+  ADD PRIMARY KEY (`id_agenda`),
+  ADD KEY `nip_dosen` (`nip_dosen`);
 
 --
 -- Indexes for table `dosen`
@@ -798,7 +874,8 @@ ALTER TABLE `kodeujian`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`nim`),
-  ADD UNIQUE KEY `noTest` (`noTest`);
+  ADD UNIQUE KEY `noTest` (`noTest`),
+  ADD KEY `prodikode` (`prodikode`);
 
 --
 -- Indexes for table `pembimbing`
@@ -895,6 +972,12 @@ ALTER TABLE `user_sub_menu`
 --
 
 --
+-- AUTO_INCREMENT for table `agendaDosen`
+--
+ALTER TABLE `agendaDosen`
+  MODIFY `id_agenda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
 -- AUTO_INCREMENT for table `jurusan`
 --
 ALTER TABLE `jurusan`
@@ -910,13 +993,13 @@ ALTER TABLE `kodeujian`
 -- AUTO_INCREMENT for table `pembimbing`
 --
 ALTER TABLE `pembimbing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `penguji`
 --
 ALTER TABLE `penguji`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `prodi`
@@ -928,7 +1011,7 @@ ALTER TABLE `prodi`
 -- AUTO_INCREMENT for table `publikasi`
 --
 ALTER TABLE `publikasi`
-  MODIFY `idJurnal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idJurnal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reviewer`
@@ -940,13 +1023,13 @@ ALTER TABLE `reviewer`
 -- AUTO_INCREMENT for table `ujian`
 --
 ALTER TABLE `ujian`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=350;
 
 --
 -- AUTO_INCREMENT for table `userprofile`
@@ -970,11 +1053,17 @@ ALTER TABLE `user_menu`
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `agendaDosen`
+--
+ALTER TABLE `agendaDosen`
+  ADD CONSTRAINT `agendaDosen_ibfk_1` FOREIGN KEY (`nip_dosen`) REFERENCES `dosen` (`nip`);
 
 --
 -- Constraints for table `dosen`
@@ -987,6 +1076,12 @@ ALTER TABLE `dosen`
 --
 ALTER TABLE `isianmahasiswa`
   ADD CONSTRAINT `isianmahasiswa_ibfk_1` FOREIGN KEY (`Mahasiswanim`) REFERENCES `mahasiswa` (`nim`);
+
+--
+-- Constraints for table `mahasiswa`
+--
+ALTER TABLE `mahasiswa`
+  ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`prodikode`) REFERENCES `prodi` (`kode`);
 
 --
 -- Constraints for table `pembimbing`

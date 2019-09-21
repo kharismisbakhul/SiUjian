@@ -46,11 +46,7 @@ class Operator extends CI_Controller
         if ($this->session->userdata('user_profile_kode') != 2) {
             redirect('auth/blocked');
         }
-        $data = $this->initData();
-        $data['title'] = 'Dashboard';
-        $this->loadTemplate($data);
-        $this->load->view('dashboard/dash_operator', $data);
-        $this->load->view('templates/footer');
+        $this->agendaDosen();
     }
 
     public function profil()
@@ -85,11 +81,16 @@ class Operator extends CI_Controller
             $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $Id])->num_rows();
             $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $Id])->num_rows();
             $data['ujian'] = $this->mahasiswa->getUjian($Id);
+            $data['cek_ujian'] = "";
+            if ($data['ujian']) {
+                $data['cek_ujian'] = $data['ujian'][count($data['ujian']) - 1];
+            }
             $data['publikasi'] = $this->mahasiswa->getPublikasi($Id);
-            $data['isianMahasiswa'] = $this->db->get_where('isianMahasiswa', ['Mahasiswanim' => $Id])->row_array();
+            $data['isianMahasiswa'] = $this->db->get_where('isianmahasiswa', ['Mahasiswanim' => $Id])->row_array();
             $data['dosen'] = $this->mahasiswa->getDaftarPembimbing($Id);
             $data['posisiPembimbing'] = $this->mahasiswa->getPosisiPembimbing($Id);
             $data['belumUjian'] = $this->mahasiswa->getBelumUjian($Id);
+            $data['cek_pembimbing'] = $this->db->get_where('pembimbing', ['Mahasiswanim' => $Id])->data_seek();
         }
 
         $this->loadTemplate($data);
@@ -110,10 +111,40 @@ class Operator extends CI_Controller
         $data = $this->initData();
         $this->load->model('dosen_model', 'dosen');
         $data['pimpinan'] = $this->dosen->getPimpinanPlusProdi();
+        $data['posisi'] = $this->dosen->getPosisiPimpinan();
+        $data['dosen'] = $this->operator->cekPimpinan();
         $data['title'] = 'Pimpinan';
         $this->loadTemplate($data);
         $this->load->view('operator/listPimpinan', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function ubahPimpinan()
+    {
+        $this->db->set('jabatan_pimpinan', 0);
+        $this->db->where('nip', $this->input->post('nip_pimpinan_old'));
+        $this->db->update('dosen');
+
+        if ($this->input->post('jabatan') == 13) {
+            $this->db->set('jabatan_pimpinan', $this->input->post('jabatan'));
+            $this->db->where('nip', $this->input->post('nip'));
+            $this->db->update('dosen');
+        } else if ($this->input->post('jabatan') == 14) {
+            $this->db->set('jabatan_pimpinan', $this->input->post('jabatan'));
+            $this->db->where('nip', $this->input->post('nip'));
+            $this->db->update('dosen');
+        } else {
+            $this->db->set('jabatan_pimpinan', $this->input->post('jabatan'));
+            $this->db->where('nip', $this->input->post('nip'));
+            $this->db->update('dosen');
+        }
+        redirect('operator/pimpinan');
+    }
+    public function getPosisiDosen($nip)
+    {
+        $this->load->model('dosen_model', 'dosen');
+        $dosen = $this->dosen->getDataDosen($nip);
+        echo json_encode($dosen);
     }
 
     public function getDetailUjian($id_ujian)
@@ -172,21 +203,25 @@ class Operator extends CI_Controller
     }
     public function tambahPembimbing($nim)
     {
-        $data = [
-            'Mahasiswanim' => $nim,
-            'Dosennip' => $this->input->post('nip'),
-            'statusPembimbing' => $this->input->post('pembimbing'),
-            'tgl_tambah_pembimbing' => date("Y/m/d")
-        ];
-        $this->db->insert('pembimbing', $data);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Pembimbing berhasil di tambah ! </div>');
+        if ($this->input->post('nip') != null) {
+            $data = [
+                'Mahasiswanim' => $nim,
+                'Dosennip' => $this->input->post('nip'),
+                'statusPembimbing' => $this->input->post('pembimbing'),
+                'tgl_tambah_pembimbing' => date('Y-m-d')
+            ];
+            $this->db->insert('pembimbing', $data);
+            $this->session->set_flashdata('message', 'Pembimbing berhasil ditambah !');
+        } else {
+            $this->session->set_flashdata('error', 'Pembimbing gagal ditambah !');
+        }
         redirect('operator/mahasiswa/profile/' . $nim);
     }
     public function hapusPembimbing($nim)
     {
         $id = $this->input->post('pembimbing');
         $this->db->delete('pembimbing', ['id' => $id]);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Pembimbing berhasil di hapus ! </div>');
+        $this->session->set_flashdata('message', 'Pembimbing berhasil dihapus !');
         redirect('operator/mahasiswa/profile/' . $nim);
     }
     public function updateStatusMahasiswa($nim)
@@ -197,7 +232,7 @@ class Operator extends CI_Controller
         $data['statusTPA'] = $this->input->post('cekstatusTPA');
         $this->db->where('nim', $nim);
         $this->db->update('mahasiswa', $data);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di perbaharui ! </div>');
+        $this->session->set_flashdata('message', 'Status mahasiswa berhasil diubah !');
         redirect('operator/mahasiswa/profile/' . $nim);
     }
     public function ujian()
@@ -240,7 +275,7 @@ class Operator extends CI_Controller
         if ($ujian['kodeUjiankode'] == 4 || $ujian['kodeUjiankode'] == 12 || $ujian['kodeUjiankode'] == 16) {
             $this->_kalkulasiNilaiTA($ujian['nim']);
         }
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Nilai berhasil di perbaharui ! </div>');
+        $this->session->set_flashdata('message', 'Nilai berhasil diperbaharui !');
         redirect('operator/validasi_cek/' . $id_ujian);
     }
     public function validasi_cek($id_ujian)
@@ -273,7 +308,6 @@ class Operator extends CI_Controller
             $this->load->model('Operator_model', 'operator');
             $this->operator->validasiUjian($data);
         }
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di ubah ! </div>');
         redirect('operator/validasi_cek/' . $id);
     }
     public function getInfoPenguji($nip)
@@ -288,7 +322,7 @@ class Operator extends CI_Controller
         $this->load->model('Dosen_model', 'dosen');
         $this->form_validation->set_rules('nip', 'Dosen', 'required');
         if ($this->form_validation->run() == false) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data penguji tidak berhasil di tambah ! </div>');
+            $this->session->set_flashdata('error', 'Penguji tidak berhasil ditambah !');
             redirect('operator/validasi_cek/' . $id_ujian);
         } else {
             $data = [
@@ -300,7 +334,7 @@ class Operator extends CI_Controller
             // update Nilai
             $NilaiAkhir = $this->dosen->cekNilaiAkhir($data['ujianid']);
             $this->dosen->updateNilaiAkhir($NilaiAkhir['nilai'], $data['ujianid']);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data penguji berhasil di tambah ! </div>');
+            $this->session->set_flashdata('message', 'Penguji berhasil ditambah !');
             redirect('operator/validasi_cek/' . $id_ujian);
         }
     }
@@ -316,7 +350,7 @@ class Operator extends CI_Controller
         $NilaiAkhir = $this->dosen->cekNilaiAkhir($id_ujian);
         $this->dosen->updateNilaiAkhir($NilaiAkhir['nilai'], $id_ujian);
         // akhir update nilai
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">penguji berhasil di hapus ! </div>');
+        $this->session->set_flashdata('message', 'Penguji berhasil dihapus !');
         redirect('operator/validasi_cek/' . $id_ujian);
     }
     public function publikasi()
@@ -352,7 +386,7 @@ class Operator extends CI_Controller
             }
             $this->db->where('idJurnal', $idJurnal);
             $this->db->update('publikasi');
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data publikasi berhasil di perbaharui ! </div>');
+            $this->session->set_flashdata('message', 'Publikasi berhasil divalidasi !');
             redirect('operator/validasi_publikasi/' . $idJurnal);
         }
         $this->load->view('operator/validasi_operator_publikasi_cek', $data);
@@ -410,5 +444,31 @@ class Operator extends CI_Controller
         $sql = "UPDATE ujian set angka_mutu_x_nilai = CASE $case END ,nilai_akhir_angka = CASE $case2 END WHERE id in ($whereCondition)";
         $this->db->query($sql);
         $this->operator->updateNilaiTA(round($nilaiTA, 2), $nim);
+    }
+
+    public function agendaDosen($nip = null)
+    {
+        $data['title'] = 'Lecturer Agenda';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
+        if ($nip != null) {
+            $data['user_login'] = $this->db->get_where('dosen', ['nip' => $nip])->row_array();
+            $data['user_login_prodi'] = $this->db->get_where('prodi', ['kode' => intval($data['user_login']['prodi_dosen'])])->row_array();
+        }
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
+
+        $data['dosen'] = $this->db->get('dosen')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        if ($nip != null) {
+            $this->load->view('operator/agendaDosenDetail', $data);
+        } else {
+            $this->load->view('operator/agendaDosen', $data);
+        }
+        $this->load->view('templates/footer');
     }
 }

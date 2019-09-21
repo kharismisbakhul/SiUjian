@@ -19,12 +19,12 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <?= $this->session->flashdata('message');  ?>
+                    <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
                 </div>
             </div>
 
             <!-- Content Row -->
-            <div class="row">
+            <div class="row box">
 
                 <div class="d-none d-lg-block col-md-8 mb-4">
                     <div class="shadow mb-1">
@@ -35,9 +35,14 @@
                         </a>
                         <div class="collapse show" id="collapseCardExample">
                             <div class="card-body pb-4">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
-                                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
-                                possimus!
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
+                                    deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
+                                    possimus!
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,11 +102,11 @@
                                                     <label for="komentarRevisi" class="col-sm-3 col-form-label">Valid</label>
                                                     <div class="col-sm-9">
                                                         <?php if ($publikasi['valid'] == 1) : ?>
-                                                            <span class="badge badge-pill badge-success">Valid</span>
+                                                        <span class="badge badge-pill badge-success">Valid</span>
                                                         <?php elseif ($publikasi['valid'] == 2) : ?>
-                                                            <span class="badge badge-pill badge-primary">Proses</span>
+                                                        <span class="badge badge-pill badge-primary">Proses</span>
                                                         <?php else : ?>
-                                                            <span class="badge badge-pill badge-danger">Tidak Valid</span>
+                                                        <span class="badge badge-pill badge-danger">Tidak Valid</span>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>

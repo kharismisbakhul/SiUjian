@@ -36,11 +36,11 @@ class Mahasiswa extends CI_Controller
     {
         if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
             if ($this->session->userdata('statusIsianMahasiswa') == 'insert') {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil ditambahan </div>');
+                $this->session->set_flashdata('message', 'Isian berhasil ditambah');
             } else if ($this->session->userdata('statusIsianMahasiswa') == 'update') {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil diperbarui </div>');
+                $this->session->set_flashdata('message', 'Isian berhasil diubah');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di perbaharui ! </div>');
+                $this->session->set_flashdata('message', 'Berhasil diubah !');
             }
             //ini isian
             redirect('operator/mahasiswa/profile/' . $this->session->userdata('nim_mhsnya'));
@@ -66,7 +66,7 @@ class Mahasiswa extends CI_Controller
             $data['fakultas'] = $this->mahasiswa->getProfilJurusan($data['user_login']['prodikode']);
             $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
             $data['dosen'] = $this->mahasiswa->getDaftarPembimbing($data['user_login']['nim']);
-            $data['isianMahasiswa'] = $this->db->get_where('isianMahasiswa', ['Mahasiswanim' => $this->session->userdata('username')])->row_array();
+            $data['isianMahasiswa'] = $this->db->get_where('isianmahasiswa', ['Mahasiswanim' => $this->session->userdata('username')])->row_array();
 
             $this->load->model('Notif_model', 'notif');
             $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
@@ -89,7 +89,7 @@ class Mahasiswa extends CI_Controller
         $this->db->update('mahasiswa', $mhs);
         $this->session->set_userdata('nim_mhsnya', $this->input->post('nim'));
         $this->session->set_userdata('statusIsianMahasiswa', 'edit');
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil di perbaharui ! </div>');
+        $this->session->set_flashdata('message', 'Berhasil diubah !');
         redirect('mahasiswa/profil');
     }
     // cek dosbing
@@ -106,10 +106,17 @@ class Mahasiswa extends CI_Controller
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['user_login'] = $this->mahasiswa->getDataMahasiswa($this->session->userdata('username'));
+        $data['cek_pembimbing'] = $this->db->get_where('pembimbing', ['Mahasiswanim' => $this->session->userdata('username')])->data_seek();
         $data['ujian'] = $this->mahasiswa->getUjian($this->session->userdata('username'));
+        $data['cek_ujian'] = [
+            'statusUjian' => 1,
+            'valid' => 1
+        ];
+        if ($data['ujian']) {
+            $data['cek_ujian'] = $data['ujian'][count($data['ujian']) - 1];
+        }
         $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         $data['pembimbing'] = $this->mahasiswa->getPembimbing($data['user_login']['nim']);
-
         $this->load->model('Notif_model', 'notif');
         $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
         $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
@@ -128,12 +135,13 @@ class Mahasiswa extends CI_Controller
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $data['user_login'] = $this->mahasiswa->getDataMahasiswa($nim);
+
         $jurusan_kode = $this->db->select('jurusankode as kode')->get_where('prodi', ['kode' => $data['user_login']['prodikode']])->row_array();
         $data['belumUjian'] = $this->mahasiswa->getBelumUjian($data['user_login']['nim'], $jurusan_kode['kode'], $data['user_login']['jenjang']);
         $data['jumlah_ujian'] = $this->db->get_where('ujian', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
         if ($data['user_login']['jenjang'] == 'S3' && $data['user_login']['jurusankode'] == 1  && $data['jumlah_ujian'] > 11) {
             redirect('mahasiswa/ujian');
-        } elseif (($data['user_login']['jenjang'] == 'S3' || $data['user_login']['jenjang'] == 'S2') && $data['user_login']['jurusankode'] != 1  && $data['jumlah_ujian'] > 3) {
+        } elseif (($data['user_login']['jenjang'] == 'S3' || $data['user_login']['jenjang'] == 'S2')  && $data['jumlah_ujian'] > 3) {
             redirect('mahasiswa/ujian');
         }
         $data['pembimbing'] = $this->db->select('Dosennip,statusPembimbing as statusPenguji')->get_where('pembimbing', ['Mahasiswanim' => $data['user_login']['nim']])->result_array();
@@ -154,7 +162,7 @@ class Mahasiswa extends CI_Controller
             $dataUjian = [
                 'tgl_ujian' => $this->input->post('tanggalUjian'),
                 'kodeUjiankode' => $this->input->post('kodeUjian'),
-                'tgl_tambah_ujian' => date("Y/m/d"),
+                'tgl_tambah_ujian' => date("Y-m-d"),
                 'MahasiswaNim' => $data['user_login']['nim']
             ];
             // Tambah Penguji dengan dosen pembimbing
@@ -179,7 +187,7 @@ class Mahasiswa extends CI_Controller
             foreach ($data['pembimbing'] as $pmb) {
                 $this->mahasiswa->updatePenguji($pmb, $idUjian['id']);
             }
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data ujian berhasil di tambah ! </div>');
+            $this->session->set_flashdata('message', 'Ujian berhasil ditambah');
             if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
                 redirect('operator/mahasiswa/ujian/' . $nim);
             }
@@ -199,7 +207,7 @@ class Mahasiswa extends CI_Controller
         $this->load->library('upload');
         unlink(FCPATH . "assets/ujian/" . $user['ujian']['bukti']);
         $this->db->delete('ujian', ['id' => $id]);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ujian terhapus</div>');
+        $this->session->set_flashdata('message', 'Ujian berhasil dihapus');
         if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
             redirect('operator/mahasiswa/ujian/' . $user['ujian']['MahasiswaNim']);
         }
@@ -213,7 +221,7 @@ class Mahasiswa extends CI_Controller
         $data['ujian'] = $this->db->get_where('ujian', ['id' => $id])->row_array();
         $data['username'] = $this->session->userdata('username');
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $data['ujian']['MahasiswaNim']])->row_array();
+        $data['user_login'] = $this->mahasiswa->getDataMahasiswa($this->session->userdata('username'));
         $ujianBelum = $this->mahasiswa->getBelumUjian($data['ujian']['MahasiswaNim']);
         $data['listUjian'] = ($ujianBelum);
         $data['pilihanUjian'] =  $this->mahasiswa->getUjian_Edit($id);
@@ -233,7 +241,7 @@ class Mahasiswa extends CI_Controller
             $dataUjian = [
                 'tgl_ujian' => $this->input->post('tanggalUjian'),
                 'kodeUjiankode' => $this->input->post('kodeUjian'),
-                'tgl_tambah_ujian' => date("Y/m/d"),
+                'tgl_tambah_ujian' => date('Y-m-d'),
                 'MahasiswaNim' => $data['user_login']['nim'],
                 'bukti' => $data['ujian']['bukti']
             ];
@@ -252,7 +260,7 @@ class Mahasiswa extends CI_Controller
                 }
             }
             $this->mahasiswa->editUjian($dataUjian, $id);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data ujian berhasil di perbaharui ! </div>');
+            $this->session->set_flashdata('message', 'Ujian berhasil diubah');
             if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
                 redirect('operator/mahasiswa/ujian/' . $data['user_login']['nim']);
             }
@@ -284,11 +292,11 @@ class Mahasiswa extends CI_Controller
     {
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data['title'] = 'Tambah Publikasi';
-        $data['username'] = $this->session->userdata('username');
-        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
-        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $nim;
+        $data['user'] = $this->db->get_where('user', ['username' => $nim])->row_array();
+        $data['user_login'] = $this->db->get_where('mahasiswa', ['nim' => $nim])->row_array();
 
-        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $data['user_login']['nim']])->num_rows();
+        $data['jumlah_publikasi'] = $this->db->get_where('publikasi', ['mahasiswanim' => $nim])->num_rows();
         if ($data['jumlah_publikasi'] > 2) {
             redirect('mahasiswa/publikasi');
         }
@@ -316,7 +324,7 @@ class Mahasiswa extends CI_Controller
                 'statusJurnal' => $this->input->post('statusJurnal'),
                 'Mahasiswanim' => $data['user_login']['nim'],
                 'bukti' => $_FILES['buktiPublikasi']['name'],
-                'tanggal' => date("Y/m/d"),
+                'tanggal' => date('Y-m-d'),
             ];
             if ($dataPublikasi['bukti']) {
                 $config['allowed_types'] = 'jpg|png|pdf';
@@ -327,12 +335,11 @@ class Mahasiswa extends CI_Controller
                 if ($this->upload->do_upload('buktiPublikasi')) {
                     $dataPublikasi['bukti'] = $this->upload->data('file_name');
                 } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Data publikasi gagal di tambah ! </div>');
                     echo $this->upload->display_errors();
                 }
             }
             $this->db->insert('publikasi', $dataPublikasi);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data publikasi berhasil di tambah ! </div>');
+            $this->session->set_flashdata('message', 'Publikasi berhasil ditambah ! ');
             if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
                 redirect('operator/mahasiswa/publikasi/' . $nim);
             }
@@ -348,7 +355,7 @@ class Mahasiswa extends CI_Controller
         $this->load->library('upload');
         unlink(FCPATH . "assets/publikasi/" . $user['publikasi']['bukti']);
         $this->db->delete('publikasi', ['idJurnal' => $idJurnal]);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Publikasi terhapus</div>');
+        $this->session->set_flashdata('message', 'Publikasi berhasil dihapus');
         if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
             redirect('operator/mahasiswa/publikasi/' . $user['publikasi']['Mahasiswanim']);
         }
@@ -388,7 +395,7 @@ class Mahasiswa extends CI_Controller
                 'statusJurnal' => $this->input->post('statusJurnal'),
                 'Mahasiswanim' => $data['jurnal']['Mahasiswanim'],
                 'bukti' => $data['jurnal']['bukti'],
-                'tanggal' => date("Y/m/d")
+                'tanggal' => date('Y-m-d')
             ];
             $upload_publikasi = $_FILES['buktiPublikasi'];
             if ($upload_publikasi['name'] != '') {
@@ -405,7 +412,7 @@ class Mahasiswa extends CI_Controller
                 }
             }
             $this->mahasiswa->editPublikasi($dataPublikasi, $id);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data publikasi berhasil di perbaharui ! </div>');
+            $this->session->set_flashdata('message', 'Publikasi berhasil diubah !');
             if ($this->session->userdata('user_profile_kode') == 1 || $this->session->userdata('user_profile_kode') == 2) {
                 redirect('operator/mahasiswa/publikasi/' . $data['jurnal']['Mahasiswanim']);
             }
@@ -443,7 +450,7 @@ class Mahasiswa extends CI_Controller
         $this->db->insert('isianMahasiswa', $data);
         $this->session->set_userdata('nim_mhsnya', $data['Mahasiswanim']);
         $this->session->set_userdata('statusIsianMahasiswa', 'insert');
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil ditambahan </div>');
+        $this->session->set_flashdata('message', 'Isian berhasil ditambahan');
         redirect('mahasiswa/profil');
     }
     public function updateIsianMahasiswa($nim)
@@ -463,12 +470,37 @@ class Mahasiswa extends CI_Controller
         $this->db->update('isianMahasiswa', $data);
         $this->session->set_userdata('nim_mhsnya', $data['Mahasiswanim']);
         $this->session->set_userdata('statusIsianMahasiswa', 'update');
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data isian berhasil diperbarui </div>');
+        $this->session->set_flashdata('message', 'Isian berhasil diperbaharui');
         redirect('mahasiswa/profil');
     }
     public function getDataEditIsian($nim)
     {
         $data = $this->db->get_where('isianMahasiswa', ['MahasiswaNim' => $nim])->row_array();
         echo json_encode($data);
+    }
+    public function agendaDosen($nip = null)
+    {
+        $data['title'] = 'Lecturer Agenda';
+        $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['username'] = $this->session->userdata('username');
+        if ($nip != null) {
+            $data['user_login'] = $this->db->get_where('dosen', ['nip' => $nip])->row_array();
+            $data['user_login_prodi'] = $this->db->get_where('prodi', ['kode' => intval($data['user_login']['prodi_dosen'])])->row_array();
+        }
+        $this->load->model('Notif_model', 'notif');
+        $result = $this->notif->notif($data['username'], intval($data['user']['user_profile_kode']));
+        $counter = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['counter'] = intval($counter['jumlah_notifikasi']);
+
+        $data['dosen'] = $this->db->get('dosen')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        if ($nip != null) {
+            $this->load->view('mahasiswa/agendaDosenDetail', $data);
+        } else {
+            $this->load->view('mahasiswa/agendaDosen', $data);
+        }
+        $this->load->view('templates/footer');
     }
 }

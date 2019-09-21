@@ -12,7 +12,7 @@
     </div>
     <div class="row">
         <!-- Area Chart -->
-        <div class="col-xl-10 col-lg-10">
+        <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-3">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -24,26 +24,26 @@
                     <?= form_open_multipart('mahasiswa/tambahUjian/' . $user_login['nim']); ?>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama mahasiswa..." readonly value="<?= $user_login['nama'] ?>">
                             <input type="hidden" name="nim" value="<?= $user_login['nim'] ?>">
                         </div>
                     </div>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">NIM</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-12">
                             <input type="email" class="form-control" name="nim" id="nim" placeholder="Nim.." readonly value="<?= $user_login['nim'] ?>">
                         </div>
                     </div>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Judul Tugas Akhir</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                             <textarea type="text" class="form-control" id="judulTA" placeholder="Tugas Akhir..." readonly name="judulTA" id="" cols="10" rows="2"><?= $user_login['judulAkhir'] ?> </textarea>
                         </div>
                     </div>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Ujian</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <select class="custom-select" id="kodeUjian" name="kodeUjian">
                                 <?php foreach ($belumUjian as $u) : ?>
                                 <option value="<?= $u['kode'] ?>"><?= $u['nama_ujian'] ?></option>
@@ -54,21 +54,21 @@
                     </div>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tanggal ujian</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-12">
                             <input type="date" class="form-control" id="tanggalUjian" name="tanggalUjian" placeholder="Enter email">
                             <?= form_error('tanggalUjian', '<small class="text-danger pl-3">', '</small>'); ?>
                         </div>
                     </div>
                     <div class="form-group row mb-1">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Bukti</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="buktiUjian" name="buktiUjian">
                                 <label class="custom-file-label" for="customFile">Choose file</label id="buktiUjian" name="buktiUjian">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row mb-1 mt-3">
+                    <div class="form-group row mb-1 mt-5">
                         <div class="col-lg-12 ">
                             <button type="submit" class="btn btn-primary float-right">
                                 <span class="icon text-white-50">

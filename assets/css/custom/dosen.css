@@ -1,28 +1,53 @@
-.clr-white{
-    color: white
+.clr-white {
+	color: white
 }
 
-.bg-blue{
-    background-color:#4e73df;
+.bg-blue {
+	background-color: #4e73df;
 }
 
-.close{
-    font-size: 1.8rem;
+.close {
+	font-size: 1.8rem;
 }
 
-.close:hover{
-    color: white;
+.close:hover {
+	color: white;
 }
 
-.modal-body .card .card-body textarea{
-    border-radius: 10px;
+.modal-body .card .card-body textarea {
+	border-radius: 10px;
 }
 
-.clr-black{
-    color: black
+.clr-black {
+	color: black
 }
 
-.search-dosen{
-    width: 100%;
-    height: 10rem;
+.search-dosen {
+	width: 100%;
+	height: 10rem;
 }
+
+.fc-content {
+	height: 60px;
+}
+
+.fc-content .fc-title,
+.fc-content .fc-time {
+	font-size: 13px;
+	font-weight: bold;
+	color: white;
+	word-wrap: break-word;
+	white-space: normal;
+}
+
+.fc-day-header {
+	font-size: 18px;
+	background-color: rgb(11, 97, 131);
+	color: white;
+	height: 35px;
+}
+
+/* .fc-day-header span { */
+/* margin: 20px; */
+/* height: 50px;
+} */

@@ -19,13 +19,13 @@
 
       <div class="row">
         <div class="col-lg-6">
-          <?= $this->session->flashdata('message');  ?>
+          <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message');  ?>"></div>
         </div>
       </div>
 
 
       <!-- Content Row -->
-      <div class="row">
+      <div class="row box">
 
         <div class="d-none d-lg-block col-md-8 mb-4">
           <div class="shadow mb-1">
@@ -36,9 +36,13 @@
             </a>
             <div class="collapse show" id="collapseCardExample">
               <div class="card-body pb-4">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa quibusdam excepturi non ipsam
-                deserunt hic placeat odio voluptas vitae odit enim a, veritatis at totam eaque consequuntur quae sit
-                possimus!
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                  <span class="font-weight-bold">Detail Ujian</span> adalah halaman untuk memverifikasi permintaan ujian dari mahasiswa S2 dan S3 serta menambahkan penguji untuk ujiannya
+                  dan memberikan nilai untuk hasil ujian yang telah dilakukan serta memberikan status kelulusan dari ujian tersebut.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -59,14 +63,14 @@
                       <div class="col-md-3">
                         <small>Mulai Periode</small>
                         <?php if ($star_date != null) : ?>
-                        <small> <?= $star_date ?></small>
+                          <small> <?= $star_date ?></small>
                         <?php endif; ?>
                         <input type="date" class="form-control" name="star_date">
                       </div>
                       <div class="col-md-3">
                         <small>Akhir Periode</small>
                         <?php if ($end_date != null) : ?>
-                        <small> <?= $end_date ?></small>
+                          <small> <?= $end_date ?></small>
                         <?php endif; ?>
                         <div class="input-group mb-3">
                           <input type="date" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" name="end_date">
@@ -96,33 +100,33 @@
                       <tbody>
                         <?php $i = 1;
                         foreach ($valid_ujian as $v) : ?>
-                        <tr>
-                          <td><?= $i++;  ?></td>
-                          <td><small><?= $v['tgl_tambah_ujian']  ?></small></td>
-                          <td><?= $v['nama']  ?></td>
-                          <td><?= $v['nim']  ?></td>
-                          <td><?= $v['jenjang']  ?></td>
-                          <td><?= $v['nama_prodi']  ?></td>
-                          <td><?= $v['nama_ujian']  ?></td>
+                          <tr>
+                            <td><?= $i++;  ?></td>
+                            <td> <?= date("d/m/Y", strtotime($v['tgl_tambah_ujian'])) ?> </td>
+                            <td><?= $v['nama']  ?></td>
+                            <td><?= $v['nim']  ?></td>
+                            <td><?= $v['jenjang']  ?></td>
+                            <td><?= $v['nama_prodi']  ?></td>
+                            <td><?= $v['nama_ujian']  ?></td>
 
-                          <!-- valid ujian -->
-                          <?php if ($v['valid'] == 1) { ?>
-                          <td class="text-success font-weight-bold">Valid</td>
-                          <?php } elseif ($v['valid'] == 2) { ?>
-                          <td class="text-primary font-weight-bold">Proses</td>
-                          <?php } else { ?>
-                          <td class="text-danger font-weight-bold">Tidak Valid</td>
-                          <?php } ?>
+                            <!-- valid ujian -->
+                            <?php if ($v['valid'] == 1) { ?>
+                              <td class="text-success font-weight-bold">Valid</td>
+                            <?php } elseif ($v['valid'] == 2) { ?>
+                              <td class="text-primary font-weight-bold">Proses</td>
+                            <?php } else { ?>
+                              <td class="text-danger font-weight-bold">Tidak Valid</td>
+                            <?php } ?>
 
-                          <td class="text-center">
-                            <a href="<?= base_url('operator')  ?>/validasi_cek/<?= $v['id']  ?>" class="btn btn-success btn-icon-split btn-sm">
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check-circle"></i>
-                              </span>
-                              <span class="text">Detail</span>
-                            </a>
-                          </td>
-                        </tr>
+                            <td class="text-center">
+                              <a href="<?= base_url('operator')  ?>/validasi_cek/<?= $v['id']  ?>" class="btn btn-success btn-icon-split btn-sm">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-check-circle"></i>
+                                </span>
+                                <span class="text">Detail</span>
+                              </a>
+                            </td>
+                          </tr>
                         <?php endforeach; ?>
                       </tbody>
                       <tfoot>

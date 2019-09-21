@@ -133,7 +133,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="text-xs pt-3 pb-3 see-more font-weight-normal"><a href="<?= base_url('operator/validasi') ?>">lihat selengkapnya</a></div>
+                  <div class="text-xs pt-3 pb-3 see-more font-weight-normal"><a href="<?= base_url('operator/ujian') ?>">lihat selengkapnya</a></div>
                 </div>
               </div>
             </div>
